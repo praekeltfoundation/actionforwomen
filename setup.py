@@ -11,11 +11,11 @@ setup(
     url='http://github.com/praekelt/mama',
     packages = find_packages(),
     dependency_links = [
-        "https://github.com/praekelt/jmbo-foundry/tarball/master#egg=jmbo-foundry",
     ],
     install_requires=[
         'django',
-        'jmbo-foundry',
+        'jmbo',
+        'south',
     ],
     tests_require=[
         'django-setuptest',

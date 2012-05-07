@@ -1,12 +1,7 @@
-# Django settings for mama project.
+
+# Django settings for project project.
 
 import os
-from os import path
-import sys
-
-from foundry import settings as foundry_settings
-SCRIPT_PATH = path.abspath(path.dirname(__file__))
-ROOT_PATH = path.split(path.abspath(path.join(path.dirname(sys.argv[0]))))[0]
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -61,7 +56,7 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = os.path.join(ROOT_PATH, 'static')
+STATIC_ROOT = ''
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -73,28 +68,26 @@ STATIC_URL = '/static/'
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 # Additional locations of static files
-STATICFILES_DIRS = [
+STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-]
+)
 
 # List of finder classes that know how to find static files in
 # various locations.
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'compressor.finders.CompressorFinder',
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = 'mb1-emjv020ks*ibsvcps_hfbc*c47@gt(w7jeabthv3hsx@=='
+SECRET_KEY = 'tk1t&n3^r1)yk%ss3wxd79nw*z&__@bnt*7!2pbv7#9_)lepax'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
-    'foundry.loaders.AppDirectoriesTypeLoader',
     'django.template.loaders.app_directories.Loader',
 #     'django.template.loaders.eggs.Loader',
 )
@@ -107,50 +100,28 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-# A tuple of callables that are used to populate the context in RequestContext.
-# These callables take a request object as their argument and return a
-# dictionary of items to be merged into the context.
-TEMPLATE_CONTEXT_PROCESSORS = (
-    "django.contrib.auth.context_processors.auth",
-    "django.contrib.messages.context_processors.messages",
-    "django.core.context_processors.debug",
-    "django.core.context_processors.i18n",
-    "django.core.context_processors.media",
-    "django.core.context_processors.static",
-    "django.core.context_processors.request",
-    'preferences.context_processors.preferences_cp',
-    'foundry.context_processors.foundry',
-)
+ROOT_URLCONF = 'project.urls'
 
-ROOT_URLCONF = 'mama.urls'
-
-TEMPLATE_DIRS = [
+TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     os.path.join(os.path.dirname(__file__), "templates"),
-]
+)
 
 INSTALLED_APPS = (
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.comments',
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'jmbo_analytics',
-    'jmbo',
-    'compressor',
-    'category',
-    'foundry',
-    'mama',
-    'photologue',
-    'preferences',
-    'publisher',
-    'secretballot',
+    'south',
+    # Uncomment the next line to enable the admin:
+    # 'django.contrib.admin',
+    # Uncomment the next line to enable admin documentation:
+    # 'django.contrib.admindocs',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -175,16 +146,3 @@ LOGGING = {
         },
     }
 }
-
-FOUNDRY = {
-    'has_javascript': True,
-    'has_ajax': True,
-    'sms_gateway_api_key': '',
-    'sms_gateway_password': '',
-    'layers': ('basic',)
-}
-
-RECAPTCHA_PUBLIC_KEY = ""
-RECAPTCHA_PRIVATE_KEY = ""
-
-foundry_settings.compute_settings(sys.modules[__name__])
