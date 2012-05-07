@@ -1,3 +1,4 @@
 *.swp
 mama.egg-info/
 /ve/
+*.pyc
