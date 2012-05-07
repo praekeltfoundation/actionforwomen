@@ -1,20 +1,25 @@
-
 from django.conf.urls.defaults import *
 from django.conf import settings
+from django.contrib import admin
 
-# Uncomment the next two lines to enable the admin:
-# from django.contrib import admin
-# admin.autodiscover()
+from django.views.generic import TemplateView
 
+admin.autodiscover()
 urlpatterns = patterns('',
-    # Example:
-    # (r'^{{ project_name }}/', include('{{ project_name }}.foo.urls')),
-
-    # Uncomment the admin/doc line below to enable admin documentation:
-    # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
-    # Uncomment the next line to enable the admin:
-    # (r'^admin/', include(admin.site.urls)),
+    url(
+        r'^$',
+        TemplateView.as_view(template_name="mama/home.html"),
+        name='home'
+    ),
+    url(
+        r'^articles/$',
+        TemplateView.as_view(template_name="mama/articles.html"),
+        name='articles'
+    ),
+    
+    (r'^', include('jmbo.urls')),
+    (r'^admin/', include(admin.site.urls)),
+    (r'^ckeditor/', include('ckeditor.urls')),
 )
 
 if settings.DEBUG:
@@ -22,4 +27,3 @@ if settings.DEBUG:
         (r'^media/(?P<path>.*)$', 'django.views.static.serve',
          {'document_root': settings.MEDIA_ROOT}),
     )
-

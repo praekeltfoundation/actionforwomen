@@ -14,7 +14,10 @@ setup(
     ],
     install_requires=[
         'django',
+        'django-generate',
+        'django-preferences',
         'jmbo',
+        'jmbo-post',
         'south',
     ],
     tests_require=[

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% load mama_inclusion_tags %}
+
+{% block content %}
+
+    {% category_featured_listing "articles" %}
+    
+    {% category_featured_listing "moms-stories" %}
+
+    {% category_featured_listing "todays-poll" %}
+
+{% endblock %}

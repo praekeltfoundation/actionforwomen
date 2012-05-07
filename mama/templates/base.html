@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
+        <title>MAMA - Mobile Alliance for Maternal Action</title>
+        <link href="{{ STATIC_URL}}/mama/css/style.css" rel="stylesheet" type="text/css" />
+    </head>
+<body>
+	<header>
+        <div class="logo">
+            <a href="index.html">
+                <img src="{{ STATIC_URL }}/mama/images/logo.png" alt="Mama Logo" />
+            </a>
+        </div>
+		<nav class="horizontal">
+            <ul>
+                <li><a href="{% url home %}">Home</a></li>
+                <li><a href="{% url articles %}">Articles</a></li>
+                <li><a href="contact.html">Mom's Stories</a></li>
+            </ul>
+        </nav> 
+		<nav class="horizontal">
+            <ul>
+                <li><a href="{% url home %}">Pregnancy</a></li>
+                <li><a href="{% url articles %}">Labour</a></li>
+                <li><a href="contact.html">Baby</a></li>
+            </ul>
+        </nav> 
+        <div class="clear"></div>
+    </header>    
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+    <footer>
+        <p class="copy">&copy; 2012 yourdomainname.com | All right reserved &bull; Design By <a href="http://www.mobifreaks.com" title="Design By Mobifreaks.com">Mobifreaks.com</a></p>
+    </footer>
+</body>
+</html>
