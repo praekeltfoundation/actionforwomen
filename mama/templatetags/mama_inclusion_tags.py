@@ -8,8 +8,8 @@ register = template.Library()
 def ages_and_stages(context):
     return context
     
-@register.inclusion_tag('mama/inclusion_tags/home_category_listing.html')
-def home_category_listing(type, slug):
+@register.inclusion_tag('mama/inclusion_tags/home_category_content_listing.html')
+def home_category_content_listing(type, slug):
     category = Category.objects.get(slug__exact=slug)
     object_list = ModelBase.objects.filter(categories__slug=category.slug).filter(categories__slug='featured')
 
