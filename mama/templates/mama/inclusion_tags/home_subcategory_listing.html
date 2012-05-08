@@ -1,0 +1,12 @@
+{% load jmbo_inclusion_tags %} 
+
+{% if object_list %}
+    <div class="foundry-container foundry-menu">
+        <div class="title">{{ category.title }}</div>
+        <div class="items">
+            {% for object in object_list %}
+                {% render_object object "link" %}
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}

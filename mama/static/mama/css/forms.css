@@ -1,0 +1,30 @@
+ul.errorlist { margin: 0 0 12px -3.1em; }    
+ul.errorlist li { margin: 0; color: red; }
+div.errorlist { margin-bottom: 12px; }    
+div.errorlist div.error { color: red; }
+
+ul.form-ul { margin-top: 0; }
+ul.form-ul li { margin-bottom: 6px; margin-left: -40px; list-style: none; }
+ul.form-ul ul.errorlist, 
+ul.form-ul div.errorlist { margin: 0; }    
+ul.form-ul label { display: block; margin-bottom: 2px; }    
+ul.form-ul .helptext { display: block; margin-bottom: 2px; color: #7e7e7e; }  
+
+div.field { margin-bottom: 7px; color: #666; }
+div.field ul.errorlist { margin: 0 0 0 -3.1em; }    
+div.field div.errorlist { margin: 0; }    
+div.field label { display: block; margin-bottom: 4px; color: #666; font-weight: bold; }    
+div.field .helptext { display: block; margin-bottom: 7px; color: #7e7e7e; }
+div.field input { padding: 5px; font-size: 11px; color: #000; border: 1px solid #666; }
+
+form.foundry-form { margin: 4px; padding: 5px 0; }
+form.foundry-form-inline { margin: 0; padding: 0; border: 1px solid #e5e5e5; padding: 5px; margin: 0.5em 0; }
+form.foundry-form textarea { width: 80%; }
+form.foundry-form div.buttons { padding: 0 0 8px 0; }
+form.foundry-form div.buttons input { padding: 3px 6px; border: 0; background: #d92128; font-size: 11px; font-weight: bold; color: #fff; }
+
+.poll-widget-inclusion div.buttons input { padding: 3px 6px; border: 0; background: #d92128; font-size: 11px; font-weight: bold; color: #fff; }
+
+form > .field > .required > div label { font-weight: normal; font-size: 12px; }
+
+li.required > label, div.required > label {}
