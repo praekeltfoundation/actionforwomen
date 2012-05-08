@@ -84,24 +84,18 @@ def generate():
                 },
             },]
   
-
-    objects += gen_subcat_content(('BC Content', 'bc-content'), [('HIV', 'hiv'), ('Labour & Birth', 'labour-birth'), ('Pregnancy', 'pregnancy')])
-    objects += gen_subcat_content(('MAMA SA', 'mama-sa'), [('Planning your family', 'planning-your-family'), ('Single parenting', 'single-parenting'), ('The good dad guide', 'the-good-dad-guide')])
-   
-    """
-    for i in range(1, 30):
+    for i in range(1, 10):
         objects.append({
-            "model": "post.Post",
+            "model": "poll.Poll",
             "fields": {
-                "title": "MAMA SA %s Title" % i,
-                "content": "MAMA SA %s Content" % i,
+                "title": "Poll %s Title" % i,
                 "state": "published",
                 "sites": [1,],
                 "categories": [{
                     "model": "category.Category",
                     "fields": {
-                        "title": "MAMA SA",
-                        "slug": "mama-sa",
+                        "title": "Todays Poll",
+                        "slug": "todays-poll",
                     },
                 },],
             },
@@ -114,6 +108,8 @@ def generate():
                     "slug": "featured",
                 },
             },]
-    """
+    
+    objects += gen_subcat_content(('BC Content', 'bc-content'), [('HIV', 'hiv'), ('Labour & Birth', 'labour-birth'), ('Pregnancy', 'pregnancy')])
+    objects += gen_subcat_content(('MAMA SA', 'mama-sa'), [('Planning your family', 'planning-your-family'), ('Single parenting', 'single-parenting'), ('The good dad guide', 'the-good-dad-guide')])
 
     return objects

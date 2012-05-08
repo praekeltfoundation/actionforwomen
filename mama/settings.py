@@ -138,10 +138,12 @@ INSTALLED_APPS = (
     'mama',
     'jmbo',
     'photologue',
-    'publisher',
     'post',
+    'poll',
+    'publisher',
     'preferences',
     'secretballot',
+    'sites_groups',
     'south',
 )
 

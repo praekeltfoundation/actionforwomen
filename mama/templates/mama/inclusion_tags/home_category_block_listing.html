@@ -7,10 +7,18 @@
                         <div class="title">{{ category.title }}</div>
                         <div class="items">
                             {% for object in object_list %}
-                                {% render_object object.as_leaf_class "content" %}
+                                {% render_object object "block" %}
                             {% endfor %}
                         </div>
                     </div> 
                 </div>
+                <div class="foundry-page-tile sub-nav">
+                    <div class="foundry-container foundry-navbar">
+                        <div class="items">
+                            <div class="item first"><a href="category.html">Recent</a></div><div class="item"><a href="category.html">Popular</a></div><div class="item last"><a href="articles.html">All</a></div>
+                        </div>
+                    </div>
+                </div>
             </div>
 {% endif %}
+
