@@ -1,40 +1,177 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
-        <title>MAMA - Mobile Alliance for Maternal Action</title>
-        <link href="{{ STATIC_URL}}/mama/css/style.css" rel="stylesheet" type="text/css" />
-    </head>
+<?xml version="1.0" encoding="utf-8"?> 
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta name="description" content="Airtel Web Ghana" />
+    <meta property="og:title" content="Airtel Web Ghana" />
+    <meta property="og:description" content="Jmbo is a mobile-focused content delivery platform for the delivery of dynamic experiences to audiences in emerging markets." />
+    <meta property="og:image" content="/static/images/logo.png" />
+    <title>MAMA - Mobile Alliance for Maternal Action</title>
+    <link href="{{ STATIC_URL }}/mama/css/main.css" rel="stylesheet" type="text/css" />
+    <link href="{{ STATIC_URL }}/mama/css/tile.css" rel="stylesheet" type="text/css" />
+    <link href="{{ STATIC_URL }}/mama/css/comment.css" rel="stylesheet" type="text/css" />
+    <link href="{{ STATIC_URL }}/mama/css/forms.css" rel="stylesheet" type="text/css" />
+    <link href="{{ STATIC_URL }}/mama/css/gallery.css" rel="stylesheet" type="text/css" />
+    <link href="{{ STATIC_URL }}/mama/css/promo.css" rel="stylesheet" type="text/css" />
+    <link href="{{ STATIC_URL }}/mama/css/custom.css" rel="stylesheet" type="text/css" />    
+</head>
+
 <body>
-	<header>
-        <div class="logo">
-            <a href="index.html">
-                <img src="{{ STATIC_URL }}/mama/images/logo.png" alt="Mama Logo" />
-            </a>
+    <div id="header">
+        <div class="items">
+            <a href="{% url home %}"><img src="{{ STATIC_URL }}/mama/images/logo.png" alt="" /></a>
+            <div class="buttons">
+                  <span><a href="profile.html">My Profile</a></span>
+          	</div>
+        </div>    
+    </div><!--/Header-->
+
+    <div class="foundry-container foundry-navbar">
+        <div class="items">
+            <div class="item first"><a href="{% url home %}">Home</a></div>
+            <div class="item"><a href="articles.html">BC Content</a></div>
+            <div class="item"><a href="articles.html">MAMA SA</a></div>
+            <div class="item"><a href="articles.html">Articles</a></div>
+            <div class="item last"><a href="blogs.html">Stories</a></div>
         </div>
-		<nav class="horizontal">
-            <ul>
-                <li><a href="{% url home %}">Home</a></li>
-                <li><a href="{% url articles %}">Articles</a></li>
-                <li><a href="contact.html">Mom's Stories</a></li>
-            </ul>
-        </nav> 
-		<nav class="horizontal">
-            <ul>
-                <li><a href="{% url home %}">Pregnancy</a></li>
-                <li><a href="{% url articles %}">Labour</a></li>
-                <li><a href="contact.html">Baby</a></li>
-            </ul>
-        </nav> 
-        <div class="clear"></div>
-    </header>    
-    <div class="content">
-        {% block content %}
+    </div><!--/Navbar-->
+
+    <div id="content">        
+
+        <div class="content">
+            {% block content %}
+
+
+
+            <div class="foundry-container foundry-listing-vertical-thumbnail">
+                <div class="foundry-page-tile">
+                    <div class="foundry-container foundry-listing-vertical-thumbnail">
+                        <div class="title">Articles</div>
+                        <div class="items">
+                            <div class="item first item-post">
+                                <a href="post.html"><img src="images/happy.png" class="left" /></a>
+                                <div class="title">
+                                    <span class="category"><a href="category.html">Enjoying your pregnancy</a></span>
+                                    <a href="post.html">Why I'm happy to be pregnant</a>
+                                </div>
+                                <div class="meta">
+                                    <div class="byline">Today</div> // <div class="comments">(5 comments)</div>
+                                    <div class="description">This is the post description... </div>
+                                </div>
+                            </div>
+                            <div class="item item-post">
+                                <a href="post.html"><img src="images/health.png" class="left" /></a>
+                                <div class="title">
+                                    <span class="category"><a href="category.html">Common worries</a></span>
+                                    <a href="post.html">Tummy cramps</a>
+                                </div>
+                                <div class="meta">
+                                    <div class="byline">23 April 2012</div> // <div class="comments">(22 comments)</div>
+                                    <div class="description">This is the post description... </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+                <div class="foundry-page-tile sub-nav">
+                    <div class="foundry-container foundry-navbar">
+                        <div class="items">
+                            <div class="item first"><a href="category.html">Recent</a></div><div class="item"><a href="category.html">Popular</a></div><div class="item last"><a href="articles.html">All</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>     
+
+            <div class="foundry-container foundry-listing-vertical-thumbnail">
+                <div class="foundry-page-tile">
+                    <div class="foundry-container foundry-listing-widget">
+                        <div class="title">Today's Poll</div>
+                        <div class="items">
+                            <div class="item first last item-poll">
+                                <div class="object-widget-inclusion poll-widget-inclusion">
+                                    <div class="title">Do you find it easy to read your baby's mind? </div>
+                                    <form action="poll.html">
+                                        <div class="field">
+                                            <div  class="required">  
+                                                <div class="helptext"></div> 
+                                                <div><label for="id_poll_option_0"><input type="radio" id="id_poll_option_0" value="46" name="poll_option" /> Yes</label></div>
+                                                <div><label for="id_poll_option_1"><input type="radio" id="id_poll_option_1" value="47" name="poll_option" /> Sometimes</label></div>
+                                                <div><label for="id_poll_option_2"><input type="radio" id="id_poll_option_0" value="48" name="poll_option" /> Hardly Ever</label></div>
+                                                <div><label for="id_poll_option_3"><input type="radio" id="id_poll_option_1" value="49" name="poll_option" /> Never</label></div>
+                                            </div>
+                                        </div>
+                                        <div class="buttons">
+                                            <input type="submit" value="Vote" />
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="foundry-container foundry-listing-vertical-thumbnail">
+                <div class="foundry-page-tile">
+                    <div class="foundry-container foundry-listing-vertical-thumbnail">
+                        <div class="title">Blogs</div>
+                        <div class="items">
+                            <div class="item first item-post">
+                                <a href="blog.html"><img src="images/bump.png" class="left" /></a>
+                                <div class="title">
+                                    <span class="category"><a href="category.html">Health</a></span>
+                                    <a href="post.html">Antenatal tests and care</a>
+                                </div>
+                                <div class="meta">
+                                    <div class="byline">Today</div> // <div class="comments">(5 comments)</div>
+                                    <div class="description">This is the post description... </div>
+                                </div>
+                            </div>
+                            <div class="item item-post item-nothumb">
+                                <div class="title">
+                                    <span class="category"><a href="category.html">Category</a></span>
+                                    <a href="post.html">Blog article post goes here</a>
+                                </div>
+                                <div class="meta">
+                                    <div class="byline">Today</div> // <div class="comments">(5 comments)</div>
+                                    <div class="description">This is the post description... </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="foundry-page-tile sub-nav">
+                    <div class="foundry-container foundry-navbar">
+                        <div class="items">
+                            <div class="item first"><a href="category.html">Recent</a></div><div class="item last"><a href="category.html">Popular</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="foundry-container foundry-listing-vertical-thumbnail">
+                <div class="foundry-page-tile">
+                    <div class="foundry-container foundry-listing-vertical-thumbnail">
+                        <div class="title">Share This Site</div>
+                        <div class="items">
+                            <div class="item first last item-social">
+                                <div class="left">Share This:</div>
+                                <div class="fb"><a href="/share/facebook/" target="_blank"><img src="images/facebook.png" border="0" /></div>
+                                <div class="tw"><a href="/share/twitter/" target="_blank"><img src="images/twitter.png" border="0" /></div>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div><!--/Page-Content-->
         {% endblock %}
-    </div>
-    <footer>
-        <p class="copy">&copy; 2012 yourdomainname.com | All right reserved &bull; Design By <a href="http://www.mobifreaks.com" title="Design By Mobifreaks.com">Mobifreaks.com</a></p>
-    </footer>
+    </div><!--/Content-->
+
+    <div id="footer">
+       <span><a href="about.html">About us</a></span> - <span><a href="contact.html">Contact us</a></span> - <span><a href="terms.html">Terms</a> - <span><a href="login.html">Sign Out</a></span><br />&copy; MAMA 2012</span>
+    </div><!--/Footer-->
+
 </body>
 </html>

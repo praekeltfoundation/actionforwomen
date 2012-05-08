@@ -17,6 +17,7 @@ setup(
         'django-generate',
         'django-preferences',
         'jmbo',
+        'jmbo-poll',
         'jmbo-post',
         'south',
     ],

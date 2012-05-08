@@ -4,10 +4,16 @@
 
 {% block content %}
 
-    {% category_featured_listing "articles" %}
+    {% ages_and_stages %}
     
-    {% category_featured_listing "moms-stories" %}
-
-    {% category_featured_listing "todays-poll" %}
-
+    {% home_subcategory_listing "bc-content" %}
+    
+    {% home_subcategory_listing "mama-sa" %}
+    
+    {% home_category_listing "content" "todays-poll" %}
+    
+    {% home_category_listing "block" "articles" %}
+    
+    {% home_category_listing "block" "moms-stories" %}
+    
 {% endblock %}
