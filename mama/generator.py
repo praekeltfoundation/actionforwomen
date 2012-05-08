@@ -84,7 +84,7 @@ def generate():
                 },
             },]
   
-    for i in range(1, 10):
+    for i in range(1, 20):
         objects.append({
             "model": "poll.Poll",
             "fields": {
@@ -109,7 +109,7 @@ def generate():
                 },
             },]
     
-    objects += gen_subcat_content(('BC Content', 'bc-content'), [('HIV', 'hiv'), ('Labour & Birth', 'labour-birth'), ('Pregnancy', 'pregnancy')])
+    #objects += gen_subcat_content(('BC Content', 'bc-content'), [('HIV', 'hiv'), ('Labour & Birth', 'labour-birth'), ('Pregnancy', 'pregnancy')])
     objects += gen_subcat_content(('MAMA SA', 'mama-sa'), [('Planning your family', 'planning-your-family'), ('Single parenting', 'single-parenting'), ('The good dad guide', 'the-good-dad-guide')])
 
     return objects
