@@ -1,69 +1,28 @@
-<?xml version="1.0" encoding="utf-8"?> 
+{% load mama_inclusion_tags %}
 <!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd"> 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-	<meta name="description" content="Airtel Web Ghana" />
-    <meta property="og:title" content="Airtel Web Ghana" />
-    <meta property="og:description" content="Jmbo is a mobile-focused content delivery platform for the delivery of dynamic experiences to audiences in emerging markets." />
-    <meta property="og:image" content="/static/images/logo.png" />
-    <title>MAMA - Mobile Alliance for Maternal Action</title>
-    <link href="{{ STATIC_URL }}/mama/css/main.css" rel="stylesheet" type="text/css" />
-    <link href="{{ STATIC_URL }}/mama/css/tile.css" rel="stylesheet" type="text/css" />
-    <link href="{{ STATIC_URL }}/mama/css/comment.css" rel="stylesheet" type="text/css" />
-    <link href="{{ STATIC_URL }}/mama/css/forms.css" rel="stylesheet" type="text/css" />
-    <link href="{{ STATIC_URL }}/mama/css/gallery.css" rel="stylesheet" type="text/css" />
-    <link href="{{ STATIC_URL }}/mama/css/promo.css" rel="stylesheet" type="text/css" />
-    <link href="{{ STATIC_URL }}/mama/css/custom.css" rel="stylesheet" type="text/css" />    
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+    <title>Mama</title> 
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" /> 
+    <link href="{{ STATIC_URL }}/mama/css/style.css" rel="stylesheet" type="text/css" /> 
 </head>
-
 <body>
-    <div id="header">
-        <div class="items">
-            <a href="{% url home %}"><img src="{{ STATIC_URL }}/mama/images/logo.png" alt="" /></a>
-            <div class="buttons">
-                  <span><a href="profile.html">My Profile</a></span>
-          	</div>
-        </div>    
-    </div><!--/Header-->
-
-    <div class="foundry-container foundry-navbar">
-        <div class="items">
-            <div class="item first"><a href="{% url home %}">Home</a></div>
-            <div class="item"><a href="articles.html">BC Content</a></div>
-            <div class="item"><a href="articles.html">MAMA SA</a></div>
-            <div class="item"><a href="articles.html">Articles</a></div>
-            <div class="item last"><a href="blogs.html">Stories</a></div>
+    {% navbar %}
+    <div id="content">
+        {% block content %}
+        {% endblock %}
+        <div class="h1">Share This Site</div>
+        <div class="content-inner">
+            <div class="social"><p>Share This:</p> <a href="#"><img src="{{ STATIC_URL }}/mama/img/twitter.png" /></a> <a href="#"><img src="{{ STATIC_URL }}/mama/img/facebook.png" /></a></div>
         </div>
-    </div><!--/Navbar-->
-
-    <div id="content">        
-
-        <div class="content">
-            {% block content %}
-            {% endblock %}
-
-            <div class="foundry-container foundry-listing-vertical-thumbnail">
-                <div class="foundry-page-tile">
-                    <div class="foundry-container foundry-listing-vertical-thumbnail">
-                        <div class="title">Share This Site</div>
-                        <div class="items">
-                            <div class="item first last item-social">
-                                <div class="left">Share This:</div>
-                                <div class="fb"><a href="/share/facebook/" target="_blank"><img src="{{ STATIC_URL }}/mama/images/facebook.png" border="0" /></div>
-                                <div class="tw"><a href="/share/twitter/" target="_blank"><img src="{{ STATIC_URL }}/mama/images/twitter.png" border="0" /></div>
-                                <div class="clear"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div><!--/Page-Content-->
-    </div><!--/Content-->
-
-    <div id="footer">
-       <span><a href="about.html">About us</a></span> - <span><a href="contact.html">Contact us</a></span> - <span><a href="terms.html">Terms</a> - <span><a href="login.html">Sign Out</a></span><br />&copy; MAMA 2012</span>
-    </div><!--/Footer-->
+        <div class="h1">Search</div>
+        <form id="frmSearch" action="search.html">
+            <div class="row row-inline"><input type="text" name="search" value="" class="short" /><input type="submit" name="submit" value="Search" class="btn" /></div>
+            <div class="clear"></div>
+        </form>
+    </div>
+    <div id="footer"><a href="contact.html">Contact</a> | <a href="terms.html">Terms</a> | <a href="about.html">About Mama</a> | <a href="login.html">Sign Out</a><br /><span>&copy; Mama SA</span></div>
 
 </body>
 </html>

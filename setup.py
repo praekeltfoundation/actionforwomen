@@ -16,6 +16,7 @@ setup(
         'django',
         'django-generate',
         'django-preferences',
+        'django-snippetscream',
         'jmbo',
         'jmbo-poll',
         'jmbo-post',

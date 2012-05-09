@@ -7,5 +7,11 @@ DATABASES = {
     }
 }
 
-DEBUG=True
-TEMPLATE_DEBUG=DEBUG
+DEBUG = True
+TEMPLATE_DEBUG = DEBUG
+
+INSTALLED_APPS += (
+    'snippetscream',
+)
+
+CREATE_DEFAULT_SUPERUSER = True

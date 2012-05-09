@@ -1,56 +1,13 @@
-{% if request.user.is_authenticated %}
-            <div class="foundry-container foundry-listing-vertical-thumbnail">
-                <div class="foundry-page-tile">
-                    <div class="foundry-container foundry-listing-vertical-thumbnail">
-                        <div class="title">Ages &amp; Stages</div>
-                        <div class="items">
-                            <div class="item first item-post">
-                                <a href="post.html"><img src="images/preg_23.png" class="left" /></a>
-                                <div class="title">
-                                    <span class="category">My Pregnancy</span>
-                                    <a href="post.html">Read about your stage of pregnancy</a>
-                                </div>
-                                <div class="meta">
-                                    <div class="byline">Within your baby's lungs, blood vessels are...<a href="post.html">more</a></div>
-                                </div>
-                            </div>
-                            <div class="item last item-post">
-                                <a href="post.html"><img src="images/preg_23.png" class="left" /></a>
-                                <div class="title">
-                                    <span class="category">My Baby</span>
-                                    <a href="post.html">Read how your baby is growing</a>
-                                </div>
-                                <div class="meta">
-                                    <div class="byline">Within your baby's lungs, blood vessels are...<a href="post.html">more</a></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<div class="h1">My Baby</div>
+<div class="content-inner">
+    <div class="items">
+        <div class="item">
+            <a href="baby.html" class="intro-pic"><img src="{{ STATIC_URL }}/mama/img/preg_23.png"></a>
+            <div class="meta">
+                <div class="title"><a href="baby.html">Week 20 - 24</a></div>
+                <div class="description">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</div>
             </div>
-{% else %}
-            <div class="foundry-container foundry-listing-vertical-thumbnail">
-                <div class="foundry-page-tile">
-                    <div class="foundry-container foundry-listing-vertical-thumbnail">
-                        <div class="title">Notifications</div>
-                        <div class="items">
-                            <div class="item first last item-notice">
-                                <div class="title">
-                                    <span class="category">Update Your Baby's Age</span>
-                                </div>
-                                <div class="meta">
-                                    <div class="byline">Find out everything you need to know about how your pregnancy or baby is changing week to week. <a href="profile-update.html">Click this link</a> to tell us how long you’ve been pregnant or how old your baby is</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="foundry-page-tile sub-nav">
-                    <div class="foundry-container foundry-navbar">
-                        <div class="items">
-                            <div class="item first last"><a href="profile-update.html">Update Your Baby's Age</a></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-{% endif %}
+        </div>
+        <div class="item-nav"><a href="baby.html">Read more about your baby's development</a></div>
+    </div>
+</div>
