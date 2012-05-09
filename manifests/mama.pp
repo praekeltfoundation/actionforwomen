@@ -73,7 +73,7 @@ exec { 'create_virtualenv':
 
 # Install python packages.
 exec { 'install_packages':
-    command => '. ve/bin/activate && pip install -r requirements.pip && deactivate',
+    command => '/bin/sh -c ". ve/bin/activate && pip install -r requirements.pip && deactivate"',
     cwd => '/var/praekelt/mama',
     subscribe => [
         Exec['create_virtualenv'],
