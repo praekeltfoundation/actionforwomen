@@ -135,7 +135,6 @@ INSTALLED_APPS = (
     'category',
     'ckeditor',
     'generate',
-    'mama',
     'jmbo',
     'photologue',
     'post',
@@ -145,6 +144,7 @@ INSTALLED_APPS = (
     'secretballot',
     'sites_groups',
     'south',
+    'mama',
 )
 
 # A sample logging configuration. The only tangible logging
