@@ -20,6 +20,7 @@ setup(
         'jmbo',
         'jmbo-poll',
         'jmbo-post',
+        'psycopg2',
         'south',
     ],
     tests_require=[
