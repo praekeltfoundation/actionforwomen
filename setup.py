@@ -17,6 +17,7 @@ setup(
         'django-generate',
         'django-preferences',
         'django-snippetscream',
+        'flup',
         'jmbo',
         'jmbo-poll',
         'jmbo-post',
