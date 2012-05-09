@@ -41,7 +41,7 @@ file { "/var/praekelt/":
 
 # Clone and update repo.
 exec { "clone_repo":
-    command => "git clone https://github.com/praekelt/mama.git mama",
+    command => "git clone git@github.com:praekelt/mama.git mama",
     cwd => "/var/praekelt",
     unless => "test -d /var/praekelt/mama",
     subscribe => [
