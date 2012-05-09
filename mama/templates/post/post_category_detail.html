@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load mama_inclusion_tags %}
+
+{% block content %}
+    <div class="h1">{{ category.title }}</div>
+    <div class="content-inner">
+        <div class="post">
+            <div class="title">{{ object.title }}</div>
+            <img src="{{ STATIC_URL }}mama/img/health.png" />
+            {{ object.content|safe }}
+        </div>
+        {% with object.link_target_set.all as links %}
+            {% if links %}
+                <div class="post-menu">
+                    <div class="items">
+                        {% for link in links %}
+                        <div class="item"><a href="{{ link.target.get_absolute_category_url }}">&raquo; {{ link.title }}</a></div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        {% endwith %}
+    </div>
+    {% topic_listing category.slug 1 %}
+{% endblock %}
