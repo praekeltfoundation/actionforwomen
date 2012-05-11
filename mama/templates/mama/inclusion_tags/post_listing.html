@@ -6,9 +6,9 @@
         <div class="content-inner">
             <div class="items">
                 {% for object in object_list %}
-                    {% render_object object "block_home" %}
+                    {% render_object object "block" %}
                 {% endfor %}
-                <div class="item-nav"><a href="articles.html">All</a> | <a href="articles.html">Popular</a></div>
+                <div class="item-nav"><a href="{{ category.get_absolute_url }}">All</a> | <a href="{{ category.get_absolute_url }}?by=popular">Popular</a></div>
             </div>
         </div>
     </div>
