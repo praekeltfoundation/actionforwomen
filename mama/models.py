@@ -1,4 +1,5 @@
 from django.db import models
+from preferences.models import Preferences
 
 
 class Link(models.Model):
@@ -17,3 +18,20 @@ class Link(models.Model):
 
     def __unicode__(self):
         return self.title
+
+
+class SitePreferences(Preferences):
+    __module__ = 'preferences.models'
+    pregnancy_helpline_number = models.CharField(
+        max_length=64
+    )
+    baby_helpline_number = models.CharField(
+        max_length=64
+    )
+    hivaids_helpline_number = models.CharField(
+        "HIV/Aids helpline number",
+        max_length=64
+    )
+
+    class Meta:
+        verbose_name_plural = "Site preferences"
