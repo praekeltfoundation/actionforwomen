@@ -1,7 +1,8 @@
 {% load jmbo_inclusion_tags %} 
 
 {% if object_list %}
-<div class="h1">{% if more %}More {% endif %}{{ category.title }}</div>
+    <div class="{{ color }}">
+        <div class="h1">{% if more %}More {% endif %}{{ category.title }}</div>
         <div id="menu">
             <div class="items">
                 {% for object in object_list %}
@@ -10,4 +11,5 @@
                 <div class="item-nav"><a href="{{ category.get_absolute_url }}">More {{ category.title }} Topics</a></div>
             </div>
         </div>
+    </div>
 {% endif %}

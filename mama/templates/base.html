@@ -1,28 +1,44 @@
-{% load mama_inclusion_tags %}
 <!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd"> 
+{% load mama_inclusion_tags %}
+
 <html xmlns="http://www.w3.org/1999/xhtml"> 
 <head> 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
-    <title>Mama</title> 
-    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" /> 
+    <title>Mama {% if object %}| {{ object.title }}{% endif %}</title> 
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+    <meta name="description" content="Maternal health community platform.">
+    <meta name="keywords" content="moms,maternal,baby,pregnancy,pregnant,expectant,mama,askmama,ask,mother,pain,birth,help">
     <link href="{{ STATIC_URL }}mama/css/style.css" rel="stylesheet" type="text/css" /> 
 </head>
 <body>
-    {% navbar %}
+
+    {% header %}
+    <div id="divider"><img src="{{ STATIC_URL }}mama/img/divider.jpg" /></div>
+
+    <div id="banner"><img src="{{ STATIC_URL }}mama/img/banner.jpg" /></div>
+    
     <div id="content">
+
         {% block content %}
         {% endblock %}
+
         <div class="h1">Share This Site</div>
         <div class="content-inner">
             <div class="social"><p>Share This:</p> <a href="#"><img src="{{ STATIC_URL }}mama/img/twitter.png" /></a> <a href="#"><img src="{{ STATIC_URL }}mama/img/facebook.png" /></a></div>
         </div>
+
         <div class="h1">Search</div>
         <form id="frmSearch" action="search.html">
-            <div class="row row-inline"><input type="text" name="search" value="" class="short" /><input type="submit" name="submit" value="Search" class="btn" /></div>
+            <div class="row"><input type="text" name="search" value="" class="short" /></div>
+            <div class="row"><input type="submit" name="submit" value="Search" class="btn" /></div>
             <div class="clear"></div>
         </form>
+        
     </div>
-    <div id="footer"><a href="contact.html">Contact</a> | <a href="terms.html">Terms</a> | <a href="about.html">About Mama</a> | <a href="login.html">Sign Out</a><br /><span>&copy; Mama SA</span></div>
+
+    <div id="divider"><img src="{{ STATIC_URL }}mama/img/divider.jpg" /></div>
+    
+    <div id="footer"><a href="contact.html">Contact</a> | <a href="terms.html">Terms</a> | <a href="about.html">About Mama</a> | <a href="login.html">Sign Out</a><br /><span>&copy; Mama SA {% now "Y" %}</span></div>
 
 </body>
 </html>

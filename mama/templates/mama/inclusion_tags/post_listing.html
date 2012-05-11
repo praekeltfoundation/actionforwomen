@@ -1,13 +1,15 @@
 {% load jmbo_inclusion_tags %}
 
 {% if object_list %}
-<div class="h1">{{ category.title }}</div>
-    <div class="content-inner">
-        <div class="items">
-            {% for object in object_list %}
-                {% render_object object "block_home" %}
-            {% endfor %}
+    <div class="{{ color }}">
+        <div class="h1"> {{ category.title }}</div>
+        <div class="content-inner">
+            <div class="items">
+                {% for object in object_list %}
+                    {% render_object object "block_home" %}
+                {% endfor %}
+                <div class="item-nav"><a href="articles.html">All</a> | <a href="articles.html">Recent</a> | <a href="articles.html">Popular</a></div>
+            </div>
         </div>
-        <div class="item-nav"><a href="articles.html">All</a> | <a href="articles.html">Recent</a> | <a href="articles.html">Popular</a></div>
     </div>
 {% endif %}
