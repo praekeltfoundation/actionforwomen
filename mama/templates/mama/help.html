@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="h1">Get Help</div>
+    <div class="content-inner">
+        <div class="post">
+            <p><strong>Pregnancy:</strong> {{ preferences.SitePreferences.pregnancy_helpline_number }}</p>
+            <p><strong>Baby:</strong> {{ preferences.SitePreferences.baby_helpline_number }}</p>
+            <p><strong>HIV/AIDS:</strong> {{ preferences.SitePreferences.hivaids_helpline_number }}</p>
+            <p>Or use the contact form <a href="{% url contact %}">here</a></p>
+        </div>
+    </div>
+{% endblock %}
