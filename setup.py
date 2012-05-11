@@ -13,7 +13,7 @@ setup(
     dependency_links = [
     ],
     install_requires=[
-        'django',
+        'django>=1.4',
         'django-generate',
         'django-preferences',
         'django-snippetscream',
