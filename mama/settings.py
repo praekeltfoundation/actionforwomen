@@ -134,19 +134,19 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'post',
-    'mama',
     'category',
     'ckeditor',
     'generate',
     'jmbo',
     'photologue',
     'poll',
+    'post',
     'publisher',
     'preferences',
     'secretballot',
     'sites_groups',
     'south',
+    'mama',
 )
 
 # A sample logging configuration. The only tangible logging
