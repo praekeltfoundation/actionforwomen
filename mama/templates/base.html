@@ -13,9 +13,9 @@
 <body>
 
     {% header %}
-    <div id="divider"><img src="{{ STATIC_URL }}mama/img/divider.jpg" /></div>
 
-    <div id="banner"><img src="{{ STATIC_URL }}mama/img/banner.jpg" /></div>
+    {% block following_header %}
+    {% endblock %}
     
     <div id="content">
 

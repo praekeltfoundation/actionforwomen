@@ -2,6 +2,10 @@
 
 {% load mama_inclusion_tags %}
 
+{% block following_header %}
+    <div id="banner"><img src="{{ STATIC_URL }}mama/img/banner.jpg" /></div>
+{% endblock %}
+
 {% block content %}
 
     {% ages_and_stages %}
