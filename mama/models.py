@@ -1,3 +1,4 @@
+from ckeditor.fields import RichTextField
 from django.db import models
 from django.db.models.signals import class_prepared
 from django.dispatch import receiver
@@ -25,14 +26,28 @@ class Link(models.Model):
 class SitePreferences(Preferences):
     __module__ = 'preferences.models'
     pregnancy_helpline_number = models.CharField(
-        max_length=64
+        max_length=64,
+        blank=True,
+        null=True
     )
     baby_helpline_number = models.CharField(
-        max_length=64
+        max_length=64,
+        blank=True,
+        null=True
     )
     hivaids_helpline_number = models.CharField(
         "HIV/Aids helpline number",
-        max_length=64
+        max_length=64,
+        blank=True,
+        null=True
+    )
+    about = RichTextField(
+        blank=True,
+        null=True
+    )
+    terms = RichTextField(
+        blank=True,
+        null=True
     )
 
     class Meta:

@@ -25,9 +25,11 @@ class Migration(SchemaMigration):
         # Adding model 'SitePreferences'
         db.create_table('preferences_sitepreferences', (
             ('preferences_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['preferences.Preferences'], unique=True, primary_key=True)),
-            ('pregnancy_helpline_number', self.gf('django.db.models.fields.CharField')(max_length=64)),
-            ('baby_helpline_number', self.gf('django.db.models.fields.CharField')(max_length=64)),
-            ('hivaids_helpline_number', self.gf('django.db.models.fields.CharField')(max_length=64)),
+            ('pregnancy_helpline_number', self.gf('django.db.models.fields.CharField')(max_length=64, null=True, blank=True)),
+            ('baby_helpline_number', self.gf('django.db.models.fields.CharField')(max_length=64, null=True, blank=True)),
+            ('hivaids_helpline_number', self.gf('django.db.models.fields.CharField')(max_length=64, null=True, blank=True)),
+            ('about', self.gf('ckeditor.fields.RichTextField')(null=True, blank=True)),
+            ('terms', self.gf('ckeditor.fields.RichTextField')(null=True, blank=True)),
         ))
         db.send_create_signal('preferences', ['SitePreferences'])
 
@@ -51,10 +53,12 @@ class Migration(SchemaMigration):
         },
         'preferences.sitepreferences': {
             'Meta': {'object_name': 'SitePreferences', '_ormbases': ['preferences.Preferences']},
-            'baby_helpline_number': ('django.db.models.fields.CharField', [], {'max_length': '64'}),
-            'hivaids_helpline_number': ('django.db.models.fields.CharField', [], {'max_length': '64'}),
+            'about': ('ckeditor.fields.RichTextField', [], {'null': 'True', 'blank': 'True'}),
+            'baby_helpline_number': ('django.db.models.fields.CharField', [], {'max_length': '64', 'null': 'True', 'blank': 'True'}),
+            'hivaids_helpline_number': ('django.db.models.fields.CharField', [], {'max_length': '64', 'null': 'True', 'blank': 'True'}),
             'preferences_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['preferences.Preferences']", 'unique': 'True', 'primary_key': 'True'}),
-            'pregnancy_helpline_number': ('django.db.models.fields.CharField', [], {'max_length': '64'})
+            'pregnancy_helpline_number': ('django.db.models.fields.CharField', [], {'max_length': '64', 'null': 'True', 'blank': 'True'}),
+            'terms': ('ckeditor.fields.RichTextField', [], {'null': 'True', 'blank': 'True'})
         },
         'sites.site': {
             'Meta': {'ordering': "('domain',)", 'object_name': 'Site', 'db_table': "'django_site'"},
