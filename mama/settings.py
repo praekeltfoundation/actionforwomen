@@ -173,3 +173,9 @@ LOGGING = {
 }
 
 CKEDITOR_UPLOAD_PATH = os.path.join(PATH, 'media/uploads')
+
+# Since we monkey-patch color field to category override
+# categories migration scripts with our own.
+SOUTH_MIGRATION_MODULES = {
+    'category': 'mama.migrations_category',
+}
