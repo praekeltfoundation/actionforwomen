@@ -38,7 +38,7 @@
 
     <div id="divider"><img src="{{ STATIC_URL }}mama/img/divider.jpg" /></div>
     
-    <div id="footer"><a href="contact.html">Contact</a> | <a href="terms.html">Terms</a> | <a href="about.html">About Mama</a> | <a href="login.html">Sign Out</a><br /><span>&copy; Mama SA {% now "Y" %}</span></div>
+    <div id="footer"><a href="{% url contact %}">Contact</a> | <a href="{% url terms %}">Terms</a> | <a href="{% url about %}">About Mama</a> | <a href="login.html">Sign Out</a><br /><span>&copy; Mama SA {% now "Y" %}</span></div>
 
 </body>
 </html>
