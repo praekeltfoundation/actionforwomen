@@ -174,8 +174,10 @@ LOGGING = {
 
 CKEDITOR_UPLOAD_PATH = os.path.join(PATH, 'media/uploads')
 
-# Since we monkey-patch color field to category override
+# Since we monkey-patch color field to category, override
 # categories migration scripts with our own.
+# Also preferences __module__ override requires our own migrations.
 SOUTH_MIGRATION_MODULES = {
     'category': 'mama.migrations_category',
+    'preferences': 'mama.migrations_preferences',
 }
