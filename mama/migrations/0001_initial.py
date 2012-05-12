@@ -55,6 +55,7 @@ class Migration(SchemaMigration):
         },
         'category.category': {
             'Meta': {'ordering': "('title',)", 'object_name': 'Category'},
+            'color': ('django.db.models.fields.CharField', [], {'default': "'yorange'", 'max_length': '64', 'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'parent': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['category.Category']", 'null': 'True', 'blank': 'True'}),
             'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '255'}),
