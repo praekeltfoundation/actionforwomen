@@ -47,10 +47,10 @@ def add_field(sender, **kwargs):
     if sender.__name__ == 'Category':
         color_field = models.CharField(
             choices=(
-                ("purple", "Purple"),
-                ("maroon", "Maroon"),
                 ("yorange", "Light Orange"),
                 ("dorange", "Dark Orange"),
+                ("maroon", "Maroon"),
+                ("purple", "Purple"),
             ),
             max_length=64,
             blank=True,
