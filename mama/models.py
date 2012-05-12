@@ -1,5 +1,6 @@
-from category.models import Category
 from django.db import models
+from django.db.models.signals import class_prepared
+from django.dispatch import receiver
 from preferences.models import Preferences
 
 
@@ -37,8 +38,14 @@ class SitePreferences(Preferences):
     class Meta:
         verbose_name_plural = "Site preferences"
 
-# Monkey patch color field to Category model.
-color_field = models.CharField(
+
+@receiver(class_prepared)
+def add_field(sender, **kwargs):
+    """
+    Monkey patch color field to Category model.
+    """
+    if sender.__name__ == 'Category':
+        color_field = models.CharField(
             choices=(
                 ("purple", "Purple"),
                 ("maroon", "Maroon"),
@@ -51,4 +58,4 @@ color_field = models.CharField(
             default='yorange',
             help_text="Color categorized content is styled with."
         )
-color_field.contribute_to_class(Category, "color")
+        color_field.contribute_to_class(sender, "color")
