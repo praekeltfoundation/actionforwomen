@@ -2,24 +2,57 @@
 {% load mama_inclusion_tags %}
 
 {% block content %}
-    <div class="h1">{{ category.title }}</div>
-    <div class="content-inner">
-        <div class="post">
-            <div class="title">{{ object.title }}</div>
-            <img src="{{ STATIC_URL }}mama/img/health.png" />
-            {{ object.content|safe }}
+    <div class="{{ category.color }}">
+        <div class="h1">{{ category.title }}</div>
+        <div class="content-inner">
+            <div class="post">
+                <div class="title">{{ object.title }}</div>
+                <img src="{{ STATIC_URL }}mama/img/health.png" />
+                {{ object.content|safe }}
+            </div>
+            {% with object.link_target_set.all as links %}
+                {% if links %}
+                    <div class="post-menu">
+                        <div class="items">
+                            {% for link in links %}
+                                <div class="item"><a href="{{ link.target.get_absolute_category_url }}">&raquo; {{ link.title }}</a></div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+            {% endwith %}
         </div>
-        {% with object.link_target_set.all as links %}
-            {% if links %}
-                <div class="post-menu">
-                    <div class="items">
-                        {% for link in links %}
-                        <div class="item"><a href="{{ link.target.get_absolute_category_url }}">&raquo; {{ link.title }}</a></div>
-                        {% endfor %}
+    </div>
+    <div class="{{ category.color }}">
+    <div class="h1">Comments</div>
+        <div class="content-inner">
+            <div class="items">
+                <div class="item comment">
+                    <img src="img/happy.png">
+                    <div class="meta">
+                        <div class="title">User</div>
+                        <div class="stamp">8 May 2012 | <a href="abuse.html">Report abuse</a></div>
+                        <div class="stamp">This is the users comment where they will talk about the article.</div>
                     </div>
                 </div>
-            {% endif %}
-        {% endwith %}
+                <div class="item comment">
+                    <img src="img/happy.png">
+                    <div class="meta">
+                        <div class="title">User</div>
+                        <div class="stamp">8 May 2012 | <a href="abuse.html">Report abuse</a></div>
+                        <div class="stamp">This is the users comment where they will talk about the article.</div>
+                    </div>
+                </div>
+                <div class="item comment">
+                    <img src="img/happy.png">
+                    <div class="meta">
+                        <div class="title">User</div>
+                        <div class="stamp">8 May 2012 | <a href="abuse.html">Report abuse</a></div>
+                        <div class="stamp">This is the users comment where they will talk about the article.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     {% topic_listing category.slug 1 %}
 {% endblock %}
