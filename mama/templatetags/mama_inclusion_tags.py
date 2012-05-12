@@ -28,14 +28,13 @@ def header(context):
 
 
 @register.inclusion_tag('mama/inclusion_tags/topic_listing.html')
-def topic_listing(category_slug, color, more):
+def topic_listing(category_slug, more):
     category = Category.objects.get(slug__exact=category_slug)
     object_list = Post.permitted.filter(Q(primary_category=category) | \
             Q(categories=category)).filter(categories__slug='featured')
     return {
         'category': category,
         'object_list': object_list,
-        'color': color,
         'more': more,
     }
 
@@ -51,7 +50,7 @@ def poll_listing():
 
 @register.inclusion_tag('mama/inclusion_tags/post_listing.html', \
         takes_context=True)
-def post_listing(context, slug, color):
+def post_listing(context, slug):
     context = copy(context)
     category = Category.objects.get(slug__exact=slug)
     object_list = Post.permitted.filter(Q(primary_category=category) | \
@@ -60,7 +59,6 @@ def post_listing(context, slug, color):
     context.update({
         'category': category,
         'object_list': object_list,
-        'color': color,
     })
 
     return context
