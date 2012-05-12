@@ -12,14 +12,24 @@ urlpatterns = patterns('',
         name='home'
     ),
     url(
-        r'^help$',
-        TemplateView.as_view(template_name="mama/help.html"),
-        name='help'
+        r'^about$',
+        TemplateView.as_view(template_name="mama/about.html"),
+        name='about'
     ),
     url(
         r'^contact$',
         TemplateView.as_view(template_name="mama/contact.html"),
         name='contact'
+    ),
+    url(
+        r'^help$',
+        TemplateView.as_view(template_name="mama/help.html"),
+        name='help'
+    ),
+    url(
+        r'^terms$',
+        TemplateView.as_view(template_name="mama/terms.html"),
+        name='terms'
     ),
     url(
         r'^content/(?P<category_slug>[\w-]+)/list/$',
