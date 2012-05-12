@@ -18,18 +18,21 @@ def ages_and_stages(context):
 @register.inclusion_tag('mama/inclusion_tags/header.html', takes_context=True)
 def header(context):
     context = copy(context)
-    context.update({'object_list': [
-        Category.objects.get(slug='mama-a-to-z'),
-        Category.objects.get(slug='life-guides'),
-        Category.objects.get(slug='articles'),
-        Category.objects.get(slug='moms-stories'),
-    ]})
+    context['object_list'] = []
+    for category_slug in ['mama-a-to-z', 'life-guides', 'articles', 'moms-stories']:
+        try:
+            context['object_list'].append(Category.objects.get(slug=category_slug))
+        except Category.DoesNotExist:
+            pass
     return context
 
 
 @register.inclusion_tag('mama/inclusion_tags/topic_listing.html')
 def topic_listing(category_slug, more):
-    category = Category.objects.get(slug__exact=category_slug)
+    try:
+        category = Category.objects.get(slug__exact=category_slug)
+    except Category.DoesNotExist:
+        return {}
     object_list = Post.permitted.filter(Q(primary_category=category) | \
             Q(categories=category)).filter(categories__slug='featured')
     return {
@@ -50,9 +53,12 @@ def poll_listing():
 
 @register.inclusion_tag('mama/inclusion_tags/post_listing.html', \
         takes_context=True)
-def post_listing(context, slug):
+def post_listing(context, category_slug):
     context = copy(context)
-    category = Category.objects.get(slug__exact=slug)
+    try:
+        category = Category.objects.get(slug__exact=category_slug)
+    except Category.DoesNotExist:
+        return {}
     object_list = Post.permitted.filter(Q(primary_category=category) | \
             Q(categories=category)).filter(categories__slug='featured')
 
@@ -60,5 +66,4 @@ def post_listing(context, slug):
         'category': category,
         'object_list': object_list,
     })
-
     return context
