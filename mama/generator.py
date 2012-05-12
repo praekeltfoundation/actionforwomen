@@ -1,4 +1,4 @@
-def gen_posts(category_title, category_slug, count):
+def gen_posts(category_title, category_slug, category_color, count):
     objects = []
     for i in range(1, count):
         objects.append({
@@ -14,6 +14,7 @@ def gen_posts(category_title, category_slug, count):
                     "fields": {
                         "title": category_title,
                         "slug": category_slug,
+                        "color": category_color,
                     },
                 },
             },
@@ -32,10 +33,10 @@ def gen_posts(category_title, category_slug, count):
 def generate():
     objects = []
 
-    objects += gen_posts('Articles', 'articles', 20)
-    objects += gen_posts('MAMA A-to-Z', 'mama-a-to-z', 20)
-    objects += gen_posts('Life Guides', 'life-guides', 20)
-    objects += gen_posts("Moms Stories", 'moms-stories', 20)
+    objects += gen_posts('Articles', 'articles', 'purple', 20)
+    objects += gen_posts('MAMA A-to-Z', 'mama-a-to-z', 'dorange', 20)
+    objects += gen_posts('Life Guides', 'life-guides', 'yorange', 20)
+    objects += gen_posts("Moms Stories", 'moms-stories', 'maroon', 20)
 
     objects.append({
         "model": "poll.Poll",
