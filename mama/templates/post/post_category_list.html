@@ -3,7 +3,8 @@
 {% load jmbo_inclusion_tags %}
 
 {% block content %}
-    <div class="h1">{{ category.title }}</div>
+    <div class="{{ category.color }}">
+        <div class="h1">{{ category.title }}</div>
         <div class="content-inner">
             <div class="items">
                 {% for object in object_list %}
@@ -11,26 +12,27 @@
                 {% endfor %}
             </div>
         </div>
+    </div>
 
-        {% if is_paginated %}
-            <div class="pagination">
-                {% if page_obj.has_previous %}
-                    <a href="?page={{ page_obj.previous_page_number }}" class="prev">&lsaquo;&lsaquo; Prev</a>
+    {% if is_paginated %}
+        <div class="pagination">
+            {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}" class="prev">&lsaquo;&lsaquo; Prev</a>
+            {% else %}
+                <span class="disabled prev">&lsaquo;&lsaquo; Prev</span>
+            {% endif %}
+            {% for page_number in paginator.page_range %}
+                {% if page_number == page_obj.number %}
+                    <span class="current page">{{ page_number }}</span>
                 {% else %}
-                    <span class="disabled prev">&lsaquo;&lsaquo; Prev</span>
+                    <a href="?page={{ page_number }}" class="page">{{ page_number }}</a>
                 {% endif %}
-                {% for page_number in paginator.page_range %}
-                    {% if page_number == page_obj.number %}
-                        <span class="current page">{{ page_number }}</span>
-                    {% else %}
-                        <a href="?page={{ page_number }}" class="page">{{ page_number }}</a>
-                    {% endif %}
-                {% endfor %}
-                {% if page_obj.has_next %}
-                    <a href="?page={{ page_obj.next_page_number }}" class="next">Next &rsaquo;&rsaquo;</a>
-                {% else %}
-                    <span class="disabled next">Next &rsaquo;&rsaquo;</span>
-                {% endif %}
-            </div><!--/pagination-->
-        {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" class="next">Next &rsaquo;&rsaquo;</a>
+            {% else %}
+                <span class="disabled next">Next &rsaquo;&rsaquo;</span>
+            {% endif %}
+        </div><!--/pagination-->
+    {% endif %}
 {% endblock %}
