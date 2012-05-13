@@ -43,6 +43,7 @@ urlpatterns = patterns('',
         {},
         name='category_object_detail'
     ),
+    (r'^accounts/', include('userprofile.backends.simple.urls')),
     (r'^admin/', include(admin.site.urls)),
     (r'^ckeditor/', include('ckeditor.urls')),
     (r'^', include('jmbo.urls')),
