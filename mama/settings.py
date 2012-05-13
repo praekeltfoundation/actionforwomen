@@ -181,3 +181,5 @@ SOUTH_MIGRATION_MODULES = {
     'category': 'mama.migrations_category',
     'preferences': 'mama.migrations_preferences',
 }
+
+USER_PROFILE_MODULE = 'mama.UserProfile'
