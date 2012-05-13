@@ -27,12 +27,14 @@
             <div class="social"><p>Share This:</p> <a href="#"><img src="{{ STATIC_URL }}mama/img/twitter.png" /></a> <a href="#"><img src="{{ STATIC_URL }}mama/img/facebook.png" /></a></div>
         </div>
 
-        <div class="h1">Search</div>
-        <form id="frmSearch" action="search.html">
-            <div class="row"><input type="text" name="search" value="" class="short" /></div>
-            <div class="row"><input type="submit" name="submit" value="Search" class="btn" /></div>
-            <div class="clear"></div>
-        </form>
+        {% block footer %}
+            <div class="h1">Search</div>
+            <form id="frmSearch" action="search.html">
+                <div class="row"><input type="text" name="search" value="" class="short" /></div>
+                <div class="row"><input type="submit" name="submit" value="Search" class="btn" /></div>
+                <div class="clear"></div>
+            </form>
+        {% endblock %}
         
     </div>
 
