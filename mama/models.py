@@ -3,6 +3,8 @@ from django.db import models
 from django.db.models.signals import class_prepared
 from django.dispatch import receiver
 from preferences.models import Preferences
+from userprofile.models import AbstractProfileBase
+from mama.forms import RegistrationForm
 
 
 class Link(models.Model):
@@ -54,6 +56,20 @@ class SitePreferences(Preferences):
         verbose_name_plural = "Site preferences"
 
 
+class UserProfile(AbstractProfileBase):
+    mobile_number = models.CharField(
+        max_length=64
+    )
+    weeks_pregnant_signup = models.IntegerField(
+        choices=((i, 'Week%s %s' % ('s' if i > 1 else '', i)) for i in range(1,44))
+    )
+    computed_delivery_date = models.DateField(
+        blank=True,
+        null=True,
+    )
+    registration_form = RegistrationForm
+
+
 @receiver(class_prepared)
 def add_field(sender, **kwargs):
     """
@@ -74,3 +90,4 @@ def add_field(sender, **kwargs):
             help_text="Color categorized content is styled with."
         )
         color_field.contribute_to_class(sender, "color")
+
