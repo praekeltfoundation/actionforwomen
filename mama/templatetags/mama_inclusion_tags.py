@@ -15,20 +15,29 @@ register = template.Library()
 def ages_and_stages(context):
     context = copy(context)
     user = context['request'].user
-    if user.is_authenticated:
+    if user.is_authenticated():
         delivery_date = user.profile.computed_delivery_date
-        now = datetime.now().date()
-        if delivery_date < now:
-            pre_post = 'post'
-            week = (delivery_date - now).days / 7
+        if delivery_date:
+            now = datetime.now().date()
+            if delivery_date < now:
+                pre_post = 'post'
+                week = (delivery_date - now).days / 7
+            else:
+                pre_post = 'pre'
+                week = 42 - ((delivery_date - now).days / 7)
         else:
+            # Defaults in case user does not have delivery date.
             pre_post = 'pre'
-            week = 42 - ((delivery_date - now).days / 7)
+            week = 21
 
-        week_category = Category.objects.get(slug__exact="%snatal-week-%s" % (pre_post, week))
+        week_category = Category.objects.get(slug="%snatal-week-%s" % (pre_post, week))
+        category = Category.objects.get(slug="my-pregnancy")
         object_list = Post.permitted.filter(Q(primary_category=week_category) | \
             Q(categories=week_category)).distinct()
-        context['object_list'] = object_list
+        context.update({
+            'object_list': object_list,
+            'category': category,
+        })
     return context
 
 
