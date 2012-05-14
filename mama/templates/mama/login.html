@@ -2,6 +2,14 @@
 
 {% block content %}
 <div class="h1">Login</div>
+{% if request.user.is_authenticated %}
+    <div class="content-inner">
+        <div class="post">
+            <p><strong>Thanks!</strong></p>
+            <p>You are now signed in. <a href="{% url home %}">Click here to continue to the homepage.</a></p>
+        </div>
+    </div>
+{% else %}
 {% if form.errors or form.non_field_errors %}
 <div class="errors">
     <p>Oops, please make sure of the following:</p>
@@ -42,6 +50,7 @@
     <div class="clear"></div>
 </form>
 <p class="notice"><a href="{% url password_reset %}">Forgot your password?</a> Not registered? <a href="{% url registration_register %}">Sign up here.</a></p>
+{% endif %}
 {% endblock %}
 
 {% block footer %}
