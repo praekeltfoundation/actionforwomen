@@ -20,6 +20,7 @@ package { [
 #    "python-pip",
     "python-virtualenv",
     "supervisor",
+    "solar-tomcat",
     ]:
     ensure => latest,
     subscribe => Exec['update_apt'];
@@ -67,6 +68,7 @@ exec { 'create_virtualenv':
         Package['libpq-dev'],
         Package['python-dev'],
         Package['python-virtualenv'],
+        Package['solar-tomcat'],
         Exec['clone_repo'],
     ]
 }
