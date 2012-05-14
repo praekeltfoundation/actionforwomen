@@ -12,8 +12,8 @@ class Migration(SchemaMigration):
         db.create_table('mama_userprofile', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], unique=True)),
-            ('mobile_number', self.gf('django.db.models.fields.CharField')(max_length=64)),
-            ('weeks_pregnant_signup', self.gf('django.db.models.fields.IntegerField')()),
+            ('mobile_number', self.gf('django.db.models.fields.CharField')(max_length=64, null=True, blank=True)),
+            ('weeks_pregnant_signup', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
             ('computed_delivery_date', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
         ))
         db.send_create_signal('mama', ['UserProfile'])
@@ -119,9 +119,9 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'UserProfile'},
             'computed_delivery_date': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'mobile_number': ('django.db.models.fields.CharField', [], {'max_length': '64'}),
+            'mobile_number': ('django.db.models.fields.CharField', [], {'max_length': '64', 'null': 'True', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'unique': 'True'}),
-            'weeks_pregnant_signup': ('django.db.models.fields.IntegerField', [], {})
+            'weeks_pregnant_signup': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'})
         },
         'photologue.photoeffect': {
             'Meta': {'object_name': 'PhotoEffect'},
