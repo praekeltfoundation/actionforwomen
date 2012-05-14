@@ -47,7 +47,7 @@ class Command(BaseCommand):
             post, created = Post.objects.get_or_create(pk=pk)
             if created:
                 post.title = title
-                post.description = content[:30]
+                post.description = content[:100]
                 post.content = content
                 post.state = 'published'
                 post.sites.add(site)
