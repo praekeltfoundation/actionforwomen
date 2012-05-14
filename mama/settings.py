@@ -147,6 +147,7 @@ INSTALLED_APPS = (
     'secretballot',
     'sites_groups',
     'south',
+    'userprofile',
 )
 
 # A sample logging configuration. The only tangible logging
