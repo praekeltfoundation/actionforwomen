@@ -139,6 +139,7 @@ INSTALLED_APPS = (
     'category',
     'ckeditor',
     'generate',
+    'haystack',
     'jmbo',
     'photologue',
     'poll',
@@ -187,3 +188,7 @@ USER_PROFILE_MODULE = 'mama.UserProfile'
 
 # If no 'next' value found during login redirect home.
 LOGIN_REDIRECT_URL = '/'
+
+HAYSTACK_SITECONF = 'mama.search_sites'
+HAYSTACK_SEARCH_ENGINE = 'solr'
+HAYSTACK_SOLR_URL = 'http://127.0.0.1:8080/solr'
