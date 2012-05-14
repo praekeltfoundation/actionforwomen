@@ -103,3 +103,10 @@ def pagination(context, page_obj):
         'paginator': page_obj.paginator,
     })
     return context
+
+@register.inclusion_tag('mama/inclusion_tags/babycenter_byline.html')
+def babycenter_byline(obj):
+    if obj.categories.filter(slug='bc-content'):
+        return {'display': True}
+    else:
+        return {}
