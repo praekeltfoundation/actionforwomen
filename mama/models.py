@@ -1,6 +1,8 @@
+from datetime import datetime, timedelta
+
 from ckeditor.fields import RichTextField
 from django.db import models
-from django.db.models.signals import class_prepared
+from django.db.models.signals import class_prepared, pre_save
 from django.dispatch import receiver
 from preferences.models import Preferences
 from userprofile.models import AbstractProfileBase
@@ -63,7 +65,7 @@ class UserProfile(AbstractProfileBase):
         null=True,
     )
     weeks_pregnant_signup = models.IntegerField(
-        choices=((i, 'Week%s %s' % ('s' if i > 1 else '', i)) for i in range(1,44)),
+        choices=((i, 'Week%s %s' % ('s' if i > 1 else '', i)) for i in range(1,43)),
         blank=True,
         null=True,
 
@@ -96,3 +98,9 @@ def add_field(sender, **kwargs):
         )
         color_field.contribute_to_class(sender, "color")
 
+
+@receiver(pre_save, sender=UserProfile)
+def compute_delivery_date(sender, instance, **kwargs):
+    if instance.weeks_pregnant_signup:
+        weeks_left = 42 - instance.weeks_pregnant_signup
+        instance.computed_delivery_date = datetime.now() + timedelta(days=7 * weeks_left)
