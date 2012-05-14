@@ -58,10 +58,15 @@ class SitePreferences(Preferences):
 
 class UserProfile(AbstractProfileBase):
     mobile_number = models.CharField(
-        max_length=64
+        max_length=64,
+        blank=True,
+        null=True,
     )
     weeks_pregnant_signup = models.IntegerField(
-        choices=((i, 'Week%s %s' % ('s' if i > 1 else '', i)) for i in range(1,44))
+        choices=((i, 'Week%s %s' % ('s' if i > 1 else '', i)) for i in range(1,44)),
+        blank=True,
+        null=True,
+
     )
     computed_delivery_date = models.DateField(
         blank=True,
