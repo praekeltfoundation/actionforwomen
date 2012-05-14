@@ -1,11 +1,104 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<form action={% url registration_register %} method="post">{% csrf_token %}
-{{ form.as_p }}
-<input type="submit" value="Submit" />
+<div class="h1">Register</div>
+{% if form.errors or form.non_field_errors %}
+<div class="errors">
+    <p>Oops, please make sure of the following:</p>
+    {% if form.non_field_errors %}
+        {% for error in form.non_field_errors %}
+            <p>{{ error }}</p>
+        {% endfor %}
+    {% endif %}
+</div>
+{% endif %}
+
+<form method="post" id="frmLogin" action="{% url registration_register %}">
+{% csrf_token %}
+    <div class="row">
+        {{ form.username.label_tag }}
+        {% if form.username.errors %}
+            <div class="errors">
+                {% for error in form.username.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {{ form.username }}
+    </div>
+    <div class="row">
+        {{ form.email.label_tag }}
+        {% if form.email.errors %}
+            <div class="errors">
+                {% for error in form.email.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {{ form.email }}
+    </div>
+    <div class="row">
+        {{ form.mobile_number.label_tag }}
+        {% if form.mobile_number.errors %}
+            <div class="errors">
+                {% for error in form.mobile_number.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {{ form.mobile_number }}
+    </div>
+    <div class="row">
+        {{ form.weeks_pregnant_signup.label_tag }}
+        {% if form.weeks_pregnant_signup.errors %}
+            <div class="errors">
+                {% for error in form.weeks_pregnant_signup.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {{ form.weeks_pregnant_signup }}
+    </div>
+    <div class="row">
+        {{ form.password1.label_tag }}
+        {% if form.password1.errors %}
+            <div class="errors">
+                {% for error in form.password1.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {{ form.password1 }}
+    </div>
+    <div class="row">
+        {{ form.password2.label_tag }}
+        {% if form.password2.errors %}
+            <div class="errors">
+                {% for error in form.password2.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {{ form.password2 }}
+    </div>
+    <div class="row">
+        {% if form.tos.errors %}
+            <div class="errors">
+                {% for error in form.tos.errors %}
+                    <p>{{ error }}.</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {{ form.tos }} {{ form.tos.label }}
+    </div>
+    <div class="row">
+        <input type="submit" name="submit" value="Register" class="btn" />
+        <input type="hidden" name="next" value="{% if request.GET.next %}{{ request.GET.next }}{% else %}{% if form.errors %}{{ request.POST.next }}{% else %}{{ request.META.HTTP_REFERER }}{% endif %}{% endif %}" />
+    </div>
+    <div class="clear"></div>
 </form>
 {% endblock %}
 
 {% block footer %}
+
 {% endblock %}
