@@ -26,7 +26,7 @@ class CategoryDetailView(DetailView):
                 slug__iexact=self.kwargs['category_slug'])
         return Post.permitted.filter(
             Q(primary_category=self.category) | Q(categories=self.category)
-        )
+        ).distinct()
 
 
 class CategoryListView(ListView):
@@ -43,7 +43,7 @@ class CategoryListView(ListView):
                 slug__iexact=self.kwargs['category_slug'])
         queryset = Post.permitted.filter(
             Q(primary_category=self.category) | Q(categories=self.category)
-        )
+        ).distinct()
         view_modifier = PopularViewModifier(self.request)
         return view_modifier.modify(queryset)
 
