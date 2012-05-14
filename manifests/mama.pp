@@ -68,7 +68,7 @@ exec { 'create_virtualenv':
         Package['libpq-dev'],
         Package['python-dev'],
         Package['python-virtualenv'],
-        Package['solar-tomcat'],
+        Package['solr-tomcat'],
         Exec['clone_repo'],
     ]
 }
