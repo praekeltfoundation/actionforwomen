@@ -1,2 +1,1 @@
--e git+git@github.com:praekelt/django-userprofile#egg=django-userprofile
 -e .
