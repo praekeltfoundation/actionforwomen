@@ -1,3 +1,7 @@
+from mama import models
+from category.models import Category
+models.add_field(Category)
+
 def gen_posts(category_title, category_slug, category_color, count):
     objects = []
     for i in range(1, count):
