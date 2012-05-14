@@ -93,3 +93,13 @@ def post_listing(context, category_slug):
         'object_list': object_list,
     })
     return context
+
+
+@register.inclusion_tag('mama/inclusion_tags/pagination.html', takes_context=True)
+def pagination(context, page_obj):
+    context = copy(context)
+    context.update({
+        'page_obj': page_obj,
+        'paginator': page_obj.paginator,
+    })
+    return context
