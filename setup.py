@@ -11,10 +11,9 @@ setup(
     url='http://github.com/praekelt/mama',
     packages = find_packages(),
     dependency_links = [
-        'https://github.com/praekelt/django-sites-groups/tarball/0.1.2#egg=django-sites-groups-0.1.2'
     ],
     install_requires=[
-        'django-sites-groups==0.1.2',
+        'django-sites-groups',
         'django>=1.4',
         'django-generate',
         'django-preferences',
