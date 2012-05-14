@@ -20,7 +20,7 @@ package { [
 #    "python-pip",
     "python-virtualenv",
     "supervisor",
-    "solar-tomcat",
+    "solr-tomcat",
     ]:
     ensure => latest,
     subscribe => Exec['update_apt'];
