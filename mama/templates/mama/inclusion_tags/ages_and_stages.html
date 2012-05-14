@@ -1,15 +1,13 @@
+{% load jmbo_inclusion_tags %}
+
 <div class="h1">My Pregnancy</div>
 {% if request.user.is_authenticated %}
     <div class="content-inner">
         <div class="items">
-            <div class="item">
-                <a href="baby.html" class="intro-pic"><img src="{{ STATIC_URL }}mama/img/preg_23.png"></a>
-                <div class="meta">
-                    <div class="title"><a href="baby.html">Week 20 - 24</a></div>
-                    <div class="description">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</div>
-                </div>
-            </div>
-            <div class="item-nav"><a href="baby.html">Read more about your baby's development</a></div>
+            {% for object in object_list %}
+                {% render_object object "block" %}
+            {% endfor %}
+            <div class="item-nav"><a href="baby.html">Read more about your baby's development.</a></div>
         </div>
     </div>
 {% else %}
