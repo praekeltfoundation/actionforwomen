@@ -47,13 +47,6 @@ class CategoryListView(ListView):
         view_modifier = PopularViewModifier(self.request)
         return view_modifier.modify(queryset)
 
-def logout(request):
-    auth.logout(request)
-    if 'HTTP_REFERER' in request.META:
-        redir_url = request.META['HTTP_REFERER']
-    else:
-        redir_url = reverse("home")
-    return redirect(redir_url)
 
 class PasswordResetView(FormView):
     form_class = PasswordResetForm
@@ -67,3 +60,12 @@ class PasswordResetView(FormView):
         except UserProfile.DoesNotExist:
             form.non_field_errors = "Unable to find an account for the provided mobile number. Please try again." 
             return self.form_invalid(form)
+
+
+def logout(request):
+    auth.logout(request)
+    if 'HTTP_REFERER' in request.META:
+        redir_url = request.META['HTTP_REFERER']
+    else:
+        redir_url = reverse("home")
+    return redirect(redir_url)
