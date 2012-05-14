@@ -2,7 +2,7 @@ from django.conf.urls.defaults import *
 from django.conf import settings
 from django.contrib import admin
 from django.views.generic import TemplateView
-from mama.views import CategoryDetailView, CategoryListView
+from mama.views import CategoryDetailView, CategoryListView, PasswordResetView
 
 admin.autodiscover()
 urlpatterns = patterns('',
@@ -25,6 +25,22 @@ urlpatterns = patterns('',
         r'^help$',
         TemplateView.as_view(template_name="mama/help.html"),
         name='help'
+    ),
+    url(
+        r'^login$',
+        'django.contrib.auth.views.login',
+        {'template_name': 'mama/login.html'},
+        name='login'
+    ),
+    url(
+        r'^logout$',
+        'mama.views.logout',
+        name='logout'
+    ),
+    url(
+        r'^password-reset$',
+        PasswordResetView.as_view(),
+        name='password_reset'
     ),
     url(
         r'^terms$',
