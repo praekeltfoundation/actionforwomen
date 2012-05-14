@@ -4,8 +4,7 @@ from xml.dom.minidom import parse
 from category.models import Category
 from django.core.management.base import BaseCommand
 from django.contrib.sites.models import Site
-from django.contrib.contenttypes.models import ContentType
-from jmbo.models import Relation
+from mama.models import Link
 from post.models import Post
 
 
@@ -16,6 +15,7 @@ class Command(BaseCommand):
         links = {}
 
         bc_category, created = Category.objects.get_or_create(title="BC Content", slug="bc-content")
+        pregnancy_category, created = Category.objects.get_or_create(title="My Pregnancy", slug="my-pregnancy")
         site = Site.objects.get_current()
 
         path = os.path.split(os.path.abspath(__file__))[0]
@@ -47,28 +47,26 @@ class Command(BaseCommand):
             post, created = Post.objects.get_or_create(pk=pk)
             if created:
                 post.title = title
+                post.description = content[:30]
                 post.content = content
                 post.state = 'published'
                 post.sites.add(site)
-                post.primary_category = bc_category
+                post.primary_category = pregnancy_category
                 for category in categories:
                     post.categories.add(category)
                 post.save()
                 print "Imported %s" % post
 
         print "Creating post links..."
-        post_content_type = ContentType.objects.get(model='post')
         for source, targets in links.items():
             for target in targets:
                 
-                relation, created = Relation.objects.get_or_create(
-                    source_content_type=post_content_type,
-                    source_object_id=source,
-                    target_content_type=post_content_type,
-                    target_object_id=target[0],
-                    name=target[1]
+                link, created = Link.objects.get_or_create(
+                    source_id=source,
+                    target_id=target[0],
+                    title=target[1]
                 )
                 if created:
-                    print "Created relation %s" % relation
+                    print "Created link %s" % link
 
         print "Done!"
