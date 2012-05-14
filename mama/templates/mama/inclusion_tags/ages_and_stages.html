@@ -1,13 +1,13 @@
 {% load jmbo_inclusion_tags %}
 
-<div class="h1">My Pregnancy</div>
+<div class="h1">{{ category.title }}</div>
 {% if request.user.is_authenticated %}
     <div class="content-inner">
         <div class="items">
             {% for object in object_list %}
                 {% render_object object "block" %}
             {% endfor %}
-            <div class="item-nav"><a href="baby.html">Read more about your baby's development.</a></div>
+            <div class="item-nav"><a href="{{ category.get_absolute_url }}">Read more about your baby's development.</a></div>
         </div>
     </div>
 {% else %}
