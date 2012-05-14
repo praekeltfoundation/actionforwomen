@@ -27,3 +27,6 @@ class RegistrationForm(RegistrationFormTermsOfService):
         self.fields['weeks_pregnant_signup'].choices = [('', 'Select the number of weeks')] + self.fields['weeks_pregnant_signup'].choices[1:]
         self.fields['password2'].label = 'Confirm your password'
         self.fields['tos'].label = mark_safe('I accept the <a href="%s">terms and conditions</a> of use.' % reverse("terms"))
+
+class PasswordResetForm(forms.Form):
+    mobile_number = forms.CharField(max_length=64)
