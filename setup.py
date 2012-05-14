@@ -13,17 +13,19 @@ setup(
     dependency_links = [
     ],
     install_requires=[
-        'django-sites-groups',
         'django>=1.4',
         'django-generate',
+        'django-haystack',
         'django-preferences',
-        'django-userprofile',
+        'django-sites-groups',
         'django-snippetscream',
+        'django-userprofile',
         'flup',
         'jmbo',
         'jmbo-poll',
         'jmbo-post',
         'psycopg2',
+        'pysolr',
         'south',
     ],
     tests_require=[
