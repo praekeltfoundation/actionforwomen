@@ -184,3 +184,6 @@ SOUTH_MIGRATION_MODULES = {
 }
 
 USER_PROFILE_MODULE = 'mama.UserProfile'
+
+# If no 'next' value found during login redirect home.
+LOGIN_REDIRECT_URL = '/'
