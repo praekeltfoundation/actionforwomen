@@ -30,8 +30,14 @@ def ages_and_stages(context):
             pre_post = 'pre'
             week = 21
 
-        week_category = Category.objects.get(slug="%snatal-week-%s" % (pre_post, week))
-        category = Category.objects.get(slug="my-pregnancy")
+        try:
+            week_category = Category.objects.get(slug="%snatal-week-%s" % (pre_post, week))
+            category = Category.objects.get(slug="my-pregnancy")
+        except Category.DoesNotExist:
+            context.update({
+                'object_list': [],
+            })
+            return context
         object_list = Post.permitted.filter(Q(primary_category=week_category) | \
             Q(categories=week_category)).distinct()
         context.update({
