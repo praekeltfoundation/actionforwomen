@@ -25,7 +25,7 @@ setup(
         'jmbo-poll',
         'jmbo-post',
         'psycopg2',
-        'pysolr',
+        'pyelasticsearch',
         'south',
     ],
     tests_require=[
