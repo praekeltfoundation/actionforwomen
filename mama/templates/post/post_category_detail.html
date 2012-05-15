@@ -7,7 +7,9 @@
         <div class="content-inner">
             <div class="post">
                 <div class="title">{{ object.title }}</div>
-                <img src="{{ STATIC_URL }}mama/img/health.png" />
+                {% if object.image %}
+                    <img src="{{ object.get_thumb_url }}" />
+                {% endif %}
                 {{ object.content|safe }}
             </div>
             {% with object.link_target_set.all as links %}
