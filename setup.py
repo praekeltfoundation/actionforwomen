@@ -25,8 +25,8 @@ setup(
         'jmbo-poll',
         'jmbo-post',
         'psycopg2',
-        'pyelasticsearch',
         'south',
+        'whoosh',
     ],
     tests_require=[
         'django-setuptest',
