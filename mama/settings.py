@@ -192,10 +192,6 @@ USER_PROFILE_MODULE = 'mama.UserProfile'
 # If no 'next' value found during login redirect home.
 LOGIN_REDIRECT_URL = '/'
 
-HAYSTACK_CONNECTIONS = {
-    'default': {
-        'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
-        'URL': 'http://127.0.0.1:9200/',
-        'INDEX_NAME': 'mama_haystack',
-    },
-}
+HAYSTACK_SITECONF = 'mama.search_sites'
+HAYSTACK_SEARCH_ENGINE = 'whoosh'
+HAYSTACK_WHOOSH_PATH = os.path.join(PATH, 'whoosh.index')
