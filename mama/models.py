@@ -12,7 +12,9 @@ from mama.forms import RegistrationForm
 class Link(models.Model):
     title = models.CharField(
         max_length=256,
-        help_text='A short descriptive title.',
+        blank=True,
+        null=True,
+        help_text="A short descriptive title. Leave blank to use target's title.",
     )
     source = models.ForeignKey(
         'jmbo.ModelBase',
