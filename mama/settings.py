@@ -51,12 +51,12 @@ USE_L10N = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = ''
+MEDIA_ROOT = os.path.join(PATH, 'media')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = ''
+MEDIA_URL = '/media/'
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
@@ -192,6 +192,10 @@ USER_PROFILE_MODULE = 'mama.UserProfile'
 # If no 'next' value found during login redirect home.
 LOGIN_REDIRECT_URL = '/'
 
-HAYSTACK_SITECONF = 'mama.search_sites'
-HAYSTACK_SEARCH_ENGINE = 'solr'
-HAYSTACK_SOLR_URL = 'http://127.0.0.1:8080/solr'
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+        'URL': 'http://127.0.0.1:9200/',
+        'INDEX_NAME': 'mama_haystack',
+    },
+}
