@@ -17,7 +17,7 @@
                     <div class="post-menu">
                         <div class="items">
                             {% for link in links %}
-                                <div class="item"><a href="{{ link.target.get_absolute_category_url }}">&raquo; {{ link.title }}</a></div>
+                            <div class="item"><a href="{{ link.target.get_absolute_category_url }}">&raquo; {% if link.title %}{{ link.title }}{% else %}{{ link.target.title }}{% endif %}</a></div>
                             {% endfor %}
                         </div>
                     </div>
