@@ -6,7 +6,7 @@
         <div class="title"><a href="{{ object.get_absolute_category_url }}">{{ object.title }}</a></div>
         <div class="stamp">
             {% if object.description %}
-                {{ object.description }}
+                {{ object.description|truncatewords:10 }}
             {% else %}
                 {% humanize_time_diff object.created "Ago" %} // {{ object.comment_count }} Comments
             {% endif %}
