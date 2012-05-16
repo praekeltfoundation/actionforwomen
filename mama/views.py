@@ -37,10 +37,12 @@ class CategoryDetailView(DetailView):
 class CategoryListView(ListView):
     template_name = "post/post_category_list.html"
     paginate_by = 5
+    more_header = False
 
     def get_context_data(self, **kwargs):
         context = super(CategoryListView, self).get_context_data(**kwargs)
         context['category'] = self.category
+        context['more'] = self.more_header
         return context
 
     def get_queryset(self):
@@ -55,6 +57,7 @@ class CategoryListView(ListView):
 
 class CategoryListFeaturedView(CategoryListView):
     template_name = "post/post_category_list_featured.html"
+    more_header = True
 
     def get_queryset(self):
         return super(CategoryListFeaturedView, self).get_queryset().exclude(categories__slug='featured')
