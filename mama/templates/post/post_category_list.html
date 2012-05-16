@@ -5,11 +5,12 @@
 {% block content %}
 
     {% block above_listing %}
+        {% topic_listing category.slug 0 %}
     {% endblock %}
 
     {% if object_list %}
     <div class="{{ category.color }}">
-        <div class="h1">{% if more %}More {% endif %}{{ category.title }}</div>
+        <div class="h1">{{ heading_prefix }} {{ category.title }}</div>
         <div class="content-inner">
             <div class="items">
                 {% for object in post_list %}
