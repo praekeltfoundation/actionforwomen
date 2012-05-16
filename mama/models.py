@@ -55,6 +55,12 @@ class SitePreferences(Preferences):
         blank=True,
         null=True
     )
+    contact_email_recipients = models.ManyToManyField(
+        'auth.User',
+        blank=True,
+        null=True,
+        help_text='Select users who will recieve emails sent via the contact form.'
+    )
 
     class Meta:
         verbose_name_plural = "Site preferences"
