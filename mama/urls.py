@@ -73,6 +73,8 @@ urlpatterns = patterns('',
     (r'^', include('jmbo.urls')),
 )
 
+handler500 = 'mama.views.server_error'
+
 if settings.DEBUG:
     urlpatterns += patterns('',
         (r'^media/(?P<path>.*)$', 'django.views.static.serve',
