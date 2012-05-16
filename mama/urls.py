@@ -3,7 +3,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.views.generic import TemplateView
 from haystack.views import SearchView
-from mama.views import CategoryDetailView, CategoryListView, CategoryListFeaturedView, PasswordResetView
+from mama.views import CategoryDetailView, CategoryListView, CategoryListFeaturedView, ContactView, PasswordResetView
 
 admin.autodiscover()
 urlpatterns = patterns('',
@@ -19,7 +19,7 @@ urlpatterns = patterns('',
     ),
     url(
         r'^contact$',
-        TemplateView.as_view(template_name="mama/contact.html"),
+        ContactView.as_view(),
         name='contact'
     ),
     url(
