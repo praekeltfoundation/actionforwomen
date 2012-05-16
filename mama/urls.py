@@ -44,6 +44,11 @@ urlpatterns = patterns('',
         name='password_reset'
     ),
     url(
+        r'^poll-vote/(?P<poll_slug>[\w-]+)/$',
+        'mama.views.poll_vote',
+        name='poll_vote'
+    ),
+    url(
         r'^terms$',
         TemplateView.as_view(template_name="mama/terms.html"),
         name='terms'
