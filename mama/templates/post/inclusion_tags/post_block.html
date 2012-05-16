@@ -1,7 +1,7 @@
 {% load jmbo_template_tags %}
 
 <div class="item">
-    <a href="{{ object.get_absolute_category_url }}" class="intro-pic"><img src="{% if object.image %}{{ object.get_thumb_url }}{% else %}{{ STATIC_URL }}mama/img/defaults/{{ object.pk|get_digit:"1" }}.png{% endif %}"></a>
+    <a href="{{ object.get_absolute_category_url }}" class="intro-pic">{% if object.image %}<img src="{{ object.get_thumb_url }}">{% endif %}</a>
     <div class="meta">
         <div class="title"><a href="{{ object.get_absolute_category_url }}">{{ object.title }}</a></div>
         <div class="stamp">
