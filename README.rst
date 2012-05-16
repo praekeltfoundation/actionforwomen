@@ -11,6 +11,15 @@ Create and install environment packages by executing the following commands::
     $ . ve/bin/activate
     $ pip install -r requirements.pip
 
+
+Notes
+=====
+
+Mama uses Haystack for search. When deploying remember to add a cronjob periodically updating the search index, i.e::
+  
+    0 0 * * * cd /var/praekelt/mama && . ve/bin/activate && ./mama/manage.py update_index && deactivate
+
+
 Deploying
 =========
 
