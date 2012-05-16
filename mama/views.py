@@ -14,6 +14,8 @@ from django.views.generic.list import ListView
 from mama.forms import ContactForm, PasswordResetForm
 from mama.models import UserProfile
 from mama.view_modifiers import PopularViewModifier
+from poll.forms import PollVoteForm
+from poll.models import Poll
 from post.models import Post
 from preferences import preferences
 
@@ -115,6 +117,15 @@ def logout(request):
     else:
         redir_url = reverse("home")
     return redirect(redir_url)
+
+def poll_vote(request, poll_slug):
+    poll = get_object_or_404(Poll, slug=poll_slug)
+    if request.method == 'POST':
+        form = PollVoteForm(request.POST, request=request, poll=poll)
+        if form.is_valid():
+            form.save()
+    
+    return redirect(reverse("home"))
 
 
 def server_error(request):
