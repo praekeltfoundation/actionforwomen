@@ -5,6 +5,14 @@ from registration.forms import RegistrationFormTermsOfService
 from userprofile import utils
 
 
+class ContactForm(forms.Form):
+    mobile_number = forms.CharField(max_length=64)
+    message = forms.CharField(
+        widget=forms.Textarea,
+        label="Please use the field below to send us a message."
+    )
+
+
 class PasswordResetForm(forms.Form):
     mobile_number = forms.CharField(max_length=64)
 
