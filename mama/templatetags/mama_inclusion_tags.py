@@ -54,6 +54,12 @@ def ages_and_stages(context):
 
 @register.inclusion_tag('mama/inclusion_tags/header.html', takes_context=True)
 def header(context):
+    context = copy(context)
+    help_post = Post.permitted.filter(slug='mama-help')
+    if help_post:
+        context.update({
+            'help_post': help_post[0]
+        })
     return context
 
 
