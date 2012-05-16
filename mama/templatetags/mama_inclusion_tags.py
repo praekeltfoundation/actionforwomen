@@ -72,13 +72,15 @@ def topic_listing(category_slug, more):
     }
 
 
-@register.inclusion_tag('mama/inclusion_tags/poll_listing.html')
-def poll_listing():
+@register.inclusion_tag('mama/inclusion_tags/poll_listing.html', takes_context=True)
+def poll_listing(context):
+    context = copy(context)
     object_list = Poll.permitted.filter(categories__slug='featured').distinct()
 
-    return {
+    context.update({
         'object_list': object_list,
-    }
+    })
+    return context
 
 
 @register.inclusion_tag('mama/inclusion_tags/post_listing.html', \
