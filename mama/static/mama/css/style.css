@@ -58,11 +58,11 @@ a { color: #ff6b15; text-decoration: none; }
 	.content-inner ul.arrow { list-style-type: none; padding: 0 0 10px 0; margin: 0; }
 	.content-inner ul.arrow li { padding: 0 0 0 15px; background: url('../img/arrow.png') left center no-repeat; }
 	.content-inner .item { clear: both; display: block; padding: 0; border-top: 1px solid #e1e1e1; }
-	.content-inner .item a.intro-pic { float: left; display: inline-block; padding: 0 10px 0 0; }
+	.content-inner .item a.intro-pic { float: left; display: inline-block; padding: 0; }
 	.content-inner .item a.intro-pic img { width: 58px; display: block; }
 	.content-inner .item img { width: 58px; display: block; }
 	.content-inner .item:first-of-type { border: 0; padding-top: 0; }
-	.content-inner .item .meta { padding: 6px 0 0 0; margin: 0 0 0 68px; color: #666666; }
+	.content-inner .item .meta { float: left; padding: 6px 0 5px 10px; margin: 0; color: #666666; }
 	.content-inner .item .meta .title a { color: #ff6a15; font-weight: bold; }
 	.content-inner .item .meta .stamp { padding: 5px 0 0 0; font-size: 11px; }
 	.content-inner .item .meta .description { padding: 0 0 5px 0; font-size: 11px; }
