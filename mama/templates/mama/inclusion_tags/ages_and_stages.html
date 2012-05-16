@@ -1,17 +1,19 @@
 {% load jmbo_inclusion_tags %}
 
-{% if object_list %}
-<div class="h1">{{ category.title }}</div>
 {% if request.user.is_authenticated %}
-    <div class="content-inner">
-        <div class="items">
-            {% for object in object_list %}
-                {% render_object object "block" %}
-            {% endfor %}
-            <div class="item-nav"><a href="{{ category.get_absolute_url }}">Read more about your baby's development.</a></div>
+    {% if object_list %}
+        <div class="h1">{{ category.title }}</div>
+        <div class="content-inner">
+            <div class="items">
+                {% for object in object_list %}
+                    {% render_object object "block" %}
+                {% endfor %}
+                <div class="item-nav"><a href="{{ category.get_absolute_url }}">Read more about your baby's development.</a></div>
+            </div>
         </div>
-    </div>
+    {% endif %}
 {% else %}
+    <div class="h1">{{ category.title }}</div>
     <div class="content-inner">
         <div class="items">
             <div class="item">
@@ -24,5 +26,4 @@
             <div class="item-nav"><a href="{% url login %}">Already registered? Click here to sign in.</a></div>
         </div>
     </div>
-{% endif %}
 {% endif %}
