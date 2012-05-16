@@ -15,6 +15,13 @@ register = template.Library()
 def ages_and_stages(context):
     context = copy(context)
     user = context['request'].user
+    try:
+        category = Category.objects.get(slug="my-pregnancy")
+        context.update({
+            'category': category,
+        })
+    except Category.DoesNotExist:
+        return context
     if user.is_authenticated():
         delivery_date = user.profile.computed_delivery_date
         if delivery_date:
@@ -32,7 +39,6 @@ def ages_and_stages(context):
 
         try:
             week_category = Category.objects.get(slug="%snatal-week-%s" % (pre_post, week))
-            category = Category.objects.get(slug="my-pregnancy")
         except Category.DoesNotExist:
             context.update({
                 'object_list': [],
@@ -42,20 +48,12 @@ def ages_and_stages(context):
             Q(categories=week_category)).distinct()
         context.update({
             'object_list': object_list,
-            'category': category,
         })
     return context
 
 
 @register.inclusion_tag('mama/inclusion_tags/header.html', takes_context=True)
 def header(context):
-    context = copy(context)
-    context['object_list'] = []
-    for category_slug in ['mama-a-to-z', 'life-guides', 'articles', 'moms-stories']:
-        try:
-            context['object_list'].append(Category.objects.get(slug=category_slug))
-        except Category.DoesNotExist:
-            pass
     return context
 
 
