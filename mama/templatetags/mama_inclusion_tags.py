@@ -104,7 +104,7 @@ def pagination(context, page_obj):
     context = copy(context)
     context.update({
         'page_obj': page_obj,
-        'paginator': page_obj.paginator,
+        'paginator': getattr(page_obj, 'paginator', None),
     })
     return context
 
