@@ -1,9 +1,9 @@
-{% extends "base.html" %}
+{% extends "post/post_category_list.html" %}
 
 {% load jmbo_inclusion_tags mama_inclusion_tags %}
 
-{% block content %}
+{% block below_listing %}
 
-    {% topic_listing category.slug 0 %}
+    {% topic_listing category.slug 1 %}
 
 {% endblock %}
