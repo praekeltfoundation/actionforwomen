@@ -1,6 +1,7 @@
 from category.models import Category
 from django.conf import settings
 from django.contrib import auth
+from django.core.mail import EmailMessage, mail_managers
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.http import HttpResponseServerError
@@ -10,10 +11,11 @@ from django.template.loader import render_to_string
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormView
 from django.views.generic.list import ListView
-from mama.forms import PasswordResetForm
+from mama.forms import ContactForm, PasswordResetForm
 from mama.models import UserProfile
 from mama.view_modifiers import PopularViewModifier
 from post.models import Post
+from preferences import preferences
 
 
 class CategoryDetailView(DetailView):
@@ -66,6 +68,37 @@ class CategoryListFeaturedView(ListView):
             Q(primary_category=self.category) | Q(categories=self.category)
         ).filter(categories__slug='featured').distinct()
         return queryset
+
+
+class ContactView(FormView):
+    form_class = ContactForm
+    template_name = "mama/contact.html"
+
+    def form_valid(self, form):
+        recipients = [recipient.email for recipient in \
+                preferences.SitePreferences.contact_email_recipients.all()]
+        mobile_number = form.cleaned_data['mobile_number']
+        message = "Mobile Number: \n%s\n\nMessage: \n%s" % (mobile_number, form.cleaned_data['message'])
+
+        if not recipients:
+            mail_managers(
+                'Error: No contact recipients specified',
+                "A user is trying to contact MAMA but no contact email recipients could be found.\n\nUser's Message:\n\n%s" % message,
+                fail_silently=False
+            )
+
+        else:
+            subject = "Contact Message from MAMA user"
+            from_address = "MAMA <contact@askmama.mobi>"
+            mail = EmailMessage(
+                subject,
+                message,
+                from_address,
+                recipients,
+                headers={'From': from_address, 'Reply-To': from_address}
+            )
+            mail.send(fail_silently=False)
+        return render_to_response('mama/contact_thanks.html', context_instance=RequestContext(self.request))
 
 
 class PasswordResetView(FormView):
