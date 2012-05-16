@@ -3,7 +3,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.views.generic import TemplateView
 from haystack.views import SearchView
-from mama.views import CategoryDetailView, CategoryListView, CategoryListFeaturedView, ContactView, PasswordResetView
+from mama.views import CategoryDetailView, CategoryListView, ContactView, PasswordResetView
 
 admin.autodiscover()
 urlpatterns = patterns('',
@@ -58,12 +58,6 @@ urlpatterns = patterns('',
         CategoryListView.as_view(),
         {},
         name='category_object_list'
-    ),
-    url(
-        r'^content/featured/(?P<category_slug>[\w-]+)/list/$',
-        CategoryListFeaturedView.as_view(),
-        {},
-        name='category_object_list_featured'
     ),
     url(
         r'^content/(?P<category_slug>[\w-]+)/(?P<slug>[\w-]+)/$',
