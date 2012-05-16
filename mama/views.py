@@ -1,9 +1,12 @@
 from category.models import Category
+from django.conf import settings
 from django.contrib import auth
 from django.core.urlresolvers import reverse
 from django.db.models import Q
+from django.http import HttpResponseServerError
 from django.shortcuts import get_object_or_404, redirect, render_to_response
 from django.template import RequestContext
+from django.template.loader import render_to_string
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormView
 from django.views.generic.list import ListView
@@ -86,3 +89,9 @@ def logout(request):
     else:
         redir_url = reverse("home")
     return redirect(redir_url)
+
+
+def server_error(request):
+    return HttpResponseServerError(render_to_string('500.html', {
+        'STATIC_URL': settings.STATIC_URL
+    }))
