@@ -52,6 +52,9 @@ class Command(BaseCommand):
                 post.state = 'published'
                 post.sites.add(site)
                 post.primary_category = pregnancy_category
+                post.comments_enabled = False
+                post.anonymous_comments = False
+                post.comments_closed = True
                 for category in categories:
                     post.categories.add(category)
                 post.save()
