@@ -48,6 +48,23 @@ class CategoryListView(ListView):
         return view_modifier.modify(queryset)
 
 
+class CategoryListFeaturedView(ListView):
+    template_name = "post/post_category_list_featured.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(CategoryListFeaturedView, self).get_context_data(**kwargs)
+        context['category'] = self.category
+        return context
+
+    def get_queryset(self):
+        self.category = get_object_or_404(Category, \
+                slug__iexact=self.kwargs['category_slug'])
+        queryset = Post.permitted.filter(
+            Q(primary_category=self.category) | Q(categories=self.category)
+        ).filter(categories__slug='featured').distinct()
+        return queryset
+
+
 class PasswordResetView(FormView):
     form_class = PasswordResetForm
     template_name = "mama/password_reset.html"
