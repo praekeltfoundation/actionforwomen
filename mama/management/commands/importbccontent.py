@@ -16,6 +16,7 @@ class Command(BaseCommand):
 
         bc_category, created = Category.objects.get_or_create(title="BC Content", slug="bc-content")
         pregnancy_category, created = Category.objects.get_or_create(title="My Pregnancy", slug="my-pregnancy")
+        mama_category, created = Category.objects.get_or_create(title="MAMA A-to-Z", slug="mama-a-to-z")
         site = Site.objects.get_current()
 
         path = os.path.split(os.path.abspath(__file__))[0]
@@ -23,7 +24,7 @@ class Command(BaseCommand):
 
         print "Creating posts..."
         for node in pages.getElementsByTagName('page'):
-            categories = [bc_category,]
+            categories = [bc_category, mama_category]
             pk = 6000 + int(node.getElementsByTagName('uid')[0].firstChild.data)
             title = node.getElementsByTagName('title')[0].firstChild.data
             content = node.getElementsByTagName('body')[0].toxml().lstrip('<body>').rstrip('</body>')
