@@ -39,12 +39,12 @@ class CategoryDetailView(DetailView):
 class CategoryListView(ListView):
     template_name = "post/post_category_list.html"
     paginate_by = 5
-    more_header = False
+    heading_prefix = "More"
 
     def get_context_data(self, **kwargs):
         context = super(CategoryListView, self).get_context_data(**kwargs)
         context['category'] = self.category
-        context['more'] = self.more_header
+        context['heading_prefix'] = self.heading_prefix
         return context
 
     def get_queryset(self):
@@ -52,17 +52,12 @@ class CategoryListView(ListView):
                 slug__iexact=self.kwargs['category_slug'])
         queryset = Post.permitted.filter(
             Q(primary_category=self.category) | Q(categories=self.category)
-        ).distinct()
+        ).exclude(categories__slug='featured').distinct()
         view_modifier = PopularViewModifier(self.request)
+        active_modifiers = view_modifier.get_active_items()
+        if active_modifiers:
+            self.heading_prefix = active_modifiers[0].title
         return view_modifier.modify(queryset)
-
-
-class CategoryListFeaturedView(CategoryListView):
-    template_name = "post/post_category_list_featured.html"
-    more_header = True
-
-    def get_queryset(self):
-        return super(CategoryListFeaturedView, self).get_queryset().exclude(categories__slug='featured')
 
 
 class ContactView(FormView):
