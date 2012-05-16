@@ -8,7 +8,7 @@
                 {% for object in object_list %}
                     {% render_object object "link" %}
                 {% endfor %}
-                <div class="item-nav"><a href="{{ category.get_absolute_url }}">More {{ category.title }}</a></div>
+                {% comment %}<div class="item-nav"><a href="{{ category.get_absolute_url }}">More {{ category.title }}</a></div>{% endcomment %}
             </div>
         </div>
     </div>
