@@ -110,5 +110,5 @@ def add_field(sender, **kwargs):
 @receiver(pre_save, sender=UserProfile)
 def compute_delivery_date(sender, instance, **kwargs):
     if instance.weeks_pregnant_signup:
-        weeks_left = 42 - instance.weeks_pregnant_signup
+        weeks_left = 42 - int(instance.weeks_pregnant_signup)
         instance.computed_delivery_date = datetime.now() + timedelta(days=7 * weeks_left)
