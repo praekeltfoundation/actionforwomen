@@ -1,30 +1,15 @@
 {% load jmbo_template_tags %}
 
-{% if object.image %}
-    <div class="item">
-        <a href="{{ object.get_absolute_category_url }}" class="intro-pic"><img src="{{ object.get_thumb_url }}"></a>
-        <div class="meta">
-            <div class="title"><a href="{{ object.get_absolute_category_url }}">{{ object.title }}</a></div>
-            <div class="stamp">
-                {% if object.description %}
-                    {{ object.description|truncatewords:10 }}
-                {% else %}
-                    {% humanize_time_diff object.created "Ago" %} // {{ object.comment_count }} Comments
-                {% endif %}
-            </div>
+<div class="item{% if not object.image %} no-pic{% endif %}">
+    {% if object.image %}<a href="{{ object.get_absolute_category_url }}" class="intro-pic"><img src="{{ object.get_thumb_url }}"></a>{% endif %}
+    <div class="meta">
+        <div class="title"><a href="{{ object.get_absolute_category_url }}">{{ object.title }}</a></div>
+        <div class="stamp">
+            {% if object.description %}
+                {{ object.description|truncatewords:10 }}
+            {% else %}
+                {% humanize_time_diff object.created "Ago" %} // {{ object.comment_count }} Comments
+            {% endif %}
         </div>
     </div>
-{% else %}
-    <div class="item no-pic">
-        <div class="meta">
-            <div class="title"><a href="{{ object.get_absolute_category_url }}">{{ object.title }}</a></div>
-            <div class="stamp">
-                {% if object.description %}
-                    {{ object.description|truncatewords:10 }}
-                {% else %}
-                    {% humanize_time_diff object.created "Ago" %} // {{ object.comment_count }} Comments
-                {% endif %}
-            </div>
-        </div>
-    </div>
-{% endif %}
+</div>
