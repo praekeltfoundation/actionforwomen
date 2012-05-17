@@ -49,6 +49,11 @@ urlpatterns = patterns('',
         name='poll_vote'
     ),
     url(
+        r'^post-comment$',
+        'mama.views.post_comment',
+        name='post_comment'
+    ),
+    url(
         r'^terms$',
         TemplateView.as_view(template_name="mama/terms.html"),
         name='terms'
