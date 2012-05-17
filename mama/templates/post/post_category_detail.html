@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load mama_inclusion_tags %}
+{% load jmbo_inclusion_tags mama_inclusion_tags %}
 
 {% block content %}
     <div class="{{ category.color }}">
@@ -26,38 +26,8 @@
             {% babycenter_byline object %}
         </div>
     </div>
-    {% comment %}
-    <div class="{{ category.color }}">
-    <div class="h1">Comments</div>
-        <div class="content-inner">
-            <div class="items">
-                <div class="item comment">
-                    <img src="img/happy.png">
-                    <div class="meta">
-                        <div class="title">User</div>
-                        <div class="stamp">8 May 2012 | <a href="abuse.html">Report abuse</a></div>
-                        <div class="stamp">This is the users comment where they will talk about the article.</div>
-                    </div>
-                </div>
-                <div class="item comment">
-                    <img src="img/happy.png">
-                    <div class="meta">
-                        <div class="title">User</div>
-                        <div class="stamp">8 May 2012 | <a href="abuse.html">Report abuse</a></div>
-                        <div class="stamp">This is the users comment where they will talk about the article.</div>
-                    </div>
-                </div>
-                <div class="item comment">
-                    <img src="img/happy.png">
-                    <div class="meta">
-                        <div class="title">User</div>
-                        <div class="stamp">8 May 2012 | <a href="abuse.html">Report abuse</a></div>
-                        <div class="stamp">This is the users comment where they will talk about the article.</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    {% endcomment %}
+
     {% topic_listing category.slug 1 %}
+    
+    {% object_comments object %}
 {% endblock %}
