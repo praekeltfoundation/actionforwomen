@@ -16,7 +16,7 @@
                     <tr class="poll-result-1">
                         <td>{{ option.title }}</td> 
                         <td class="bar"><div style="width: {{ option.percentage }}%;">&nbsp;</div></td>
-                        <td>{{ option.percentage }}%</td>
+                        <td>{{ option.percentage|floatformat:1 }}%</td>
                     </tr>
                 {% endfor %}
             </table>
