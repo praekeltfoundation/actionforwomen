@@ -1,6 +1,7 @@
 from category.models import Category
 from django.conf import settings
 from django.contrib import auth
+from django.contrib.comments.views import comments
 from django.core.mail import EmailMessage, mail_managers
 from django.core.urlresolvers import reverse
 from django.db.models import Q
@@ -8,6 +9,8 @@ from django.http import HttpResponseServerError
 from django.shortcuts import get_object_or_404, redirect, render_to_response
 from django.template import RequestContext
 from django.template.loader import render_to_string
+from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.http import require_POST
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormView
 from django.views.generic.list import ListView
@@ -18,6 +21,7 @@ from poll.forms import PollVoteForm
 from poll.models import Poll
 from post.models import Post
 from preferences import preferences
+
 
 
 class CategoryDetailView(DetailView):
@@ -113,15 +117,27 @@ def logout(request):
         redir_url = reverse("home")
     return redirect(redir_url)
 
+@csrf_protect
+@require_POST
 def poll_vote(request, poll_slug):
     poll = get_object_or_404(Poll, slug=poll_slug)
-    if request.method == 'POST':
-        form = PollVoteForm(request.POST, request=request, poll=poll)
-        if form.is_valid():
-            form.save()
+    form = PollVoteForm(request.POST, request=request, poll=poll)
+    if form.is_valid():
+        form.save()
     
     return redirect(reverse("home"))
 
+@csrf_protect
+@require_POST
+def post_comment(request, next=None, using=None):
+    # Populate dummy data for non required fields
+    data = request.POST.copy()
+    if not request.user.is_authenticated():
+        data["name"] = 'anonymous'
+        data["email"] = 'commentor@askmama.mobi'
+    data["url"] = 'http://commentor.askmama.mobi'
+    request.POST = data
+    return comments.post_comment(request, next=request.META['HTTP_REFERER'], using=using)
 
 def server_error(request):
     return HttpResponseServerError(render_to_string('500.html', {
