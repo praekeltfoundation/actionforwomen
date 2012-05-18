@@ -19,6 +19,11 @@
                             <div class="item"><a href="{{ link.target.get_absolute_category_url }}">&raquo; {% if link.title %}{{ link.title }}{% else %}{{ link.target.title }}{% endif %}</a></div>
                         {% endfor %}
                     {% endwith %}
+                </div>
+            </div>
+            {% babycenter_byline object %}
+            <div class="post-menu">
+                <div class="items">
                     <div class="item-nav">
                         {% with object.navigation_link_target_set.all as navigation_links %}
                             {% for navigation_link in navigation_links %}
@@ -28,7 +33,7 @@
                         <a href="{{ category.get_absolute_url }}">&laquo; Back to {{ category.title }}</a>
                     </div>
                 </div>
-            {% babycenter_byline object %}
+            </div>
         </div>
     </div>
 
