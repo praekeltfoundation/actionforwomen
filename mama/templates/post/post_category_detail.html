@@ -12,17 +12,22 @@
                 {% endif %}
                 {{ object.content|safe }}
             </div>
-            {% with object.link_target_set.all as links %}
-                {% if links %}
-                    <div class="post-menu">
-                        <div class="items">
-                            {% for link in links %}
+            <div class="post-menu">
+                <div class="items">
+                    {% with object.link_target_set.all as links %}
+                        {% for link in links %}
                             <div class="item"><a href="{{ link.target.get_absolute_category_url }}">&raquo; {% if link.title %}{{ link.title }}{% else %}{{ link.target.title }}{% endif %}</a></div>
+                        {% endfor %}
+                    {% endwith %}
+                    <div class="item-nav">
+                        {% with object.navigation_link_target_set.all as navigation_links %}
+                            {% for navigation_link in navigation_links %}
+                                <a href="{{ navigation_link.target.get_absolute_category_url }}">&laquo; Back to {% if navigation_link.title %}{{ navigation_link.title }}{% else %}{{ navigation_link.target.title }}{% endif %}</a><br />
                             {% endfor %}
-                        </div>
+                        {% endwith %}
+                        <a href="{{ category.get_absolute_url }}">&laquo; Back to {{ category.title }}</a>
                     </div>
-                {% endif %}
-            {% endwith %}
+                </div>
             {% babycenter_byline object %}
         </div>
     </div>
@@ -30,4 +35,5 @@
     {% topic_listing category.slug 1 %}
     
     {% object_comments object %}
+
 {% endblock %}
