@@ -28,6 +28,25 @@ class Link(models.Model):
     def __unicode__(self):
         return self.title
 
+class NavigationLink(models.Model):
+    title = models.CharField(
+        max_length=256,
+        blank=True,
+        null=True,
+        help_text="A short descriptive title. Leave blank to use target's title.",
+    )
+    source = models.ForeignKey(
+        'jmbo.ModelBase',
+        related_name="navigation_link_target_set"
+    )
+    target = models.ForeignKey(
+        'jmbo.ModelBase',
+        related_name="navigation_link_source_set"
+    )
+
+    def __unicode__(self):
+        return self.title
+
 
 class SitePreferences(Preferences):
     __module__ = 'preferences.models'
