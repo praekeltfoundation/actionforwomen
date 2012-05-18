@@ -21,7 +21,6 @@ class PostAdmin(ModelBaseAdmin):
     ]
 
 
-admin.site.register(Link)
 admin.site.register(SitePreferences, PreferencesAdmin)
 admin.site.unregister(Post)
 admin.site.register(Post, PostAdmin)
