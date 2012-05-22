@@ -3,7 +3,8 @@ from django.conf import settings
 from django.contrib import admin
 from django.views.generic import TemplateView
 from haystack.views import SearchView
-from mama.views import CategoryDetailView, CategoryListView, ContactView, PasswordResetView
+from mama.views import CategoryDetailView, CategoryListView, ContactView
+from mama.forms import PasswordResetForm
 
 admin.autodiscover()
 urlpatterns = patterns('',
@@ -40,8 +41,30 @@ urlpatterns = patterns('',
     ),
     url(
         r'^password-reset$',
-        PasswordResetView.as_view(),
+        'django.contrib.auth.views.password_reset',
+        {
+            'password_reset_form': PasswordResetForm,
+            'template_name': 'mama/password_reset.html',
+        },
         name='password_reset'
+    ),
+    url(
+        r'^password-reset-done$',
+        'django.contrib.auth.views.password_reset_done',
+        {'template_name': 'mama/password_reset_done.html'},
+        name='password_reset_done'
+    ),
+    url(
+        r'^reset/(?P<uidb36>[0-9A-Za-z]{1,13})-(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        'django.contrib.auth.views.password_reset_confirm',
+        {'template_name': 'mama/password_reset_confirm.html'},
+        name='password_reset_confirm'
+    ),
+    url(
+        r'^reset/done/$', 
+        'django.contrib.auth.views.password_reset_complete', 
+        {'template_name': 'mama/password_reset_complete.html'},
+        name='password_reset_complete'
     ),
     url(
         r'^poll-vote/(?P<poll_slug>[\w-]+)/$',
