@@ -1,3 +1,4 @@
+import ambient
 from category.models import Category
 from django.conf import settings
 from django.contrib import auth
@@ -93,20 +94,6 @@ class ContactView(FormView):
             )
             mail.send(fail_silently=False)
         return render_to_response('mama/contact_thanks.html', context_instance=RequestContext(self.request))
-
-
-class PasswordResetView(FormView):
-    form_class = PasswordResetForm
-    template_name = "mama/password_reset.html"
-
-    def form_valid(self, form):
-        try:
-            profile = UserProfile.objects.get(mobile_number__exact=form.cleaned_data['mobile_number'])
-            raise NotImplementedError("Implement reset SMS line with throttling.")
-            return render_to_response('mama/password_reset_done.html', context_instance=RequestContext(self.request))
-        except UserProfile.DoesNotExist:
-            form.non_field_errors = "Unable to find an account for the provided mobile number. Please try again." 
-            return self.form_invalid(form)
 
 
 def logout(request):
