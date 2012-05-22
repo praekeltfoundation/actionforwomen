@@ -4,9 +4,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"> 
 <head> 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
-    <title>Mama {% if object %}| {{ object.title }}{% endif %}</title> 
+    <title>Mama Mobile Community / {% if object %}{{ object.title }}{% else %}SA's week-by-week guide to pregnancy and infants{% endif %}</title> 
     <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
-    <meta name="description" content="Maternal health community platform.">
+    <meta name="description" content="{% if object %}{{ object.description }}{% else %}www.askmama.mobi is a week-by-week guide to pregnancy, birth and early childhood for South African mothers. It was founded by the Mobile Alliance for Maternal Action to put the power of health in every mama's hand.{% endif %}">
     <meta name="keywords" content="moms,maternal,baby,pregnancy,pregnant,expectant,mama,askmama,ask,mother,pain,birth,help">
     <link href="{{ STATIC_URL }}mama/css/style.css" rel="stylesheet" type="text/css" /> 
 </head>
