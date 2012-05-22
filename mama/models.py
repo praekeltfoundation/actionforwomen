@@ -86,6 +86,7 @@ class SitePreferences(Preferences):
 
 
 class UserProfile(AbstractProfileBase):
+    registration_form = RegistrationForm
     mobile_number = models.CharField(
         max_length=64,
         blank=True,
@@ -101,7 +102,16 @@ class UserProfile(AbstractProfileBase):
         blank=True,
         null=True,
     )
-    registration_form = RegistrationForm
+    last_reset_date = models.DateField(
+        blank=True,
+        null=True,
+        help_text='Last date on which user tried to reset her password.',
+    )
+    reset_count = models.IntegerField(
+        blank=True,
+        null=True,
+        help_text='Number of times user has tried to reset her password on the last reset date.',
+    )
 
 
 @receiver(class_prepared)
