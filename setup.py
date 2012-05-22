@@ -25,6 +25,7 @@ setup(
         'jmbo-poll',
         'jmbo-post',
         'psycopg2',
+        'python-ambient',
         'south',
         'whoosh',
     ],
