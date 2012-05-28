@@ -16,6 +16,7 @@ setup(
         'django>=1.4',
         'django-generate',
         'django-haystack',
+        'django-moderator',
         'django-preferences',
         'django-sites-groups',
         'django-snippetscream',
