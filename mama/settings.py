@@ -145,6 +145,7 @@ INSTALLED_APPS = (
     'generate',
     'haystack',
     'jmbo',
+    'moderator',
     'photologue',
     'poll',
     'publisher',
@@ -201,3 +202,20 @@ EMAIL_SUBJECT_PREFIX = '[MAMA] '
 
 AMBIENT_API_KEY = 'A363FDC5-32F6-4891-8722-04BA2D6AEBA3'
 AMBIENT_GATEWAY_PASSWORD = 'm4m45m5'
+
+MODERATOR = {
+    'CLASSIFIER': 'moderator.storage.RedisClassifier',
+    'CLASSIFIER_CONFIG': {
+        'host': 'localhost',
+        'port': 6379,
+        'db': 8,
+        'password': None,
+        'socket_timeout': None,
+        'connection_pool': None,
+        'charset': 'utf-8',
+        'errors': 'strict',
+        'unix_socket_path': None,
+    },
+    'HAM_CUTOFF': 0.3,
+    'SPAM_CUTOFF': 0.7,
+}
