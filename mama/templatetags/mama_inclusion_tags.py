@@ -23,7 +23,7 @@ def ages_and_stages(context):
     except Category.DoesNotExist:
         return context
     if user.is_authenticated():
-        delivery_date = user.profile.computed_delivery_date
+        delivery_date = user.profile.delivery_date
         if delivery_date:
             now = datetime.now().date()
             if delivery_date < now:

@@ -48,16 +48,16 @@
         {% endif %}
         {{ form.mobile_number }}
     </div>
-    <div class="row">
-        {{ form.weeks_pregnant_signup.label_tag }}
-        {% if form.weeks_pregnant_signup.errors %}
+    <div class="row shorter">
+        {{ form.delivery_date.label_tag }}
+        {% if form.delivery_date.errors %}
             <div class="errors">
-                {% for error in form.weeks_pregnant_signup.errors %}
+                {% for error in form.delivery_date.errors %}
                     <p>{{ error }}</p>
                 {% endfor %}
             </div>
         {% endif %}
-        {{ form.weeks_pregnant_signup }}
+        {{ form.delivery_date }}
     </div>
     <div class="row">
         {{ form.password1.label_tag }}
