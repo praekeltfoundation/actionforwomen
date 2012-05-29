@@ -6,8 +6,7 @@ from jmbo.view_modifiers.items import GetItem
 
 class PopularItem(GetItem):
     def modify(self, queryset):
-        sql = '''SELECT COUNT(*) from %s WHERE
-        %s.object_pk=%s.%s AND %s.content_type_id=%s''' % (
+        sql = 'SELECT COUNT(*) from %s WHERE %s.object_pk=CAST(%s.%s as TEXT) AND %s.content_type_id=%s' % (
             Comment._meta.db_table,
             Comment._meta.db_table,
             queryset.model._meta.db_table,
