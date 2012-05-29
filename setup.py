@@ -20,7 +20,7 @@ setup(
         'django-preferences',
         'django-sites-groups',
         'django-snippetscream',
-        'django-userprofile',
+        'django-userprofile>=0.0.6',
         'flup',
         'jmbo',
         'jmbo-poll',
