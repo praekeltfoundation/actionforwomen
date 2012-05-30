@@ -56,7 +56,16 @@
 	td { vertical-align: top; }
 	.chromeframe { margin: 0.2em 0; background: #ccc; color: black; padding: 0.2em 0; }
 	
-    @font-face{ font-family:'HelvN'; src:url('../font/HelveticaLTStd-BoldCond.otf'); font-weight:normal; font-style:normal; }
+    @font-face {
+        font-family: 'HelvN';
+        src: url('../font/helveticaltstd-boldcond-webfont.eot');
+        src: url('../font/helveticaltstd-boldcond-webfont.eot?#iefix') format('embedded-opentype'),
+             url('../font/helveticaltstd-boldcond-webfont.woff') format('woff'),
+             url('../font/helveticaltstd-boldcond-webfont.ttf') format('truetype'),
+             url('../font/helveticaltstd-boldcond-webfont.svg#HelveticaLTStdCondBold') format('svg');
+        font-weight: normal;
+        font-style: normal;
+    }
 
 /*  ===== Primary Styles ========================================================
     Author:
@@ -111,7 +120,7 @@
     .main { width: 940px; float: left; margin: 0 30px; background: #fff; position: relative; }
         .promo { width: 900px; height: 466px; float: left; margin: 0 20px; position: relative; overflow: hidden; }
             .promo h1 { padding: 40px 0 0 65px; margin: 0; color: #ff4200; font-family: HelvN; font-size: 30px; font-weight: normal; text-transform: uppercase; }
-            .promo h2 { padding: 10px 0 0 60px; margin: 0; color: #fe8f00; font-family: HelvN; font-size: 80px; font-weight: normal; text-transform: uppercase; line-height: 80px; }
+            .promo h2 { padding: 5px 0 0 60px; margin: 0; color: #fe8f00; font-family: HelvN; font-size: 80px; font-weight: normal; text-transform: uppercase; line-height: 80px; }
             .promo p { padding: 0 0 0 65px; margin: 0; color: #666; font-size: 17px; line-height: 24px; }
             .promo p a { color: #d92128; text-decoration: none; }
             .promo_home { background: url('../img/promo_home.png') no-repeat; }
@@ -124,17 +133,17 @@
             .banner_learn { background: url('../img/banner_learn.png') no-repeat; }
             .banner_involved { background: url('../img/banner_involved.png') no-repeat; }
             .banner h1 { padding: 40px 0 0 5px; margin: 0; color: #ff4200; font-family: HelvN; font-size: 30px; font-weight: normal; text-transform: uppercase; }
-            .banner h2 { padding: 10px 0 0 0; margin: 0; color: #fe8f00; font-family: HelvN; font-size: 80px; font-weight: normal; text-transform: uppercase; line-height: 86px; }
+            .banner h2 { padding: 5px 0 0 0; margin: 0; color: #fe8f00; font-family: HelvN; font-size: 80px; font-weight: normal; text-transform: uppercase; line-height: 86px; }
             .banner p { padding: 0 0 0 5px; margin: 0; color: #666; font-size: 18px; }
         .content { width: 860px; float: left; padding: 40px; }
             .half { width: 410px; float: left; padding: 17px 0 40px 0; border-top: 7px solid #da2128; position: relative; }
-                .half h1 { margin: 0; padding: 0 0 6px 0; font-size: 15px; font-weight: normal; }
-                .half h2 { margin: 0; padding: 0; font-family: HelvN; font-size: 30px; font-weight: normal; color: #000; text-transform: uppercase; }
+                .half h1 { margin: 0; padding: 0; font-size: 15px; font-weight: normal; }
+                .half h2 { margin: 0; padding: 0 0 5px 0; font-family: HelvN; font-size: 30px; font-weight: normal; color: #000; text-transform: uppercase; }
                 .half h3 { margin: 0; padding: 0; font-size: 14px; font-weight: normal; color: #000; }
                 .half img { padding: 5px 0 15px 0; }
             .third { width: 260px; float: left; padding: 17px 0 40px 0; margin: 0 40px 0 0; border-top: 7px solid #da2128; position: relative; }
-                .third h1 { margin: 0; padding: 0 0 6px 0; font-size: 15px; font-weight: normal; }
-                .third h2 { margin: 0; padding: 0; font-family: HelvN; font-size: 30px; font-weight: normal; color: #000; text-transform: uppercase; }
+                .third h1 { margin: 0; padding: 0; font-size: 15px; font-weight: normal; }
+                .third h2 { margin: 0; padding: 0 0 5px 0; font-family: HelvN; font-size: 30px; font-weight: normal; color: #000; text-transform: uppercase; }
                 .third h3 { margin: 0; padding: 0; font-size: 14px; font-weight: normal; color: #000; }
                 .third p { margin: 0; }
                 .third ul { padding: 0 0 0 15px; }
@@ -151,7 +160,7 @@
 
         /* family */
         .family { width: 860px; float; left; padding: 17px 0 0 0; border-top: 7px solid #f54f16; }
-            .family h1 { margin: 0; padding: 0 0 6px 0; font-size: 15px; font-weight: normal; }
+            .family h1 { margin: 0; padding: 0; font-size: 15px; font-weight: normal; }
             .family h2 { margin: 0; padding: 0; font-family: HelvN; font-size: 32px; font-weight: normal; color: #000; text-transform: uppercase; }
             .family .full { width: 860px; float: left; padding: 20px 0; border: 0!important; }
             .family .full h2 { font-size: 24px; }
