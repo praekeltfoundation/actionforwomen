@@ -22,14 +22,9 @@ class Command(BaseCommand):
         for node in pages.getElementsByTagName('page'):
             pk = 6000 + int(node.getElementsByTagName('uid')[0].firstChild.data)
             post = Post.objects.get(pk=pk)
-            original_content = node.getElementsByTagName('body')[0].toxml().lstrip('<body>').rstrip('</body>')
-            if post.content != original_content:
-                # In case content has changed lets drop into debug and see whats going on.
-                import pdb; pdb.set_trace()
-            else:
-                content = linebreaksbr(node.getElementsByTagName('body')[0].toxml().lstrip('<body>').rstrip('</body>'))
-                post.content = content
-                post.save()
-                print 'Corrected "%s" linebreaks' % post
+            content = linebreaksbr(node.getElementsByTagName('body')[0].toxml().lstrip('<body>').rstrip('</body>'))
+            post.content = content
+            post.save()
+            print 'Corrected "%s" linebreaks' % post
 
         print "Done!"
