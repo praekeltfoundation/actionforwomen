@@ -22,17 +22,19 @@
                 </div>
             </div>
             {% babycenter_byline object %}
-            <div class="post-menu">
-                <div class="items">
-                    <div class="item-nav">
-                        {% with object.navigation_link_target_set.all as navigation_links %}
-                            {% for navigation_link in navigation_links %}
-                                <a href="{{ navigation_link.target.get_absolute_category_url }}">&laquo; Back to {% if navigation_link.title %}{{ navigation_link.title }}{% else %}{{ navigation_link.target.title }}{% endif %}</a><br />
-                            {% endfor %}
-                        {% endwith %}
+            {% with object.navigation_link_target_set.all as navigation_links %}
+                {% if navigation_links %}
+                    <div class="post-menu">
+                        <div class="items">
+                            <div class="item-nav">
+                                {% for navigation_link in navigation_links %}
+                                    <a href="{{ navigation_link.target.get_absolute_category_url }}">&laquo; Back to {% if navigation_link.title %}{{ navigation_link.title }}{% else %}{{ navigation_link.target.title }}{% endif %}</a><br />
+                                {% endfor %}
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
+                {% endif %}
+            {% endwith %}
         </div>
     </div>
 
