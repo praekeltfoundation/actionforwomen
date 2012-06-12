@@ -219,3 +219,8 @@ MODERATOR = {
     'HAM_CUTOFF': 0.3,
     'SPAM_CUTOFF': 0.7,
 }
+
+SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
+
+# Set session cookie age to 1 year, meaning sessions are valid for up to 1 year.
+SESSION_COOKIE_AGE = 31536000
