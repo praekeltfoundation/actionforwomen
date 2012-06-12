@@ -92,8 +92,9 @@
     .border_brown { border-top: 7px solid #b30007!important; }
     .clear { width: 97%; height: 0px!important; clear: both; }
     .biglink { padding: 12px 0 0 0; display: block; color: #f54f16; font-weight: bold; font-size: 15px; text-decoration: none; }
+    .padless { padding: 4px 0 0 0; }
     .brownlink { color: #b30007!important; text-decoration: none; }
-    .smaller { font-size: 26px!important; }
+    .smaller { font-size: 24px!important; line-height: 37px!important; }
     
     /* HEADER */
     
@@ -143,7 +144,7 @@
                 .half img { padding: 5px 0 15px 0; }
             .third { width: 260px; float: left; padding: 17px 0 40px 0; margin: 0 40px 0 0; border-top: 7px solid #da2128; position: relative; }
                 .third h1 { margin: 0; padding: 0; font-size: 15px; font-weight: normal; }
-                .third h2 { margin: 0; padding: 0 0 5px 0; font-family: HelvN; font-size: 30px; font-weight: normal; color: #000; text-transform: uppercase; }
+                .third h2 { margin: 0; padding: 0 0 5px 0; font-family: HelvN; font-size: 30px; line-height: 42px; font-weight: normal; color: #000; text-transform: uppercase; }
                 .third h3 { margin: 0; padding: 0; font-size: 14px; font-weight: normal; color: #000; }
                 .third p { margin: 0; }
                 .third ul { padding: 0 0 0 15px; }
@@ -177,7 +178,7 @@
             .family .quarter h2 { font-size: 18px; }
             .family .quarter p { line-height: 20px; }
             .family .quarter p a { padding: 12px 0 0 0; display: block; color: #f54f16; font-weight: bold; font-size: 15px; text-decoration: none; }
-            .family .member { width: 200px; float: left; margin: 10px 20px 0 0; }
+            .family .member { width: 134px; float: left; margin: 10px 11px 0 0; }
 
         /* founders */
         .founders { width: 860px; float; left; padding: 17px 0 0 0; border-top: 7px solid #f58d16; }
@@ -191,6 +192,7 @@
         .pf_colin { background: url('../img/partner_pf_colin.png') no-repeat!important; }
         .whri_eugene { background: url('../img/partner_whri_eugene.png') no-repeat!important; }
         .cl_peter { background: url('../img/partner_cl_peter.png') no-repeat!important; }
+        .cl_kath { background: url('../img/partner_cl_kath.png') no-repeat!important; }
         div.anythingSlider { width: 900px; height: 466px; display: block; position: relative; padding: 0; }
         div.anythingSlider .anythingWindow { width: 900px; height: 466px; overflow: hidden; position: relative; }
         div.anythingSlider { position: relative; float: right; }
