@@ -1,4 +1,4 @@
-{% if can_vote %}
+{% if can_vote_on_poll %}
     <form id="frmPoll" method="post" action="{% url poll_vote object.slug %}">
     {% csrf_token %}
         <div class="title">{{ object.title }}</div>
