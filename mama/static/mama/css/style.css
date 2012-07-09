@@ -23,6 +23,7 @@ a { color: #ff6b15; text-decoration: none; }
 
 /* CONTENT */
 #content { color: #666; background: #fff; }
+    #content .title .stamp { font-size:12px; font-weight: normal;}
 	#content .errors { padding: 10px; background: #ececec; font-weight: bold; color: #da2127; }
 	#content .errors ul { margin: 15px 15px 10px 15px; padding: 0; }
 	#content .notice { padding: 0 10px; margin: 0 0 15px 0; }
