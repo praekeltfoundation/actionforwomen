@@ -26,12 +26,8 @@ def ages_and_stages(context):
         delivery_date = user.profile.delivery_date
         if delivery_date:
             now = datetime.now().date()
-            if delivery_date < now:
-                pre_post = 'post'
-                week = (delivery_date - now).days / 7
-            else:
-                pre_post = 'pre'
-                week = 42 - ((delivery_date - now).days / 7)
+            pre_post = 'pre' if user.profile.is_prenatal() else 'post'
+            week = 42 - ((delivery_date - now).days / 7) if user.profile.is_prenatal() else (delivery_date - now).days / 7
         else:
             # Defaults in case user does not have delivery date.
             pre_post = 'pre'
