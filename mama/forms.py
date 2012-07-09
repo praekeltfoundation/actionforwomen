@@ -80,16 +80,15 @@ class RegistrationForm(RegistrationFormTermsOfService):
                 fields = ('mobile_number', 'delivery_date')
                 model = utils.get_profile_model()
         self.fields.update(ProfileModelForm().fields)
+        del self.fields['email']
         self.fields.keyOrder = [
             'username',
-            'email',
             'mobile_number',
             'delivery_date',
             'password1',
             'password2',
             'tos',
         ]
-        self.fields['email'].label = 'Email address'
         self.fields['mobile_number'].required = True
         self.fields['delivery_date'].required = True
         self.fields['delivery_date'].label = 'What is your due date'
