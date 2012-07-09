@@ -27,17 +27,6 @@
         {{ form.username }}
     </div>
     <div class="row">
-        {{ form.email.label_tag }}
-        {% if form.email.errors %}
-            <div class="errors">
-                {% for error in form.email.errors %}
-                    <p>{{ error }}</p>
-                {% endfor %}
-            </div>
-        {% endif %}
-        {{ form.email }}
-    </div>
-    <div class="row">
         {{ form.mobile_number.label_tag }}
         {% if form.mobile_number.errors %}
             <div class="errors">
