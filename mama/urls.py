@@ -94,7 +94,11 @@ urlpatterns = patterns('',
         name='category_object_detail'
     ),
     url(r'^search/', SearchView(results_per_page=5), name='haystack_search'),
-    (r'^accounts/', include('userprofile.backends.simple.urls')),
+    url(
+        r'^accounts/register/$', 'registration.views.register',
+        {'backend': 'mama.registration_backend.MamaBackend'},
+        name='registration_register'
+    ),
     (r'^admin/', include(admin.site.urls)),
     (r'^ckeditor/', include('ckeditor.urls')),
     (r'^', include('jmbo.urls')),

@@ -1,3 +1,5 @@
+from datetime import date
+
 from ckeditor.fields import RichTextField
 from django.db import models
 from django.db.models.signals import class_prepared
@@ -110,6 +112,24 @@ class UserProfile(AbstractProfileBase):
         null=True,
         help_text='Number of times user has tried to reset her password on the last reset date.',
     )
+
+    def is_prenatal(self):
+        """
+        Returns True if prenatal, otherwise False
+        If no delivery date is specified it is assumed we are prenatal.
+        """
+        if not self.delivery_date:
+            return True
+        return date.today() < self.delivery_date
+    
+    def is_postnatal(self):
+        """
+        Returns True if postnatal, otherwise False
+        If no delivery date is specified it is assumed we are prenatal.
+        """
+        if not self.delivery_date:
+            return False
+        return date.today() > self.delivery_date
 
 
 @receiver(class_prepared)
