@@ -8,7 +8,11 @@
                 {% for object in object_list %}
                     {% render_object object "block" %}
                 {% endfor %}
-                <div class="item-nav"><a href="{{ category.get_absolute_url }}">Read more about your baby's development.</a></div>
+                {% if request.user.profile.is_prenatal %}
+                    <div class="item-nav"><a href="{{ category.get_absolute_url }}">More about your pregnancy stage</a></div>
+                {% else %}
+                    <div class="item-nav"><a href="{{ category.get_absolute_url }}">More about your baby's age</a></div>
+                {% endif %}
             </div>
         </div>
     {% endif %}
