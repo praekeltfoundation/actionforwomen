@@ -23,7 +23,7 @@ setup(
         'django-south-admin',
         'django-userprofile>=0.0.6',
         'flup',
-        'jmbo',
+        'jmbo==0.3',
         'jmbo-poll',
         'jmbo-post',
         'psycopg2',
