@@ -20,6 +20,7 @@ setup(
         'django-preferences',
         'django-sites-groups',
         'django-snippetscream',
+        'django-south-admin',
         'django-userprofile>=0.0.6',
         'flup',
         'jmbo',

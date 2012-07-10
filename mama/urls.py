@@ -5,8 +5,11 @@ from django.views.generic import TemplateView
 from haystack.views import SearchView
 from mama.views import CategoryDetailView, CategoryListView, ContactView
 from mama.forms import PasswordResetForm
+import object_tools
 
 admin.autodiscover()
+object_tools.autodiscover()
+
 urlpatterns = patterns('',
     url(
         r'^$',
@@ -100,6 +103,7 @@ urlpatterns = patterns('',
         name='registration_register'
     ),
     (r'^admin/', include(admin.site.urls)),
+    (r'^object-tools/', include(object_tools.tools.urls)),
     (r'^ckeditor/', include('ckeditor.urls')),
     (r'^', include('jmbo.urls')),
 )
