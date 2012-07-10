@@ -129,6 +129,7 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
+    'object_tools',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.comments',
@@ -153,6 +154,7 @@ INSTALLED_APPS = (
     'secretballot',
     'sites_groups',
     'south',
+    'south_admin',
     'userprofile',
 )
 
