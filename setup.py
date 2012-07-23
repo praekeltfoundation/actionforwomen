@@ -24,7 +24,7 @@ setup(
         'django-userprofile>=0.0.6',
         'flup',
         'jmbo==0.3',
-        'jmbo-poll',
+        'jmbo-poll>=0.0.5',
         'jmbo-post',
         'psycopg2',
         'python-ambient',
