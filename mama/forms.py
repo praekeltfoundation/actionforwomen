@@ -6,6 +6,7 @@ from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.models import get_current_site
 from django.core.urlresolvers import reverse
+from django.core.validators import RegexValidator
 from django.forms.extras.widgets import SelectDateWidget
 from django.utils.http import int_to_base36
 from django.utils.safestring import mark_safe
@@ -112,3 +113,8 @@ class RegistrationForm(RegistrationFormTermsOfService):
         self.fields['tos'].label = mark_safe('I accept the <a href="%s">terms'
                                              'and conditions</a> of use.'
                                              % reverse("terms"))
+
+    def clean_mobile_number(self):
+        mobile_number = self.cleaned_data['mobile_number']
+        RegexValidator('^27\d{9}$', message="Enter a valid mobile number in the form 27719876543")(mobile_number)
+        return mobile_number
