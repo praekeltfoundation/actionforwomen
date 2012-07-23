@@ -9,9 +9,11 @@
             <div class="post">
                 <div class="title">
                     {{ object.title }}
-                    <div class="stamp">
-                        {% humanize_time_diff object.created "Ago" %} // <a href="#comments">{{ object.comment_count }} Comments</a>
-                    </div>
+                    {% if show_byline %}
+                        <div class="stamp">
+                            {% humanize_time_diff object.created "Ago" %} // <a href="#comments">{{ object.comment_count }} Comments</a>
+                        </div>
+                    {% endif %}
                 </div>
                 <div> </div>
                 {% if object.image %}

@@ -6,6 +6,7 @@ from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.models import get_current_site
 from django.core.urlresolvers import reverse
+from django.core.validators import RegexValidator
 from django.forms.extras.widgets import SelectDateWidget
 from django.utils.http import int_to_base36
 from django.utils.safestring import mark_safe
@@ -96,19 +97,23 @@ class RegistrationForm(RegistrationFormTermsOfService):
                 model = utils.get_profile_model()
         self.fields.update(ProfileModelForm().fields)
         del self.fields['email']
+        del self.fields['password2']
         self.fields.keyOrder = [
             'username',
             'mobile_number',
             'delivery_date',
             'password1',
-            'password2',
             'tos',
         ]
         self.fields['mobile_number'].required = True
         self.fields['delivery_date'].required = True
         self.fields['delivery_date'].label = 'What is your due date'
         self.fields['delivery_date'].widget = SelectDateWidget()
-        self.fields['password2'].label = 'Confirm your password'
         self.fields['tos'].label = mark_safe('I accept the <a href="%s">terms'
                                              'and conditions</a> of use.'
                                              % reverse("terms"))
+
+    def clean_mobile_number(self):
+        mobile_number = self.cleaned_data['mobile_number']
+        RegexValidator('^27\d{9}$', message="Enter a valid mobile number in the form 27719876543")(mobile_number)
+        return mobile_number
