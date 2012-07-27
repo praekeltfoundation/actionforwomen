@@ -17,6 +17,7 @@
 {% csrf_token %}
     <div class="row">
         {{ form.username.label_tag }}
+        This name will appear next to all your comments.
         {% if form.username.errors %}
             <div class="errors">
                 {% for error in form.username.errors %}
@@ -28,6 +29,7 @@
     </div>
     <div class="row">
         {{ form.mobile_number.label_tag }}
+        We'll use this to give you updated pregnancy / baby info
         {% if form.mobile_number.errors %}
             <div class="errors">
                 {% for error in form.mobile_number.errors %}
