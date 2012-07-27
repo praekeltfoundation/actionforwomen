@@ -1,3 +1,4 @@
+import uuid
 import ambient
 from datetime import date
 from django import forms
@@ -5,6 +6,7 @@ from django.conf import settings
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.models import get_current_site
+from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django.core.validators import RegexValidator
 from django.forms.extras.widgets import SelectDateWidget
@@ -106,14 +108,27 @@ class RegistrationForm(RegistrationFormTermsOfService):
             'tos',
         ]
         self.fields['mobile_number'].required = True
+        self.fields['password1'].required = False
         self.fields['delivery_date'].required = True
         self.fields['delivery_date'].label = 'What is your due date'
         self.fields['delivery_date'].widget = SelectDateWidget()
-        self.fields['tos'].label = mark_safe('I accept the <a href="%s">terms'
+        self.fields['tos'].label = mark_safe('I accept the <a href="%s">terms '
                                              'and conditions</a> of use.'
                                              % reverse("terms"))
 
     def clean_mobile_number(self):
         mobile_number = self.cleaned_data['mobile_number']
-        RegexValidator('^27\d{9}$', message="Enter a valid mobile number in the form 27719876543")(mobile_number)
-        return mobile_number
+        RegexValidator('^27\d{9}$', message="Enter a valid mobile number in "
+                       "the form 27719876543")(mobile_number)
+        try:
+            mama.models.UserProfile.objects.get(
+                mobile_number__exact=mobile_number
+            )
+            raise ValidationError('A user with that mobile number already '
+                                  'exists. <a href="%s">Forgotten your '
+                                  'password?</a>' % reverse("password_reset"))
+        except mama.models.UserProfile.DoesNotExist:
+            return mobile_number
+
+    def clean_password1(self):
+        return uuid.uuid4().hex
