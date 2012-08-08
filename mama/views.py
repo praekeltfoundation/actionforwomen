@@ -122,8 +122,10 @@ def post_comment(request, next=None, using=None):
     data = request.POST.copy()
     if not request.user.is_authenticated():
         data["name"] = 'anonymous'
-        data["email"] = 'commentor@askmama.mobi'
-    data["url"] = 'http://commentor.askmama.mobi'
+    else:
+        data['name'] = request.user.username
+    data["email"] = 'commentor@askmama.mobi'
+    data["url"] = request.META['HTTP_REFERER']
     request.POST = data
     return comments.post_comment(request, next=request.META['HTTP_REFERER'], using=using)
 
