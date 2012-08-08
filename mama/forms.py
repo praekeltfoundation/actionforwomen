@@ -118,8 +118,8 @@ class RegistrationForm(RegistrationFormTermsOfService):
 
     def clean_mobile_number(self):
         mobile_number = self.cleaned_data['mobile_number']
-        RegexValidator('^27\d{9}$', message="Enter a valid mobile number in "
-                       "the form 27719876543")(mobile_number)
+        RegexValidator('^\d{10}$', message="Enter a valid mobile number in "
+                       "the form 0719876543")(mobile_number)
         try:
             mama.models.UserProfile.objects.get(
                 mobile_number__exact=mobile_number
