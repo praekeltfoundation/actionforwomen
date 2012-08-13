@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.1.0 (2012-08-13)
+------------------
+#. Started on holodeck metrics push management command.
+
 0.0.9 (2012-08-13)
 ------------------
 #. Added exportusers management command for exporting all users sorted by date joined.
