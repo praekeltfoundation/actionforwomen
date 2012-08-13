@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.0.9 (2012-08-13)
+------------------
+#. Added exportusers management command for exporting all users sorted by date joined.
+
 0.0.8 (2012-08-13)
 ------------------
 #. Re-enabled password field on registration.
