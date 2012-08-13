@@ -1,6 +1,14 @@
 Changelog
 =========
 
+0.0.8 (2012-08-13)
+------------------
+#. Re-enabled password field on registration.
+
+0.0.7 (2012-08-07)
+------------------
+#. Corrected authorized comment issue.
+
 0.0.6 (2012-07-26)
 ------------------
 
