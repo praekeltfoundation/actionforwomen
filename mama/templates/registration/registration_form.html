@@ -28,6 +28,17 @@
         {{ form.username }}
     </div>
     <div class="row">
+        {{ form.password1.label_tag }}
+        {% if form.password1.errors %}
+            <div class="errors">
+                {% for error in form.password1.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {{ form.password1 }}
+    </div>
+    <div class="row">
         {{ form.mobile_number.label_tag }}
         We'll use this to give you updated pregnancy / baby info
         {% if form.mobile_number.errors %}

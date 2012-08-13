@@ -108,7 +108,6 @@ class RegistrationForm(RegistrationFormTermsOfService):
             'tos',
         ]
         self.fields['mobile_number'].required = True
-        self.fields['password1'].required = False
         self.fields['delivery_date'].required = True
         self.fields['delivery_date'].label = 'What is your due date'
         self.fields['delivery_date'].widget = SelectDateWidget()
@@ -129,6 +128,3 @@ class RegistrationForm(RegistrationFormTermsOfService):
                                   'password?</a>' % reverse("password_reset"))
         except mama.models.UserProfile.DoesNotExist:
             return mobile_number
-
-    def clean_password1(self):
-        return uuid.uuid4().hex
