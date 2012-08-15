@@ -9,11 +9,16 @@ from photon import Client
 class Command(BaseCommand):
     help = 'Pushes various metrics to Holodeck dashboard.'
 
+
     def handle(self, *args, **options):
-   
-        range_end = datetime.now()
+        self.push(datetime.now())
+        print "Done!"
+                
+    def push(self, datetime_obj):
+        range_end = datetime_obj
         day_range_start = range_end - timedelta(days=1)
         week_range_start = range_end - timedelta(days=7)
+        month_range_start = range_end - timedelta(days=30)
 
         client = Client(server='http://holodeck.praekelt.com')
 
@@ -22,8 +27,9 @@ class Command(BaseCommand):
             samples=(
                 ("Daily", User.objects.filter(date_joined__range=(day_range_start, range_end)).count()),
                 ("Weekly", User.objects.filter(date_joined__range=(week_range_start, range_end)).count()),
+                ("Monthly", User.objects.filter(date_joined__range=(month_range_start, range_end)).count()),
             ),
-            api_key='6a01d31eccef43d4bc922104ca3b752d',
+            api_key='f19b87d3cd474faf918d58b71abd4311',
             timestamp=datetime.now(),
         )
         
@@ -32,8 +38,8 @@ class Command(BaseCommand):
             samples=(
                 ("Daily", Comment.objects.filter(submit_date__range=(day_range_start, range_end)).count()),
                 ("Weekly", Comment.objects.filter(submit_date__range=(week_range_start, range_end)).count()),
+                ("Monthly", Comment.objects.filter(submit_date__range=(month_range_start, range_end)).count()),
             ),
-            api_key='0c4912946bb14b8190f800ea6ac8a699',
+            api_key='14db95a47181416c9a687976e30f2a6c',
             timestamp=datetime.now(),
         )
-        print "Done!"
