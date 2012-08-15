@@ -25,6 +25,9 @@ class Link(models.Model):
         related_name="link_source_set"
     )
 
+    class Meta:
+        ordering = ['-id',]
+
     def __unicode__(self):
         return self.title
 
