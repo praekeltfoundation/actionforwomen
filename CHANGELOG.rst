@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.1.1 (2012-08-15)
+------------------
+#. Created managment command importing BC Baby content.
+#. Created managment command to disable comments and likes on authoritative content.
+#. Removed post byline show/hide hardcode, now relies on comments_enabled field.
+
 0.1.0 (2012-08-13)
 ------------------
 #. Started on holodeck metrics push management command.

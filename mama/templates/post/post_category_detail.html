@@ -9,7 +9,7 @@
             <div class="post">
                 <div class="title">
                     {{ object.title }}
-                    {% if show_byline %}
+                    {% if object.comments_enabled %}
                         <div class="stamp">
                             {% humanize_time_diff object.created "Ago" %} // <a href="#comments">{{ object.comment_count }} Comments</a>
                         </div>

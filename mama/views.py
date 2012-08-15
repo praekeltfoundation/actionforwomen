@@ -31,7 +31,6 @@ class CategoryDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(CategoryDetailView, self).get_context_data(**kwargs)
         context['category'] = self.category
-        context['show_byline'] = self.category.slug not in ['life-guides', 'mama-a-to-z']
         return context
 
     def get_queryset(self):
