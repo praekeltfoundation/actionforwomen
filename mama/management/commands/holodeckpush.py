@@ -30,7 +30,7 @@ class Command(BaseCommand):
                 ("Monthly", User.objects.filter(date_joined__range=(month_range_start, range_end)).count()),
             ),
             api_key='f19b87d3cd474faf918d58b71abd4311',
-            timestamp=datetime.now(),
+            timestamp=datetime_obj,
         )
         
         print "Pushing Comments"
@@ -41,5 +41,5 @@ class Command(BaseCommand):
                 ("Monthly", Comment.objects.filter(submit_date__range=(month_range_start, range_end)).count()),
             ),
             api_key='14db95a47181416c9a687976e30f2a6c',
-            timestamp=datetime.now(),
+            timestamp=datetime_obj,
         )
