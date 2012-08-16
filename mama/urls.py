@@ -105,6 +105,7 @@ urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
     (r'^object-tools/', include(object_tools.tools.urls)),
     (r'^ckeditor/', include('ckeditor.urls')),
+    url(r'^google-credentials/', include('google_credentials.urls')),
     (r'^', include('jmbo.urls')),
 )
 
