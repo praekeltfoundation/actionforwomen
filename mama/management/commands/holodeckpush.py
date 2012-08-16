@@ -1,9 +1,13 @@
-from datetime import datetime, timedelta
+from datetime import datetime, date, timedelta
 
 from django.contrib.auth.models import User
 from django.contrib.comments.models import Comment
 from django.core.management.base import BaseCommand
+from mama.models import UserProfile
+from google_credentials import utils
 from photon import Client
+
+GA_PROFILE_ID = 60937138
 
 
 class Command(BaseCommand):
@@ -11,35 +15,121 @@ class Command(BaseCommand):
 
 
     def handle(self, *args, **options):
-        self.push(datetime.now())
+        for i in range (0,20):
+            self.push(datetime.now() - timedelta(days=i*7))
+        #self.push(datetime.now())
         print "Done!"
                 
     def push(self, datetime_obj):
         range_end = datetime_obj
-        day_range_start = range_end - timedelta(days=1)
-        week_range_start = range_end - timedelta(days=7)
-        month_range_start = range_end - timedelta(days=30)
+        range_start = range_end - timedelta(days=7)
+        range_start_cumulative = datetime(year=2012, month=1, day=1, hour=0, minute=0, second=0)
 
         client = Client(server='http://holodeck.praekelt.com')
+        ga_service = utils.get_service()
 
-        print "Pushing Registrations"
+        print "Pushing Mobi Weekly Comments"
         client.send(
             samples=(
-                ("Daily", User.objects.filter(date_joined__range=(day_range_start, range_end)).count()),
-                ("Weekly", User.objects.filter(date_joined__range=(week_range_start, range_end)).count()),
-                ("Monthly", User.objects.filter(date_joined__range=(month_range_start, range_end)).count()),
+                ("Weekly", Comment.objects.filter(submit_date__range=(range_start, range_end)).count()),
             ),
-            api_key='f19b87d3cd474faf918d58b71abd4311',
+            api_key='5bf6a7f19c58454b89ec640bb5799884',
             timestamp=datetime_obj,
         )
         
-        print "Pushing Comments"
+        print "Pushing Mobi Weekly Users"
+        query = ga_service.data().ga().get(
+            ids='ga:%d' % GA_PROFILE_ID,
+            start_date=str(range_start.date()),
+            end_date=str(range_end.date()),
+            metrics='ga:visitors'
+        )
+
+        results = query.execute()
         client.send(
             samples=(
-                ("Daily", Comment.objects.filter(submit_date__range=(day_range_start, range_end)).count()),
-                ("Weekly", Comment.objects.filter(submit_date__range=(week_range_start, range_end)).count()),
-                ("Monthly", Comment.objects.filter(submit_date__range=(month_range_start, range_end)).count()),
+                ("Unique Users", results['totalsForAllResults']['ga:visitors']),
+                ("Registration", User.objects.filter(date_joined__range=(range_start, range_end)).count()),
             ),
-            api_key='14db95a47181416c9a687976e30f2a6c',
+            api_key='2d4946ea24fd451a9a7fc6e950b3b3d3',
+            timestamp=datetime_obj,
+        )
+        
+        print "Pushing Mobi Weekly Pageviews"
+        query = ga_service.data().ga().get(
+            ids='ga:%d' % GA_PROFILE_ID,
+            start_date=str(range_start.date()),
+            end_date=str(range_end.date()),
+            metrics='ga:pageviews'
+        )
+
+        results = query.execute()
+        client.send(
+            samples=(
+                ("Pageviews", results['totalsForAllResults']['ga:pageviews']),
+            ),
+            api_key='4ca629dd63334526829ecf0ba7dfc253',
+            timestamp=datetime_obj,
+        )
+        
+        print "Pushing Mobi User Types"
+        query = ga_service.data().ga().get(
+            ids='ga:%d' % GA_PROFILE_ID,
+            start_date=str(range_start.date()),
+            end_date=str(range_end.date()),
+            metrics='ga:visitors',
+            dimensions='ga:visitorType'
+        )
+
+        results = query.execute()
+        if 'rows' in results:
+            client.send(
+                samples=[(row[0], int(row[1])) for row in results['rows']],
+                api_key='0115a91da7cd4771b8609f3e8fa8ef6f',
+                timestamp=datetime_obj,
+            )
+        
+        print "Pushing Mobi User Phase"
+        client.send(
+            samples=(
+                ("Prenatal", UserProfile.objects.filter(delivery_date__gte=datetime_obj).count()),
+                ("Postnatal", UserProfile.objects.filter(delivery_date__lt=datetime_obj).count()),
+            ),
+            api_key='cd5ad5f4898d4f768e09cf17c9f89b2f',
+            timestamp=datetime_obj,
+        )
+        
+        print "Pushing Mobi Users Cumulative"
+        query = ga_service.data().ga().get(
+            ids='ga:%d' % GA_PROFILE_ID,
+            start_date=str(range_start_cumulative.date()),
+            end_date=str(range_end.date()),
+            metrics='ga:visitors'
+        )
+
+        results = query.execute()
+        client.send(
+            samples=(
+                ("Unique Users", results['totalsForAllResults']['ga:visitors']),
+                ("Registration", User.objects.filter(date_joined__range=(range_start_cumulative, range_end)).count()),
+            ),
+            api_key='4a067ff0cf0844cfa4adda556fd285bb',
+            timestamp=datetime_obj,
+        )
+        
+        print "Pushing Mobi Pageviews Cumulative"
+        query = ga_service.data().ga().get(
+            ids='ga:%d' % GA_PROFILE_ID,
+            start_date=str(range_start_cumulative.date()),
+            end_date=str(range_end.date()),
+            metrics='ga:pageviews'
+        )
+
+        results = query.execute()
+        client.send(
+            samples=(
+                ("Pageviews", results['totalsForAllResults']['ga:pageviews']),
+            ),
+            api_key='ade53b20f12b4991a6070b9b9108d313',
             timestamp=datetime_obj,
         )
