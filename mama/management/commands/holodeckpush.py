@@ -15,9 +15,9 @@ class Command(BaseCommand):
 
 
     def handle(self, *args, **options):
-        for i in range (0,20):
-            self.push(datetime.now() - timedelta(days=i*7))
-        #self.push(datetime.now())
+        #for i in range (0,20):
+        #    self.push(datetime.now() - timedelta(days=i*7))
+        self.push(datetime.now())
         print "Done!"
                 
     def push(self, datetime_obj):
