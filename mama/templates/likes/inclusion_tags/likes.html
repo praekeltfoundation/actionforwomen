@@ -1,0 +1,8 @@
+{% if likes_enabled %}
+    // {{ content_obj.vote_total }}
+    {% if can_vote %}
+        <a href="{% url like content_type content_obj.id 1 %}">I Like</a>
+    {% else %}
+        Likes
+    {% endif %}
+{% endif %}
