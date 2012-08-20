@@ -24,7 +24,7 @@ setup(
         'django-south-admin',
         'django-userprofile>=0.0.6',
         'flup',
-        'jmbo==0.3',
+        'jmbo>=0.5.1',
         'jmbo-poll>=0.0.5',
         'jmbo-post',
         'photon',
