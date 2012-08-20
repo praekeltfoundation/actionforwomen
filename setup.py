@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='mama',
-    version='0.1.1',
+    version='0.1.2',
     description='Mama Django project.',
     long_description = open('README.rst', 'r').read() + open('AUTHORS.rst', 'r').read() + open('CHANGELOG.rst', 'r').read(),
     author='Praekelt Foundation',
@@ -24,7 +24,7 @@ setup(
         'django-south-admin',
         'django-userprofile>=0.0.6',
         'flup',
-        'jmbo==0.3',
+        'jmbo>=0.5.1',
         'jmbo-poll>=0.0.5',
         'jmbo-post',
         'photon',
