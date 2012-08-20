@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.1.2 (2012-08-20)
+------------------
+#. Enabled post and comment liking.
+#. Upgraded from Jmbo 0.3.4 to 0.5.1 as required for comment liking.
+
 0.1.1 (2012-08-15)
 ------------------
 #. Created managment command importing BC Baby content.
