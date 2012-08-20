@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load jmbo_inclusion_tags mama_inclusion_tags %}
 {% load jmbo_template_tags %}
+{% load likes_inclusion_tags %}
 
 {% block content %}
     <div class="{{ category.color }}">
@@ -11,7 +12,7 @@
                     {{ object.title }}
                     {% if object.comments_enabled %}
                         <div class="stamp">
-                            {% humanize_time_diff object.created "Ago" %} // <a href="#comments">{{ object.comment_count }} Comments</a>
+                            {% humanize_time_diff object.created "Ago" %} // <a href="#comments">{{ object.comment_count }} Comments</a>{% likes object %}
                         </div>
                     {% endif %}
                 </div>
