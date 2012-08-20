@@ -1,12 +1,16 @@
 from datetime import date
 
 from ckeditor.fields import RichTextField
+from django.contrib.comments.models import Comment
 from django.db import models
 from django.db.models.signals import class_prepared
 from django.dispatch import receiver
-from preferences.models import Preferences
-from userprofile.models import AbstractProfileBase
+from likes.exceptions import CannotVoteException
+from likes.signals import likes_enabled_test, can_vote_test
 from mama.forms import RegistrationForm
+from preferences.models import Preferences
+import secretballot
+from userprofile.models import AbstractProfileBase
 
 
 class Link(models.Model):
@@ -155,3 +159,20 @@ def add_field(sender, **kwargs):
             help_text="Color categorized content is styled with."
         )
         color_field.contribute_to_class(sender, "color")
+
+secretballot.enable_voting_on(
+    Comment,
+)
+
+likes_enabled_test.disconnect(sender=Comment)
+@receiver(likes_enabled_test, sender=Comment)
+def on_likes_enabled_test(sender, instance, request, **kwargs):
+    return True
+
+likes_enabled_test.disconnect(sender=Comment)
+@receiver(can_vote_test, sender=Comment)
+def on_can_vote_test(sender, instance, user, request, **kwargs):
+    if instance.user == user:# or instance.ip_address == request.META['REMOTE_ADDR'] :
+        raise CannotVoteException
+    else:
+        return True
