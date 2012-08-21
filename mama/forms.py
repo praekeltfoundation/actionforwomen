@@ -109,7 +109,7 @@ class RegistrationForm(RegistrationFormTermsOfService):
         ]
         self.fields['mobile_number'].required = True
         self.fields['delivery_date'].required = True
-        self.fields['delivery_date'].label = 'What is your due date'
+        self.fields['delivery_date'].label = "What is your due date or baby's birthday?"
         self.fields['delivery_date'].widget = SelectDateWidget()
         self.fields['tos'].label = mark_safe('I accept the <a href="%s">terms '
                                              'and conditions</a> of use.'
