@@ -23,7 +23,7 @@ class Command(BaseCommand):
         path = os.path.split(os.path.abspath(__file__))[0]
         pages = parse(os.path.join(path, 'raw_bc_baby_content.txt')).childNodes[0]
 
-        print "Creating posts..."
+        print "Creating baby posts..."
         for node in pages.getElementsByTagName('page'):
             categories = [bc_category, ]
             pk = 8000 + int(node.getElementsByTagName('uid')[0].firstChild.data)
@@ -71,7 +71,7 @@ class Command(BaseCommand):
                 post.save()
                 print "Imported %s" % post
 
-        print "Creating post links..."
+        print "Creating baby post links..."
         for source, targets in links.items():
             for target in targets:
                 
@@ -83,4 +83,4 @@ class Command(BaseCommand):
                 if created:
                     print "Created link %s" % link
 
-        print "Done!"
+        print "Baby done!"

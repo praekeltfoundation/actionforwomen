@@ -10,7 +10,7 @@ from post.models import Post
 
 
 class Command(BaseCommand):
-    help = 'Imports raw Baby Center content.'
+    help = 'Imports raw Baby Center pregnancy content.'
 
     def handle(self, *args, **options):
         links = {}
@@ -23,7 +23,7 @@ class Command(BaseCommand):
         path = os.path.split(os.path.abspath(__file__))[0]
         pages = parse(os.path.join(path, 'raw_bc_content.txt')).childNodes[0]
 
-        print "Creating posts..."
+        print "Creating pregnancy posts..."
         for node in pages.getElementsByTagName('page'):
             categories = [bc_category, ]
             pk = 6000 + int(node.getElementsByTagName('uid')[0].firstChild.data)
@@ -71,7 +71,7 @@ class Command(BaseCommand):
                 post.save()
                 print "Imported %s" % post
 
-        print "Creating post links..."
+        print "Creating pregnancy post links..."
         for source, targets in links.items():
             for target in targets:
                 
@@ -83,4 +83,4 @@ class Command(BaseCommand):
                 if created:
                     print "Created link %s" % link
 
-        print "Done!"
+        print "Pregnancy done!"
