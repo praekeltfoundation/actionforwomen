@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.1.3 (2012-08-21)
+------------------
+#. Corrected registration form due date field copy to account for postnatal users.
+#. Cleaned up management commends.
+
 0.1.2 (2012-08-20)
 ------------------
 #. Enabled post and comment liking.
