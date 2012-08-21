@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.1.4 (2012-08-21)
+------------------
+#. Now honour like and comment enabled settings on post listing byline. 
+#. Install latest Jmbo witch provides publish change view buttons.
+
 0.1.3 (2012-08-21)
 ------------------
 #. Corrected registration form due date field copy to account for postnatal users.
