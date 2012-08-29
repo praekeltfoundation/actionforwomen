@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.1.5 (2012-08-29)
+------------------
+#. Updated to use new django-moderation release.
+
 0.1.4 (2012-08-21)
 ------------------
 #. Now honour like and comment enabled settings on post listing byline. 
