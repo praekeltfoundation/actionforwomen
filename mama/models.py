@@ -160,9 +160,9 @@ def add_field(sender, **kwargs):
         )
         color_field.contribute_to_class(sender, "color")
 
-secretballot.enable_voting_on(
-    Comment,
-)
+#secretballot.enable_voting_on(
+#    Comment,
+#)
 
 likes_enabled_test.disconnect(sender=Comment)
 @receiver(likes_enabled_test, sender=Comment)
@@ -172,7 +172,7 @@ def on_likes_enabled_test(sender, instance, request, **kwargs):
 likes_enabled_test.disconnect(sender=Comment)
 @receiver(can_vote_test, sender=Comment)
 def on_can_vote_test(sender, instance, user, request, **kwargs):
-    if instance.user == user:# or instance.ip_address == request.META['REMOTE_ADDR'] :
+    if instance.user == user:
         raise CannotVoteException
     else:
         return True
