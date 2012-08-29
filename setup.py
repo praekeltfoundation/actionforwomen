@@ -17,7 +17,7 @@ setup(
         'django-generate',
         'django-google-credentials',
         'django-haystack',
-        'django-moderator',
+        'django-moderator>=0.0.4',
         'django-preferences',
         'django-sites-groups',
         'django-snippetscream',
