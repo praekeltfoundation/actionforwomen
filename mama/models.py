@@ -32,6 +32,9 @@ class Link(models.Model):
     def __unicode__(self):
         return self.title
 
+    class Meta:
+        ordering = ['id',]
+
 class NavigationLink(models.Model):
     title = models.CharField(
         max_length=256,
