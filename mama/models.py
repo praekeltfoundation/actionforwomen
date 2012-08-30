@@ -29,9 +29,6 @@ class Link(models.Model):
         related_name="link_source_set"
     )
 
-    class Meta:
-        ordering = ['-id',]
-
     def __unicode__(self):
         return self.title
 
@@ -160,9 +157,6 @@ def add_field(sender, **kwargs):
         )
         color_field.contribute_to_class(sender, "color")
 
-#secretballot.enable_voting_on(
-#    Comment,
-#)
 
 likes_enabled_test.disconnect(sender=Comment)
 @receiver(likes_enabled_test, sender=Comment)
