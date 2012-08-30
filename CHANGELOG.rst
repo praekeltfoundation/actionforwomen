@@ -3,7 +3,7 @@ Changelog
 
 0.1.6 (2012-08-30)
 ------------------
-#. Removed link ordering on id.
+#. Corrected link ordering on id.
 
 0.1.5 (2012-08-29)
 ------------------
