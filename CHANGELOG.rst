@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.1.7 (2012-09-13)
+------------------
+#. Holodeck push now limits GA stats to mobile only.
+
 0.1.6 (2012-08-30)
 ------------------
 #. Corrected link ordering on id.
