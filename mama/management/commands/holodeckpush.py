@@ -42,6 +42,7 @@ class Command(BaseCommand):
             ids='ga:%d' % GA_PROFILE_ID,
             start_date=str(range_start.date()),
             end_date=str(range_end.date()),
+            segment='gaid::-11', # mobile users only
             metrics='ga:visitors'
         )
 
@@ -60,6 +61,7 @@ class Command(BaseCommand):
             ids='ga:%d' % GA_PROFILE_ID,
             start_date=str(range_start.date()),
             end_date=str(range_end.date()),
+            segment='gaid::-11', # mobile users only
             metrics='ga:pageviews'
         )
 
@@ -79,6 +81,7 @@ class Command(BaseCommand):
             end_date=str(range_end.date()),
             metrics='ga:visitors',
             dimensions='ga:visitorType'
+            segment='gaid::-11', # mobile users only
         )
 
         results = query.execute()
@@ -105,6 +108,7 @@ class Command(BaseCommand):
             start_date=str(range_start_cumulative.date()),
             end_date=str(range_end.date()),
             metrics='ga:visitors'
+            segment='gaid::-11', # mobile users only
         )
 
         results = query.execute()
@@ -123,6 +127,7 @@ class Command(BaseCommand):
             start_date=str(range_start_cumulative.date()),
             end_date=str(range_end.date()),
             metrics='ga:pageviews'
+            segment='gaid::-11', # mobile users only
         )
 
         results = query.execute()
