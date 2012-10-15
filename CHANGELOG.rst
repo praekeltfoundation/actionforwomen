@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.1.8 (2012-10-15)
+------------------
+#. Comments containing URLs are now ignore.
+
 0.1.7 (2012-09-13)
 ------------------
 #. Holodeck push now limits GA stats to mobile only.
