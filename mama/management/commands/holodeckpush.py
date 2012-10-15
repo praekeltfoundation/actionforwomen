@@ -80,7 +80,7 @@ class Command(BaseCommand):
             start_date=str(range_start.date()),
             end_date=str(range_end.date()),
             metrics='ga:visitors',
-            dimensions='ga:visitorType'
+            dimensions='ga:visitorType',
             segment='gaid::-11', # mobile users only
         )
 
@@ -107,7 +107,7 @@ class Command(BaseCommand):
             ids='ga:%d' % GA_PROFILE_ID,
             start_date=str(range_start_cumulative.date()),
             end_date=str(range_end.date()),
-            metrics='ga:visitors'
+            metrics='ga:visitors',
             segment='gaid::-11', # mobile users only
         )
 
@@ -126,7 +126,7 @@ class Command(BaseCommand):
             ids='ga:%d' % GA_PROFILE_ID,
             start_date=str(range_start_cumulative.date()),
             end_date=str(range_end.date()),
-            metrics='ga:pageviews'
+            metrics='ga:pageviews',
             segment='gaid::-11', # mobile users only
         )
 

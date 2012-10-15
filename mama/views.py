@@ -1,3 +1,5 @@
+import re
+
 import ambient
 from category.models import Category
 from django.conf import settings
@@ -23,6 +25,14 @@ from poll.models import Poll
 from post.models import Post
 from preferences import preferences
 
+URL_REGEX = re.compile(
+    r'(?:http|ftp)s?://' # http:// or https://
+    r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|' #domain...
+    r'localhost|' #localhost...
+    r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})' # ...or ip
+    r'(?::\d+)?' # optional port
+    r'(?:/?|[/?]\S+)', re.IGNORECASE
+)
 
 
 class CategoryDetailView(DetailView):
@@ -126,6 +136,11 @@ def post_comment(request, next=None, using=None):
     data["email"] = 'commentor@askmama.mobi'
     data["url"] = request.META['HTTP_REFERER']
     request.POST = data
+
+    # Ignore comments containing URLs
+    if re.search(URL_REGEX, data['comment']):
+        return comments.CommentPostBadRequest("URLs are not allowed.")
+
     return comments.post_comment(request, next=request.META['HTTP_REFERER'], using=using)
 
 def server_error(request):
