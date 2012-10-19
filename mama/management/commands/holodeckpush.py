@@ -31,12 +31,21 @@ class Command(BaseCommand):
         print "Pushing Mobi Weekly Comments"
         client.send(
             samples=(
-                ("Weekly", Comment.objects.filter(submit_date__range=(range_start, range_end)).count()),
+                ("Comments", Comment.objects.filter(submit_date__range=(range_start, range_end)).count()),
             ),
             api_key='5bf6a7f19c58454b89ec640bb5799884',
             timestamp=datetime_obj,
         )
         
+        print "Pushing Mobi Weekly Comments Cumulative"
+        client.send(
+            samples=(
+                ("Comments", Comment.objects.filter(submit_date__range=(range_start_cumulative, range_end)).count()),
+            ),
+            api_key='1ee89392a5d74460bfffd991c8a01e0e',
+            timestamp=datetime_obj,
+        )
+
         print "Pushing Mobi Weekly Users"
         query = ga_service.data().ga().get(
             ids='ga:%d' % GA_PROFILE_ID,
