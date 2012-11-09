@@ -20,7 +20,7 @@ class Command(BaseCommand):
                 
     def push(self, datetime_obj):
         range_end = datetime_obj
-        range_start = range_end - timedelta(days=7)
+        range_start = range_end - timedelta(days=1)
 
         client = Client(server='http://holodeck.praekelt.com')
         ga_service = utils.get_service()
