@@ -59,7 +59,7 @@ class Command(BaseCommand):
                 ("Pageviews", pageviews),
                 ("Unique Users", unique_users),
                 ("New Registrations", User.objects.filter(date_joined__range=(range_start, range_end)).count()),
-                ("Mean Response Time", mean_response_time),
+                ("Response Time(ms)", mean_response_time),
             ),
             api_key='6378ed3021ea4073a26b4d00e26c75c6',
             timestamp=datetime_obj,
