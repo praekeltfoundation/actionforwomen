@@ -58,7 +58,7 @@ class Command(BaseCommand):
             samples=(
                 ("Pageviews", pageviews),
                 ("Unique Users", unique_users),
-                ("New Registrations", User.objects.filter(date_joined__range=(range_start, range_end)).count())
+                ("New Registrations", User.objects.filter(date_joined__range=(range_start, range_end)).count()),
                 ("Mean Response Time", mean_response_time),
             ),
             api_key='6378ed3021ea4073a26b4d00e26c75c6',
