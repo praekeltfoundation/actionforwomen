@@ -72,8 +72,9 @@ class PasswordResetForm(PasswordResetForm):
         uid = int_to_base36(self.user.id)
         token = default_token_generator.make_token(self.profile.user)
         current_site = get_current_site(kwargs['request'])
-        message = "Follow this link to reset your %s password: http://%s%s" % (
-            current_site.name,
+
+        message = "Hi %s. Follow this link to reset your MAMA password: http://%s%s" % (
+            self.user.username,
             current_site.domain,
             reverse(
                 'password_reset_confirm',
