@@ -11,3 +11,6 @@ class MamaBackend(SimpleBackend):
         """
         kwargs['email'] = ''
         return super(MamaBackend, self).register(request, **kwargs)
+
+    def post_registration_redirect(self, request, user):
+        return ('registration_done', (), {}) 

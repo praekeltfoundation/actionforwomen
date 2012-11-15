@@ -1,6 +1,7 @@
 from django.conf.urls.defaults import *
 from django.conf import settings
 from django.contrib import admin
+from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView
 from haystack.views import SearchView
 from mama.views import CategoryDetailView, CategoryListView, ContactView
@@ -101,6 +102,11 @@ urlpatterns = patterns('',
         r'^accounts/register/$', 'registration.views.register',
         {'backend': 'mama.registration_backend.MamaBackend'},
         name='registration_register'
+    ),
+    url(
+        r'^accounts/register/done/', 
+        login_required(TemplateView.as_view(template_name="registration/done.html")),
+        name='registration_done'
     ),
     (r'^admin/', include(admin.site.urls)),
     (r'^object-tools/', include(object_tools.tools.urls)),
