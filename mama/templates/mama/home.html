@@ -3,7 +3,7 @@
 {% load mama_inclusion_tags %}
 
 {% block following_header %}
-    <div id="banner"><img src="{{ STATIC_URL }}mama/img/banner.jpg" /></div>
+    <div id="banner"><a href="{% url registration_register %}"><img src="{{ STATIC_URL }}mama/img/banner_camp1.jpg" /></a></div>
 {% endblock %}
 
 {% block content %}
