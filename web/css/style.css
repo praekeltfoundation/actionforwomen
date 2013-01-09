@@ -180,12 +180,30 @@
             .family .quarter p a { padding: 12px 0 0 0; display: block; color: #f54f16; font-weight: bold; font-size: 15px; text-decoration: none; }
             .family .member { width: 134px; float: left; margin: 10px 11px 0 0; }
 
+        /* news */
+        .news .third h2 { padding: 0 0 10px 0; line-height: 20px; }
+        .news .half { padding-bottom: 40px!important; }
+            .news .half img { float: left; display: block; padding: 0 20px 0 0; }
+            .news .half .title { margin: 0; font-size: 15px; color: #000; }
+            .news .half .title a { padding: 0; color: #000; font-weight: normal; }
+            .news .half .title a:hover { color: #f54f16; }
+            .news .half p { margin: 0; }
+
         /* founders */
         .founders { width: 860px; float; left; padding: 17px 0 0 0; border-top: 7px solid #f58d16; }
             .founders h3 { margin: 0; padding: 0 0 10px 0; font-family: HelvN; font-size: 18px; font-weight: normal; color: #000; text-transform: uppercase; }
             .founders .logos { width: 420px; float: left; }
             .founders .logos a { float: left; margin: 0 45px 0 0; display: block; }
             .founders .logos a img { display: block; }
+
+        /* emulator */
+        .emulator { width: 900px; height: 859px; padding: 0; margin: 0 20px 20px 20px; background: url('../img/bg_emulator.png') no-repeat; }
+            .emulator .phone { width: 418px; height: 686px; float: left; margin: 44px 0 0 0px; padding: 86px 0 0 127px; background: url('../img/phone.png') no-repeat }
+            .emulator .phone iframe { width: 295px; height: 394px; display: block; border: 0!important; }
+            .emulator .phone_text { width: 315px; float: left; margin: 180px 0 0 -30px; }
+            .emulator .phone_text h1 { padding: 30px 0 0 5px; margin: 0; color: #ff4200; font-family: HelvN; font-size: 30px; font-weight: normal; text-transform: uppercase; }
+            .emulator .phone_text h2 { padding: 0 0 0 0; margin: 0; color: #fe8f00; font-family: HelvN; font-size: 80px; font-weight: normal; text-transform: uppercase; line-height: 76px; }
+            .emulator .phone_text p { padding: 10px 0 0 5px; margin: 0; color: #666; font-size: 18px; }
 
         /* partners promo */
         .pf_marcha { background: url('../img/partner_pf_marcha.png') no-repeat!important; }

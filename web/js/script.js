@@ -6,7 +6,7 @@ $(function() {
 
 //Slider for Partners
 $('.promo_partners').anythingSlider({
-	delay: 12000,
-	animationTime: 600,
+	delay: 5000,
+	animationTime: 400,
 	startPanel: 1
 });
