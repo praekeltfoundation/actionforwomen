@@ -4,13 +4,13 @@ setup(
     name='mama',
     version='0.1.8',
     description='Mama Django project.',
-    long_description = open('README.rst', 'r').read() + open('AUTHORS.rst', 'r').read() + open('CHANGELOG.rst', 'r').read(),
+    long_description=open('README.rst', 'r').read() + open('AUTHORS.rst', 'r').read() + open('CHANGELOG.rst', 'r').read(),
     author='Praekelt Foundation',
     author_email='dev@praekelt.com',
     license='BSD',
     url='http://github.com/praekelt/mama',
-    packages = find_packages(),
-    dependency_links = [
+    packages=find_packages(),
+    dependency_links=[
     ],
     install_requires=[
         'django>=1.4',
@@ -24,7 +24,7 @@ setup(
         'django-south-admin',
         'django-userprofile>=0.0.6',
         'flup',
-        'jmbo>=0.5.3',
+        'jmbo==0.5.5',
         'jmbo-poll>=0.0.5',
         'jmbo-post',
         'photon',
