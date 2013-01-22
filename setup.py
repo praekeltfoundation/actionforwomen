@@ -25,7 +25,7 @@ setup(
         'django-userprofile>=0.0.6',
         'flup',
         'jmbo==0.5.5',
-        'jmbo-poll>=0.0.5',
+        'jmbo-poll>=0.0.9',
         'jmbo-post',
         'photon',
         'psycopg2',
@@ -38,7 +38,7 @@ setup(
     ],
     test_suite="setuptest.setuptest.SetupTestSuite",
     include_package_data=True,
-    classifiers = [
+    classifiers=[
         "Programming Language :: Python",
         "License :: OSI Approved :: BSD License",
         "Development Status :: 4 - Beta",
