@@ -143,6 +143,7 @@ INSTALLED_APPS = (
     'mama',
     'category',
     'ckeditor',
+    'export',
     'generate',
     'google_credentials',
     'haystack',
@@ -234,3 +235,7 @@ GA_CLIENT_ID = '938739567758.apps.googleusercontent.com'
 GA_CLIENT_SECRET = 'bpiXTbuh95MI8DQlDCIr02kf'
 GA_SCOPE = 'https://www.googleapis.com/auth/analytics.readonly'
 GA_REDIRECT_URI = 'http://askmama.mobi/google-credentials/callback'
+
+SERIALIZATION_MODULES = {
+    'csv': 'snippetscream.csv_serializer',
+}
