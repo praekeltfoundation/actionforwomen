@@ -14,6 +14,7 @@ setup(
     ],
     install_requires=[
         'django>=1.4',
+        'django-export',
         'django-generate',
         'django-google-credentials',
         'django-haystack',
