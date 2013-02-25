@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.2.0 (2013-02-25)
+------------------
+#. Comment honeypot field was not rendering, corrected.
+
 0.1.8 (2012-10-15)
 ------------------
 #. Comments containing URLs are now ignore.
@@ -19,7 +23,7 @@ Changelog
 
 0.1.4 (2012-08-21)
 ------------------
-#. Now honour like and comment enabled settings on post listing byline. 
+#. Now honour like and comment enabled settings on post listing byline.
 #. Install latest Jmbo witch provides publish change view buttons.
 
 0.1.3 (2012-08-21)
