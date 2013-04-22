@@ -13,7 +13,7 @@ setup(
     dependency_links=[
     ],
     install_requires=[
-        'django>=1.4',
+        'django==1.4.5',
         'django-export',
         'django-generate',
         'django-google-credentials',
