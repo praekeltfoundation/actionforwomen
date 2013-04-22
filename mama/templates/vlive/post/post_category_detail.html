@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load jmbo_inclusion_tags mama_inclusion_tags %}
+{% load jmbo_template_tags %}
+{% load likes_inclusion_tags %}
+
+{% block content %}
+    <div class="{{ category.color }}">
+        <div class="h1">{{ category.title }}</div>
+        <div class="content-inner">
+            <div class="post">
+                <div class="title">
+                    {{ object.title }}
+                    {% if object.comments_enabled %}
+                        <div class="stamp">
+                            {% humanize_time_diff object.created "Ago" %} // <a href="#comments">{{ object.comment_count }} Comments</a> // {% likes object %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div> </div>
+                {% if object.image %}
+                    <img src="{{ object.get_thumb_url }}" />
+                {% endif %}
+                {{ object.content|safe }}
+            </div>
+            <div class="post-menu">
+                <div class="items">
+                    {% with object.link_target_set.all as links %}
+                        {% for link in links %}
+                            {% if link.target.is_permitted %}
+                                <div class="item"><a href="{{ link.target.get_absolute_category_url }}">&raquo; {% if link.title %}{{ link.title }}{% else %}{{ link.target.title }}{% endif %}</a></div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endwith %}
+                </div>
+            </div>
+            {% babycenter_byline object %}
+            {% with object.navigation_link_target_set.all as navigation_links %}
+                {% if navigation_links %}
+                    <div class="post-menu">
+                        <div class="items">
+                            <div class="item-nav">
+                                {% for navigation_link in navigation_links %}
+                                    <a href="{{ navigation_link.target.get_absolute_category_url }}">&laquo; Back to {% if navigation_link.title %}{{ navigation_link.title }}{% else %}{{ navigation_link.target.title }}{% endif %}</a><br />
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endwith %}
+        </div>
+    </div>
+
+    {% topic_listing category.slug 1 %}
+    
+    {% object_comments object %}
+
+{% endblock %}

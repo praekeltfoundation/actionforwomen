@@ -1,0 +1,33 @@
+{% load jmbo_inclusion_tags %}
+
+{% if request.user.is_authenticated %}
+    {% if object_list %}
+        <div class="h1">{{ category.title }}</div>
+        <div class="content-inner">
+            <div class="items">
+                {% for object in object_list %}
+                    {% render_object object "block" %}
+                {% endfor %}
+                {% if request.user.profile.is_prenatal %}
+                    <div class="item-nav"><a href="{{ category.get_absolute_url }}">More about your pregnancy stage</a></div>
+                {% else %}
+                    <div class="item-nav"><a href="{{ category.get_absolute_url }}">More about your baby's age</a></div>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+{% else %}
+    <div class="h1">{{ category.title }}</div>
+    <div class="content-inner">
+        <div class="items">
+            <div class="item">
+                <a href="baby.html" class="intro-pic"><img src="{{ STATIC_URL }}mama/img/preg_23.png"></a>
+                <div class="meta">
+                    <div class="title"><a href="{% url registration_register %}">Sign Up Now!</a></div>
+                    <div class="description">Tell us your due date or baby’s birthday to get weekly updates on your growing baby.</div>
+                </div>
+            </div>
+            <div class="item-nav"><a href="{% url login %}">Already registered? Click here to sign in.</a></div>
+        </div>
+    </div>
+{% endif %}

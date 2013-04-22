@@ -1,0 +1,15 @@
+{% load likes_inclusion_tags moderator_inclusion_tags %}
+
+<div class="content-inner">
+    <div class="items">
+        {% for comment in comment_list %}
+            <div class="item comment no-pic">
+                <div class="meta">
+                    <div class="title">{{ comment.name }}</div>
+                    <div class="stamp">{{ comment.submit_date }} | {% likes comment %} {% report_comment_abuse comment %}</a></div>
+                    <div class="stamp">{{ comment.comment|linebreaks }}</div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>

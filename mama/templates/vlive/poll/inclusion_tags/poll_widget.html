@@ -1,0 +1,25 @@
+{% if can_vote_on_poll %}
+    <form id="frmPoll" method="post" action="{% url poll_vote object.slug %}">
+    {% csrf_token %}
+        <div class="title">{{ object.title }}</div>
+        {% for option in object.polloption_set.all %}
+            <div class="row"><input type="radio" name="{{ form.poll_option.html_name }}" value="{{ option.pk }}" /> {{option.title }}</div>
+        {% endfor %}
+        <div class="row"><input type="submit" name="submit" value="Vote" class="btn" ></div>
+    </form>
+{% else %}
+    <div class="content-inner">
+        <div class="post">
+            <div class="title">{{ object.title }}</div>
+            <table class="poll-results" cellspacing="0">        
+                {% for option in object.polloption_set.all %}
+                    <tr class="poll-result-1">
+                        <td>{{ option.title }}</td> 
+                        <td class="bar"><div style="width: {{ option.percentage }}%;">&nbsp;</div></td>
+                        <td>{{ option.percentage|floatformat:1 }}%</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endif %}

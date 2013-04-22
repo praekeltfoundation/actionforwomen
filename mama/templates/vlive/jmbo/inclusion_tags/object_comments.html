@@ -1,0 +1,15 @@
+{% load comments %}
+
+{% get_comment_count for object as comment_count %}
+
+{% if comment_count or can_render_comment_form %}
+    {% if object.comments_enabled %}
+        <div class="{{ category.color }}">
+            <div class="h1" id="comments">Comments</div>
+            {% render_comment_list for object %}
+            {% if can_render_comment_form %}
+                {% render_comment_form for object %}
+            {% endif %}
+        </div>
+    {% endif %}
+{% endif %}
