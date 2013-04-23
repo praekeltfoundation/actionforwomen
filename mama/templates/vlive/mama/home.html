@@ -1,6 +1,11 @@
 {% extends 'pml/base.xml' %}
 
+{% load mama_inclusion_tags pml_inclusion_tags %}
+
 {% block body %}
 
+    {% banner image_url="{{ STATIC_URL }}mama/img/banner.jpg" %}
+
+    {% ages_and_stages %}
 
 {% endblock %}
