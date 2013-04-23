@@ -10,23 +10,25 @@ from post.models import Post
 register = template.Library()
 
 
-@register.inclusion_tag('mama/inclusion_tags/ages_and_stages.html', \
-        takes_context=True)
+@register.inclusion_tag('mama/inclusion_tags/ages_and_stages.html',
+                        takes_context=True)
 def ages_and_stages(context):
     context = copy(context)
     user = context['request'].user
     if user.is_authenticated():
-        delivery_date = user.profile.delivery_date
+        profile = user.profile
+        context.update({'profile': profile})
+        delivery_date = profile.delivery_date
         if delivery_date:
             now = datetime.now().date()
-            pre_post = 'pre' if user.profile.is_prenatal() else 'post'
-            week = 42 - ((delivery_date - now).days / 7) if user.profile.is_prenatal() else (now - delivery_date).days / 7
+            pre_post = 'pre' if profile.is_prenatal() else 'post'
+            week = 42 - ((delivery_date - now).days / 7) if profile.is_prenatal() else (now - delivery_date).days / 7
         else:
             # Defaults in case user does not have delivery date.
             pre_post = 'pre'
             week = 21
         try:
-            category = Category.objects.get(slug="my-pregnancy" if user.profile.is_prenatal() else "my-baby")
+            category = Category.objects.get(slug="my-pregnancy" if profile.is_prenatal() else "my-baby")
             context.update({
                 'category': category,
             })
@@ -40,8 +42,8 @@ def ages_and_stages(context):
                 'object_list': [],
             })
             return context
-        object_list = Post.permitted.filter(Q(primary_category=week_category) | \
-            Q(categories=week_category)).distinct()
+        object_list = Post.permitted.filter(Q(primary_category=week_category) |
+                                            Q(categories=week_category)).distinct()
         context.update({
             'object_list': object_list,
         })
