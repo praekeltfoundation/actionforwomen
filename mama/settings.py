@@ -1,4 +1,3 @@
-
 # Django settings for project project.
 
 import os
@@ -231,8 +230,8 @@ SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 # Set session cookie age to 1 year, meaning sessions are valid for up to 1 year.
 SESSION_COOKIE_AGE = 31536000
 
-GA_CLIENT_ID = '938739567758.apps.googleusercontent.com'
-GA_CLIENT_SECRET = 'bpiXTbuh95MI8DQlDCIr02kf'
+GA_CLIENT_ID = '862858405572.apps.googleusercontent.com'
+GA_CLIENT_SECRET = 'VXUxb2A6xUyYADGSKjb2h9Op'
 GA_SCOPE = 'https://www.googleapis.com/auth/analytics.readonly'
 GA_REDIRECT_URI = 'http://askmama.mobi/google-credentials/callback'
 
