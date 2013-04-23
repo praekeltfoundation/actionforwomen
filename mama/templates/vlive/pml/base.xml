@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+{% load pml_inclusion_tags %}
+<VZV-PARTNER xmlns:dc="http://purl.org/dc/elements/1.1/"
+             xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+             xmlns:vddr="http://namespaces.vodafone.com/applications/CRE#DDR"
+             xmlns:vmpml="http://namespaces.vodafone.com/applications/3PI#MPML"
+             xmlns:vsrch="http://namespaces.vodafone.com/applications/search#"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:noNamespaceSchemaLocation="http://www.via.vodafone.com/schema/VZV-PARTNER.xsd">
+    <PARTNER-PI>
+        <TRANSFORMER name="VZV-DEFAULT"/>
+    </PARTNER-PI>
+    <PARTNER-BODY>
+        {% block header %}
+        {% endblock %}
+        <VZV-DEFAULT>
+            {% banner image_url="{{ STATIC_URL }}mama/img/banner.jpg" %}
+            {% block body %}
+            {% endblock %}
+
+            {% header text='Share This Siter' color='pink' %}
+            <MODULE>
+                <CONTAINER type="data">
+                    <TEXT><p>
+                        Share This:
+                        <LINK href="http://twitter.com/home?status=MAMA - Mobile Alliance for Maternal Action http://askmama.mobi">
+                            <IMAGE href="{{ STATIC_URL }}mama/img/twitter.png"/>
+                        </LINK>
+                        <LINK href="http://www.facebook.com/sharer.php?u=http://askmama.mobi%26t=MAMA - Mobile Alliance for Maternal Action">
+                            <IMAGE href="{{ STATIC_URL }}mama/img/facebook.png"/>
+                        </LINK>
+                    </p></TEXT>
+                </CONTAINER>
+            </MODULE>
+        </VZV-DEFAULT>
+    </PARTNER-BODY>
+</VZV-PARTNER>
