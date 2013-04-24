@@ -18,7 +18,7 @@
             {% block body %}
             {% endblock %}
 
-            {% header text='Share This Siter' color='pink' %}
+            {% header text='Share This Site' color='pink' %}
             <MODULE>
                 <CONTAINER type="data">
                     <TEXT><p>
