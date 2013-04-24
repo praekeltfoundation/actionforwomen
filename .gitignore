@@ -5,3 +5,4 @@ mama.egg-info/
 mama.sqlite
 mama.sublime-project
 mama.sublime-workspace
+whoosh.index/
