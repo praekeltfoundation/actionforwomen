@@ -1,11 +1,8 @@
-{% extends 'base.html' %}
+{% extends 'pml/base.xml' %}
 
-{% block content %}
-    <div class="h1">Error</div>
-    <div class="content-inner">
-        <div class="post">
-            <p><strong>Something has gone horribly wrong...</strong></p>
-            <p>Don't worry, our engineers are attending to the problem.</p>
-        </div>
-    </div>
+{% load pml_inclusion_tags %}
+
+{% block body %}
+    {% header text='Error' color='pink' %}
+    {% text_module html="<b>Something has gone horribly wrong...</b><br />Don't worry, our engineers are attending to the problem.</p>" %}
 {% endblock %}
