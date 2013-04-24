@@ -1,1 +1,3 @@
-<div class="item"><a href="{{ object.get_absolute_category_url }}">{{ object.title }}</a></div>
+{% load pml_inclusion_tags %}
+
+{% text_include template='post/inclusion_tags/post_link_include.html' color='dove' %}
