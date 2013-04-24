@@ -4,7 +4,8 @@
 import os
 import sys
 
-PATH = os.path.split(os.path.abspath(os.path.join(os.path.dirname(sys.argv[0]))))[0]
+#PATH = os.path.split(os.path.abspath(os.path.join(os.path.dirname(sys.argv[0]))))[0]
+PATH = os.getcwd()
 
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
