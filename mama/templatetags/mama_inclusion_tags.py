@@ -4,8 +4,10 @@ from datetime import datetime
 from category.models import Category
 from django import template
 from django.db.models import Q
+from django.template import Context, Template
 from poll.models import Poll
 from post.models import Post
+
 
 register = template.Library()
 
@@ -114,6 +116,11 @@ def pagination(context, page_obj):
         'page_obj': page_obj,
         'paginator': getattr(page_obj, 'paginator', None),
     })
+    if page_obj.has_previous():
+        context['previous_url'] = Template("{% load jmbo_template_tags %}{% smart_query_string 'page' page_obj.previous_page_number %}").render(Context(context))
+    if page_obj.has_next():
+        context['next_url'] = Template("{% load jmbo_template_tags %}{% smart_query_string 'page' page_obj.next_page_number %}").render(Context(context))
+
     return context
 
 
