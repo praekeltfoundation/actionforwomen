@@ -67,12 +67,14 @@ def topic_listing(category_slug, more):
         category = Category.objects.get(slug__exact=category_slug)
     except Category.DoesNotExist:
         return {}
-    object_list = Post.permitted.filter(Q(primary_category=category) | \
-            Q(categories=category)).filter(categories__slug='featured').distinct()
+    object_list = Post.permitted.filter(
+        Q(primary_category=category) |
+        Q(categories=category)
+    ).filter(categories__slug='featured').distinct()
     return {
         'category': category,
         'object_list': object_list,
-        'more': more,
+        'full_heading': "More %s" % category.title if more else category.title
     }
 
 
