@@ -10,7 +10,7 @@
 
     {% if object_list %}
     <div class="{{ category.color }}">
-        <div class="h1">{{ heading_prefix }} {{ category.title }}</div>
+        <div class="h1">full_heading</div>
         <div class="content-inner">
             <div class="items">
                 {% for object in post_list %}
@@ -25,5 +25,5 @@
 
     {% block below_listing %}
     {% endblock %}
-    
+
 {% endblock %}
