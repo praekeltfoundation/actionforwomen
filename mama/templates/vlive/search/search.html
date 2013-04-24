@@ -1,5 +1,28 @@
+{% extends 'pml/base.xml' %}
+
+{% load jmbo_inclusion_tags mama_inclusion_tags pml_inclusion_tags %}
+
+{% block body %}
+
+    {% header text='Search Results' color='pink' %}
+
+    {% if page.object_list %}
+        {% for object in page.object_list %}
+            {% render_object object.object "block" %}
+        {% endfor %}
+    {% else %}
+        {% text_include template="mama/pml_includes/search_not_found.html" %}
+    {% endif %}
+
+
+{% endblock %}
+
+
+{% comment %}
 {% extends 'base.html' %}
 {% load jmbo_inclusion_tags mama_inclusion_tags %}
+
+
 
 {% block content %}
     <div class="h1">Search Results for '{{ query }}'</div>
@@ -20,3 +43,4 @@
 
     {% pagination page %}
 {% endblock %}
+{% endcomment %}
