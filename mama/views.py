@@ -60,6 +60,7 @@ class CategoryListView(ListView):
         context = super(CategoryListView, self).get_context_data(**kwargs)
         context['category'] = self.category
         context['heading_prefix'] = self.heading_prefix
+        context['full_heading'] = "%s %s" % (self.heading_prefix, self.category.title)
         return context
 
     def get_queryset(self):
@@ -121,7 +122,7 @@ def poll_vote(request, poll_slug):
     form = PollVoteForm(request.POST, request=request, poll=poll)
     if form.is_valid():
         form.save()
-    
+
     return redirect(reverse("home"))
 
 @csrf_protect
