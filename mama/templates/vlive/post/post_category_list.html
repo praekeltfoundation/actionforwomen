@@ -15,37 +15,9 @@
         {% endfor %}
     {% endif %}
 
-{% endblock %}
-
-{% comment %}
-
-{% extends "base.html" %}
-
-{% load jmbo_inclusion_tags mama_inclusion_tags %}
-
-{% block content %}
-
-    {% block above_listing %}
-        {% topic_listing category.slug 0 %}
-    {% endblock %}
-
-    {% if object_list %}
-    <div class="{{ category.color }}">
-        <div class="h1">{{ heading_prefix }} {{ category.title }}</div>
-        <div class="content-inner">
-            <div class="items">
-                {% for object in post_list %}
-                    {% render_object object "block" %}
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-    {% endif %}
-
     {% pagination page_obj %}
 
     {% block below_listing %}
     {% endblock %}
 
 {% endblock %}
-{% endcomment %}
