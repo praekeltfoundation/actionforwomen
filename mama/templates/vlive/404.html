@@ -1,11 +1,8 @@
-{% extends 'base.html' %}
+{% extends 'pml/base.xml' %}
 
-{% block content %}
-    <div class="h1">Not Found</div>
-    <div class="content-inner">
-        <div class="post">
-            <p><strong>Well this is embarrassing...</strong></p>
-            <p>The page you are looking for could not be found.</p>
-        </div>
-    </div>
+{% load pml_inclusion_tags %}
+
+{% block body %}
+    {% header text='Not Found' color='pink' %}
+    {% text_module html="<b>Well this is embarrassing...</b><br />The page you are looking for could not be found.</p>" %}
 {% endblock %}
