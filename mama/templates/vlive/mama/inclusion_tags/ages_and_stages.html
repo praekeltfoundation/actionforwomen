@@ -1,9 +1,14 @@
-{% load pml_inclusion_tags %}
+{% load jmbo_inclusion_tags pml_inclusion_tags %}
 
 {% if profile.delivery_date %}
-    {% header text=category.title color='pink' %}
-    {% text_include template='mama/pml_includes/ages_and_stages_content.html' %}
+    {% header text=category.title color='orange' %}
+    {% banner image_url="{{ STATIC_URL }}mama/img/banner.jpg" %}
+    {% for object in object_list %}
+        {% render_object object "block" %}
+    {% endfor %}
+    {% text_include template='mama/pml_includes/ages_and_stages_byline.html' %}
 {% else %}
-    {% header text='Register' color='pink' %}
+    {% header text='Register' color='orange' %}
+    {% banner image_url="{{ STATIC_URL }}mama/img/banner.jpg" %}
     {% thumbnail_include image_url='{{ STATIC_URL }}mama/img/preg_23.png' template='mama/pml_includes/ages_and_stages_cta.html' %}
 {% endif %}
