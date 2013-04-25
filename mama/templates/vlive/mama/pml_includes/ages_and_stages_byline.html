@@ -1,9 +1,5 @@
 {% load jmbo_inclusion_tags %}
 
-{% for object in object_list %}
-    {% render_object object "block" %}
-{% endfor %}
-
 {% if request.user.profile.is_prenatal %}
     <a href="{{ category.get_absolute_url }}">More about your pregnancy stage</a>
 {% else %}
