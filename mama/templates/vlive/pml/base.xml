@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-{% load pml_inclusion_tags %}
+{% load mama_inclusion_tags pml_inclusion_tags %}
 <VZV-PARTNER xmlns:dc="http://purl.org/dc/elements/1.1/"
              xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
              xmlns:vddr="http://namespaces.vodafone.com/applications/CRE#DDR"
@@ -14,26 +14,21 @@
         {% block header %}
         {% endblock %}
         <VZV-DEFAULT>
-            {% banner image_url="{{ STATIC_URL }}mama/img/banner.jpg" %}
+            {% pml_page_header %}
+
             {% block body %}
             {% endblock %}
 
-            {% header text='Share This Site' color='pink' %}
+            {% header text='Share This Site' color='orange' %}
             <MODULE>
                 <CONTAINER type="data">
-                    <TEXT><p>
-                        Share This:
-                        <LINK href="http://twitter.com/home?status=MAMA - Mobile Alliance for Maternal Action http://askmama.mobi">
-                            <IMAGE href="{{ STATIC_URL }}mama/img/twitter.png"/>
-                        </LINK>
-                        <LINK href="http://www.facebook.com/sharer.php?u=http://askmama.mobi%26t=MAMA - Mobile Alliance for Maternal Action">
-                            <IMAGE href="{{ STATIC_URL }}mama/img/facebook.png"/>
-                        </LINK>
-                    </p></TEXT>
+                    <TEXT>
+                        Share This: <LINK href="http://twitter.com/home?status=MAMA - Mobile Alliance for Maternal Action http://askmama.mobi"><IMAGE href="{{ STATIC_URL }}mama/img/twitter.png"></IMAGE></LINK><LINK href="http://www.facebook.com/sharer.php?u=http://askmama.mobi%26t=MAMA - Mobile Alliance for Maternal Action"><IMAGE href="{{ STATIC_URL }}mama/img/facebook.png"></IMAGE></LINK>
+                    </TEXT>
                 </CONTAINER>
             </MODULE>
 
-            {% header text='Search' color='pink' %}
+            {% header text='Search' color='orange' %}
             {% include 'mama/inclusion_tags/search_form.html' %}
 
         </VZV-DEFAULT>
