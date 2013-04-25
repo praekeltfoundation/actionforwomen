@@ -14,3 +14,8 @@ MIDDLEWARE_CLASSES = MIDDLEWARE_CLASSES + (
     'pml.middleware.RedirectMiddleware',
     'pml.middleware.VLiveRemoteUserMiddleware',
 )
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.RemoteUserBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
