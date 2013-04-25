@@ -3,6 +3,7 @@ from datetime import datetime
 
 from category.models import Category
 from django import template
+from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.template import Context, Template
 from poll.models import Poll
@@ -52,14 +53,51 @@ def ages_and_stages(context):
     return context
 
 
-@register.inclusion_tag('mama/inclusion_tags/header.html', takes_context=True)
-def header(context):
+@register.inclusion_tag('mama/inclusion_tags/page_header.html', takes_context=True)
+def page_header(context):
     context = copy(context)
     help_post = Post.permitted.filter(slug='mama-help')
     if help_post:
         context.update({
-            'help_post': help_post[0]
+            'help_post': help_post[0],
         })
+    return context
+
+
+@register.inclusion_tag('mama/inclusion_tags/page_header.html', takes_context=True)
+def pml_page_header(context):
+    context = copy(context)
+    help_post = Post.permitted.filter(slug='mama-help')
+    links = [
+        {
+            'title': 'Home',
+            'url': reverse('home'),
+        },
+        {
+            'title': 'A-to-Z',
+            'url': reverse('category_object_list', kwargs={'category_slug': 'mama-a-to-z'}),
+        },
+        {
+            'title': 'Life Guides',
+            'url': reverse('category_object_list', kwargs={'category_slug': 'life-guides'}),
+        },
+        {
+            'title': 'Articles',
+            'url': reverse('category_object_list', kwargs={'category_slug': 'articles'}),
+        },
+        {
+            'title': "Moms' Stories",
+            'url': reverse('category_object_list', kwargs={'category_slug': 'moms-stories'}),
+        }
+    ]
+    if help_post:
+        links.append(
+            {
+                'title': 'Help',
+                'url': help_post[0].get_absolute_category_url(),
+            }
+        )
+    context['links'] = links
     return context
 
 
