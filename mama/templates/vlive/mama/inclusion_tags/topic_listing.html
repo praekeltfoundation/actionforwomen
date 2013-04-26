@@ -1,8 +1,7 @@
 {% load jmbo_inclusion_tags pml_inclusion_tags %}
 
 {% if object_list %}
-    {% header text=full_heading color='pink' %}
-    {% for object in object_list %}
-        {% render_object object "link" %}
-    {% endfor %}
+    {% header text=full_heading color='orange' %}
+
+    {% link_list objects=object_list url_property='get_absolute_url' text_property='title' color='orange' %}
 {% endif %}
