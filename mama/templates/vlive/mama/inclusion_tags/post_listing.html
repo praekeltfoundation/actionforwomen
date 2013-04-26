@@ -1,15 +1,9 @@
-{% load jmbo_inclusion_tags %}
+{% load jmbo_inclusion_tags pml_inclusion_tags %}
 
 {% if object_list %}
-    <div class="{{ category.color }}">
-        <div class="h1"> {{ category.title }}</div>
-        <div class="content-inner">
-            <div class="items">
-                {% for object in object_list %}
-                    {% render_object object "block" %}
-                {% endfor %}
-                <div class="item-nav"><a href="{{ category.get_absolute_url }}">All</a> | <a href="{{ category.get_absolute_url }}?by=popular">Popular</a></div>
-            </div>
-        </div>
-    </div>
+    {% header text=category.title color='orange' %}
+
+    {% for object in object_list %}
+        {% render_object object "block" %}
+    {% endfor %}
 {% endif %}
