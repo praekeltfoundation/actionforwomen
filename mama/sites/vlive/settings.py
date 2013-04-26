@@ -9,10 +9,11 @@ INSTALLED_APPS += (
 )
 
 MIDDLEWARE_CLASSES = MIDDLEWARE_CLASSES + (
-    'mama.middleware.PMLMiddleware',
-    'mama.middleware.PMLFormMiddleware',
+    'pml.middleware.XMLResponseMiddleware',
+    'pml.middleware.FormMiddleware',
     'pml.middleware.RedirectMiddleware',
     'pml.middleware.VLiveRemoteUserMiddleware',
+    'pml.middleware.NoCacheMiddleware',
 )
 
 AUTHENTICATION_BACKENDS = (
