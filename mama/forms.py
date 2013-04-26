@@ -1,6 +1,8 @@
 import uuid
-import ambient
 from datetime import date
+
+import ambient
+from dateutil import parser
 from django import forms
 from django.conf import settings
 from django.contrib.auth.forms import PasswordResetForm
@@ -13,6 +15,7 @@ from django.forms.extras.widgets import SelectDateWidget
 from django.utils.http import int_to_base36
 from django.utils.safestring import mark_safe
 import mama
+from pml import forms as pml_forms
 from registration.forms import RegistrationFormTermsOfService
 from userprofile import utils
 
@@ -129,3 +132,28 @@ class RegistrationForm(RegistrationFormTermsOfService):
                                   'password?</a>' % reverse("password_reset"))
         except mama.models.UserProfile.DoesNotExist:
             return mobile_number
+
+
+class ProfileForm(pml_forms.PMLForm):
+    submit_text = "Register"
+    username = pml_forms.PMLTextField(
+        label="Username",
+        help_text="This name will appear next to all your comments."
+    )
+    delivery_date = pml_forms.PMLTextField(
+        label="What is your due date or baby's birthday?",
+    )
+    tos = pml_forms.PMLCheckBoxField(
+        choices=(
+            ("accept", 'I accept the terms and conditions of use.'),
+        )
+    )
+
+    def clean_delivery_date(self):
+        delivery_date = self.cleaned_data['delivery_date']
+        try:
+            delivery_date = parser.parse(delivery_date)
+        except ValueError:
+            raise ValidationError('Please enter a date in the format day/month/year(i.e. 17/8/2013).')
+
+        return delivery_date
