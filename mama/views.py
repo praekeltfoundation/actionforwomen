@@ -119,7 +119,7 @@ class ProfileView(FormView):
         from django.contrib import messages
         messages.success(
             self.request,
-            "Thank you, your profile has been created."
+            "Thank you! You have successfully been registered. You will be redirected to the homepage shortly."
         )
         return HttpResponseRedirect(reverse('home'))
 
