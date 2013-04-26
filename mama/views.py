@@ -8,7 +8,7 @@ from django.contrib.comments.views import comments
 from django.core.mail import EmailMessage, mail_managers
 from django.core.urlresolvers import reverse
 from django.db.models import Q
-from django.http import HttpResponseServerError
+from django.http import HttpResponseRedirect, HttpResponseServerError
 from django.shortcuts import get_object_or_404, redirect, render_to_response
 from django.template import RequestContext
 from django.template.loader import render_to_string
@@ -17,7 +17,7 @@ from django.views.decorators.http import require_POST
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormView
 from django.views.generic.list import ListView
-from mama.forms import ContactForm, PasswordResetForm
+from mama.forms import ContactForm, PasswordResetForm, ProfileForm
 from mama.models import UserProfile
 from mama.view_modifiers import PopularViewModifier
 from poll.forms import PollVoteForm
@@ -106,6 +106,22 @@ class ContactView(FormView):
             mail.send(fail_silently=False)
         return render_to_response('mama/contact_thanks.html', context_instance=RequestContext(self.request))
 
+
+class ProfileView(FormView):
+    form_class = ProfileForm
+    template_name = "mama/profile.html"
+
+    def form_valid(self, form):
+        user = self.request.user
+        profile = user.profile
+        profile.delivery_date = form.cleaned_data['delivery_date']
+        profile.save()
+        from django.contrib import messages
+        messages.success(
+            self.request,
+            "Thank you, your profile has been created."
+        )
+        return HttpResponseRedirect(reverse('home'))
 
 def logout(request):
     auth.logout(request)
