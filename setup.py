@@ -31,6 +31,7 @@ setup(
         'photon',
         'psycopg2',
         'python-ambient',
+        'python-dateutil',
         'south',
         'whoosh',
     ],
