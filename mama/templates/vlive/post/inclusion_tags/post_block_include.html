@@ -1,6 +1,7 @@
 {% load jmbo_template_tags %}
 
 <a href="{{ object.get_absolute_category_url }}">{{ object.title }}</a><br />
+
 {% if object.description %}
     {{ object.description|truncatewords:10 }}
 {% else %}
