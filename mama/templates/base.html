@@ -1,22 +1,22 @@
-<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd"> 
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
 {% load mama_inclusion_tags %}
 
-<html xmlns="http://www.w3.org/1999/xhtml"> 
-<head> 
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
-    <title>MAMA Mobile Community / {% if object %}{{ object.title }}{% else %}SA's week-by-week guide to pregnancy and infants{% endif %}</title> 
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>MAMA Mobile Community / {% if object %}{{ object.title }}{% else %}SA's week-by-week guide to pregnancy and infants{% endif %}</title>
     <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
     <meta name="description" content="{% if object %}{{ object.description }}{% else %}www.askmama.mobi is a week-by-week guide to pregnancy, birth and early childhood for South African mothers. It was founded by the Mobile Alliance for Maternal Action to put the power of health in every mama's hand.{% endif %}">
     <meta name="keywords" content="moms,maternal,baby,pregnancy,pregnant,expectant,mama,askmama,ask,mother,pain,birth,help">
-    <link href="{{ STATIC_URL }}mama/css/style.css?20120709" rel="stylesheet" type="text/css" /> 
+    <link href="{{ STATIC_URL }}mama/css/style.css?20120709" rel="stylesheet" type="text/css" />
 </head>
 <body>
 
-    {% header %}
+    {% page_header %}
 
     {% block following_header %}
     {% endblock %}
-    
+
     <div id="content">
 
         {% block content %}
@@ -35,11 +35,11 @@
                 <div class="clear"></div>
             </form>
         {% endblock %}
-        
+
     </div>
 
     <div id="divider"><img src="{{ STATIC_URL }}mama/img/divider.jpg" /></div>
-    
+
     <div id="footer"><a href="{% url contact %}">Contact</a> | <a href="{% url terms %}">Terms</a> | <a href="{% url about %}">About MAMA</a> | {% if request.user.is_authenticated %}<a href="{% url logout %}">Sign Out</a>{% else %}<a href="{% url login %}">Sign In</a>{% endif %}<br /><span>&copy; MAMA SA {% now "Y" %}</span></div>
 <script type="text/javascript">
 
