@@ -1,15 +1,16 @@
 {% load jmbo_template_tags mama_inclusion_tags likes_inclusion_tags %}
 
-{{ object.title }}
+<b>{{ object.title }}</b><br />
 {% if object.comments_enabled %}
-    {% humanize_time_diff object.created "Ago" %} // <a href="#comments">{{ object.comment_count }} Comments</a> // {% likes object %}
+    <small>{% humanize_time_diff object.created "Ago" %}</small><br /><small>{{ object.comment_count }} Comments{% comment %} // {% likes object %}{% endcomment %}</small>
+    <br /><br />
 {% endif %}
 {{ object.content|safe }}
 
 {% with object.link_target_set.all as links %}
     {% for link in links %}
         {% if link.target.is_permitted %}
-            <div class="item"><a href="{{ link.target.get_absolute_category_url }}">&raquo; {% if link.title %}{{ link.title }}{% else %}{{ link.target.title }}{% endif %}</a></div>
+            <a href="{{ link.target.get_absolute_category_url }}">&raquo; {% if link.title %}{{ link.title }}{% else %}{{ link.target.title }}{% endif %}</a><br />
         {% endif %}
     {% endfor %}
 {% endwith %}
@@ -18,6 +19,7 @@
 
 {% with object.navigation_link_target_set.all as navigation_links %}
     {% if navigation_links %}
+        <br />
         {% for navigation_link in navigation_links %}
             <a href="{{ navigation_link.target.get_absolute_category_url }}">&laquo; Back to {% if navigation_link.title %}{{ navigation_link.title }}{% else %}{{ navigation_link.target.title }}{% endif %}</a><br />
         {% endfor %}
