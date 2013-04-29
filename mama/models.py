@@ -119,6 +119,16 @@ class UserProfile(AbstractProfileBase):
         null=True,
         help_text='Number of times user has tried to reset her password on the last reset date.',
     )
+    alias = models.CharField(
+        max_length=128,
+        blank=True,
+        null=True,
+    )
+    banned = models.BooleanField(
+        help_text='Whether or not user is banned from posting comments.',
+        default=False,
+        blank=True,
+    )
 
     def is_prenatal(self):
         """
@@ -128,7 +138,7 @@ class UserProfile(AbstractProfileBase):
         if not self.delivery_date:
             return True
         return date.today() < self.delivery_date
-    
+
     def is_postnatal(self):
         """
         Returns True if postnatal, otherwise False
