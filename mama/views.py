@@ -1,4 +1,5 @@
 import re
+import urlparse
 
 import ambient
 from category.models import Category
@@ -114,6 +115,7 @@ class ProfileView(FormView):
     def form_valid(self, form):
         user = self.request.user
         profile = user.profile
+        profile.alias = form.cleaned_data['username']
         profile.delivery_date = form.cleaned_data['delivery_date']
         profile.save()
         from django.contrib import messages
@@ -123,6 +125,7 @@ class ProfileView(FormView):
         )
         return HttpResponseRedirect(reverse('home'))
 
+
 def logout(request):
     auth.logout(request)
     if 'HTTP_REFERER' in request.META:
@@ -130,6 +133,7 @@ def logout(request):
     else:
         redir_url = reverse("home")
     return redirect(redir_url)
+
 
 @csrf_protect
 @require_POST
@@ -141,24 +145,40 @@ def poll_vote(request, poll_slug):
 
     return redirect(reverse("home"))
 
+
 @csrf_protect
 @require_POST
 def post_comment(request, next=None, using=None):
     # Populate dummy data for non required fields
     data = request.POST.copy()
+
+    # Resolve comment name from profile alias, username, or anonymous.
     if not request.user.is_authenticated():
         data["name"] = 'anonymous'
     else:
-        data['name'] = request.user.username
+        profile = request.user.profile
+        if profile.alias:
+            data['name'] = profile.alias
+        else:
+            data['name'] = request.user.username
+
     data["email"] = 'commentor@askmama.mobi'
     data["url"] = request.META['HTTP_REFERER']
     request.POST = data
-
     # Ignore comments containing URLs
     if re.search(URL_REGEX, data['comment']):
         return comments.CommentPostBadRequest("URLs are not allowed.")
 
-    return comments.post_comment(request, next=request.META['HTTP_REFERER'], using=using)
+    # Set the host header to the same as refering host, thus preventing PML
+    # tunnel tripping up django.http.utils.is_safe_url.
+    request.META['HTTP_HOST'] = urlparse.urlparse(data['url'])[1]
+
+    return comments.post_comment(
+        request,
+        next=data["url"],
+        using=using
+    )
+
 
 def server_error(request):
     return HttpResponseServerError(render_to_string('500.html', {
