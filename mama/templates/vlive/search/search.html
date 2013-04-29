@@ -4,7 +4,7 @@
 
 {% block body %}
 
-    {% header text='Search Results' color='pink' %}
+    {% header text='Search Results' color='orange' %}
 
     {% if page.object_list %}
         {% for object in page.object_list %}
@@ -14,5 +14,6 @@
         {% text_include template="mama/pml_includes/search_not_found.html" %}
     {% endif %}
 
+    {% pagination page %}
 
 {% endblock %}
