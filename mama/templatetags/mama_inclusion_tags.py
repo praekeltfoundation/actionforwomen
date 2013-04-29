@@ -3,6 +3,7 @@ from datetime import datetime
 
 from category.models import Category
 from django import template
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.template import Context, Template
@@ -168,3 +169,67 @@ def babycenter_byline(obj):
         return {'display': True}
     else:
         return {}
+
+
+
+@register.inclusion_tag('mama/inclusion_tags/vlive_object_comments.html', takes_context=True)
+def vlive_object_comments(context, obj):
+    def can_comment(obj, request):
+        """
+        Determine if user can comment.
+        We don't use ModelBase.can_comment since that unnecessarily traverses to base.
+        """
+        # can't comment if commenting is closed
+        if obj.comments_closed:
+            return False
+
+        # can't comment if commenting is disabled
+        if not obj.comments_enabled:
+            return False
+
+        # anonymous users can't comment if anonymous comments are disabled
+        if not request.user.is_authenticated() and not \
+                obj.anonymous_comments:
+            return False
+
+        # can't comment if user is banned
+        if request.user.is_authenticated() and request.user.profile.banned:
+            return False
+
+        return True
+
+    def get_paginated_comments(obj, request):
+        from django.contrib.comments.models import Comment
+        from django.contrib.contenttypes.models import ContentType
+        ctype = ContentType.objects.get_for_model(obj)
+        comments = list(Comment.objects.filter(
+            content_type=ctype,
+            object_pk=obj.pk,
+            is_public=True,
+            is_removed=False
+        ).select_related('user').order_by('-submit_date'))
+
+        paginator = Paginator(comments, 5)
+        page = request.GET.get('page')
+
+        try:
+            page_comments = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            page_comments = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            page_comments = paginator.page(paginator.num_pages)
+
+        return page_comments, len(comments)
+
+    request = context['request']
+    comments, count = get_paginated_comments(obj, request)
+    context.update({
+        'object': obj,
+        'page_comments': comments,
+        'comment_count': count,
+        'can_render_comment_form': can_comment(obj, request),
+    })
+
+    return context
