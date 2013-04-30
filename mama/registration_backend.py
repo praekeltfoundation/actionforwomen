@@ -13,4 +13,10 @@ class MamaBackend(SimpleBackend):
         return super(MamaBackend, self).register(request, **kwargs)
 
     def post_registration_redirect(self, request, user):
-        return ('registration_done', (), {}) 
+        # Set alias from uername
+        profile = user.profile
+        if not profile.alias:
+            profile.alias = user.username
+            profile.save()
+
+        return ('registration_done', (), {})
