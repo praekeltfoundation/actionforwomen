@@ -21,6 +21,7 @@ package { [
     "python-dev",
     "python-virtualenv",
     "supervisor",
+    "redis-server",
     ]:
     ensure => latest,
     subscribe => Exec['update_apt'];
@@ -70,7 +71,7 @@ exec { 'create_virtualenv':
         Package['libxslt-dev'],
         Package['python-dev'],
         Package['python-virtualenv'],
-#        Package['solr-tomcat'],
+        Package['redis-server'],
         Exec['clone_repo'],
     ]
 }
@@ -115,7 +116,7 @@ file { "/etc/supervisor/conf.d/mama.conf":
 
 # Create Postgres role and database.
 postgres::role { "mama":
-    password => mama,
+    password => Twhq627Yt,
     ensure => present,
     subscribe => [
         Exec['update_repo'],
