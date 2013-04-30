@@ -1,9 +1,11 @@
 # Django settings for project project.
 
 import os
-import sys
 
-#PATH = os.path.split(os.path.abspath(os.path.join(os.path.dirname(sys.argv[0]))))[0]
+from raven import Client
+from raven.conf import setup_logging
+from raven.handlers.logging import SentryHandler
+
 PATH = os.getcwd()
 
 DEBUG = False
@@ -240,3 +242,6 @@ GA_REDIRECT_URI = 'http://askmama.mobi/google-credentials/callback'
 SERIALIZATION_MODULES = {
     'csv': 'snippetscream.csv_serializer',
 }
+
+client = Client('http://a63d3e29a4e9453c9883663cb3159469:471fe88edf274035bb8c1285a4db8d21@sentry.praekelt.com/22')
+setup_logging(SentryHandler(client))
