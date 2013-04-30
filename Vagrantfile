@@ -9,5 +9,4 @@ Vagrant::Config.run do |config|
   end
 
   config.vm.forward_port 80, 4567
-  #config.vm.share_folder "files", "/vagrant/files", "manifests/files"
 end
