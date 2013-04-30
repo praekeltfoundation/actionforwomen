@@ -1,0 +1,23 @@
+{% extends 'pml/base.xml' %}
+
+{% load jmbo_inclusion_tags mama_inclusion_tags pml_inclusion_tags %}
+
+{% block body %}
+
+    {% block above_listing %}
+        {% topic_listing category.slug 0 %}
+    {% endblock %}
+
+    {% if object_list %}
+        {% header text=full_heading color='orange' %}
+        {% for object in post_list %}
+            {% render_object object "block" %}
+        {% endfor %}
+    {% endif %}
+
+    {% pagination page_obj %}
+
+    {% block below_listing %}
+    {% endblock %}
+
+{% endblock %}

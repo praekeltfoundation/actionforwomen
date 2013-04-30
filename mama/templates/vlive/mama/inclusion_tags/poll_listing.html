@@ -1,0 +1,9 @@
+{% load jmbo_inclusion_tags poll_tags pml_inclusion_tags %}
+
+{% if object_list %}
+    {% header text="Today's Poll" color='orange' %}
+
+    {% for object in object_list %}
+        {% poll_widget object %}
+    {% endfor %}
+{% endif %}

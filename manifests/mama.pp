@@ -14,13 +14,14 @@ exec { "update_apt":
 package { [
     "git-core",
     "libpq-dev",
+    "libxml2-dev",
+    "libxslt-dev",
     "nginx",
     "postgresql",
     "python-dev",
-#    "python-pip",
     "python-virtualenv",
     "supervisor",
-    "solr-tomcat",
+    "redis-server",
     ]:
     ensure => latest,
     subscribe => Exec['update_apt'];
@@ -66,9 +67,11 @@ exec { 'create_virtualenv':
     unless => 'test -d /var/praekelt/mama/ve',
     subscribe => [
         Package['libpq-dev'],
+        Package['libxml2-dev'],
+        Package['libxslt-dev'],
         Package['python-dev'],
         Package['python-virtualenv'],
-        Package['solr-tomcat'],
+        Package['redis-server'],
         Exec['clone_repo'],
     ]
 }
@@ -113,7 +116,7 @@ file { "/etc/supervisor/conf.d/mama.conf":
 
 # Create Postgres role and database.
 postgres::role { "mama":
-    password => mama,
+    password => Twhq627Yt,
     ensure => present,
     subscribe => [
         Exec['update_repo'],
@@ -129,4 +132,33 @@ postgres::database { "mama":
         Exec['update_repo'],
         Package['postgresql']
     ]
+}
+
+file {
+    "/home/ubuntu/":
+        ensure => 'directory',
+        owner => 'ubuntu',
+        require => User['ubuntu'];
+    "ubuntu_ssh_dir":
+        path => '/home/ubuntu/.ssh',
+        ensure => directory,
+        owner => ubuntu,
+        group => ubuntu,
+        require => User['ubuntu'];
+    "ubuntu_id_rsa":
+        path => '/home/ubuntu/.ssh/id_rsa',
+        ensure => present,
+        owner => ubuntu,
+        group => ubuntu,
+        mode => 0600,
+        require => [ User['ubuntu'], File['ubuntu_ssh_dir'], ],
+        source => 'puppet:///modules/base/id_rsa';
+    "ubuntu_id_rsa.pub":
+        path => '/home/ubuntu/.ssh/id_rsa.pub',
+        ensure => present,
+        owner => ubuntu,
+        group => ubuntu,
+        mode => 0644,
+        require => [ User['ubuntu'], File['ubuntu_ssh_dir'], ],
+        source => 'puppet:///modules/base/id_rsa.pub';
 }

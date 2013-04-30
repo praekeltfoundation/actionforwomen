@@ -1,0 +1,7 @@
+{% load pml_inclusion_tags %}
+
+{% if can_vote_on_poll %}
+    {% include 'poll/inclusion_tags/poll_form.html' %}
+{% else %}
+    {% text_include template="poll/inclusion_tags/poll_results.html" %}
+{% endif %}

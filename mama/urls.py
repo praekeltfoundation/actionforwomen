@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView
 from haystack.views import SearchView
-from mama.views import CategoryDetailView, CategoryListView, ContactView
+from mama.views import CategoryDetailView, CategoryListView, ContactView, ProfileView
 from mama.forms import PasswordResetForm
 import object_tools
 
@@ -65,8 +65,8 @@ urlpatterns = patterns('',
         name='password_reset_confirm'
     ),
     url(
-        r'^reset/done/$', 
-        'django.contrib.auth.views.password_reset_complete', 
+        r'^reset/done/$',
+        'django.contrib.auth.views.password_reset_complete',
         {'template_name': 'mama/password_reset_complete.html'},
         name='password_reset_complete'
     ),
@@ -104,9 +104,14 @@ urlpatterns = patterns('',
         name='registration_register'
     ),
     url(
-        r'^accounts/register/done/', 
+        r'^accounts/register/done/',
         login_required(TemplateView.as_view(template_name="registration/done.html")),
         name='registration_done'
+    ),
+    url(
+        r'^accounts/profile/',
+        login_required(ProfileView.as_view()),
+        name='profile'
     ),
     (r'^admin/', include(admin.site.urls)),
     (r'^object-tools/', include(object_tools.tools.urls)),

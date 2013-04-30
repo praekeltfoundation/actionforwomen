@@ -1,0 +1,21 @@
+{% extends 'pml/base_module.xml' %}
+{% load pml_inclusion_tags %}
+
+{% block content %}
+    <CONTAINER type="form">
+        <FORM method="GET" href="{% url post_comment %}" submit_text="Post">
+            <FIELD name="csrfmiddlewaretoken" value="{{ csrf_token }}" type="hidden"/>
+            {% for field in form %}
+                {% if field.is_hidden %}
+                    <FIELD name="{{ field.html_name }}" value="{{ field.value }}" type="hidden"/>
+                {% endif %}
+            {% endfor %}
+            <TEXT>
+                <b>Comment</b><br />
+            </TEXT>
+            <FIELD name="{{ form.comment.html_name }}" type="text" />
+            <br />
+            <br />
+        </FORM>
+    </CONTAINER>
+{% endblock %}

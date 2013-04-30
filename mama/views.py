@@ -1,4 +1,5 @@
 import re
+import urlparse
 
 import ambient
 from category.models import Category
@@ -8,7 +9,7 @@ from django.contrib.comments.views import comments
 from django.core.mail import EmailMessage, mail_managers
 from django.core.urlresolvers import reverse
 from django.db.models import Q
-from django.http import HttpResponseServerError
+from django.http import HttpResponseRedirect, HttpResponseServerError
 from django.shortcuts import get_object_or_404, redirect, render_to_response
 from django.template import RequestContext
 from django.template.loader import render_to_string
@@ -17,7 +18,7 @@ from django.views.decorators.http import require_POST
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormView
 from django.views.generic.list import ListView
-from mama.forms import ContactForm, PasswordResetForm
+from mama.forms import ContactForm, PasswordResetForm, ProfileForm
 from mama.models import UserProfile
 from mama.view_modifiers import PopularViewModifier
 from poll.forms import PollVoteForm
@@ -60,6 +61,7 @@ class CategoryListView(ListView):
         context = super(CategoryListView, self).get_context_data(**kwargs)
         context['category'] = self.category
         context['heading_prefix'] = self.heading_prefix
+        context['full_heading'] = "%s %s" % (self.heading_prefix, self.category.title)
         return context
 
     def get_queryset(self):
@@ -106,6 +108,24 @@ class ContactView(FormView):
         return render_to_response('mama/contact_thanks.html', context_instance=RequestContext(self.request))
 
 
+class ProfileView(FormView):
+    form_class = ProfileForm
+    template_name = "mama/profile.html"
+
+    def form_valid(self, form):
+        user = self.request.user
+        profile = user.profile
+        profile.alias = form.cleaned_data['username']
+        profile.delivery_date = form.cleaned_data['delivery_date']
+        profile.save()
+        from django.contrib import messages
+        messages.success(
+            self.request,
+            "Thank you! You have successfully been registered. You will be redirected to the homepage shortly."
+        )
+        return HttpResponseRedirect(reverse('home'))
+
+
 def logout(request):
     auth.logout(request)
     if 'HTTP_REFERER' in request.META:
@@ -114,6 +134,7 @@ def logout(request):
         redir_url = reverse("home")
     return redirect(redir_url)
 
+
 @csrf_protect
 @require_POST
 def poll_vote(request, poll_slug):
@@ -121,27 +142,43 @@ def poll_vote(request, poll_slug):
     form = PollVoteForm(request.POST, request=request, poll=poll)
     if form.is_valid():
         form.save()
-    
+
     return redirect(reverse("home"))
+
 
 @csrf_protect
 @require_POST
 def post_comment(request, next=None, using=None):
     # Populate dummy data for non required fields
     data = request.POST.copy()
+
+    # Resolve comment name from profile alias, username, or anonymous.
     if not request.user.is_authenticated():
         data["name"] = 'anonymous'
     else:
-        data['name'] = request.user.username
+        profile = request.user.profile
+        if profile.alias:
+            data['name'] = profile.alias
+        else:
+            data['name'] = request.user.username
+
     data["email"] = 'commentor@askmama.mobi'
     data["url"] = request.META['HTTP_REFERER']
     request.POST = data
-
     # Ignore comments containing URLs
     if re.search(URL_REGEX, data['comment']):
         return comments.CommentPostBadRequest("URLs are not allowed.")
 
-    return comments.post_comment(request, next=request.META['HTTP_REFERER'], using=using)
+    # Set the host header to the same as refering host, thus preventing PML
+    # tunnel tripping up django.http.utils.is_safe_url.
+    request.META['HTTP_HOST'] = urlparse.urlparse(data['url'])[1]
+
+    return comments.post_comment(
+        request,
+        next=data["url"],
+        using=using
+    )
+
 
 def server_error(request):
     return HttpResponseServerError(render_to_string('500.html', {

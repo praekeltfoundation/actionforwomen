@@ -2,3 +2,7 @@
 mama.egg-info/
 /ve/
 *.pyc
+mama.sqlite
+mama.sublime-project
+mama.sublime-workspace
+whoosh.index/

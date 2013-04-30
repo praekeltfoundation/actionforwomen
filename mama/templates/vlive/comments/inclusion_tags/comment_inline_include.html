@@ -1,0 +1,11 @@
+{% load jmbo_template_tags %}
+
+{% if object.user.is_staff %}
+    <b>
+        {{ object.name }} - {% humanize_time_diff object.submit_date "Ago" %}<br />
+        {{ object.comment|linebreaksbr }}
+    </b>
+{% else %}
+    {{ object.name }} - {% humanize_time_diff object.submit_date "Ago" %}<br />
+    {{ object.comment|linebreaksbr }}
+{% endif %}

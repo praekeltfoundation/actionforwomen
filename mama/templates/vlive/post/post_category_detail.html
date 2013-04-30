@@ -1,0 +1,15 @@
+{% extends 'pml/base.xml' %}
+
+{% load jmbo_inclusion_tags mama_inclusion_tags pml_inclusion_tags %}
+
+{% block body %}
+
+    {% header text=category.title color='orange' %}
+
+    {% render_object object "inline" %}
+
+    {% topic_listing category.slug 1 %}
+
+    {% vlive_object_comments object %}
+
+{% endblock %}
