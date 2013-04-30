@@ -153,14 +153,11 @@ def post_comment(request, next=None, using=None):
     data = request.POST.copy()
 
     # Resolve comment name from profile alias, username, or anonymous.
-    if not request.user.is_authenticated():
-        data["name"] = 'anonymous'
-    else:
+    data["name"] = 'anonymous'
+    if request.user.is_authenticated():
         profile = request.user.profile
         if profile.alias:
             data['name'] = profile.alias
-        else:
-            data['name'] = request.user.username
 
     data["email"] = 'commentor@askmama.mobi'
     data["url"] = request.META['HTTP_REFERER']
