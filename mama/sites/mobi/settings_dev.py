@@ -1,4 +1,4 @@
-from mama..sites.mobi.settings import *
+from mama.sites.mobi.settings import *
 
 DATABASES = {
     'default': {
