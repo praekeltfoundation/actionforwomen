@@ -24,7 +24,7 @@ setup(
         'django-snippetscream',
         'django-south-admin',
         'django-userprofile>=0.0.6',
-        'flup',
+        'gunicorn',
         'jmbo==0.5.5',
         'jmbo-poll>=0.0.9',
         'jmbo-post',
