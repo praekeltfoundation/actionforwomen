@@ -32,6 +32,7 @@ setup(
         'psycopg2',
         'python-ambient',
         'python-dateutil',
+        'raven',
         'south',
         'whoosh',
     ],
