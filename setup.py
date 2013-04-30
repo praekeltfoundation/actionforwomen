@@ -14,6 +14,7 @@ setup(
     ],
     install_requires=[
         'django==1.4.5',
+        'django-category==0.1',
         'django-export',
         'django-generate',
         'django-google-credentials',
