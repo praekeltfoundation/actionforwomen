@@ -17,6 +17,6 @@ INSTALLED_APPS += (
 CREATE_DEFAULT_SUPERUSER = True
 
 # Customizations allowing for dev testing through proxytunnel.
-ROOT_URLCONF = 'mama.sites.vlive.urls'
+ROOT_URLCONF = 'mama.sites.vlive.urls_dev'
 STATIC_URL = '/mama/static/'
 MEDIA_URL = '/mama/media/'
