@@ -20,3 +20,5 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.RemoteUserBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
+
+ROOT_URLCONF = 'mama.sites.vlive.urls'
