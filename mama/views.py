@@ -5,6 +5,7 @@ import ambient
 from category.models import Category
 from django.conf import settings
 from django.contrib import auth
+from django.contrib import messages
 from django.contrib.comments.views import comments
 from django.core.mail import EmailMessage, mail_managers
 from django.core.urlresolvers import reverse
@@ -118,7 +119,6 @@ class ProfileView(FormView):
         profile.alias = form.cleaned_data['username']
         profile.delivery_date = form.cleaned_data['delivery_date']
         profile.save()
-        from django.contrib import messages
         messages.success(
             self.request,
             "Thank you! You have successfully been registered. You will be redirected to the homepage shortly."
@@ -142,6 +142,11 @@ def poll_vote(request, poll_slug):
     form = PollVoteForm(request.POST, request=request, poll=poll)
     if form.is_valid():
         form.save()
+    else:
+        messages.success(
+            request,
+            "Please select an option before voting."
+        )
 
     return redirect(reverse("home"))
 
