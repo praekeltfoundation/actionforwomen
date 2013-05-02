@@ -1,15 +1,13 @@
-from django.conf import settings
 from django.conf.urls import patterns, include, url
-from django.contrib import admin
+from django.contrib.auth.decorators import login_required
+from mama.urls import urlpatterns
+from mama.views import ProfileView
 
-admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^mama/', include('mama.urls')),
-)
-
-if settings.DEBUG:
-    urlpatterns += patterns('',
-        (r'^mama/media/(?P<path>.*)$', 'django.views.static.serve',
-         {'document_root': settings.MEDIA_ROOT}),
-    )
+    url(
+        r'^accounts/register/$',
+        login_required(ProfileView.as_view()),
+        name='registration_register'
+    ),
+) + urlpatterns
