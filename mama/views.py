@@ -14,6 +14,8 @@ from django.http import HttpResponseRedirect, HttpResponseServerError
 from django.shortcuts import get_object_or_404, redirect, render_to_response
 from django.template import RequestContext
 from django.template.loader import render_to_string
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.http import require_POST
 from django.views.generic.detail import DetailView
@@ -76,6 +78,10 @@ class CategoryListView(ListView):
         if active_modifiers:
             self.heading_prefix = active_modifiers[0].title
         return view_modifier.modify(queryset)
+
+    @method_decorator(cache_page(60 * 60))
+    def dispatch(self, *args, **kwargs):
+        return super(CategoryListView, self).dispatch(*args, **kwargs)
 
 
 class ContactView(FormView):
