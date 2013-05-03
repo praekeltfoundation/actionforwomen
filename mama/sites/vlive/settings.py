@@ -9,7 +9,7 @@ INSTALLED_APPS += (
 )
 
 MIDDLEWARE_CLASSES = MIDDLEWARE_CLASSES + (
-    'pml.middleware.XMLResponseMiddleware',
+    #'pml.middleware.XMLResponseMiddleware',
     'pml.middleware.FormMiddleware',
     'pml.middleware.RedirectMiddleware',
     'pml.middleware.VLiveRemoteUserMiddleware',
@@ -22,3 +22,5 @@ AUTHENTICATION_BACKENDS = (
 )
 
 ROOT_URLCONF = 'mama.sites.vlive.urls'
+
+CACHES['default']['KEY_PREFIX'] = 'mama_vlive'
