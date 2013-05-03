@@ -9,7 +9,7 @@ INSTALLED_APPS += (
 )
 
 MIDDLEWARE_CLASSES = MIDDLEWARE_CLASSES + (
-    #'pml.middleware.XMLResponseMiddleware',
+    'pml.middleware.XMLResponseMiddleware',
     'pml.middleware.FormMiddleware',
     'pml.middleware.RedirectMiddleware',
     'pml.middleware.VLiveRemoteUserMiddleware',
