@@ -20,3 +20,13 @@ CREATE_DEFAULT_SUPERUSER = True
 ROOT_URLCONF = 'mama.sites.vlive.urls_dev'
 STATIC_URL = '/mama/static/'
 MEDIA_URL = '/mama/media/'
+
+MIDDLEWARE_CLASSES += (
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+)
+
+INTERNAL_IPS = ('127.0.0.1',)
+
+INSTALLED_APPS += (
+    'debug_toolbar',
+)
