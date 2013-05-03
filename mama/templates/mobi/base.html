@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
-{% load mama_inclusion_tags %}
+{% load cache mama_inclusion_tags %}
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -12,7 +12,9 @@
 </head>
 <body>
 
-    {% page_header %}
+    {% cache 3600 page_header %}
+        {% page_header %}
+    {% endcache %}
 
     {% block following_header %}
     {% endblock %}
