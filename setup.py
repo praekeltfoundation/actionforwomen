@@ -15,6 +15,7 @@ setup(
     install_requires=[
         'django==1.4.5',
         'django-category==0.1',
+        'django-debug-toolbar',
         'django-export',
         'django-generate',
         'django-google-credentials',
@@ -33,6 +34,7 @@ setup(
         'psycopg2',
         'python-ambient',
         'python-dateutil',
+        'python-memcached',
         'raven',
         'south',
         'whoosh',
