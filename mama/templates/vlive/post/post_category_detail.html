@@ -1,14 +1,17 @@
 {% extends 'pml/base.xml' %}
 
-{% load jmbo_inclusion_tags mama_inclusion_tags pml_inclusion_tags %}
+{% load cache jmbo_inclusion_tags mama_inclusion_tags pml_inclusion_tags %}
 
 {% block body %}
 
-    {% header text=category.title color='orange' %}
+    {% cache 600 post_inline object.id %}
+        {% header text=category.title color='orange' %}
+        {% render_object object "inline" %}
+    {% endcache %}
 
-    {% render_object object "inline" %}
-
-    {% topic_listing category.slug 1 %}
+    {% cache 3600 topic_listing category.slug %}
+        {% topic_listing category.slug 1 %}
+    {% endcache %}
 
     {% vlive_object_comments object %}
 
