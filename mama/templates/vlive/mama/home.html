@@ -1,19 +1,14 @@
 {% extends 'pml/base.xml' %}
 
-{% load mama_inclusion_tags pml_inclusion_tags %}
+{% load cache mama_inclusion_tags pml_inclusion_tags %}
 
 {% block body %}
-
     {% ages_and_stages %}
-
-    {% post_listing "articles" %}
-
-    {% post_listing "moms-stories" %}
-
-    {% topic_listing "mama-a-to-z" 0 %}
-
-    {% topic_listing "life-guides" 0 %}
-
+    {% cache 3600 home %}
+        {% post_listing "articles" %}
+        {% post_listing "moms-stories" %}
+        {% topic_listing "mama-a-to-z" 0 %}
+        {% topic_listing "life-guides" 0 %}
+    {% endcache %}
     {% poll_listing %}
-
 {% endblock %}
