@@ -245,3 +245,10 @@ SERIALIZATION_MODULES = {
 
 client = Client('http://a63d3e29a4e9453c9883663cb3159469:471fe88edf274035bb8c1285a4db8d21@sentry.praekelt.com/22')
 setup_logging(SentryHandler(client))
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211'
+    }
+}
