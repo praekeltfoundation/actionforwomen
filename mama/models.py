@@ -2,14 +2,15 @@ from datetime import date
 
 from ckeditor.fields import RichTextField
 from django.contrib.comments.models import Comment
+from django.core.cache import cache
 from django.db import models
-from django.db.models.signals import class_prepared
+from django.db.models.signals import class_prepared, post_save
 from django.dispatch import receiver
+from jmbo.models import ModelBase
 from likes.exceptions import CannotVoteException
 from likes.signals import likes_enabled_test, can_vote_test
 from mama.forms import RegistrationForm
 from preferences.models import Preferences
-import secretballot
 from userprofile.models import AbstractProfileBase
 
 
@@ -33,7 +34,8 @@ class Link(models.Model):
         return self.title
 
     class Meta:
-        ordering = ['id',]
+        ordering = ['id', ]
+
 
 class NavigationLink(models.Model):
     title = models.CharField(
@@ -176,6 +178,7 @@ likes_enabled_test.disconnect(sender=Comment)
 def on_likes_enabled_test(sender, instance, request, **kwargs):
     return True
 
+
 likes_enabled_test.disconnect(sender=Comment)
 @receiver(can_vote_test, sender=Comment)
 def on_can_vote_test(sender, instance, user, request, **kwargs):
@@ -183,3 +186,12 @@ def on_can_vote_test(sender, instance, user, request, **kwargs):
         raise CannotVoteException
     else:
         return True
+
+
+@receiver(post_save)
+def cache_clearer(instance, *args, **kwargs):
+    """
+    Clears the entire cache whenever a content object is changed/saved.
+    """
+    if isinstance(instance, ModelBase):
+        cache.clear()
