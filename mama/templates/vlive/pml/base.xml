@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-{% load mama_inclusion_tags pml_inclusion_tags %}
+{% load cache mama_inclusion_tags pml_inclusion_tags %}
 <VZV-PARTNER xmlns:dc="http://purl.org/dc/elements/1.1/"
              xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
              xmlns:vddr="http://namespaces.vodafone.com/applications/CRE#DDR"
@@ -14,7 +14,10 @@
         {% block header %}
         {% endblock %}
         <VZV-DEFAULT>
-            {% pml_page_header %}
+
+            {% cache 3600 pml_page_header %}
+                {% pml_page_header %}
+            {% endcache %}
 
             {% block body %}
             {% endblock %}
