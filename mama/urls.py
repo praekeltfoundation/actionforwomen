@@ -2,6 +2,7 @@ from django.conf.urls.defaults import *
 from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.cache import cache_page
 from django.views.generic import TemplateView
 from haystack.views import SearchView
 from mama.views import CategoryDetailView, CategoryListView, ContactView, ProfileView
@@ -97,7 +98,7 @@ urlpatterns = patterns('',
         {},
         name='category_object_detail'
     ),
-    url(r'^search/', SearchView(results_per_page=5), name='haystack_search'),
+    url(r'^search/', cache_page(SearchView(results_per_page=5), 60 * 60), name='haystack_search'),
     url(
         r'^accounts/register/$', 'registration.views.register',
         {'backend': 'mama.registration_backend.MamaBackend'},
