@@ -12,3 +12,9 @@
     {% endcache %}
     {% poll_listing %}
 {% endblock %}
+
+{% block footer %}
+    {% with 'False' as homelink %}
+        {{ block.super }}
+    {% endwith %}
+{% endblock %}
