@@ -3,8 +3,9 @@
 {% load jmbo_inclusion_tags mama_inclusion_tags pml_inclusion_tags %}
 
 {% block body %}
+    {% with 'grey' as color %}
 
-    {% header text='Search Results' color='orange' %}
+    {% header text='Search Results' color=color %}
 
     {% if page.object_list %}
         {% for object in page.object_list %}
@@ -15,5 +16,12 @@
     {% endif %}
 
     {% pagination page %}
+    {% endwith %}
 
+{% endblock %}
+
+{% block footer %}
+    {% with 'grey' as color %}
+        {{ block.super }}
+    {% endwith %}
 {% endblock %}
