@@ -3,13 +3,13 @@
 {% load jmbo_inclusion_tags mama_inclusion_tags pml_inclusion_tags %}
 
 {% block body %}
-
+    {% with 'grey' as color %}
     {% block above_listing %}
         {% topic_listing category.slug 0 %}
     {% endblock %}
 
     {% if object_list %}
-        {% header text=full_heading color='orange' %}
+        {% header text=full_heading color=color %}
         {% for object in post_list %}
             {% render_object object "block" %}
         {% endfor %}
@@ -20,4 +20,12 @@
     {% block below_listing %}
     {% endblock %}
 
+    {% endwith %}
 {% endblock %}
+
+{% block footer %}
+    {% with 'grey' as color %}
+        {{ block.super }}
+    {% endwith %}
+{% endblock %}
+
