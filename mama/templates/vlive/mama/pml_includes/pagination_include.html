@@ -3,7 +3,11 @@
 {% if page_obj.has_other_pages %}
     {% if previous_url %}<a href="{{ previous_url|force_escape }}">&lt; Prev</a>{% endif %}
     {% for page in pages %}
-        <a href="{{ page|force_escape }}">{{ forloop.counter }}</a>
+        {% if page_obj.number == page.number %}
+            {{ page.number }}
+        {% else %}
+            <a href="{{ page.url|force_escape }}"> {{ page.number }} </a>
+        {% endif %}
     {% endfor %}
     {% if next_url %}<a href="{{ next_url|force_escape }}">Next &gt;</a>{% endif %}
 {% endif %}
