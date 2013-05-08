@@ -160,8 +160,18 @@ def pagination(context, page_obj):
 
     pages = []
     for page in page_obj.paginator.page_range:
-        pages.append(Template("{% load jmbo_template_tags %}{% smart_query_string 'page' " + str(page) + " %}").render(Context(context)))
-    context['pages'] = pages
+        pages.append({
+            'number': page ,
+            'url': Template("{% load jmbo_template_tags %}{% smart_query_string 'page' " + str(page) + " %}").render(Context(context))
+        })
+    page_number = page_obj.number - 1
+    if page_number < 3:
+        slice_start = 0
+    else:
+        slice_start = page_number - 2
+    if page_number + 2 >= len(pages):
+        slice_start = len(pages) - 5
+    context['pages'] = pages[slice_start: slice_start + 5]
     if page_obj.has_previous():
         context['previous_url'] = Template("{% load jmbo_template_tags %}{% smart_query_string 'page' page_obj.previous_page_number %}").render(Context(context))
     if page_obj.has_next():
