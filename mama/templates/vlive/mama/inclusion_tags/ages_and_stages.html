@@ -6,7 +6,7 @@
     {% for object in object_list %}
         {% render_object object "block" %}
     {% endfor %}
-    {% text_include template='mama/pml_includes/ages_and_stages_byline.html' color='black' %}
+    {% text_include template='mama/pml_includes/ages_and_stages_byline.html' color='grey' %}
 {% else %}
     {% header text='Register' color='orange' %}
     {% banner image_url="{{ STATIC_URL }}mama/img/banner_vlive.jpg?3" %}
