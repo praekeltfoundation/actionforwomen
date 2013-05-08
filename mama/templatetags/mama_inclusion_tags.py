@@ -102,8 +102,9 @@ def pml_page_header(context):
     return context
 
 
-@register.inclusion_tag('mama/inclusion_tags/topic_listing.html')
-def topic_listing(category_slug, more):
+@register.inclusion_tag('mama/inclusion_tags/topic_listing.html', takes_context=True)
+def topic_listing(context, category_slug, more):
+    context = copy(context)
     try:
         category = Category.objects.get(slug__exact=category_slug)
     except Category.DoesNotExist:
@@ -112,11 +113,12 @@ def topic_listing(category_slug, more):
         Q(primary_category=category) |
         Q(categories=category)
     ).filter(categories__slug='featured').distinct()
-    return {
+    context.update({
         'category': category,
         'object_list': object_list,
         'full_heading': "More %s" % category.title if more else category.title
-    }
+    })
+    return context
 
 
 @register.inclusion_tag('mama/inclusion_tags/poll_listing.html', takes_context=True)
@@ -155,6 +157,11 @@ def pagination(context, page_obj):
         'page_obj': page_obj,
         'paginator': getattr(page_obj, 'paginator', None),
     })
+
+    pages = []
+    for page in page_obj.paginator.page_range:
+        pages.append(Template("{% load jmbo_template_tags %}{% smart_query_string 'page' " + str(page) + " %}").render(Context(context)))
+    context['pages'] = pages
     if page_obj.has_previous():
         context['previous_url'] = Template("{% load jmbo_template_tags %}{% smart_query_string 'page' page_obj.previous_page_number %}").render(Context(context))
     if page_obj.has_next():
