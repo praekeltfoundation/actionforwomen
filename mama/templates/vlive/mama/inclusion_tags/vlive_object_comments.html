@@ -3,7 +3,7 @@
 {% if comment_count or can_render_comment_form %}
     {% if object.comments_enabled %}
 
-        {% header text="{{ comment_count }} Comments" color="orange" %}
+        {% header text="{{ comment_count }} Comments" color=color %}
 
         {% for comment in page_comments %}
             {% render_object comment 'inline' %}
