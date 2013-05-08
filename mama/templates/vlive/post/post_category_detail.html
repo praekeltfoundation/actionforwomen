@@ -3,16 +3,23 @@
 {% load cache jmbo_inclusion_tags mama_inclusion_tags pml_inclusion_tags %}
 
 {% block body %}
-
+    {% with 'grey' as color %}
     {% cache 600 post_inline object.id %}
-        {% header text=category.title color='orange' %}
+        {% header text=category.title color=color %}
         {% render_object object "inline" %}
-    {% endcache %}
-
-    {% cache 3600 topic_listing category.slug %}
-        {% topic_listing category.slug 1 %}
     {% endcache %}
 
     {% vlive_object_comments object %}
 
+    {% cache 3600 topic_listing category.slug %}
+        {% topic_listing category.slug 1 %}
+    {% endcache %}
+    {% endwith %}
+
+{% endblock %}
+
+{% block footer %}
+    {% with 'grey' as color %}
+        {{ block.super }}
+    {% endwith %}
 {% endblock %}
