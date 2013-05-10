@@ -32,6 +32,7 @@ setup(
         'jmbo-poll>=0.0.9',
         'jmbo-post',
         'kombu==2.4.7',
+        'celery=3.0.11',
         'photon',
         'psycopg2',
         'python-ambient',
