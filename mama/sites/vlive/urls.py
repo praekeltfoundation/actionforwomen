@@ -5,6 +5,7 @@ from mama.views import ProfileView
 
 
 urlpatterns = patterns('',
+    (r'^djga/', include('google_analytics.urls')),
     url(
         r'^accounts/register/$',
         login_required(ProfileView.as_view()),
