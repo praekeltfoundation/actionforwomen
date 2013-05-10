@@ -5,6 +5,8 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS += (
+    'djcelery',
+    'google_analytics',
     'pml',
 )
 
@@ -14,6 +16,7 @@ MIDDLEWARE_CLASSES = MIDDLEWARE_CLASSES + (
     'pml.middleware.RedirectMiddleware',
     'pml.middleware.VLiveRemoteUserMiddleware',
     'pml.middleware.NoCacheMiddleware',
+    'google_analytics.middleware.GoogleAnalyticsMiddleware',
 )
 
 AUTHENTICATION_BACKENDS = (
@@ -24,3 +27,9 @@ AUTHENTICATION_BACKENDS = (
 ROOT_URLCONF = 'mama.sites.vlive.urls'
 
 CACHES['default']['KEY_PREFIX'] = 'mama_vlive'
+
+GOOGLE_ANALYTICS = {
+    'google_analytics_id': 'UA-40632967-1',
+}
+
+CELERY_IMPORTS = ('google_analytics.tasks')
