@@ -18,6 +18,7 @@ setup(
         'django-debug-toolbar',
         'django-export',
         'django-generate',
+        'django-google-analytics-app',
         'django-google-credentials',
         'django-haystack',
         'django-moderator>=0.0.4',
