@@ -1,10 +1,8 @@
-{% extends 'base.html' %}
+{% extends 'pml/base.xml' %}
 
-{% block content %}
-    <div class="h1">Terms of Use</div>
-    <div class="content-inner">
-        <div class="post">
-            {{ preferences.SitePreferences.terms|safe }}
-        </div>
-    </div>
+{% load pml_inclusion_tags %}
+
+{% block body %}
+    {% header text='Terms of Use' color='grey' %}
+    {% text_module html='{{ preferences.SitePreferences.terms|safe }}' %}
 {% endblock %}
