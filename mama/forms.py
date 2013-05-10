@@ -149,6 +149,16 @@ class ProfileForm(pml_forms.PMLForm):
         )
     )
 
+    def __init__(self, *args, **kwargs):
+        super(ProfileForm, self).__init__(*args, **kwargs)
+        self.fields['tos'] = pml_forms.PMLCheckBoxField(
+            choices=(
+                ("accept", mark_safe('I accept the <LINK href="%s">terms '
+                                     'and conditions</LINK> of use.'
+                                     % reverse("terms"))),
+            )
+        )
+
     def clean_delivery_date(self):
         delivery_date = self.cleaned_data['delivery_date']
         try:
