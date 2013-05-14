@@ -150,11 +150,13 @@
                 .third ul { padding: 0 0 0 15px; }
                 .third .logo_pf { padding: 10px 0 20px 0; }
                 .third .logo_cl { padding: 5px 0 20px 0; }
-                .third .logo_whri { padding: 5px 0 7px 0; }
+                .third .logo_wrhi { padding: 5px 0 7px 0; }
         .diamond { width: 10px; height: 7px; position: absolute; top: -7px; right: -26px; background: url('../img/diamond.png') no-repeat; }
-        .girl { width: 270px; height: 381px; position: absolute; bottom: 162px; right: 30px; }
+        .girl { width: 270px; height: 381px; position: absolute; bottom: 230px; right: 30px; }
         .spacer { width: 97%; height: 30px; clear: both; }
         .divider { width: 860px; height: 2px; float: left; margin: 0 0 20px 0; background: #d9d9d9; }
+        .video { clear: both; display: block; text-decoration: none; background: url('../img/orange.png') no-repeat; }
+        a.video { color:#000!important; padding: 0 0 0 75px; font-family: HelvN; font-size: 16px; line-height: 20px; }
 
         /* intro */
         .intro { width: 860px; float: left; padding: 0 0 40px 0; font-size: 18px; line-height: 24px; }
@@ -178,7 +180,7 @@
             .family .quarter h2 { font-size: 18px; }
             .family .quarter p { line-height: 20px; }
             .family .quarter p a { padding: 12px 0 0 0; display: block; color: #f54f16; font-weight: bold; font-size: 15px; text-decoration: none; }
-            .family .member { width: 134px; float: left; margin: 10px 11px 0 0; }
+            .family .member { width: 115px; float: left; margin: 10px 9px 0 0; }
 
         /* news */
         .news .third h2 { padding: 0 0 10px 0; line-height: 20px; }
@@ -211,6 +213,7 @@
         .whri_eugene { background: url('../img/partner_whri_eugene.png') no-repeat!important; }
         .cl_peter { background: url('../img/partner_cl_peter.png') no-repeat!important; }
         .cl_kath { background: url('../img/partner_cl_kath.png') no-repeat!important; }
+        .vc_maya { background: url('../img/partner_vc_maya.jpg') no-repeat!important; }
         div.anythingSlider { width: 900px; height: 466px; display: block; position: relative; padding: 0; }
         div.anythingSlider .anythingWindow { width: 900px; height: 466px; overflow: hidden; position: relative; }
         div.anythingSlider { position: relative; float: right; }
