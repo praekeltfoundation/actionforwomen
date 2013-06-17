@@ -18,6 +18,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.http import require_POST
+from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormView
 from django.views.generic.list import ListView
@@ -130,6 +131,10 @@ class ProfileView(FormView):
             "Thank you! You have successfully been registered. You will be redirected to the homepage shortly."
         )
         return HttpResponseRedirect(reverse('home'))
+
+
+class QuestionnaireView(TemplateView):
+    template_name = "mama/questionnaire.html"
 
 
 def logout(request):

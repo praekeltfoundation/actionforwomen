@@ -5,7 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import cache_page
 from django.views.generic import TemplateView
 from haystack.views import SearchView
-from mama.views import CategoryDetailView, CategoryListView, ContactView, ProfileView
+from mama.views import CategoryDetailView, CategoryListView, ContactView, \
+                       ProfileView, QuestionnaireView
 from mama.forms import PasswordResetForm
 import object_tools
 
@@ -113,6 +114,11 @@ urlpatterns = patterns('',
         r'^accounts/profile/',
         login_required(ProfileView.as_view()),
         name='profile'
+    ),
+    url(
+        r'^questionnaire/',
+        login_required(QuestionnaireView.as_view()),
+        name='questionnaire'
     ),
     (r'^admin/', include(admin.site.urls)),
     (r'^object-tools/', include(object_tools.tools.urls)),
