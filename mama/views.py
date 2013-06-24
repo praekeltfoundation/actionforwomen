@@ -133,17 +133,14 @@ class ProfileView(FormView):
         return HttpResponseRedirect(reverse('home'))
 
 
-class QuestionnaireView(TemplateView):
-    template_name = "mama/questionnaire.html"
-
-
 def logout(request):
     auth.logout(request)
-    if 'HTTP_REFERER' in request.META:
-        redir_url = request.META['HTTP_REFERER']
-    else:
-        redir_url = reverse("home")
-    return redirect(redir_url)
+    # if 'HTTP_REFERER' in request.META:
+    #     redir_url = request.META['HTTP_REFERER']
+    # else:
+    #     redir_url = reverse("home")
+    # return redirect(redir_url)
+    return redirect(reverse("home"))
 
 
 @csrf_protect
