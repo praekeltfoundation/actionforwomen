@@ -113,6 +113,8 @@ class ContactView(FormView):
                 headers={'From': from_address, 'Reply-To': from_address}
             )
             mail.send(fail_silently=False)
+
+        # TODO: This should be a redirect to prevent a double POST ???
         return render_to_response('mama/contact_thanks.html', context_instance=RequestContext(self.request))
 
 
