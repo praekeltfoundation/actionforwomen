@@ -24,3 +24,6 @@ INSTALLED_APPS += (
     'debug_toolbar',
     'survey',
 )
+
+# URL for a DEVELOPMENT Holodeck instance
+HOLODECK_URL = 'http://localhost:8001/'
