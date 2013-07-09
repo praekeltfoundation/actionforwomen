@@ -2,4 +2,6 @@
 
 {% if object.get_thumb_url %}
     {% thumbnail_include image_url=object.get_thumb_url template='post/inclusion_tags/post_inline_include.html' color=color %}
+{% else %}
+    {% text_include template='post/inclusion_tags/post_inline_include.html' color=color %}
 {% endif %}
