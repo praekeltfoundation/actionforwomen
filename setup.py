@@ -20,7 +20,7 @@ setup(
         'django-generate',
         'django-google-analytics-app',
         'django-google-credentials',
-        'django-haystack',
+        'django-haystack==1.2.7',
         'django-moderator>=0.0.4',
         'django-preferences',
         'django-sites-groups',
