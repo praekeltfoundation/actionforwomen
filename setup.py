@@ -26,6 +26,7 @@ setup(
         'django-sites-groups',
         'django-snippetscream',
         'django-south-admin',
+        'django-registration==0.8',
         'django-userprofile>=0.0.6',
         'django-registration==0.8',
         'gunicorn',

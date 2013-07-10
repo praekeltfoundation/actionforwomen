@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% load cache mama_inclusion_tags %}
+{% load cache mama_inclusion_tags survey_inclusion_tags %}
 
 {% block following_header %}
     <div id="banner"><a href="{% url registration_register %}"><img src="{{ STATIC_URL }}mama/img/banner.jpg" /></a></div>
@@ -15,4 +15,5 @@
         {% topic_listing "life-guides" 0 %}
     {% endcache %}
     {% poll_listing %}
+    {% show_survey %}
 {% endblock %}
