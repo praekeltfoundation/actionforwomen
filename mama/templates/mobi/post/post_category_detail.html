@@ -15,7 +15,7 @@
                     {% endif %}
                 </div>
                 <div> </div>
-                {% if object.image %}
+                {% if object.get_thumb_url %}
                     <img src="{{ object.get_thumb_url }}" />
                 {% endif %}
                 {{ object.content|safe }}
