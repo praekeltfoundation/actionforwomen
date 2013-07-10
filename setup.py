@@ -40,7 +40,7 @@ setup(
         'python-memcached',
         'raven',
         'south',
-        'whoosh',
+        'Whoosh==2.4.1',
     ],
     tests_require=[
         'django-setuptest',
