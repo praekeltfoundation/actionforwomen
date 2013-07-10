@@ -1,2 +1,3 @@
 -e git+git@github.com:praekelt/django-pummel.git#egg=django-pummel
+-e git+git@github.com:praekelt/mama-survey.git#egg=mama-survey
 -e .
