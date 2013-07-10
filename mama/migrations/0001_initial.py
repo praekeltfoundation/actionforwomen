@@ -7,6 +7,10 @@ from django.db import models
 
 class Migration(SchemaMigration):
 
+    depends_on = (
+        ("jmbo", "0003_auto"),
+    )
+
     def forwards(self, orm):
         # Adding model 'Link'
         db.create_table('mama_link', (
