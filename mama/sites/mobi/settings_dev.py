@@ -10,10 +10,6 @@ DATABASES = {
     }
 }
 
-TEMPLATE_DIRS += (
-    os.path.join(PATH, "survey", "templates", "mobi"),
-)
-
 MIDDLEWARE_CLASSES += (
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
@@ -24,6 +20,3 @@ INSTALLED_APPS += (
     'debug_toolbar',
     'survey',
 )
-
-# URL for a DEVELOPMENT Holodeck instance
-HOLODECK_URL = 'http://localhost:8001/'
