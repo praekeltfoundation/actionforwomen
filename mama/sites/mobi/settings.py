@@ -6,11 +6,3 @@ TEMPLATE_DIRS += (
 )
 
 CACHES['default']['KEY_PREFIX'] = 'mama_mobi'
-
-LOGIN_REDIRECT_URL = '/survey/check-for-survey/'
-
-INSTALLED_APPS += (
-    'survey',
-)
-
-HOLODECK_URL = 'http://holodeck.praekelt.com/'

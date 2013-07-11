@@ -163,6 +163,8 @@ INSTALLED_APPS = (
     'south_admin',
     'userprofile',
     'gunicorn',
+
+    'survey',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -201,7 +203,9 @@ SOUTH_MIGRATION_MODULES = {
 USER_PROFILE_MODULE = 'mama.UserProfile'
 
 # If no 'next' value found during login redirect home.
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/survey/check-for-survey/'
+
+HOLODECK_URL = 'http://holodeck.praekelt.com/'
 
 HAYSTACK_SITECONF = 'mama.search_sites'
 HAYSTACK_SEARCH_ENGINE = 'whoosh'
