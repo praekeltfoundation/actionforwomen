@@ -10,6 +10,7 @@ def restart():
 def deploy():
     with cd('/var/praekelt/mama'):
         sudo('git pull', user='jmbo')
+        sudo('pip install -r requirements.pip', user='jmbo')
         sudo('ve/bin/python mama/manage.py syncdb --migrate --noinput',
              user='jmbo')
         sudo('ve/bin/python mama/manage.py collectstatic --noinput',
