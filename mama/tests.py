@@ -4,9 +4,6 @@ from unittest import TestCase
 from django.contrib.auth.models import User
 from mama.models import UserProfile
 
-from survey import constants
-from survey.models import Questionnaire
-
 
 class ProfileTestCase(TestCase):
     def test_is_prenatal(self):
