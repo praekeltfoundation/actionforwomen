@@ -19,4 +19,4 @@ def deploy():
 def install_packages(force=False):
     with cd('/var/praekelt/mama'):
         sudo('ve/bin/pip install %s -r requirements.pip' % (
-             '--update' if force else '',), user='jmbo')
+             '--upgrade' if force else '',), user='jmbo')
