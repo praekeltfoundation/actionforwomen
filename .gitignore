@@ -7,3 +7,7 @@ mama.sublime-project
 mama.sublime-workspace
 whoosh.index/
 /media/photologue/
+build/
+logs/
+static/
+tmp/
