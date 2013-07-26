@@ -198,6 +198,7 @@ SOUTH_MIGRATION_MODULES = {
     'preferences': 'mama.migrations_preferences',
 }
 
+AUTH_PROFILE_MODULE = 'mama.UserProfile'
 USER_PROFILE_MODULE = 'mama.UserProfile'
 
 # If no 'next' value found during login redirect home.
