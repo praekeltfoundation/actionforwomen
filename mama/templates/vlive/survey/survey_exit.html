@@ -1,0 +1,26 @@
+{% extends "pml/base.xml" %}
+
+{% load pml_inclusion_tags %}
+
+{% block body %}
+
+    {% header text="askMAMA Survey" color='orange' %}
+    <CONTAINER type="data">
+        <TEXT>
+            <p>Thank you for participating in this survey. We will give
+            you the opportunity to continue when you log in again.<br/>
+            Alternatively, you can click on the survey link at the bottom
+            of the home page to continue.</p>
+
+            <p> Return to the
+            <LINK href="{% url home %}">
+            <TEXT>home page</TEXT>
+            </LINK>
+            </p>
+        </TEXT>
+    </CONTAINER>
+
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

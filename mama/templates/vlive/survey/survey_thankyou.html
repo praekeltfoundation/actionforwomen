@@ -1,0 +1,27 @@
+{% extends "pml/base.xml" %}
+
+{% load pml_inclusion_tags %}
+
+{% block body %}
+
+    {% header text="askMAMA Survey" color='orange' %}
+
+    <CONTAINER type="data">
+        <TITLE>{{ params.survey.title }}</TITLE>
+        <TEXT>
+            <p>
+            {{ params.survey.thank_you_text|safe }}
+            </p>
+
+            <p> Return to the
+            <LINK href="{% url home %}">
+            <TEXT>home page</TEXT>
+            </LINK>
+            </p>
+        </TEXT>
+    </CONTAINER>
+
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
