@@ -1,11 +1,8 @@
 from django.conf.urls.defaults import *
 from django.contrib.auth.decorators import login_required
 
-from survey.views import (
-    CheckForQuestionnaireView, 
-    SurveyThankyouView, 
-    SurveyExitView
-)
+from survey.views import (CheckForQuestionnaireView, SurveyThankyouView,
+                          SurveyExitView)
 from mama.sites.vlive.survey_views import (
     PMLChooseActionFormView,
     PMLSurveyFormView
