@@ -3,6 +3,7 @@
 {% if user.is_authenticated %}
   {% if survey %}
     {% header text="askMAMA Survey" color='orange' %}
+    <MODULE>
     <CONTAINER type="data">
       <TEXT>
       <p>
@@ -14,5 +15,6 @@
       </p>
       </TEXT>
     </CONTAINER>
+    </MODULE>
   {% endif %}
 {% endif %}
