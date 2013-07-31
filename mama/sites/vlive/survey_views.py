@@ -1,10 +1,6 @@
-from django.views.generic.edit import FormView
-
 from survey.views import ChooseActionFormView, SurveyFormView
-from mama.sites.vlive.survey_forms import (
-    PMLSurveyChoiceForm, 
-    PMLSurveyQuestionForm
-)
+from mama.sites.vlive.survey_forms import (PMLSurveyChoiceForm,
+                                           PMLSurveyQuestionForm)
 
 
 class PMLChooseActionFormView(ChooseActionFormView):
@@ -22,4 +18,3 @@ class PMLSurveyFormView(SurveyFormView):
     """
     template_name = "vlive/survey/survey_form.html"
     form_class = PMLSurveyQuestionForm
-
