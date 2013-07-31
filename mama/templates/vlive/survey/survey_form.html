@@ -8,7 +8,9 @@
 
     <MODULE>
     <CONTAINER type="form">
-        <FORM method="GET" href="" submit_text="Continue">
+        <FORM method="GET" 
+              href="{% url survey:survey_form survey.id %}" 
+              submit_text="Continue">
             <FIELD name="csrfmiddlewaretoken" 
                    value="{{ csrf_token }}" 
                    type="hidden" />
