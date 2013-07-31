@@ -198,8 +198,9 @@ SOUTH_MIGRATION_MODULES = {
     'preferences': 'mama.migrations_preferences',
 }
 
-AUTH_PROFILE_MODULE = 'mama.UserProfile'
-USER_PROFILE_MODULE = 'mama.UserProfile'
+# NOTE: These now need to be the same value because we're using
+#       `user.get_profile()` because it allows for easier mocking
+USER_PROFILE_MODULE = AUTH_PROFILE_MODULE = 'mama.UserProfile'
 
 # If no 'next' value found during login redirect home.
 LOGIN_REDIRECT_URL = '/survey/check-for-survey/'
