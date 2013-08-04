@@ -34,7 +34,8 @@ class PMLSurveyQuestionForm(SurveyQuestionMixin, PMLForm):
                 self.files, self.add_prefix('survey_id'))
         question_id = fld_question_id.widget.value_from_datadict(self.data,
                 self.files, self.add_prefix('question_id'))
-        question = MultiChoiceQuestion.objects.get(pk=question_id)
-        self.update_the_form(survey_id, question)
+        if question_id:
+            question = MultiChoiceQuestion.objects.get(pk=question_id)
+            self.update_the_form(survey_id, question)
         
         super(PMLSurveyQuestionForm, self).full_clean()
