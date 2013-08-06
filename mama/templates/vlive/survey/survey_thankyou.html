@@ -9,11 +9,8 @@
     <MODULE>
     <CONTAINER type="data">
         <TITLE>{{ params.survey.title }}</TITLE>
+        {% text_tag html=params.survey.thank_you_text %}
         <TEXT>
-            <p>
-            {{ params.survey.thank_you_text|safe }}
-            </p>
-
             <p> Return to the
             <LINK href="{% url home %}">
             <TEXT>home page</TEXT>
