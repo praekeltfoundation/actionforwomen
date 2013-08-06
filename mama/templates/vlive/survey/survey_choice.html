@@ -1,0 +1,34 @@
+{% extends "pml/base.xml" %}
+
+{% load pml_inclusion_tags %}
+
+{% block body %}
+
+    {% header text="askMAMA Survey" color='orange' %}
+
+    <MODULE>
+    <CONTAINER type="data">
+        <TITLE>{{ survey.title }}</TITLE>
+        {% text_tag html=survey.introduction_text %}
+    </CONTAINER>
+    </MODULE>
+
+    <MODULE>
+    <CONTAINER type="form">
+        <FORM method="GET" 
+              href="{% url survey:survey_action survey.id %}" 
+              submit_text="Continue">
+            <FIELD name="csrfmiddlewaretoken" 
+                   value="{{ csrf_token }}" 
+                   type="hidden" />
+            {% for field in form %}
+            {{ field }}<br />
+            {% endfor %}
+        </FORM>
+    </CONTAINER>
+    </MODULE>
+
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

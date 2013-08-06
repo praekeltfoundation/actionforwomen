@@ -11,4 +11,6 @@ urlpatterns = patterns('',
         login_required(ProfileView.as_view()),
         name='registration_register'
     ),
+    (r'^survey/', 
+        include('mama.sites.vlive.survey_urls', namespace='survey')),
 ) + urlpatterns
