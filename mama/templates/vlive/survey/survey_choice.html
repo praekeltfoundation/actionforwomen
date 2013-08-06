@@ -9,9 +9,7 @@
     <MODULE>
     <CONTAINER type="data">
         <TITLE>{{ survey.title }}</TITLE>
-        <TEXT>
-            <p>{{ survey.introduction_text|safe }}</p>
-        </TEXT>
+        {% text_tag html=survey.introduction_text %}
     </CONTAINER>
     </MODULE>
 
