@@ -31,7 +31,7 @@
                 </MODULE>
             {% endif %}
             {% header text='Share This Site' color=color %}
-            <MODULE>
+            <MODULE ignoreDevice="ZTE R237m">
                 <CONTAINER type="data">
                     <TEXT>
                         Share This: <LINK href="http://twitter.com/home?status=MAMA - Mobile Alliance for Maternal Action http://askmama.mobi"><IMAGE href="{{ STATIC_URL }}mama/img/twitter.png"></IMAGE></LINK><LINK href="http://www.facebook.com/sharer.php?u=http://askmama.mobi&amp;t=MAMA - Mobile Alliance for Maternal Action"><IMAGE href="{{ STATIC_URL }}mama/img/facebook.png"></IMAGE></LINK>
