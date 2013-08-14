@@ -2,29 +2,24 @@
 
 import os
 
-from raven import Client
-from raven.conf import setup_logging
-from raven.handlers.logging import SentryHandler
-
 PATH = os.getcwd()
 
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    ('Shaun Sephton', 'connect@shaunsephton.com'),
 )
 
 MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'mama',                      # Or path to database file if using sqlite3.
-        'USER': 'mama',                      # Not used with sqlite3.
-        'PASSWORD': 'Twhq627Yt',                  # Not used with sqlite3.
-        'HOST': '10.53.47.226',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '5432',                      # Set to empty string for default. Not used with sqlite3.
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'mama',
+        'USER': 'mama',
+        'PASSWORD': 'mama',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -91,7 +86,7 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = 'tk1t&n3^r1)yk%ss3wxd79nw*z&__@bnt*7!2pbv7#9_)lepax'
+SECRET_KEY = ''
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.auth.context_processors.auth",
@@ -162,6 +157,8 @@ INSTALLED_APPS = (
     'south_admin',
     'userprofile',
     'gunicorn',
+
+    'survey',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -197,10 +194,14 @@ SOUTH_MIGRATION_MODULES = {
     'preferences': 'mama.migrations_preferences',
 }
 
-USER_PROFILE_MODULE = 'mama.UserProfile'
+# NOTE: These now need to be the same value because we're using
+#       `user.get_profile()` because it allows for easier mocking
+USER_PROFILE_MODULE = AUTH_PROFILE_MODULE = 'mama.UserProfile'
 
 # If no 'next' value found during login redirect home.
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/survey/check-for-survey/'
+
+HOLODECK_URL = 'http://holodeck.praekelt.com/'
 
 HAYSTACK_SITECONF = 'mama.search_sites'
 HAYSTACK_SEARCH_ENGINE = 'whoosh'
@@ -208,8 +209,8 @@ HAYSTACK_WHOOSH_PATH = os.path.join(PATH, 'whoosh.index')
 
 EMAIL_SUBJECT_PREFIX = '[MAMA] '
 
-AMBIENT_API_KEY = 'A363FDC5-32F6-4891-8722-04BA2D6AEBA3'
-AMBIENT_GATEWAY_PASSWORD = 'm4m45m5'
+AMBIENT_API_KEY = ''
+AMBIENT_GATEWAY_PASSWORD = ''
 
 MODERATOR = {
     'CLASSIFIER': 'moderator.storage.RedisClassifier',
@@ -231,11 +232,12 @@ MODERATOR = {
 
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 
-# Set session cookie age to 1 year, meaning sessions are valid for up to 1 year.
+# Set session cookie age to 1 year, meaning sessions are
+# valid for up to 1 year.
 SESSION_COOKIE_AGE = 31536000
 
-GA_CLIENT_ID = '862858405572.apps.googleusercontent.com'
-GA_CLIENT_SECRET = 'VXUxb2A6xUyYADGSKjb2h9Op'
+GA_CLIENT_ID = ''
+GA_CLIENT_SECRET = ''
 GA_SCOPE = 'https://www.googleapis.com/auth/analytics.readonly'
 GA_REDIRECT_URI = 'http://askmama.mobi/google-credentials/callback'
 
@@ -243,12 +245,15 @@ SERIALIZATION_MODULES = {
     'csv': 'snippetscream.csv_serializer',
 }
 
-client = Client('http://a63d3e29a4e9453c9883663cb3159469:471fe88edf274035bb8c1285a4db8d21@sentry.praekelt.com/22')
-setup_logging(SentryHandler(client))
-
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
         'LOCATION': '127.0.0.1:11211'
     }
 }
+
+# Puppet will put this on the server.
+try:
+    from production_settings import *
+except ImportError:
+    pass

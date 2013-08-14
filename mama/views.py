@@ -18,6 +18,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.http import require_POST
+from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormView
 from django.views.generic.list import ListView
@@ -112,6 +113,8 @@ class ContactView(FormView):
                 headers={'From': from_address, 'Reply-To': from_address}
             )
             mail.send(fail_silently=False)
+
+        # TODO: This should be a redirect to prevent a double POST ???
         return render_to_response('mama/contact_thanks.html', context_instance=RequestContext(self.request))
 
 
@@ -134,11 +137,12 @@ class ProfileView(FormView):
 
 def logout(request):
     auth.logout(request)
-    if 'HTTP_REFERER' in request.META:
-        redir_url = request.META['HTTP_REFERER']
-    else:
-        redir_url = reverse("home")
-    return redirect(redir_url)
+    # if 'HTTP_REFERER' in request.META:
+    #     redir_url = request.META['HTTP_REFERER']
+    # else:
+    #     redir_url = reverse("home")
+    # return redirect(redir_url)
+    return redirect(reverse("home"))
 
 
 @csrf_protect

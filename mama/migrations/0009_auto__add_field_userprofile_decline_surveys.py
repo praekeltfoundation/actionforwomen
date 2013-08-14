@@ -7,24 +7,16 @@ from django.db import models
 
 class Migration(SchemaMigration):
 
-    depends_on = (
-        ("jmbo", "0003_auto"),
-    )
-
     def forwards(self, orm):
-        # Adding model 'Link'
-        db.create_table('mama_link', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=256)),
-            ('source', self.gf('django.db.models.fields.related.ForeignKey')(related_name='link_target_set', to=orm['jmbo.ModelBase'])),
-            ('target', self.gf('django.db.models.fields.related.ForeignKey')(related_name='link_source_set', to=orm['jmbo.ModelBase'])),
-        ))
-        db.send_create_signal('mama', ['Link'])
+        # Adding field 'UserProfile.decline_surveys'
+        db.add_column('mama_userprofile', 'decline_surveys',
+                      self.gf('django.db.models.fields.BooleanField')(default=False),
+                      keep_default=False)
 
 
     def backwards(self, orm):
-        # Deleting model 'Link'
-        db.delete_table('mama_link')
+        # Deleting field 'UserProfile.decline_surveys'
+        db.delete_column('mama_userprofile', 'decline_surveys')
 
 
     models = {
@@ -100,9 +92,9 @@ class Migration(SchemaMigration):
             'modified': ('django.db.models.fields.DateTimeField', [], {}),
             'owner': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True', 'blank': 'True'}),
             'primary_category': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'primary_modelbase_set'", 'null': 'True', 'to': "orm['category.Category']"}),
-            'publish_on': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
+            'publish_on': ('django.db.models.fields.DateTimeField', [], {'db_index': 'True', 'null': 'True', 'blank': 'True'}),
             'publishers': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'to': "orm['publisher.Publisher']", 'null': 'True', 'blank': 'True'}),
-            'retract_on': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
+            'retract_on': ('django.db.models.fields.DateTimeField', [], {'db_index': 'True', 'null': 'True', 'blank': 'True'}),
             'sites': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'to': "orm['sites.Site']", 'null': 'True', 'blank': 'True'}),
             'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '255'}),
             'state': ('django.db.models.fields.CharField', [], {'default': "'unpublished'", 'max_length': '32', 'null': 'True', 'blank': 'True'}),
@@ -112,11 +104,31 @@ class Migration(SchemaMigration):
             'view_count': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0'})
         },
         'mama.link': {
-            'Meta': {'object_name': 'Link'},
+            'Meta': {'ordering': "['id']", 'object_name': 'Link'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'source': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'link_target_set'", 'to': "orm['jmbo.ModelBase']"}),
             'target': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'link_source_set'", 'to': "orm['jmbo.ModelBase']"}),
-            'title': ('django.db.models.fields.CharField', [], {'max_length': '256'})
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '256', 'null': 'True', 'blank': 'True'})
+        },
+        'mama.navigationlink': {
+            'Meta': {'object_name': 'NavigationLink'},
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'source': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'navigation_link_target_set'", 'to': "orm['jmbo.ModelBase']"}),
+            'target': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'navigation_link_source_set'", 'to': "orm['jmbo.ModelBase']"}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '256', 'null': 'True', 'blank': 'True'})
+        },
+        'mama.userprofile': {
+            'Meta': {'object_name': 'UserProfile'},
+            'alias': ('django.db.models.fields.CharField', [], {'max_length': '128', 'null': 'True', 'blank': 'True'}),
+            'banned': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'decline_surveys': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'delivery_date': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'last_reset_date': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
+            'mobile_number': ('django.db.models.fields.CharField', [], {'max_length': '64', 'null': 'True', 'blank': 'True'}),
+            'reset_count': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'unique': 'True'}),
+            'weeks_pregnant_signup': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'})
         },
         'photologue.photoeffect': {
             'Meta': {'object_name': 'PhotoEffect'},

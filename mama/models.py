@@ -131,6 +131,11 @@ class UserProfile(AbstractProfileBase):
         default=False,
         blank=True,
     )
+    decline_surveys = models.BooleanField(
+        help_text='Whether or not user declined to paricipate in surveys.',
+        default=False,
+        blank=True,
+    )
 
     def is_prenatal(self):
         """
