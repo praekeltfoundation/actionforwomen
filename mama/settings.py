@@ -2,10 +2,6 @@
 
 import os
 
-from raven import Client
-from raven.conf import setup_logging
-from raven.handlers.logging import SentryHandler
-
 PATH = os.getcwd()
 
 DEBUG = False
@@ -90,7 +86,7 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = 'tk1t&n3^r1)yk%ss3wxd79nw*z&__@bnt*7!2pbv7#9_)lepax'
+SECRET_KEY = ''
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.auth.context_processors.auth",
@@ -213,8 +209,8 @@ HAYSTACK_WHOOSH_PATH = os.path.join(PATH, 'whoosh.index')
 
 EMAIL_SUBJECT_PREFIX = '[MAMA] '
 
-AMBIENT_API_KEY = 'A363FDC5-32F6-4891-8722-04BA2D6AEBA3'
-AMBIENT_GATEWAY_PASSWORD = 'm4m45m5'
+AMBIENT_API_KEY = ''
+AMBIENT_GATEWAY_PASSWORD = ''
 
 MODERATOR = {
     'CLASSIFIER': 'moderator.storage.RedisClassifier',
@@ -236,20 +232,18 @@ MODERATOR = {
 
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 
-# Set session cookie age to 1 year, meaning sessions are valid for up to 1 year.
+# Set session cookie age to 1 year, meaning sessions are
+# valid for up to 1 year.
 SESSION_COOKIE_AGE = 31536000
 
-GA_CLIENT_ID = '862858405572.apps.googleusercontent.com'
-GA_CLIENT_SECRET = 'VXUxb2A6xUyYADGSKjb2h9Op'
+GA_CLIENT_ID = ''
+GA_CLIENT_SECRET = ''
 GA_SCOPE = 'https://www.googleapis.com/auth/analytics.readonly'
 GA_REDIRECT_URI = 'http://askmama.mobi/google-credentials/callback'
 
 SERIALIZATION_MODULES = {
     'csv': 'snippetscream.csv_serializer',
 }
-
-client = Client('http://a63d3e29a4e9453c9883663cb3159469:471fe88edf274035bb8c1285a4db8d21@sentry.praekelt.com/22')
-setup_logging(SentryHandler(client))
 
 CACHES = {
     'default': {
