@@ -257,3 +257,9 @@ CACHES = {
         'LOCATION': '127.0.0.1:11211'
     }
 }
+
+# Puppet will put this on the server.
+try:
+    from production_settings import *
+except ImportError:
+    pass
