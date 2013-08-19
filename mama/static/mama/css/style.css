@@ -13,13 +13,22 @@ a { color: #ff6b15; text-decoration: none; }
 	#header .deets { clear: both; padding: 5px; border-top: 1px solid #e1e1e1; color: #cacaca; line-height: 14px; text-align: center; }
     #header .deets a { padding: 3px 0 0 0; font-size: 11px; font-weight: bold; color: #d92128; text-transform: uppercase; }
 	#header .nav { clear: both; padding: 8px 0 6px 10px; background-color: #da2127; color: #ff8e00; text-align: center; }
-	#header .nav a { margin: 0; font-size: 1em; font-weight: bold; text-transform: uppercase; color: #fff; }
+	#header .nav a { margin: 0; font-size: 1em; font-weight: bold; color: #fff; }
 	#header .nav .active { color: #000; }
 	
 /* BANNER and DIVIDER */
 #divider, #banner { padding: 0; margin: 0;  }
 #divider img { width: 100%; display: block; }
 #banner img { width: 100%; height: auto; margin: 0 auto; display: block; }
+.text_banner {
+    padding: 0; margin: 0; width: 100%; height: auto; display: block; 
+}
+.text_banner .banner_content {
+    clear: both; 
+    padding: 5px; 
+    border-top: 1px solid #e1e1e1; 
+    color: #888; line-height: 14px; text-align: center;
+}
 
 /* CONTENT */
 #content { color: #666; background: #fff; }

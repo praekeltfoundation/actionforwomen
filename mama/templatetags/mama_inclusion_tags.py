@@ -65,6 +65,14 @@ def page_header(context):
     return context
 
 
+@register.inclusion_tag(
+    'mama/inclusion_tags/registration_banner.html',
+    takes_context=True)
+def registration_banner(context):
+    context = copy(context)
+    return context
+
+
 @register.inclusion_tag('mama/inclusion_tags/page_header.html', takes_context=True)
 def pml_page_header(context):
     context = copy(context)
