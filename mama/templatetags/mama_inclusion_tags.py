@@ -189,6 +189,11 @@ def post_listing(context, category_slug):
     })
     return context
 
+@register.inclusion_tag('mama/inclusion_tags/stories_listing.html',
+        takes_context=True)
+def stories_listing(context, category_slug):
+    return post_listing(context, category_slug)
+
 
 @register.inclusion_tag('mama/inclusion_tags/pagination.html', takes_context=True)
 def pagination(context, page_obj):

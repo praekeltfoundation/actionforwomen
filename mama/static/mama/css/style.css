@@ -86,6 +86,7 @@ a { color: #ff6b15; text-decoration: none; }
 	.content-inner .social { padding: 5px; font-weight: bold; line-height: 17px; font-size: 11px; }
 	.content-inner .social p { float: left; padding: 3px 8px 0 0; }
 	.content-inner .social img { padding: 3px 3px 0 0; }
+	.content-inner .more-links { padding: 0 5px 5px 5px; font-weight: bold; font-size: 12px; }
 
 	table { width: 100%; }
 	th { padding: 5px; background: #212121; color: #fff; }
@@ -143,6 +144,7 @@ table.poll-results tr.poll-result-6 td.bar > div { background-color: #ff8e00; }
 	#content .purple .content-inner .item .meta .title a { color: #872e4d; }
 	#content .purple .content-inner .item-nav { background: #eadbe0; color: #bfbfbf; }
 	#content .purple .content-inner .item-nav a { color: #872e4d; }
+	#content .purple .content-inner .more-links a { color: #872e4d; }
 	#content .purple #menu .item a { color: #872e4d; }
 	#content .purple #menu .item-nav { background: #eadbe0; color: #bfbfbf; }
 	#content .purple #menu .item-nav a { color: #872e4d; }
@@ -159,6 +161,7 @@ table.poll-results tr.poll-result-6 td.bar > div { background-color: #ff8e00; }
 	#content .maroon .content-inner .item .meta .title a { color: #b22a2d; }
 	#content .maroon .content-inner .item-nav { background: #eadbe0; color: #bfbfbf; }
 	#content .maroon .content-inner .item-nav a { color: #b22a2d; }
+	#content .maroon .content-inner .more-links a { color: #b22a2d; }
 	#content .maroon #menu .item a { color: #b22a2d; }
 	#content .maroon #menu .item-nav { background: #eadbe0; color: #bfbfbf; }
 	#content .maroon #menu .item-nav a { color: #b22a2d; }
