@@ -1,5 +1,10 @@
 from copy import copy
 from datetime import datetime
+try:
+  from random import SystemRandom
+  random = SystemRandom()
+except:
+  import random
 
 from category.models import Category
 from django import template
@@ -70,6 +75,32 @@ def page_header(context):
     takes_context=True)
 def registration_banner(context):
     context = copy(context)
+    return context
+
+
+@ register.inclusion_tag(
+    'mama/inclusion_tags/random_guide_banner.html',
+    takes_context=True)
+def random_guide_banner(context):
+    context = copy(context)
+
+    # get the published, featured guides
+    qs = Post.permitted.filter(
+            primary_category__slug='life-guides',
+            categories__slug='featured')
+
+    # select a guide at random
+    try:
+        random_guide = random.choice(qs)
+        context.update({
+            'random_guide': {
+                'title': random_guide.title,
+                'subtitle': random_guide.subtitle,
+                'url': random_guide.get_absolute_category_url()
+            }
+        })
+    except IndexError:
+        pass
     return context
 
 
