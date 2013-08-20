@@ -95,7 +95,7 @@ def random_guide_banner(context):
         context.update({
             'random_guide': {
                 'title': random_guide.title,
-                'subtitle': random_guide.subtitle,
+                'description': random_guide.description,
                 'url': random_guide.get_absolute_category_url()
             }
         })
@@ -178,9 +178,10 @@ def post_listing(context, category_slug):
     try:
         category = Category.objects.get(slug__exact=category_slug)
     except Category.DoesNotExist:
-        return {}
+        return context
     object_list = Post.permitted.filter(Q(primary_category=category) | \
-            Q(categories=category)).filter(categories__slug='featured').distinct()
+            Q(categories=category))
+    object_list = object_list.filter(categories__slug='featured').distinct()
 
     context.update({
         'category': category,

@@ -5,9 +5,9 @@
     <strong>
       <a href="{{ random_guide.url }}">{{ random_guide.title }}</a>
     </strong>
-    {% if random_guide.subtitle %}
+    {% if random_guide.description %}
     <br/>
-    {{ random_guide.sub_title }}
+    {{ random_guide.description|truncatewords:10 }}
     {% endif %}
     </p>
   </div>

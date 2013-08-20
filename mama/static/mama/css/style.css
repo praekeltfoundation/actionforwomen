@@ -75,8 +75,9 @@ a { color: #ff6b15; text-decoration: none; }
 	.content-inner .item:first-of-type { border: 0; padding-top: 0; }
 	.content-inner .item .meta { padding: 6px 0 5px 0; margin: 0 0 0 68px; color: #666666; }
 	.content-inner .no-pic .meta { margin: 0 0 0 10px; }
+	.content-inner .item .meta .stats { padding: 0 0 1px 0; font-size: 10px; }
 	.content-inner .item .meta .title a { color: #ff6a15; font-weight: bold; }
-	.content-inner .item .meta .stamp { padding: 5px 0 0 0; font-size: 11px; }
+	.content-inner .item .meta .stamp { padding: 2px 0 0 0; font-size: 11px; }
 	.content-inner .item .meta .description { padding: 0 0 5px 0; font-size: 11px; }
 	.content-inner .item-nav { display: block; clear: both; padding: 5px; background: #ffe7d2; color: #e1e1e1; font-size: 11px; }
 	.content-inner .item-nav a { color: #ef5822; font-weight: bold; }
