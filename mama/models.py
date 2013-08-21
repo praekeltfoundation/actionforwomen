@@ -156,6 +156,26 @@ class UserProfile(AbstractProfileBase):
         return date.today() > self.delivery_date
 
 
+class Banner(ModelBase):
+    url = models.CharField(
+        max_length=256,
+        help_text="Root relative URL to which the banner will redirect."
+    )
+    time_on = models.TimeField(
+        blank=True,
+        null=True,
+        help_text="Time at which the banner will start displaying. If "
+                  "either time on or time off is not specified the banner "
+                  "will always be eligable for display (can be randomly selected)."
+    )
+    time_off = models.TimeField(
+        blank=True,
+        null=True,
+        help_text="Time at which the banner will stop displaying. If either "
+                  "time on or time off is not specified the banner will "
+                  "always be eligable for display (can be randomly selected)."
+    )
+
 @receiver(class_prepared)
 def add_field(sender, **kwargs):
     """
