@@ -140,7 +140,7 @@ class ProfileView(FormView):
 
 
 class BannerView(TemplateView):
-    template_name = "mama/banner.html"
+    template_name = "pml/carousel.xml"
 
     def get_context_data(self, **kwargs):
         context = super(BannerView, self).get_context_data(**kwargs)
