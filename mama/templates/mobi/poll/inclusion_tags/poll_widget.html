@@ -1,25 +1,45 @@
-{% if can_vote_on_poll %}
-    <form id="frmPoll" method="post" action="{% url poll_vote object.slug %}">
-    {% csrf_token %}
-        <div class="title">{{ object.title }}</div>
-        {% for option in object.polloption_set.all %}
-            <div class="row"><input type="radio" name="{{ form.poll_option.html_name }}" value="{{ option.pk }}" /> {{option.title }}</div>
+{% load i18n jmbo_template_tags %}
+
+<div class="object-widget-inclusion poll-widget-inclusion" id="poll-widget-oid-{{ object.id }}">
+    {% if object.image %}<div class="image"><img src="{{ object.get_modelbase_list_item_thumbnail_LAYER_url }}"/></div>{% endif %}
+    <div class="poll-form-title">{{ object.title }}</div>
+
+    {% if can_vote_on_poll %}
+        <form action="{% url poll_vote object.slug %}" method="POST" id="poll-widget-form-{{ object.id }}">
+            {% csrf_token %}
+            {{ form.as_div }}
+            <div class="row">
+                <input type="submit" value="{% trans "Vote" %}" class="btn" />
+                <a href="{{ object.get_absolute_url }}?results=1" onclick="document.getElementById('poll-widget-results-{{ object.id }}').style.display = 'block'; document.getElementById('poll-widget-form-{{ object.id }}').style.display = 'none'; return false;">{% trans "See results" %}</a>                
+            </div>
+        </form>
+    {% endif %}
+
+    <div id="poll-widget-results-{{ object.id }}" {% if can_vote_on_poll %}style="display: none;"{% endif %}>
+        <table class="poll-results" cellspacing="0">
+        {% for obj in object.polloption_set.all %}
+            <tr class="poll-result-{{ forloop.counter }}">
+                <td>{{ obj.title }}</td>
+                <td class="bar">
+                    <div style="width: {{ obj.percentage }}%;">&nbsp;</div>
+                </td>
+                <td>
+                    {{ obj.percentage|floatformat }}%
+                </td>
+            </tr>
         {% endfor %}
-        <div class="row"><input type="submit" name="submit" value="Vote" class="btn" ></div>
-    </form>
-{% else %}
-    <div class="content-inner">
-        <div class="post">
-            <div class="title">{{ object.title }}</div>
-            <table class="poll-results" cellspacing="0">        
-                {% for option in object.polloption_set.all %}
-                    <tr class="poll-result-1">
-                        <td>{{ option.title }}</td> 
-                        <td class="bar"><div style="width: {{ option.percentage }}%;">&nbsp;</div></td>
-                        <td>{{ option.percentage|floatformat:1 }}%</td>
-                    </tr>
-                {% endfor %}
-            </table>
+        </table>
+        {% if can_vote_on_poll %}
+        <div class="row">
+          <input type="button" class="btn" value="Vote" onclick="document.getElementById('poll-widget-results-{{ object.id }}').style.display = 'none'; document.getElementById('poll-widget-form-{{ object.id }}').style.display = 'block'; return false;" />
         </div>
+        {% endif %}
     </div>
-{% endif %}
+
+    {% if not can_vote_on_poll %}
+        {% if reason == 'auth_required' %}
+            <a href="{% url login %}">{% trans "You must be signed in to vote" %}</a>
+        {% endif %}
+    {% endif %}
+
+</div>

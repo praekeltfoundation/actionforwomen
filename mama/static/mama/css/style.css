@@ -61,6 +61,20 @@ a { color: #ff6b15; text-decoration: none; }
 	#content form .btns input,
 	#content .btn { padding: 3px 8px 4px 8px; border: 0; background: #ff6a15; color: #fff; font-weight: bold; }
 	#content .h1 { padding: 6px 10px 5px 10px; background: #ff6a15; clear: both; font-size: 1em; font-weight: bold; color: #fff; text-transform: uppercase; text-align: center; }
+    #content .poll-widget-inclusion {
+        padding: 5px;
+    }
+    #content .poll-widget-inclusion .poll-form-title {
+        padding: 5px; 
+        font-weight: bold;
+        font-size: 12px;
+    }
+    #content .poll-widget-inclusion table {
+        padding: 10px;
+    }
+    #content .poll-widget-inclusion div .row .btn {
+        margin: 0 0 10px 10px;
+    }
 
 /* CONTENT INNER */
 .content-inner {}
