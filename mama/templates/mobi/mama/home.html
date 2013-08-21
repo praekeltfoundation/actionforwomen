@@ -3,10 +3,8 @@
 {% load cache mama_inclusion_tags survey_inclusion_tags %}
 
 {% block following_header %}
-{% comment %}
-    <div id="banner"><img src="{{ STATIC_URL }}mama/img/banner.jpg" /></div>
-{% endcomment %}
 {% registration_banner %}
+<div id="banner"><img src="{{ STATIC_URL }}mama/img/banner.jpg" /></div>
 {% random_guide_banner %}
 {% endblock %}
 
