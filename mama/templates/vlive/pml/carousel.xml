@@ -22,7 +22,7 @@
                     <CONTAINER type="data">
                         <TEXT>
                             <LINK href="{{ banner.url }}">
-                                <IMAGE href="{{ ROOT_URL }}{{ banner.get_banner_url }}" align="full" type="image/jpeg"/>
+                                <IMAGE href="{{ ROOT_URL }}{{ banner.image.url }}" align="full" type="image/jpeg"/>
                             <TEXT>
                                 <P>
                                     <LINK href="{{banner.url}}">{{ banner.title }}</LINK>

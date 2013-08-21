@@ -1,14 +1,14 @@
 import re
 import urlparse
+from datetime import datetime
 
 from django.conf import settings
 from django.contrib import auth
 from django.contrib import messages
 from django.contrib.comments.views import comments
-from django.contrib.sites.models import Site
 from django.core.mail import EmailMessage, mail_managers
 from django.core.urlresolvers import reverse
-from django.db.models import Q
+from django.db.models import Q, F
 from django.http import HttpResponseRedirect, HttpResponseServerError
 from django.shortcuts import get_object_or_404, redirect, render_to_response
 from django.template import RequestContext
@@ -24,6 +24,7 @@ from django.views.generic.list import ListView
 
 from mama.forms import ContactForm, ProfileForm
 from mama.view_modifiers import PopularViewModifier
+from mama.models import Banner
 
 from category.models import Category
 

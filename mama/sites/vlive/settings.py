@@ -25,7 +25,7 @@ AUTHENTICATION_BACKENDS = (
 )
 
 ROOT_URLCONF = 'mama.sites.vlive.urls'
-ROOT_URL = 'http://vlive.askmama.mobi/'
+ROOT_URL = 'http://vlive.askmama.mobi'
 
 CACHES['default']['KEY_PREFIX'] = 'mama_vlive'
 
