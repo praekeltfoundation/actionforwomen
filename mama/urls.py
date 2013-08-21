@@ -115,6 +115,13 @@ urlpatterns = patterns('',
         login_required(ProfileView.as_view()),
         name='profile'
     ),
+
+    url(
+        r'^askmama/$',
+        TemplateView.as_view(template_name="mama/askmama.html"),
+        name="ask_mama"
+    ),
+
     (r'^survey/', include('survey.urls', namespace='survey')),
     (r'^admin/', include(admin.site.urls)),
     (r'^object-tools/', include(object_tools.tools.urls)),

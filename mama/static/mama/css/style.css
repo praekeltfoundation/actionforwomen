@@ -29,6 +29,9 @@ a { color: #ff6b15; text-decoration: none; }
     border-top: 1px solid #e1e1e1; 
     color: #888; line-height: 14px; text-align: center;
 }
+.maroon .banner_content a {
+    color: #b22a2d;
+}
 
 /* CONTENT */
 #content { color: #666; background: #fff; }

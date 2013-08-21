@@ -2,24 +2,21 @@
 
 {% load cache mama_inclusion_tags survey_inclusion_tags %}
 
+{% block following_header %}
 {% comment %}
-{% block following_header %}
     <div id="banner"><img src="{{ STATIC_URL }}mama/img/banner.jpg" /></div>
-{% endblock %}
 {% endcomment %}
-
-{% block following_header %}
 {% registration_banner %}
 {% random_guide_banner %}
 {% endblock %}
 
 {% block content %}
     {% ages_and_stages %}
-    {% cache 3600 home %}
+    {# cache 3600 home #}
         {% stories_listing "moms-stories" %}
         {% post_listing "articles" %}
-        {# askmama_banner #}
-    {% endcache %}
+        {% askmama_banner %}
+    {# endcache #}
     {% poll_listing %}
     {% show_survey %}
 {% endblock %}

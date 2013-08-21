@@ -78,6 +78,14 @@ def registration_banner(context):
     return context
 
 
+@register.inclusion_tag(
+    'mama/inclusion_tags/askmama_banner.html',
+    takes_context=True)
+def askmama_banner(context):
+    context = copy(context)
+    return context
+
+
 @ register.inclusion_tag(
     'mama/inclusion_tags/random_guide_banner.html',
     takes_context=True)
@@ -101,6 +109,7 @@ def random_guide_banner(context):
         })
     except IndexError:
         pass
+
     return context
 
 
@@ -174,25 +183,34 @@ def poll_listing(context):
 @register.inclusion_tag('mama/inclusion_tags/post_listing.html', \
         takes_context=True)
 def post_listing(context, category_slug):
-    context = copy(context)
-    try:
-        category = Category.objects.get(slug__exact=category_slug)
-    except Category.DoesNotExist:
-        return context
-    object_list = Post.permitted.filter(Q(primary_category=category) | \
-            Q(categories=category))
-    object_list = object_list.filter(categories__slug='featured').distinct()
+    result = _get_content_object_list(context, category_slug)
+    result['object_list'] = result['object_list'][:2]
+    return result
 
-    context.update({
-        'category': category,
-        'object_list': object_list,
-    })
-    return context
 
 @register.inclusion_tag('mama/inclusion_tags/stories_listing.html',
         takes_context=True)
 def stories_listing(context, category_slug):
-    return post_listing(context, category_slug)
+    result = _get_content_object_list(context, category_slug)
+    result['object_list'] = result['object_list'][:3]
+    return result
+
+
+def _get_content_object_list(ctx_dict, category_slug):
+    ctx_dict = copy(ctx_dict)
+    try:
+        category = Category.objects.get(slug__exact=category_slug)
+    except Category.DoesNotExist:
+        return ctx_dict
+    object_list = Post.permitted.filter(Q(primary_category=category) | \
+            Q(categories=category))
+    object_list = object_list.filter(categories__slug='featured').distinct()
+
+    ctx_dict.update({
+        'category': category,
+        'object_list': object_list,
+    })
+    return ctx_dict
 
 
 @register.inclusion_tag('mama/inclusion_tags/pagination.html', takes_context=True)
