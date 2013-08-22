@@ -1,15 +1,14 @@
 import re
 import urlparse
+from datetime import datetime
 
-import ambient
-from category.models import Category
 from django.conf import settings
 from django.contrib import auth
 from django.contrib import messages
 from django.contrib.comments.views import comments
 from django.core.mail import EmailMessage, mail_managers
 from django.core.urlresolvers import reverse
-from django.db.models import Q
+from django.db.models import Q, F
 from django.http import HttpResponseRedirect, HttpResponseServerError
 from django.shortcuts import get_object_or_404, redirect, render_to_response
 from django.template import RequestContext
@@ -22,13 +21,19 @@ from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormView
 from django.views.generic.list import ListView
-from mama.forms import ContactForm, PasswordResetForm, ProfileForm
-from mama.models import UserProfile
+
+from mama.forms import ContactForm, ProfileForm
 from mama.view_modifiers import PopularViewModifier
+from mama.models import Banner
+
+from category.models import Category
+
 from poll.forms import PollVoteForm
 from poll.models import Poll
 from post.models import Post
+
 from preferences import preferences
+
 
 URL_REGEX = re.compile(
     r'(?:http|ftp)s?://' # http:// or https://
@@ -133,6 +138,32 @@ class ProfileView(FormView):
             "Thank you! You have successfully been registered. You will be redirected to the homepage shortly."
         )
         return HttpResponseRedirect(reverse('home'))
+
+
+class BannerView(TemplateView):
+    template_name = "pml/carousel.xml"
+
+    def get_context_data(self, **kwargs):
+        context = super(BannerView, self).get_context_data(**kwargs)
+        now = datetime.now().time()
+
+        banners = Banner.permitted.filter(
+                    # in between on & off
+                    Q(time_on__lte=now, time_off__gte=now) |
+                    # roll over night, after on, before 24:00
+                    Q(time_on__lte=now, time_off__lte=F('time_on')) |
+                    # roll over night, before off, after 24:00
+                    Q(time_off__gte=now, time_off__lte=F('time_on')) |
+                    # either time on or time of not specified.
+                    Q(time_on__isnull=True) | Q(time_off__isnull=True)
+                ).order_by('?')
+
+        context.update({
+            'banner': banners[0] if banners.exists() else None,
+            'ROOT_URL': settings.ROOT_URL,
+        })
+        return context
+
 
 
 def logout(request):

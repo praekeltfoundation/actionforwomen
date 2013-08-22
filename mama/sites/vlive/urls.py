@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.contrib.auth.decorators import login_required
 from mama.urls import urlpatterns
-from mama.views import ProfileView
+from mama.views import ProfileView, BannerView
 
 
 urlpatterns = patterns('',
@@ -11,6 +11,7 @@ urlpatterns = patterns('',
         login_required(ProfileView.as_view()),
         name='registration_register'
     ),
-    (r'^survey/', 
+    (r'^survey/',
         include('mama.sites.vlive.survey_urls', namespace='survey')),
+    (r'^carousel\.xml$', BannerView.as_view()),
 ) + urlpatterns
