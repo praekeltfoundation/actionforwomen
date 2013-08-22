@@ -1,4 +1,6 @@
 from mama.settings import *
+import djcelery
+djcelery.setup_loader()
 
 TEMPLATE_DIRS = (
     os.path.join(PATH, "mama", "templates", "vlive"),
@@ -25,11 +27,21 @@ AUTHENTICATION_BACKENDS = (
 )
 
 ROOT_URLCONF = 'mama.sites.vlive.urls'
+ROOT_URL = 'http://vlive.askmama.mobi'
 
 CACHES['default']['KEY_PREFIX'] = 'mama_vlive'
 
+PML_IGNORE_PATH = ['/djga/', '/google-credentials/', ]
+GOOGLE_ANALYTICS_IGNORE_PATH = ['/health/', ]
+
 GOOGLE_ANALYTICS = {
-    'google_analytics_id': 'UA-40632967-1',
+    'google_analytics_id': 'MO-40632967-1',
 }
 
 CELERY_IMPORTS = ('google_analytics.tasks')
+
+GA_CLIENT_ID = '366062914538.apps.googleusercontent.com'
+GA_CLIENT_SECRET = 'P1wntBIm3hDNpuZZQvavzz3U'
+GA_SCOPE = 'https://www.googleapis.com/auth/analytics.readonly'
+GA_REDIRECT_URI = 'http://vlive.askmama.mobi/google-credentials/callback'
+

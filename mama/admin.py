@@ -1,6 +1,6 @@
 from django.contrib import admin
 from jmbo.admin import ModelBaseAdmin
-from mama.models import Link, NavigationLink, SitePreferences
+from mama.models import Link, NavigationLink, SitePreferences, Banner
 from post.models import Post
 from preferences.admin import PreferencesAdmin
 
@@ -24,3 +24,4 @@ class PostAdmin(ModelBaseAdmin):
 admin.site.register(SitePreferences, PreferencesAdmin)
 admin.site.unregister(Post)
 admin.site.register(Post, PostAdmin)
+admin.site.register(Banner)
