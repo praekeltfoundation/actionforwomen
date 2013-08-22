@@ -20,8 +20,23 @@ class PostAdmin(ModelBaseAdmin):
         NavigationLinkInline,
     ]
 
+class BannerAdmin(ModelBaseAdmin):
+
+    list_display = (
+        'title', 'description', 'thumbnail', 'schedule', 'state')
+
+    def thumbnail(self, obj, *args, **kwargs):
+        return '<img src="%s" />' % (obj.image.url,)
+    thumbnail.allow_tags = True
+
+    def schedule(self, obj, *args, **kwargs):
+        if(obj.time_on and obj.time_off):
+            return 'Randomly selected by Vlive between %s and %s' % (
+                obj.time_on, obj.time_off)
+        return 'Randomly selected by Vlive'
+
 
 admin.site.register(SitePreferences, PreferencesAdmin)
 admin.site.unregister(Post)
 admin.site.register(Post, PostAdmin)
-admin.site.register(Banner)
+admin.site.register(Banner, BannerAdmin)
