@@ -36,7 +36,7 @@
                     <CONTAINER type="data">
                     <TEXT>
                         <P><LINK href="/">MAMA</LINK> - With you every step of the way.</P>
-                    </TEXT>>
+                    </TEXT>
                     </CONTAINER>
                     {% endif %}
                 </MODULE>
