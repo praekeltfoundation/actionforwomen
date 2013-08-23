@@ -1,11 +1,12 @@
 from django.conf.urls.defaults import *
+from django.http import HttpResponse
 from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import cache_page
 from django.views.generic import TemplateView
 from haystack.views import SearchView
-from mama.views import (CategoryDetailView, CategoryListView, 
+from mama.views import (CategoryDetailView, CategoryListView,
                         ContactView, ProfileView)
 from mama.forms import PasswordResetForm
 import object_tools
@@ -13,7 +14,13 @@ import object_tools
 admin.autodiscover()
 object_tools.autodiscover()
 
+
+def health(request):
+    return HttpResponse('ok')
+
+
 urlpatterns = patterns('',
+    url(r'^health/$', health, name='health'),
     url(
         r'^$',
         TemplateView.as_view(template_name="mama/home.html"),
