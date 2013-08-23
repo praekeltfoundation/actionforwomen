@@ -2,18 +2,25 @@
 
 {% if request.user.is_authenticated %}
     {% if object_list %}
-        <div class="h1">{{ category.title }}</div>
-        <div class="content-inner">
-            <div class="items">
-                {% for object in object_list %}
-                    {% render_object object "block" %}
-                {% endfor %}
-                {% if request.user.profile.is_prenatal %}
-                    <div class="item-nav"><a href="{{ category.get_absolute_url }}">Your Pregnancy</a></div>
-                {% else %}
-                    <div class="item-nav"><a href="{{ category.get_absolute_url }}">Your Baby</a></div>
-                {% endif %}
-            </div>
-        </div>
-    {% endif %}
+      <div class="h1">
+        {# category.title #}
+        {% if request.user.profile.is_prenatal %}
+            Your Pregnancy
+        {% else %}
+            Your Baby
+        {% endif %}
+      </div>
+      <div class="content-inner">
+          <div class="items">
+              {% for object in object_list %}
+                  {% render_object object "block" %}
+              {% endfor %}
+              {% if request.user.profile.is_prenatal %}
+                  <div class="item-nav"><a href="{{ category.get_absolute_url }}">Your Pregnancy</a></div>
+              {% else %}
+                  <div class="item-nav"><a href="{{ category.get_absolute_url }}">Your Baby</a></div>
+              {% endif %}
+          </div>
+      </div>
+  {% endif %}
 {% endif %}
