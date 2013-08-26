@@ -2,7 +2,11 @@ from datetime import date, timedelta
 from unittest import TestCase
 
 from django.contrib.auth.models import User
+from django.test import RequestFactory
+from django.conf import settings
+
 from mama.models import UserProfile
+from mama.middleware import TrackOriginMiddleware
 
 
 class ProfileTestCase(TestCase):
@@ -50,3 +54,20 @@ class ProfileTestCase(TestCase):
             True,
             "With delivery_date set in past is_postnatal should be True"
         )
+
+
+class TrackOriginMiddlewareTestCase(TestCase):
+
+    def setUp(self):
+        self.user = User.objects.create(username='foo')
+        self.profile = UserProfile.objects.create(user=self.user)
+        self.mw = TrackOriginMiddleware()
+
+    def test_process_request(self):
+        self.assertEqual(self.profile.origin, None)
+        request_factory = RequestFactory()
+        request = request_factory.get('/path', data={'name': u'test'})
+        request.user = self.user
+        self.mw.process_request(request)
+        updated_profile = UserProfile.objects.get(user=self.user)
+        self.assertEqual(updated_profile.origin, settings.ORIGIN)

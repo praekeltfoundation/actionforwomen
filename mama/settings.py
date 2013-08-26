@@ -114,6 +114,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'likes.middleware.SecretBallotUserIpUseragentMiddleware',
+    'mama.middleware.TrackOrigin',
 )
 
 ROOT_URLCONF = 'mama.urls'
@@ -252,6 +253,8 @@ CACHES = {
         'LOCATION': '127.0.0.1:11211'
     }
 }
+
+ORIGIN = 'mobi'
 
 # Puppet will put this on the server.
 try:
