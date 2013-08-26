@@ -136,6 +136,11 @@ class UserProfile(AbstractProfileBase):
         default=False,
         blank=True,
     )
+    origin = models.CharField(
+        help_text='Where did this user register?',
+        null=True,
+        max_length=255)
+
 
     def is_prenatal(self):
         """
