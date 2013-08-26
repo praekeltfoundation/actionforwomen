@@ -1,12 +1,38 @@
 {% extends "base.html" %}
 
+{% comment %}
+Used for Mom's Stories, Articles and Guides
+{% endcomment %}
+
 {% load jmbo_inclusion_tags mama_inclusion_tags %}
+
+{% block following_header %}
+{{ block.super }}
+{% registration_banner %}
+{% endblock %}
+
+{% block following_header_search_form %}
+<div id="content">
+    <div class="h1">Search</div>
+    <form id="frmSearch" method="get" action="{% url haystack_search %}">
+        <div class="row">
+            <input type="text" name="q" value="{{ query }}" class="short" />
+        </div>
+        <div class="row">
+            <input type="submit" name="submit" value="Search" class="btn" />
+        </div>
+        <div class="clear"></div>
+    </form>
+</div>
+{% endblock %}
 
 {% block content %}
 
+    {% comment %}
     {% block above_listing %}
         {% topic_listing category.slug 0 %}
     {% endblock %}
+    {% endcomment %}
 
     {% if object_list %}
     <div class="{{ category.color }}">
@@ -24,6 +50,9 @@
     {% pagination page_obj %}
 
     {% block below_listing %}
+    {% endblock %}
+
+    {% block footer_search_form %}
     {% endblock %}
 
 {% endblock %}

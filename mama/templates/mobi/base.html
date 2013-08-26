@@ -16,6 +16,8 @@
 
     {% block following_header %}
     {% endblock %}
+    {% block following_header_search_form %}
+    {% endblock %}
 
     <div id="content">
 
@@ -23,12 +25,14 @@
         {% endblock %}
 
         {% block footer %}
+            {% block footer_search_form %}
             <div class="h1">Search</div>
             <form id="frmSearch" method="get" action="{% url haystack_search %}">
                 <div class="row"><input type="text" name="q" value="{{ query }}" class="short" /></div>
                 <div class="row"><input type="submit" name="submit" value="Search" class="btn" /></div>
                 <div class="clear"></div>
             </form>
+            {% endblock %}
 
             <div class="h1">Share This Site</div>
             <div class="content-inner">

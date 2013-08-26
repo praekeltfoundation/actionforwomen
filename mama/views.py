@@ -58,7 +58,7 @@ class CategoryDetailView(DetailView):
 
 class CategoryListView(ListView):
     template_name = "post/post_category_list.html"
-    paginate_by = 5
+    paginate_by = 10
     heading_prefix = "More"
 
     def get_context_data(self, **kwargs):
