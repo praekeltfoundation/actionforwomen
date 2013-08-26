@@ -59,12 +59,11 @@ class ProfileTestCase(TestCase):
 class TrackOriginMiddlewareTestCase(TestCase):
 
     def setUp(self):
-        self.user = User.objects.create(username='foo')
-        self.profile = UserProfile.objects.create(user=self.user)
+        self.user = User.objects.create_user('foo', 'foo@foo.com', 'foo')
         self.mw = TrackOriginMiddleware()
 
     def test_process_request(self):
-        self.assertEqual(self.profile.origin, None)
+        self.assertEqual(self.user.profile.origin, None)
         request_factory = RequestFactory()
         request = request_factory.get('/path', data={'name': u'test'})
         request.user = self.user
