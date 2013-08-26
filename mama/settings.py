@@ -114,7 +114,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'likes.middleware.SecretBallotUserIpUseragentMiddleware',
-    'mama.middleware.TrackOrigin',
+    'mama.middleware.TrackOriginMiddleware',
 )
 
 ROOT_URLCONF = 'mama.urls'
