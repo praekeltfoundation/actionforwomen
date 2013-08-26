@@ -76,6 +76,10 @@ a { color: #ff6b15; text-decoration: none; }
         margin: 0 0 10px 10px;
     }
 
+    #content .back-to-top-link {
+        padding: 10px;
+    }
+
 /* CONTENT INNER */
 .content-inner {}
 	.content-inner p { padding: 0 0 10px 0; margin: 0; }

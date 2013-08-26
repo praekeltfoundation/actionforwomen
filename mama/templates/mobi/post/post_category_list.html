@@ -39,19 +39,20 @@ Used for Mom's Stories, Articles and Guides
         <div class="h1">{{ full_heading }}</div>
         <div class="content-inner">
             <a name="listing-top" />
-            <div class="items">
+            <div class="item">
                 {% for object in post_list %}
                     {% render_object object "block" %}
                 {% endfor %}
-            </div>
-            <div class="items">
-            &nbsp;<a href="#listing-top">Back to top ></a>
             </div>
         </div>
     </div>
     {% endif %}
 
     {% pagination page_obj %}
+
+    <div class="item back-to-top-link">
+        <a href="#listing-top">Back to top ></a>
+    </div>
 
     {% block below_listing %}
     {% endblock %}
