@@ -11,6 +11,9 @@ class TrackOriginMiddleware(object):
     def process_request(self, request):
         # AuthenticationMiddleware is required so that request.user exists.
         if hasattr(request, 'user'):
+            if request.user.is_anonymous():
+                return
+
             profile = request.user.get_profile()
             if profile.origin != settings.ORIGIN:
                 profile.origin = settings.ORIGIN
