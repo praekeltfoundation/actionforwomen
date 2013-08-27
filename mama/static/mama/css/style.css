@@ -32,6 +32,10 @@ a { color: #ff6b15; text-decoration: none; }
 .maroon .banner_content a {
     color: #b22a2d;
 }
+.banner_content.live_chat {
+    background: #b22a2d;
+    color: white;
+}
 
 /* CONTENT */
 #content { color: #666; background: #fff; }
