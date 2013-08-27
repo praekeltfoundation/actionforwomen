@@ -6,7 +6,7 @@ from django.views.decorators.cache import cache_page
 from django.views.generic import TemplateView
 from haystack.views import SearchView
 from mama.views import (CategoryDetailView, CategoryListView, 
-                        ContactView, ProfileView)
+                    ContactView, ProfileView, AskMamaListView)
 from mama.forms import PasswordResetForm
 import object_tools
 
@@ -14,7 +14,7 @@ admin.autodiscover()
 object_tools.autodiscover()
 
 urlpatterns = patterns('',
-    url(
+url(
         r'^$',
         TemplateView.as_view(template_name="mama/home.html"),
         name='home'
@@ -88,6 +88,12 @@ urlpatterns = patterns('',
         name='terms'
     ),
     url(
+        r'^content/ask-mama/list/$',
+        AskMamaListView.as_view(),
+        {},
+        name='askmama_object_list'
+    ),
+    url(
         r'^content/(?P<category_slug>[\w-]+)/list/$',
         CategoryListView.as_view(),
         {},
@@ -114,12 +120,6 @@ urlpatterns = patterns('',
         r'^accounts/profile/',
         login_required(ProfileView.as_view()),
         name='profile'
-    ),
-
-    url(
-        r'^askmama/$',
-        TemplateView.as_view(template_name="mama/askmama.html"),
-        name="ask_mama"
     ),
 
     (r'^survey/', include('survey.urls', namespace='survey')),

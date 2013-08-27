@@ -85,6 +85,23 @@ class CategoryListView(ListView):
         return super(CategoryListView, self).dispatch(*args, **kwargs)
 
 
+class AskMamaListView(CategoryListView):
+    template_name = "mama/askmama.html"
+    paginate_by = 10
+    heading_prefix = "Hello there"
+
+    def get_queryset(self):
+        self.category = get_object_or_404(Category, \
+                slug__iexact='ask-mama')
+        queryset = Post.permitted.filter(
+            Q(primary_category=self.category) | Q(categories=self.category)
+        ).exclude(categories__slug__in=('live-chat', 'featured',)).distinct()
+        view_modifier = PopularViewModifier(self.request)
+        active_modifiers = view_modifier.get_active_items()
+        if active_modifiers:
+            self.heading_prefix = active_modifiers[0].title
+        return view_modifier.modify(queryset)
+
 class ContactView(FormView):
     form_class = ContactForm
     template_name = "mama/contact.html"

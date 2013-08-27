@@ -1,10 +1,58 @@
 {% extends 'base.html' %}
 
-{% block content %}
+{% comment %}
+Used for the AskMAMA section
+{% endcomment %}
+
+{% load jmbo_inclusion_tags mama_inclusion_tags %}
+
+{% block following_header %}
+{{ block.super }}
+{% registration_banner %}
+{% endblock %}
+
+{% block following_header_search_form %}
+<div id="content">
   <div class="h1">AskMAMA</div>
-  <div class="content-inner">
-    <div class="post">
-      This is going to be the AskMAMA page.
-    </div>
+  <div class="row">
+    <p>
+    MAMA is here to help you through anything! Have a question for her? Each
+    week 10 of the most requested questions will be answered by our expert. Vote
+    for your favourte question or submit your own.
+    </p>
   </div>
+</div>
+{% endblock %}
+
+{% block content %}
+
+    {% comment %}
+    {% block above_listing %}
+        {% topic_listing category.slug 0 %}
+    {% endblock %}
+    {% endcomment %}
+
+    {% if object_list %}
+    <div class="{{ category.color }}">
+        <div class="h1">{{ full_heading }}</div>
+        <div class="content-inner">
+            <a name="listing-top" />
+            <div class="item">
+                {% for object in post_list %}
+                    {% render_object object "block" %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% pagination page_obj %}
+
+    <div class="item back-to-top-link">
+        <a href="#listing-top">Back to top ></a>
+    </div>
+
+    {% block below_listing %}
+    {% endblock %}
+
 {% endblock %}

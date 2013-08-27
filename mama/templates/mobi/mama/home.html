@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 
-{# load cache mama_inclusion_tags survey_inclusion_tags #}
-{% load mama_inclusion_tags survey_inclusion_tags %}
+{% load cache mama_inclusion_tags survey_inclusion_tags %}
 
 {% block following_header %}
 {% registration_banner %}
@@ -12,11 +11,11 @@
 
 {% block content %}
     {% ages_and_stages %}
-    {# cache 3600 home #}
+    {% cache 3600 home %}
         {% stories_listing "moms-stories" %}
         {% post_listing "articles" %}
         {% askmama_banner %}
-    {# endcache #}
+    {% endcache %}
     {% poll_listing %}
     {% show_survey %}
 {% endblock %}
