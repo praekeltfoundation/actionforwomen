@@ -1,0 +1,18 @@
+{% load your_words_tags %}
+
+{% get_your_words_competitions %}
+{% if your_words_list %}
+    {% with your_words_list.latest as competition %}
+        <div class="text_banner">
+            <div class="banner_content">
+                <p>
+                <strong>
+                    <a href="{% url your_story competition.pk %}">
+                        Submit Your Story ></a>
+                </strong>
+                </p>
+            </div>
+        </div>
+    {% endwith %}
+{% endif %}
+

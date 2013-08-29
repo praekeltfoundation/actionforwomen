@@ -27,6 +27,7 @@ a { color: #ff6b15; text-decoration: none; }
     clear: both; 
     padding: 5px; 
     border-top: 1px solid #e1e1e1; 
+    border-bottom: 1px solid #e1e1e1; 
     color: #888; line-height: 14px; text-align: center;
 }
 .maroon .banner_content a {
@@ -113,6 +114,9 @@ a { color: #ff6b15; text-decoration: none; }
 	.content-inner .social p { float: left; padding: 3px 8px 0 0; }
 	.content-inner .social img { padding: 3px 3px 0 0; }
 	.content-inner .more-links { padding: 0 5px 5px 5px; font-weight: bold; font-size: 12px; }
+    .content-inner div.your-story-blurb {
+        padding: 3px 3px 3px 10px;
+    }
 
 	table { width: 100%; }
 	th { padding: 5px; background: #212121; color: #fff; }

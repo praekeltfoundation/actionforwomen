@@ -157,8 +157,8 @@ INSTALLED_APPS = (
     'south_admin',
     'userprofile',
     'gunicorn',
-
     'survey',
+    'jmboyourwords',
 )
 
 # A sample logging configuration. The only tangible logging

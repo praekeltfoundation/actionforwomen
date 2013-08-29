@@ -6,7 +6,8 @@ from django.views.decorators.cache import cache_page
 from django.views.generic import TemplateView
 from haystack.views import SearchView
 from mama.views import (CategoryDetailView, CategoryListView, 
-                    ContactView, ProfileView, AskMamaListView)
+                        ContactView, ProfileView, 
+                        AskMamaListView, MomStoriesListView)
 from mama.forms import PasswordResetForm
 import object_tools
 
@@ -20,33 +21,33 @@ url(
         name='home'
     ),
     url(
-        r'^about$',
+        r'^about/$',
         TemplateView.as_view(template_name="mama/about.html"),
         name='about'
     ),
     url(
-        r'^contact$',
+        r'^contact/$',
         ContactView.as_view(),
         name='contact'
     ),
     url(
-        r'^help$',
+        r'^help/$',
         TemplateView.as_view(template_name="mama/help.html"),
         name='help'
     ),
     url(
-        r'^login$',
+        r'^login/$',
         'django.contrib.auth.views.login',
         {'template_name': 'mama/login.html'},
         name='login'
     ),
     url(
-        r'^logout$',
+        r'^logout/$',
         'mama.views.logout',
         name='logout'
     ),
     url(
-        r'^password-reset$',
+        r'^password-reset/$',
         'django.contrib.auth.views.password_reset',
         {
             'password_reset_form': PasswordResetForm,
@@ -55,7 +56,7 @@ url(
         name='password_reset'
     ),
     url(
-        r'^password-reset-done$',
+        r'^password-reset-done/$',
         'django.contrib.auth.views.password_reset_done',
         {'template_name': 'mama/password_reset_done.html'},
         name='password_reset_done'
@@ -78,12 +79,12 @@ url(
         name='poll_vote'
     ),
     url(
-        r'^post-comment$',
+        r'^post-comment/$',
         'mama.views.post_comment',
         name='post_comment'
     ),
     url(
-        r'^terms$',
+        r'^terms/$',
         TemplateView.as_view(template_name="mama/terms.html"),
         name='terms'
     ),
@@ -92,6 +93,12 @@ url(
         AskMamaListView.as_view(),
         {},
         name='askmama_object_list'
+    ),
+    url(
+        r'^content/moms-stories/list/$',
+        MomStoriesListView.as_view(),
+        {},
+        name='moms_stories_object_list'
     ),
     url(
         r'^content/(?P<category_slug>[\w-]+)/list/$',
@@ -128,6 +135,12 @@ url(
     (r'^ckeditor/', include('ckeditor.urls')),
     url(r'^google-credentials/', include('google_credentials.urls')),
     (r'^likes/', include('likes.urls')),
+    # (r'^yourwords/', include('jmboyourwords.urls')),
+    url(r'^yourwords/(?P<competition_id>\d+)/$',\
+        login_required(
+            'jmboyourwords.views.your_story',
+            login_url='/login/'),
+        name='your_story'),
     (r'^', include('jmbo.urls')),
 )
 

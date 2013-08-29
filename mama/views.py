@@ -85,6 +85,24 @@ class CategoryListView(ListView):
         return super(CategoryListView, self).dispatch(*args, **kwargs)
 
 
+class MomStoriesListView(CategoryListView):
+    template_name = "mama/moms-stories.html"
+    paginate_by = 10
+    heading_prefix = "More"
+
+    def get_queryset(self):
+        self.category = get_object_or_404(Category, \
+                slug__iexact='moms-stories')
+        queryset = Post.permitted.filter(
+            Q(primary_category=self.category) | Q(categories=self.category)
+        ).exclude(categories__slug__in=('featured',)).distinct()
+        view_modifier = PopularViewModifier(self.request)
+        active_modifiers = view_modifier.get_active_items()
+        if active_modifiers:
+            self.heading_prefix = active_modifiers[0].title
+        return view_modifier.modify(queryset)
+
+
 class AskMamaListView(CategoryListView):
     template_name = "mama/askmama.html"
     paginate_by = 10

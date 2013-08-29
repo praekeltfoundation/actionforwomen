@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="maroon">
+  <div class="h1">{{competition.title}}</div>
+  <div class="content-inner">
+    <div class="your-story-blurb">
+    <b>{{competition.description}}</b>
+    <br/>
+    <hr/>
+    </div>
+
+    {% if user.is_anonymous %}
+    <div class="your-story-blurb">
+    You must be Signed In to submit your story.
+    <br/>
+    <a href="{% url login %}">Sign In ></a><br/>
+    <a href="{% url registration_register %}">Register ></a>
+    </div>
+    {% else %}
+    <div class="your-story-blurb">
+    {{competition.content|safe}}
+    </div>
+    <form action="{% url your_story competition.pk %}" method="post">
+        {% csrf_token %}
+        {{ form }}
+    </form>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}
+
+{% block footer_search_form %}
+{% endblock %}
