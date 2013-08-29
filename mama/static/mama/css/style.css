@@ -81,7 +81,7 @@ a { color: #ff6b15; text-decoration: none; }
     }
 
     #content .back-to-top-link {
-        padding: 10px;
+        padding: 5px 0 10px 10px;
     }
 
 /* CONTENT INNER */
@@ -104,6 +104,7 @@ a { color: #ff6b15; text-decoration: none; }
 	.content-inner .item .meta .title a { color: #ff6a15; font-weight: bold; }
 	.content-inner .item .meta .stamp { padding: 2px 0 0 0; font-size: 11px; }
 	.content-inner .item .meta .description { padding: 0 0 5px 0; font-size: 11px; }
+	.content-inner .item .introduction { padding: 5px 0 5px 10px; font-size: 11px; }
 	.content-inner .item-nav { display: block; clear: both; padding: 5px; background: #ffe7d2; color: #e1e1e1; font-size: 11px; }
 	.content-inner .item-nav a { color: #ef5822; font-weight: bold; }
 	.content-inner .h2 { color: #fff; font-weight: bold; }

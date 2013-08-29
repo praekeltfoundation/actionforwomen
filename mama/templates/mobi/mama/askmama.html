@@ -11,16 +11,19 @@ Used for the AskMAMA section
 {% registration_banner %}
 {% endblock %}
 
-{% block following_header_search_form %}
-<div id="content">
-  <div class="h1">AskMAMA</div>
-  <div class="row">
-    <p>
-    MAMA is here to help you through anything! Have a question for her? Each
-    week 10 of the most requested questions will be answered by our expert. Vote
-    for your favourte question or submit your own.
-    </p>
-  </div>
+{% block above_content %}
+{{ block.super }}
+<div class="{{ category.color }}">
+    <div class="h1">AskMAMA</div>
+    <div class="content-inner">
+        <div class="item">
+            <div class="introduction">
+            MAMA is here to help you through anything! Have a question for her?
+            Each week 10 of the most requested questions will be answered by
+            our expert.  Vote for your favourite question or submit your own.
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
 
@@ -45,12 +48,6 @@ Used for the AskMAMA section
         </div>
     </div>
     {% endif %}
-
-    {% pagination page_obj %}
-
-    <div class="item back-to-top-link">
-        <a href="#listing-top">Back to top ></a>
-    </div>
 
     {% block below_listing %}
     {% endblock %}

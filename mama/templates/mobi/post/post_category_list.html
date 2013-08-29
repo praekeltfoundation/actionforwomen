@@ -11,18 +11,20 @@ Used for Mom's Stories, Articles and Guides
 {% registration_banner %}
 {% endblock %}
 
-{% block following_header_search_form %}
-<div id="content">
+{% block above_content %}
+<div>
     <div class="h1">Search</div>
-    <form id="frmSearch" method="get" action="{% url haystack_search %}">
-        <div class="row">
-            <input type="text" name="q" value="{{ query }}" class="short" />
-        </div>
-        <div class="row">
-            <input type="submit" name="submit" value="Search" class="btn" />
-        </div>
-        <div class="clear"></div>
-    </form>
+    <div class="item">
+        <form id="frmSearch" method="get" action="{% url haystack_search %}">
+            <div class="row">
+                <input type="text" name="q" value="{{ query }}" class="short" />
+            </div>
+            <div class="row">
+                <input type="submit" name="submit" value="Search" class="btn" />
+            </div>
+            <div class="clear"></div>
+        </form>
+    </div>
 </div>
 {% endblock %}
 
@@ -50,9 +52,11 @@ Used for Mom's Stories, Articles and Guides
 
     {% pagination page_obj %}
 
+    {% if object_list %}
     <div class="item back-to-top-link">
         <a href="#listing-top">Back to top ></a>
     </div>
+    {% endif %}
 
     {% block below_listing %}
     {% endblock %}
