@@ -120,7 +120,9 @@ url(
     ),
     url(
         r'^accounts/register/done/',
-        login_required(TemplateView.as_view(template_name="registration/done.html")),
+        login_required(TemplateView.as_view(
+            template_name="registration/done.html"
+        )),
         name='registration_done'
     ),
     url(
@@ -135,12 +137,7 @@ url(
     (r'^ckeditor/', include('ckeditor.urls')),
     url(r'^google-credentials/', include('google_credentials.urls')),
     (r'^likes/', include('likes.urls')),
-    # (r'^yourwords/', include('jmboyourwords.urls')),
-    url(r'^yourwords/(?P<competition_id>\d+)/$',\
-        login_required(
-            'jmboyourwords.views.your_story',
-            login_url='/login/'),
-        name='your_story'),
+    (r'^yourwords/', include('jmboyourwords.urls')),
     (r'^', include('jmbo.urls')),
 )
 

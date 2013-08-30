@@ -198,6 +198,10 @@ SOUTH_MIGRATION_MODULES = {
 #       `user.get_profile()` because it allows for easier mocking
 USER_PROFILE_MODULE = AUTH_PROFILE_MODULE = 'mama.UserProfile'
 
+# New login and logout urls as set in mama.urls
+LOGIN_URL = '/login/'
+LOGOUT_URL = '/logout/'
+
 # If no 'next' value found during login redirect home.
 LOGIN_REDIRECT_URL = '/survey/check-for-survey/'
 
