@@ -24,7 +24,56 @@
     </div>
     <form action="{% url your_story competition.pk %}" method="post">
         {% csrf_token %}
-        {{ form }}
+        <input type="hidden" name="next" 
+               value="{% url moms_stories_object_list %}" />
+
+        <div class="errorlist">
+            {{ form.non_field_errors }}
+        </div>
+
+        <div class="field">
+            <div>
+                <label for="id_name">Your Name:</label>
+                {{ form.name.errors }}
+                <div class="helptext"></div> 
+                {{ form.name }}
+            </div>
+        </div>
+
+        <div class="field">
+            <div>
+                <label for="id_email">Your Email:</label>
+                {{ form.email.errors }}
+                <div class="helptext"></div> 
+                {{ form.email }}
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="required">
+                <label for="id_text">Your Story:</label>
+                {{ form.text.errors }}
+                <div class="helptext"></div> 
+                {{ form.text }}
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="required">
+                {{ form.terms.errors }}
+                {{ form.terms }} 
+                <label for="id_terms" style="display: inline">I
+                    accept</label> the <a href="/terms/">Terms and
+                    Conditions</a> and agree to let MAMA publish if it is
+                good enough to win a prize.
+                <div class="helptext"></div> 
+            </div>
+        </div>
+
+        <div class="row">
+            <input type="submit" class="btn" value="Submit" /> 
+        </div>
+
     </form>
     {% endif %}
   </div>
@@ -34,3 +83,9 @@
 
 {% block footer_search_form %}
 {% endblock %}
+
+
+    name
+    email
+    text
+    terms
