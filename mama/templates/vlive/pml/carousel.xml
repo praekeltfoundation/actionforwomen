@@ -20,16 +20,14 @@
                     </HEADER>
                     {% if banner %}
                     <CONTAINER type="data">
+                        <LINK href="{{ banner.url }}">
+                            <IMAGE href="{{ ROOT_URL }}{{ banner.image.url }}" align="full" type="image/jpeg"/>
+                        </LINK>
                         <TEXT>
-                            <LINK href="{{ banner.url }}">
-                                <IMAGE href="{{ ROOT_URL }}{{ banner.image.url }}" align="full" type="image/jpeg"/>
-                            <TEXT>
-                                <P>
-                                    <LINK href="{{banner.url}}">{{ banner.title }}</LINK>
-                                    {{ banner.description }}
-                                </P>
-                            </TEXT>
-                            </LINK>
+                            <P>
+                                <LINK href="{{banner.url}}">{{ banner.title }}</LINK>
+                                {{ banner.description }}
+                            </P>
                         </TEXT>
                     </CONTAINER>
                     {% else %}
