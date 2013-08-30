@@ -159,6 +159,8 @@ INSTALLED_APPS = (
     'gunicorn',
     'survey',
     'jmboyourwords',
+    'jmboarticles',
+    'livechat',
 )
 
 # A sample logging configuration. The only tangible logging
