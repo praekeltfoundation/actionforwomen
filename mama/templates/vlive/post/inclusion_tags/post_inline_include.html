@@ -10,7 +10,7 @@
 {% with object.link_target_set.all as links %}
     {% for link in links %}
         {% if link.target.is_permitted %}
-            <a href="{{ link.target.get_absolute_category_url }}">&raquo; {% if link.title %}{{ link.title }}{% else %}{{ link.target.title }}{% endif %}</a><br />
+            <a href="{{ link.target.get_absolute_category_url }}">:: {% if link.title %}{{ link.title }}{% else %}{{ link.target.title }}{% endif %}</a><br />
         {% endif %}
     {% endfor %}
 {% endwith %}
@@ -21,7 +21,7 @@
     {% if navigation_links %}
         <br />
         {% for navigation_link in navigation_links %}
-            <a href="{{ navigation_link.target.get_absolute_category_url }}">&laquo; Back to {% if navigation_link.title %}{{ navigation_link.title }}{% else %}{{ navigation_link.target.title }}{% endif %}</a><br />
+            <a href="{{ navigation_link.target.get_absolute_category_url }}">:: Back to {% if navigation_link.title %}{{ navigation_link.title }}{% else %}{{ navigation_link.target.title }}{% endif %}</a><br />
         {% endfor %}
     {% endif %}
 {% endwith %}
