@@ -85,7 +85,7 @@ class Command(BaseCommand):
         ga_service = utils.get_service()
 
         range_end = datetime_obj
-        range_start_cumulative = datetime(2012, 1, 1, 0, 0, 0)
+        range_start_cumulative = datetime(2013, 8, 27, 0, 0, 0)
 
         print "Pushing Mobi Users Cumulative"
         query = ga_service.data().ga().get(
