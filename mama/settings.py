@@ -114,9 +114,11 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'likes.middleware.SecretBallotUserIpUseragentMiddleware',
+    'mama.middleware.TrackOriginMiddleware',
 )
 
 ROOT_URLCONF = 'mama.urls'
+ROOT_URL = 'http://askmama.mobi'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -255,6 +257,8 @@ CACHES = {
         'LOCATION': '127.0.0.1:11211'
     }
 }
+
+ORIGIN = 'mobi'
 
 # Puppet will put this on the server.
 try:

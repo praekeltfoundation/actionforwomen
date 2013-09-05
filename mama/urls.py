@@ -1,4 +1,5 @@
 from django.conf.urls.defaults import *
+from django.http import HttpResponse
 from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth.decorators import login_required
@@ -14,8 +15,14 @@ import object_tools
 admin.autodiscover()
 object_tools.autodiscover()
 
+
+def health(request):
+    return HttpResponse('ok')
+
+
 urlpatterns = patterns('',
-url(
+    url(r'^health/$', health, name='health'),
+    url(
         r'^$',
         TemplateView.as_view(template_name="mama/home.html"),
         name='home'

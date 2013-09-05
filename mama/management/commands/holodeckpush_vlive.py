@@ -15,6 +15,7 @@ class Command(BaseCommand):
         #for i in range (0,20):
         #    self.push(datetime.now() - timedelta(days=i*7))
         self.push(datetime.now())
+        self.push_cumulative(datetime.now())
         print "Done!"
 
     def push(self, datetime_obj):
@@ -77,3 +78,47 @@ class Command(BaseCommand):
                 api_key='f1351ed05c2d4208a843be585928a878',
                 timestamp=datetime_obj,
             )
+
+
+    def push_cumulative(self, datetime_obj):
+        client = Client(server='http://holodeck.praekelt.com')
+        ga_service = utils.get_service()
+
+        range_end = datetime_obj
+        range_start_cumulative = datetime(2013, 8, 27, 0, 0, 0)
+
+        print "Pushing Mobi Users Cumulative"
+        query = ga_service.data().ga().get(
+            ids='ga:%d' % GA_PROFILE_ID,
+            start_date=str(range_start_cumulative.date()),
+            end_date=str(range_end.date()),
+            metrics='ga:visitors',
+            segment='gaid::-11', # mobile users only
+        )
+
+        results = query.execute()
+        client.send(
+            samples=(
+                ("Unique Users", results['totalsForAllResults']['ga:visitors']),
+            ),
+            api_key='1db783e1c9d344e7a39ca685f210633e',
+            timestamp=datetime_obj,
+        )
+
+        print "Pushing Mobi Pageviews Cumulative"
+        query = ga_service.data().ga().get(
+            ids='ga:%d' % GA_PROFILE_ID,
+            start_date=str(range_start_cumulative.date()),
+            end_date=str(range_end.date()),
+            metrics='ga:pageviews',
+            segment='gaid::-11', # mobile users only
+        )
+
+        results = query.execute()
+        client.send(
+            samples=(
+                ("Pageviews", results['totalsForAllResults']['ga:pageviews']),
+            ),
+            api_key='1a12d02a71734a1eaacc66f684261d76',
+            timestamp=datetime_obj,
+        )

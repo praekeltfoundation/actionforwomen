@@ -4,4 +4,5 @@
 -e git+git://github.com/praekelt/django-livechat.git@develop#egg=django-livechat
 django-tastypie
 mimeparse
+-e git://github.com/praekelt/django-moderator.git@0.0.4.1#egg=django_moderator-dev
 -e .

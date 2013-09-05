@@ -26,7 +26,10 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
+ORIGIN = 'vlive'
+
 ROOT_URLCONF = 'mama.sites.vlive.urls'
+ROOT_URL = 'http://vlive.askmama.mobi'
 
 CACHES['default']['KEY_PREFIX'] = 'mama_vlive'
 

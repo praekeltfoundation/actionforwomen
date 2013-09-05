@@ -21,7 +21,9 @@ setup(
         'django-google-analytics-app',
         'django-google-credentials',
         'django-haystack==1.2.7',
-        'django-moderator>=0.0.4',
+        # install via requirements.pip, django-moderator is broken.
+        # install 0.0.4.1 from GitHub tag which has a fix for the Admin.
+        # 'django-moderator>=0.0.4',
         'django-preferences',
         'django-sites-groups',
         'django-snippetscream',
