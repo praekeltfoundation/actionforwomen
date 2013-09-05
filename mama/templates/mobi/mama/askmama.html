@@ -29,11 +29,7 @@ Used for the AskMAMA section
 
 {% block content %}
 
-    {% comment %}
-    {% block above_listing %}
-        {% topic_listing category.slug 0 %}
-    {% endblock %}
-    {% endcomment %}
+    {% live_chat_banner %}
 
     {% if object_list %}
     <div class="{{ category.color }}">

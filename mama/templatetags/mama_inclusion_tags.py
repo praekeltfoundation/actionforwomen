@@ -45,8 +45,7 @@ def live_chat_banner(context):
 
     if post is not None:
         context['live_chat_advert'] = {
-                'url': reverse('category_object_list', 
-                               kwargs={'category_slug': 'ask-mama'}),
+                'url': post.get_absolute_category_url(),
                 'title': post.title,
                 'description': post.description
                 }

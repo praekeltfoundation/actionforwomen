@@ -106,7 +106,7 @@ class MomStoriesListView(CategoryListView):
 class AskMamaListView(CategoryListView):
     template_name = "mama/askmama.html"
     paginate_by = 10
-    heading_prefix = "Hello there"
+    heading_prefix = ""
 
     def get_queryset(self):
         self.category = get_object_or_404(Category, \

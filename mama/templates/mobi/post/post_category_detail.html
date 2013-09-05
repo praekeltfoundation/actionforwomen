@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load cache jmbo_inclusion_tags mama_inclusion_tags jmbo_template_tags likes_inclusion_tags %}
+{% load cache jmbo_inclusion_tags mama_inclusion_tags jmbo_template_tags likes_inclusion_tags livechat_tags%}
 
 {% block content %}
     <div class="{{ category.color }}">
@@ -54,6 +54,11 @@
         {% topic_listing category.slug 1 %}
     {% endcache %}
 
-    {% object_comments object %}
+    {% get_livechat_for_article object "livechat" %}
+    {% if livechat %}
+        {% include "livechat/embed.html" %}
+    {% else %}
+        {% object_comments object %}
+    {% endif %}
 
 {% endblock %}

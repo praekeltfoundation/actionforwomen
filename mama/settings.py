@@ -135,7 +135,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'jmbo',
     'post',
     'mama',
     'category',
@@ -144,9 +144,8 @@ INSTALLED_APPS = (
     'generate',
     'google_credentials',
     'haystack',
-    'jmbo',
     'likes',
-    'moderator',
+    # 'moderator',
     'photologue',
     'poll',
     'publisher',
@@ -159,7 +158,6 @@ INSTALLED_APPS = (
     'gunicorn',
     'survey',
     'jmboyourwords',
-    'jmboarticles',
     'livechat',
 )
 

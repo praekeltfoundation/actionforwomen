@@ -83,6 +83,7 @@ url(
         'mama.views.post_comment',
         name='post_comment'
     ),
+    (r'^comments/', include('django.contrib.comments.urls')),
     url(
         r'^terms/$',
         TemplateView.as_view(template_name="mama/terms.html"),
@@ -132,6 +133,7 @@ url(
     ),
 
     (r'^survey/', include('survey.urls', namespace='survey')),
+    (r'^livechat/', include('livechat.urls', namespace='livechat')),
     (r'^admin/', include(admin.site.urls)),
     (r'^object-tools/', include(object_tools.tools.urls)),
     (r'^ckeditor/', include('ckeditor.urls')),
