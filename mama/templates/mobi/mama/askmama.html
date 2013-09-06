@@ -4,7 +4,10 @@
 Used for the AskMAMA section
 {% endcomment %}
 
-{% load jmbo_inclusion_tags mama_inclusion_tags %}
+{% load jmbo_inclusion_tags jmbo_template_tags %}
+{% load comments likes_inclusion_tags %}
+{% load mama_inclusion_tags %}
+{% load livechat_tags %}
 
 {% block following_header %}
 {{ block.super }}
@@ -13,23 +16,39 @@ Used for the AskMAMA section
 
 {% block above_content %}
 {{ block.super }}
-<div class="{{ category.color }}">
-    <div class="h1">AskMAMA</div>
+{% if lead_in_post %}
+<div class="">
     <div class="content-inner">
-        <div class="item">
-            <div class="introduction">
-            MAMA is here to help you through anything! Have a question for her?
-            Each week 10 of the most requested questions will be answered by
-            our expert.  Vote for your favourite question or submit your own.
+        <div class="post">
+            <div class="title">
+                {{ lead_in_post.title }}
+                <div class="stamp">
+                    {% humanize_time_diff lead_in_post.created "Ago" %} // <a href="#comments">{{ lead_in_post.comment_count }} Comments</a> // {% likes lead_in_post %}
+                </div>
             </div>
+            <div> </div>
+            {% if lead_in_post.get_thumb_url %}
+                <img src="{{ lead_in_post.get_thumb_url }}" />
+            {% endif %}
+            {{ lead_in_post.content|safe }}
         </div>
+
+        {% live_chat_banner %}
+
+        {% get_livechat_for_article lead_in_post "livechat" %}
+        {% if livechat %}
+            {% include "livechat/embed.html" %}
+        {% else %}
+            {% object_comments lead_in_post %}
+        {% endif %}
     </div>
 </div>
+{% else %}
+    {% live_chat_banner %}
+{% endif %}
 {% endblock %}
 
 {% block content %}
-
-    {% live_chat_banner %}
 
     {% if object_list %}
     <div class="{{ category.color }}">

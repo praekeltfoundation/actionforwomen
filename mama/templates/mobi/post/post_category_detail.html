@@ -54,11 +54,6 @@
         {% topic_listing category.slug 1 %}
     {% endcache %}
 
-    {% get_livechat_for_article object "livechat" %}
-    {% if livechat %}
-        {% include "livechat/embed.html" %}
-    {% else %}
-        {% object_comments object %}
-    {% endif %}
+    {% object_comments object %}
 
 {% endblock %}

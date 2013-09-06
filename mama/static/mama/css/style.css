@@ -37,6 +37,10 @@ a { color: #ff6b15; text-decoration: none; }
     background: #b22a2d;
     color: white;
 }
+.banner_content .live_chat_description {
+    text-align: left;
+    padding: 0 15px;
+}
 
 /* CONTENT */
 #content { color: #666; background: #fff; }
