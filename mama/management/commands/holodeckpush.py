@@ -87,7 +87,7 @@ class Command(BaseCommand):
         results = query.execute()
         client.send(
             samples=(
-                ("Mobi", results['totalsForAllResults']['ga:pageviews']),
+                ("Pageviews", results['totalsForAllResults']['ga:pageviews']),
             ),
             api_key='4ca629dd63334526829ecf0ba7dfc253',
             timestamp=datetime_obj,
@@ -154,7 +154,7 @@ class Command(BaseCommand):
         results = query.execute()
         client.send(
             samples=(
-                ("Mobi", results['totalsForAllResults']['ga:pageviews']),
+                ("Pageviews", results['totalsForAllResults']['ga:pageviews']),
             ),
             api_key='ade53b20f12b4991a6070b9b9108d313',
             timestamp=datetime_obj,

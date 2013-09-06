@@ -67,10 +67,9 @@ class Command(BaseCommand):
         results = query.execute()
         client.send(
             samples=(
-                ("Vlive", results['totalsForAllResults']['ga:pageviews']),
+                ("Pageviews", results['totalsForAllResults']['ga:pageviews']),
             ),
-            #api_key='bf0eabed2a7346bb99b93816c6964ffc', #new graph
-            api_key='4ca629dd63334526829ecf0ba7dfc253',
+            api_key='bf0eabed2a7346bb99b93816c6964ffc',
             timestamp=datetime_obj,
         )
 
@@ -147,9 +146,8 @@ class Command(BaseCommand):
         results = query.execute()
         client.send(
             samples=(
-                ("Vlive", results['totalsForAllResults']['ga:pageviews']),
+                ("Pageviews", results['totalsForAllResults']['ga:pageviews']),
             ),
-            #api_key='1a12d02a71734a1eaacc66f684261d76',
-            api_key='ade53b20f12b4991a6070b9b9108d313',
+            api_key='1a12d02a71734a1eaacc66f684261d76',
             timestamp=datetime_obj,
         )
