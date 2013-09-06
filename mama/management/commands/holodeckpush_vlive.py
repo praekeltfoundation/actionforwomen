@@ -3,8 +3,10 @@ from datetime import datetime, timedelta
 from django.core.management.base import BaseCommand
 from google_credentials import utils
 from photon import Client
+from django.contrib.auth.models import User
 
 GA_PROFILE_ID = 72027337
+init_date = datetime(2013, 8, 26, 0, 0, 0)
 
 
 class Command(BaseCommand):
@@ -14,6 +16,8 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         #for i in range (0,20):
         #    self.push(datetime.now() - timedelta(days=i*7))
+        #    self.push_cumulative(datetime.now() - timedelta(days=i*7))
+
         self.push(datetime.now())
         self.push_cumulative(datetime.now())
         print "Done!"
@@ -22,10 +26,16 @@ class Command(BaseCommand):
         range_end = datetime_obj
         range_start = range_end - timedelta(days=7)
 
+        #Don't use stats older than Vlive launch date
+        if datetime_obj < init_date:
+            return
+
         client = Client(server='http://holodeck.praekelt.com')
         ga_service = utils.get_service()
 
-        print "Pushing Mobi Weekly Users"
+        vlive_users = User.objects.filter(userprofile__origin='vlive')
+
+        print "Pushing Vlive Weekly Users"
         query = ga_service.data().ga().get(
             ids='ga:%d' % GA_PROFILE_ID,
             start_date=str(range_start.date()),
@@ -38,12 +48,13 @@ class Command(BaseCommand):
         client.send(
             samples=(
                 ("Unique Users", results['totalsForAllResults']['ga:visitors']),
+                ("Registration", vlive_users.filter(date_joined__range=(range_start, range_end)).count()),
             ),
             api_key='fb14e8498e564872b05ceda5fc0e5400',
             timestamp=datetime_obj,
         )
 
-        print "Pushing Mobi Weekly Pageviews"
+        print "Pushing Vlive Weekly Pageviews"
         query = ga_service.data().ga().get(
             ids='ga:%d' % GA_PROFILE_ID,
             start_date=str(range_start.date()),
@@ -55,13 +66,14 @@ class Command(BaseCommand):
         results = query.execute()
         client.send(
             samples=(
-                ("Pageviews", results['totalsForAllResults']['ga:pageviews']),
+                ("Vlive", results['totalsForAllResults']['ga:pageviews']),
             ),
-            api_key='bf0eabed2a7346bb99b93816c6964ffc',
+            #api_key='bf0eabed2a7346bb99b93816c6964ffc', #new graph
+            api_key='4ca629dd63334526829ecf0ba7dfc253',
             timestamp=datetime_obj,
         )
 
-        print "Pushing Mobi User Types"
+        print "Pushing Vlive User Types"
         query = ga_service.data().ga().get(
             ids='ga:%d' % GA_PROFILE_ID,
             start_date=str(range_start.date()),
@@ -79,13 +91,29 @@ class Command(BaseCommand):
                 timestamp=datetime_obj,
             )
 
+        print "Pushing Mobi User Phase"
+        vlive_userprofile = UserProfile.objects.filter(Q(origin='vlive'))
+        client.send(
+            samples=(
+                ("Prenatal", vlive_userprofile.filter(delivery_date__gte=datetime_obj).count()),
+                ("Postnatal", vlive_userprofile.filter(delivery_date__lt=datetime_obj).count()),
+            ),
+            api_key='db14a155cb9c49a2b6c2185246b9cf10',
+            timestamp=datetime_obj,
+        )
+
 
     def push_cumulative(self, datetime_obj):
+        #Don't use stats older than Vlive launch date
+        if datetime_obj < init_date:
+            return
+
         client = Client(server='http://holodeck.praekelt.com')
         ga_service = utils.get_service()
 
         range_end = datetime_obj
-        range_start_cumulative = datetime(2013, 8, 27, 0, 0, 0)
+        range_start_cumulative = init_date
+        vlive_users = User.objects.filter(userprofile__origin='vlive')
 
         print "Pushing Mobi Users Cumulative"
         query = ga_service.data().ga().get(
@@ -100,6 +128,7 @@ class Command(BaseCommand):
         client.send(
             samples=(
                 ("Unique Users", results['totalsForAllResults']['ga:visitors']),
+                ("Registration", vlive_users.filter(date_joined__range=(range_start_cumulative, range_end)).count()),
             ),
             api_key='1db783e1c9d344e7a39ca685f210633e',
             timestamp=datetime_obj,
@@ -117,8 +146,9 @@ class Command(BaseCommand):
         results = query.execute()
         client.send(
             samples=(
-                ("Pageviews", results['totalsForAllResults']['ga:pageviews']),
+                ("Vlive", results['totalsForAllResults']['ga:pageviews']),
             ),
-            api_key='1a12d02a71734a1eaacc66f684261d76',
+            #api_key='1a12d02a71734a1eaacc66f684261d76',
+            api_key='ade53b20f12b4991a6070b9b9108d313',
             timestamp=datetime_obj,
         )
