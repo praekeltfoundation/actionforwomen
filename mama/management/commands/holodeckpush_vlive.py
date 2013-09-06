@@ -4,6 +4,7 @@ from django.core.management.base import BaseCommand
 from google_credentials import utils
 from photon import Client
 from django.contrib.auth.models import User
+from mama.models import UserProfile
 
 GA_PROFILE_ID = 72027337
 init_date = datetime(2013, 8, 26, 0, 0, 0)
@@ -92,7 +93,7 @@ class Command(BaseCommand):
             )
 
         print "Pushing Mobi User Phase"
-        vlive_userprofile = UserProfile.objects.filter(Q(origin='vlive'))
+        vlive_userprofile = UserProfile.objects.filter(origin='vlive')
         client.send(
             samples=(
                 ("Prenatal", vlive_userprofile.filter(delivery_date__gte=datetime_obj).count()),
