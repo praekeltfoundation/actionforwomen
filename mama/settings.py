@@ -147,7 +147,7 @@ INSTALLED_APPS = (
     'google_credentials',
     'haystack',
     'likes',
-    # 'moderator',
+    'moderator',
     'photologue',
     'poll',
     'publisher',

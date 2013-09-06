@@ -113,6 +113,11 @@ class AskMamaListView(CategoryListView):
     paginate_by = 10
     heading_prefix = ""
 
+    def get_context_data(self, **kwargs):
+        context = super(AskMamaListView, self).get_context_data(**kwargs)
+        context['lead_in_post'] = self.get_lead_in_post()
+        return context
+
     def get_queryset(self):
         self.category = get_object_or_404(Category, \
                 slug__iexact='ask-mama')
@@ -124,6 +129,11 @@ class AskMamaListView(CategoryListView):
         if active_modifiers:
             self.heading_prefix = active_modifiers[0].title
         return view_modifier.modify(queryset)
+
+    def get_lead_in_post(self):
+        return Post.permitted.filter(
+            pin__category=self.category
+        ).latest('created')
 
 class ContactView(FormView):
     form_class = ContactForm
