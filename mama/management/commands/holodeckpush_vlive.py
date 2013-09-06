@@ -112,7 +112,7 @@ class Command(BaseCommand):
         ga_service = utils.get_service()
 
         range_end = datetime_obj
-        range_start_cumulative = init_date
+        range_start_cumulative = datetime(2013, 1, 1)
         vlive_users = User.objects.filter(userprofile__origin='vlive')
 
         print "Pushing Mobi Users Cumulative"
