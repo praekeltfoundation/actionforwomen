@@ -135,6 +135,7 @@ class AskMamaListView(CategoryListView):
             pin__category=self.category
         ).latest('created')
 
+
 class ContactView(FormView):
     form_class = ContactForm
     template_name = "mama/contact.html"

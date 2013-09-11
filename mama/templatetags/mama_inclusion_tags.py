@@ -6,12 +6,13 @@ try:
 except:
   import random
 
-from category.models import Category
 from django import template
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.template import Context, Template
+
+from category.models import Category
 from poll.models import Poll
 from post.models import Post
 
