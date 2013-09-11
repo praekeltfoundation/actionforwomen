@@ -4,7 +4,8 @@
 Used for Mom's Stories
 {% endcomment %}
 
-{% load jmbo_inclusion_tags mama_inclusion_tags %}
+{% load jmbo_inclusion_tags %}
+{% load mama_inclusion_tags moms_stories_inclusion_tags %}
 
 {% block following_header %}
 {{ block.super }}
@@ -34,7 +35,7 @@ Used for Mom's Stories
 {% block content %}
 
     {% block above_listing %}
-    {% include 'mama/includes/tell-your-story.html' %}
+    {% your_story_competition %}
     {% endblock %}
 
     {% if object_list %}
@@ -59,7 +60,7 @@ Used for Mom's Stories
     {% endif %}
 
     {% block below_listing %}
-    {% include 'mama/includes/tell-your-story.html' %}
+    {% your_story_competition %}
     {% endblock %}
 
     {% block footer_search_form %}

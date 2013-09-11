@@ -1,0 +1,14 @@
+{% if your_story_competition %}
+  <div class="text_banner">
+    <div class="banner_content">
+      <p>
+      <strong>
+        <a href="{% url your_story your_story_competition.pk %}">
+            Submit Your Story ></a>
+      </strong>
+      </p>
+    </div>
+  </div>
+{% endif %}
+
+
