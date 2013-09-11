@@ -23,7 +23,13 @@ Used for the AskMAMA section
             <div class="title">
                 {{ lead_in_post.title }}
                 <div class="stamp">
-                    {% humanize_time_diff lead_in_post.created "Ago" %} // <a href="#comments">{{ lead_in_post.comment_count }} Comments</a> // {% likes lead_in_post %}
+                    {% humanize_time_diff lead_in_post.created "Ago" %} 
+                    // 
+                    <a href="#comments"> 
+                        {{ lead_in_post.comment_count }} Comments 
+                    </a> 
+                    // 
+                    {% likes lead_in_post %}
                 </div>
             </div>
             <div> </div>
