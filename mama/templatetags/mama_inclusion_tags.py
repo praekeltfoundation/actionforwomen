@@ -20,39 +20,6 @@ from post.models import Post
 register = template.Library()
 
 
-@register.inclusion_tag('mama/inclusion_tags/live_chat_banner.html',
-                        takes_context=True)
-def live_chat_banner(context):
-    """ Display any available live chats as advertisements on the home page and
-    AskMAMA pages.
-    """
-    context = copy(context)
-
-    # Find any current live chat posts. These are articles with primary
-    # category of 'ask-mama' and category of 'live-chat'. Publication date must
-    # be prior to now, and the post must be less than 5 days old.
-
-    post = None
-    now = datetime.now()
-    lcqs = Post.permitted.filter(primary_category__slug='ask-mama',
-                                 categories__slug='live-chat',
-                                 publish_on__lte=now).order_by('-publish_on')
-    for itm in lcqs:
-        pub_date = itm.publish_on
-        delta = now - pub_date
-        if delta.days < 5:
-            post = itm 
-            break
-
-    if post is not None:
-        context['live_chat_advert'] = {
-                'url': post.get_absolute_category_url(),
-                'title': post.title,
-                'description': post.description
-                }
-    return context
-
-
 @register.inclusion_tag('mama/inclusion_tags/ages_and_stages.html',
                         takes_context=True)
 def ages_and_stages(context):
