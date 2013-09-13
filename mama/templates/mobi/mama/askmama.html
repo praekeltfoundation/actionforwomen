@@ -16,43 +16,39 @@ Used for the AskMAMA section
 
 {% block above_content %}
 {{ block.super }}
-{% if lead_in_post %}
-<div class="">
-    <div class="content-inner">
-        <div class="post">
-            <div class="title">
-                {{ lead_in_post.title }}
-                <div class="stamp">
-                    {% humanize_time_diff lead_in_post.created "Ago" %} 
-                    // 
-                    <a href="#comments"> 
-                        {{ lead_in_post.comment_count }} Comments 
-                    </a> 
-                    // 
-                    {% likes lead_in_post %}
+    {% if lead_in_post %}
+    <div class="">
+        <div class="content-inner">
+            <div class="post">
+                <div class="title">
+                    {{ lead_in_post.title }}
+                    <div class="stamp">
+                        {% humanize_time_diff lead_in_post.created "Ago" %} 
+                        // 
+                        <a href="#comments"> 
+                            {{ lead_in_post.comment_count }} Comments 
+                        </a> 
+                        // 
+                        {% likes lead_in_post %}
+                    </div>
                 </div>
+                <div> </div>
+                {% if lead_in_post.get_thumb_url %}
+                    <img src="{{ lead_in_post.get_thumb_url }}" />
+                {% endif %}
+                {{ lead_in_post.content|safe }}
             </div>
-            <div> </div>
-            {% if lead_in_post.get_thumb_url %}
-                <img src="{{ lead_in_post.get_thumb_url }}" />
-            {% endif %}
-            {{ lead_in_post.content|safe }}
-        </div>
 
-        {% live_chat_banner %}
+            {% live_chat_banner %}
 
-        {% get_livechat_for_article lead_in_post "livechat" %}
-        {% if livechat %}
-            {% include "livechat/embed.html" %}
-        {% else %}
             {% object_comments lead_in_post %}
-        {% endif %}
+        </div>
     </div>
-</div>
-{% else %}
-    {% live_chat_banner %}
-{% endif %}
+    {% else %}
+        {% live_chat_banner %}
+    {% endif %}
 {% endblock %}
+
 
 {% block content %}
 
