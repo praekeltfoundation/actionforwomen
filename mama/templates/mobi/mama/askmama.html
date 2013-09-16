@@ -16,37 +16,37 @@ Used for the AskMAMA section
 
 {% block above_content %}
 {{ block.super }}
-    {% if lead_in_post %}
-    <div class="">
-        <div class="content-inner">
-            <div class="post">
-                <div class="title">
-                    {{ lead_in_post.title }}
-                    <div class="stamp">
-                        {% humanize_time_diff lead_in_post.created "Ago" %} 
-                        // 
-                        <a href="#comments"> 
-                            {{ lead_in_post.comment_count }} Comments 
-                        </a> 
-                        // 
-                        {% likes lead_in_post %}
-                    </div>
+{% if lead_in_post %}
+<div class="">
+    <div class="content-inner">
+        <div class="post">
+            <div class="title">
+                {{ lead_in_post.title }}
+                <div class="stamp">
+                    {% humanize_time_diff lead_in_post.created "Ago" %} 
+                    // 
+                    <a href="#comments"> 
+                        {{ lead_in_post.comment_count }} Comments 
+                    </a> 
+                    // 
+                    {% likes lead_in_post %}
                 </div>
-                <div> </div>
-                {% if lead_in_post.get_thumb_url %}
-                    <img src="{{ lead_in_post.get_thumb_url }}" />
-                {% endif %}
-                {{ lead_in_post.content|safe }}
             </div>
-
-            {% live_chat_banner %}
-
-            {% object_comments lead_in_post %}
+            <div> </div>
+            {% if lead_in_post.get_thumb_url %}
+                <img src="{{ lead_in_post.get_thumb_url }}" />
+            {% endif %}
+            {{ lead_in_post.content|safe }}
         </div>
-    </div>
-    {% else %}
+
         {% live_chat_banner %}
-    {% endif %}
+
+        {% object_comments lead_in_post %}
+    </div>
+</div>
+{% else %}
+    {% live_chat_banner %}
+{% endif %}
 {% endblock %}
 
 

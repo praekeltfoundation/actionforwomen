@@ -219,6 +219,9 @@ EMAIL_SUBJECT_PREFIX = '[MAMA] '
 AMBIENT_API_KEY = ''
 AMBIENT_GATEWAY_PASSWORD = ''
 
+LIVECHAT_PRIMARY_CATEGORY = 'ask-mama'
+LIVECHAT_CATEGORIES = ('live-chat',)
+
 MODERATOR = {
     'CLASSIFIER': 'moderator.storage.RedisClassifier',
     'CLASSIFIER_CONFIG': {
