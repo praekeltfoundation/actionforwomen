@@ -5,8 +5,8 @@ Used for the AskMAMA section
 {% endcomment %}
 
 {% load jmbo_inclusion_tags jmbo_template_tags %}
-{% load comments likes_inclusion_tags %}
 {% load mama_inclusion_tags %}
+{% load askmama_inclusion_tags %}
 {% load livechat_tags %}
 
 {% block following_header %}
@@ -19,29 +19,22 @@ Used for the AskMAMA section
 {% if lead_in_post %}
 <div class="">
     <div class="content-inner">
-        <div class="post">
-            <div class="title">
-                {{ lead_in_post.title }}
-                <div class="stamp">
-                    {% humanize_time_diff lead_in_post.created "Ago" %} 
-                    // 
-                    <a href="#comments"> 
-                        {{ lead_in_post.comment_count }} Comments 
-                    </a> 
-                    // 
-                    {% likes lead_in_post %}
+        <div class="items {{category.color}}">
+            <div class="item no-pic">
+                <div class="h1">
+                    {{ lead_in_post.title }}
+                </div>
+                <div class="meta">
+                    <div class="stamp">
+                        {{ lead_in_post.content|safe }}
+                    </div>
                 </div>
             </div>
-            <div> </div>
-            {% if lead_in_post.get_thumb_url %}
-                <img src="{{ lead_in_post.get_thumb_url }}" />
-            {% endif %}
-            {{ lead_in_post.content|safe }}
         </div>
 
         {% live_chat_banner %}
 
-        {% object_comments lead_in_post %}
+        {% favourite_questions_for_week lead_in_post weeks_ago %}
     </div>
 </div>
 {% else %}
@@ -54,7 +47,7 @@ Used for the AskMAMA section
 
     {% if object_list %}
     <div class="{{ category.color }}">
-        <div class="h1">{{ full_heading }}</div>
+        <div class="h1">{{ full_heading }} Articles</div>
         <div class="content-inner">
             <a name="listing-top" />
             <div class="item">

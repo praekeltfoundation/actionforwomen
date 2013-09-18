@@ -96,10 +96,12 @@ class MomStoriesListView(CategoryListView):
     heading_prefix = "More"
 
     def get_queryset(self):
-        self.category = get_object_or_404(Category, \
-                slug__iexact='moms-stories')
+        self.category = get_object_or_404(
+            Category,
+            slug__iexact='moms-stories')
         queryset = Post.permitted.filter(
-            Q(primary_category=self.category) | Q(categories=self.category)
+            Q(primary_category=self.category) | \
+            Q(categories=self.category)
         ).exclude(categories__slug__in=('featured',)).distinct()
         view_modifier = PopularViewModifier(self.request)
         active_modifiers = view_modifier.get_active_items()
@@ -116,14 +118,20 @@ class AskMamaListView(CategoryListView):
     def get_context_data(self, **kwargs):
         context = super(AskMamaListView, self).get_context_data(**kwargs)
         context['lead_in_post'] = self.get_lead_in_post()
+        context['weeks_ago'] = int(self.request.GET.get('wk', '0'))
         return context
 
     def get_queryset(self):
-        self.category = get_object_or_404(Category, \
-                slug__iexact='ask-mama')
+        self.category = get_object_or_404(
+            Category,
+            slug__iexact='ask-mama')
         queryset = Post.permitted.filter(
-            Q(primary_category=self.category) | Q(categories=self.category)
-        ).exclude(categories__slug__in=('live-chat', 'featured',)).distinct()
+            Q(primary_category=self.category) | \
+            Q(categories=self.category))
+        queryset = queryset.exclude(categories__slug__in=(
+            'live-chat', 
+            'featured',))
+        queryset = queryset.distinct()
         view_modifier = PopularViewModifier(self.request)
         active_modifiers = view_modifier.get_active_items()
         if active_modifiers:
