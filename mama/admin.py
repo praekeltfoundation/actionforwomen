@@ -23,7 +23,7 @@ class PostAdmin(ModelBaseAdmin):
 class BannerAdmin(ModelBaseAdmin):
 
     list_display = (
-        'title', 'description', 'thumbnail', 'schedule', 'state')
+        'title', 'description', 'thumbnail', 'schedule', '_actions')
 
     def thumbnail(self, obj, *args, **kwargs):
         return '<img src="%s" />' % (obj.image.url,)
