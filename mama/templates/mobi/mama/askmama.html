@@ -4,7 +4,6 @@
 Used for the AskMAMA section
 {% endcomment %}
 
-{% load jmbo_inclusion_tags jmbo_template_tags %}
 {% load mama_inclusion_tags %}
 {% load askmama_inclusion_tags %}
 {% load livechat_tags %}
@@ -14,49 +13,34 @@ Used for the AskMAMA section
 {% registration_banner %}
 {% endblock %}
 
-{% block above_content %}
-{{ block.super }}
-{% if lead_in_post %}
-<div class="">
-    <div class="content-inner">
-        <div class="items {{category.color}}">
-            <div class="item no-pic">
-                <div class="h1">
-                    {{ lead_in_post.title }}
-                </div>
-                <div class="meta">
-                    <div class="stamp">
-                        {{ lead_in_post.content|safe }}
+{% block content %}
+
+    {{ block.super }}
+    {% if lead_in_post %}
+    <div class="">
+        <div class="content-inner">
+            {% if weeks_ago == 0 %}
+            <div class="items {{category.color}}">
+                <div class="item no-pic">
+                    <div class="h1">
+                        {{ lead_in_post.title }}
+                    </div>
+                    <div class="meta">
+                        <div class="stamp">
+                            {{ lead_in_post.content|safe }}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+            {% endif %}
 
+            {% live_chat_banner %}
+
+            {% favourite_questions_for_week lead_in_post weeks_ago %}
+        </div>
+    </div>
+    {% else %}
         {% live_chat_banner %}
-
-        {% favourite_questions_for_week lead_in_post weeks_ago %}
-    </div>
-</div>
-{% else %}
-    {% live_chat_banner %}
-{% endif %}
-{% endblock %}
-
-
-{% block content %}
-
-    {% if object_list %}
-    <div class="{{ category.color }}">
-        <div class="h1">{{ full_heading }} Articles</div>
-        <div class="content-inner">
-            <a name="listing-top" />
-            <div class="item">
-                {% for object in post_list %}
-                    {% render_object object "block" %}
-                {% endfor %}
-            </div>
-        </div>
-    </div>
     {% endif %}
 
     {% block below_listing %}

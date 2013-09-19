@@ -6,6 +6,7 @@ from django.conf import settings
 from django.contrib import auth
 from django.contrib import messages
 from django.contrib.comments.views import comments
+from django.contrib.comments import get_model
 from django.core.mail import EmailMessage, mail_managers
 from django.core.urlresolvers import reverse
 from django.db.models import Q, F
@@ -33,6 +34,9 @@ from poll.models import Poll
 from post.models import Post
 
 from preferences import preferences
+
+
+Comment = get_model()
 
 
 URL_REGEX = re.compile(
@@ -96,6 +100,8 @@ class MomStoriesListView(CategoryListView):
     heading_prefix = "More"
 
     def get_queryset(self):
+        """ Only return Post's that are of category "moms-stories".
+        """
         self.category = get_object_or_404(
             Category,
             slug__iexact='moms-stories')
@@ -110,38 +116,55 @@ class MomStoriesListView(CategoryListView):
         return view_modifier.modify(queryset)
 
 
-class AskMamaListView(CategoryListView):
+class AskMamaView(CategoryDetailView):
+    """
+    This view surfaces the AskMAMA section of the site. It is subclassing
+    CategoryListView, 
+    """
+
     template_name = "mama/askmama.html"
-    paginate_by = 10
     heading_prefix = ""
+    context_object_name = 'lead_in_post'
 
     def get_context_data(self, **kwargs):
-        context = super(AskMamaListView, self).get_context_data(**kwargs)
-        context['lead_in_post'] = self.get_lead_in_post()
+        context = super(AskMamaView, self).get_context_data(**kwargs)
         context['weeks_ago'] = int(self.request.GET.get('wk', '0'))
         return context
 
-    def get_queryset(self):
-        self.category = get_object_or_404(
-            Category,
-            slug__iexact='ask-mama')
-        queryset = Post.permitted.filter(
-            Q(primary_category=self.category) | \
-            Q(categories=self.category))
-        queryset = queryset.exclude(categories__slug__in=(
-            'live-chat', 
-            'featured',))
-        queryset = queryset.distinct()
-        view_modifier = PopularViewModifier(self.request)
-        active_modifiers = view_modifier.get_active_items()
-        if active_modifiers:
-            self.heading_prefix = active_modifiers[0].title
-        return view_modifier.modify(queryset)
+    def get_object(self, queryset=None):
+        """ 
+        This is the Post that explains what the AskMAMA section is all about
+        and that all the questions and answer comments will be hanging off, to
+        enable use the likes and moderation functionality.
 
-    def get_lead_in_post(self):
+        We return the latest pinned post in this category. Ideally, you should
+        create only one pinned Post in the category, and just change the
+        content if you want to. If you create new pinned Posts, the comments
+        linked to the older article will not be shown.
+        """
+        self.category = get_object_or_404(Category,
+                                          slug__iexact='ask-mama')
         return Post.permitted.filter(
             pin__category=self.category
         ).latest('created')
+
+
+class QuestionAnswerView(TemplateView):
+    """ This view displays a question and its answer in the AskMAMA section.
+    """
+    template_name = "mama/question_and_answer.html"
+
+    def get_context_data(self, **kwargs):
+        """ Retrieve the question and its answer
+        """
+        context = super(QuestionAnswerView, self).get_context_data(**kwargs)
+        context['category'] = get_object_or_404(Category,
+                                          slug__iexact='ask-mama')
+        question_id = kwargs.get('question_id', None)
+        question = Comment.objects.get(pk=question_id)
+        context['question'] = question
+        context['answers'] = question.replied_to_comment_set.all()
+        return context
 
 
 class ContactView(FormView):

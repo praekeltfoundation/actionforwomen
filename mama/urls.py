@@ -8,7 +8,8 @@ from django.views.generic import TemplateView
 from haystack.views import SearchView
 from mama.views import (CategoryDetailView, CategoryListView, 
                         ContactView, ProfileView, 
-                        AskMamaListView, MomStoriesListView)
+                        AskMamaView, QuestionAnswerView, 
+                        MomStoriesListView)
 from mama.forms import PasswordResetForm
 import object_tools
 
@@ -97,13 +98,19 @@ urlpatterns = patterns('',
         name='terms'
     ),
     url(
-        r'^content/ask-mama/list/$',
-        AskMamaListView.as_view(),
+        r'^ask-mama/$',
+        AskMamaView.as_view(),
         {},
-        name='askmama_object_list'
+        name='askmama_detail'
     ),
     url(
-        r'^content/moms-stories/list/$',
+        r'^ask-mama/answer/(?P<question_id>\d+)/$',
+        QuestionAnswerView.as_view(),
+        {},
+        name='askmama_answer_detail'
+    ),
+    url(
+        r'^moms-stories/list/$',
         MomStoriesListView.as_view(),
         {},
         name='moms_stories_object_list'

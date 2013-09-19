@@ -8,11 +8,11 @@
     </div>
     <div class="nav">
         <a href="{% url category_object_list 'articles' %}">Articles</a> | 
-        <a href="{% url category_object_list 'moms-stories' %}">Stories</a> |
+        <a href="{% url moms_stories_object_list %}">Stories</a> |
         {% if live_chat %}
         <a href="{% url livechat:show_livechat live_chat.current_live_chat.slug %}">AskMAMA</a> |
         {% else %}
-        <a href="{% url askmama_object_list %}">AskMAMA</a> |
+        <a href="{% url askmama_detail %}">AskMAMA</a> |
         {% endif %}
         <a href="{% url category_object_list 'life-guides' %}">Guides</a>
     </div>
