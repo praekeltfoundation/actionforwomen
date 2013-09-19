@@ -35,7 +35,14 @@ def favourite_questions_for_week(context, post, weeks_ago=0):
 
     # Filter the questions between the date range
     questions = Comment.objects.filter(submit_date__range=(start_sunday, 
-                                                          end_saturday,))
+                                                           end_saturday,))
+
+    # Filter the comments linked to the post
+    pct = ContentType.objects.get_for_model(post.__class__)
+    questions = questions.filter(
+        content_type=pct,
+        object_pk=post.id)
+    questions = questions.exclude(is_removed=True)
 
     # Work out the vote count for the questions, to sort by the most liked
     # questions, i.e. questions with the most votes. (This is taken from the
@@ -57,7 +64,11 @@ vote=-1 AND object_id=%s.%s AND content_type_id=%s)' % (
         }
     ).order_by('-vote_score', '-submit_date')
 
-    context['questions'] = questions
+    # leave out replies
+    result = [itm for itm in list(questions) \
+        if itm.reply_comment_set.count() == 0]
+
+    context['questions'] = result
     context['weeks_ago'] = weeks_ago
     context['week_start'] = start_sunday
 

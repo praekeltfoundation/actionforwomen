@@ -10,7 +10,7 @@
     <div class="banner_content">
       <p>
       <strong>
-        <a href="{% url askmama_object_list %}?wk=1">
+        <a href="{% url askmama_detail %}?wk=1">
           See last week's answers >
         </a>
       </strong>    
@@ -19,29 +19,52 @@
   </div>
   {% endif %}
 
-    <div class="content-inner">
-        <div class="items">
-            {% for question in questions %}
-                <div class="item comment no-pic">
-                    <div class="meta">
-                        <div class="title">{{ question.name }}</div>
-                        <div class="stamp">{{ question.submit_date }} | {% likes question %} {% report_comment_abuse question %}</a></div>
-                        <div class="stamp">{{ question.comment|linebreaks }}</div>
-                    </div>
+  <div class="content-inner">
+      <div class="items">
+          {% for question in questions %}
+            <div class="item comment no-pic">
+              <div class="meta">
+                <div class="stamp">{% likes question %}</div>
+                {% if question.replied_to_comment_set.count > 0 %}
+                <a href="{% url askmama_answer_detail question.id %}">
+                  <div class="stamp">{{ question.comment|linebreaks }}</div>
+                </a>
+                {% else %}
+                  <div class="stamp">{{ question.comment|linebreaks }}</div>
+                {% endif %}
+              </div>
+            </div>
+          {% empty %}
+            {% if weeks_ago == 0 %}
+            <div class="item comment no-pic">
+              <div class="meta">
+                <div class="stamp">
+                  No questions yet. Use the form below to submit the
+                  first question.
                 </div>
-            {% empty %}
-                <div class="item comment no-pic">
-                    <div class="meta">
-                      <div class="stamp">
-                        No questions yet. Use the form below to submit the
-                        first question.
-                      </div>
-                    </div>
-                  </div>
-            {% endfor %}
-        </div>
-    </div>
+              </div>
+            </div>
+            {% endif %}
+          {% endfor %}
+      </div>
+  </div>
 
-    {% render_comment_form for lead_in_post %}
+  {% if weeks_ago == 0 %}
+  {% render_comment_form for lead_in_post %}
+  {% endif %}
+
+  {% if weeks_ago < 2 %}
+  <div class="text_banner">
+    <div class="banner_content">
+      <p>
+      <strong>
+        <a href="{% url askmama_detail %}?wk=2">
+          See older questions >
+        </a>
+      </strong>    
+      </p>
+    </div>
+  </div>
+  {% endif %}
 </div>
 
