@@ -17,28 +17,31 @@ Used for the AskMAMA section
 
     {{ block.super }}
     {% if lead_in_post %}
-    <div class="">
-        <div class="content-inner">
-            {% if weeks_ago == 0 %}
-            <div class="items {{category.color}}">
-                <div class="item no-pic">
-                    <div class="h1">
-                        {{ lead_in_post.title }}
-                    </div>
-                    <div class="meta">
-                        <div class="stamp">
-                            {{ lead_in_post.content|safe }}
+        <div class="">
+            <div class="content-inner">
+                {% if weeks_ago == 0 %}
+                <div class="items {{category.color}}">
+                    <div class="item no-pic">
+                        <div class="h1">
+                            {{ lead_in_post.title }}
                         </div>
                     </div>
                 </div>
+                {% live_chat_banner %}
+                <div class="items {{category.color}}">
+                    <div class="item no-pic">
+                        <div class="meta">
+                            <div class="stamp">
+                                {{ lead_in_post.content|safe }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% favourite_questions_for_week lead_in_post weeks_ago cpage sort %}
             </div>
-            {% endif %}
-
-            {% live_chat_banner %}
-
-            {% favourite_questions_for_week lead_in_post weeks_ago %}
         </div>
-    </div>
     {% else %}
         {% live_chat_banner %}
     {% endif %}

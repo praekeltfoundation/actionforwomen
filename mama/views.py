@@ -129,6 +129,8 @@ class AskMamaView(CategoryDetailView):
     def get_context_data(self, **kwargs):
         context = super(AskMamaView, self).get_context_data(**kwargs)
         context['weeks_ago'] = int(self.request.GET.get('wk', '0'))
+        context['cpage'] = int(self.request.GET.get('page', '1'))
+        context['sort'] = self.request.GET.get('sort','pop')
         return context
 
     def get_object(self, queryset=None):
