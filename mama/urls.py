@@ -9,7 +9,8 @@ from haystack.views import SearchView
 from mama.views import (CategoryDetailView, CategoryListView, 
                         ContactView, ProfileView, 
                         AskMamaView, QuestionAnswerView, 
-                        MomStoriesListView)
+                        MomStoriesListView,
+                        MyProfileView, MyProfileEdit)
 from mama.forms import PasswordResetForm
 import object_tools
 
@@ -139,6 +140,16 @@ urlpatterns = patterns('',
             template_name="registration/done.html"
         )),
         name='registration_done'
+    ),
+    url(
+        r'^view/myprofile/$',
+        login_required(MyProfileView.as_view()),
+        name='view_my_profile'
+    ),
+    url(
+        r'^edit/myprofile/$',
+        login_required(MyProfileEdit.as_view()),
+        name='edit_my_profile'
     ),
     url(
         r'^accounts/profile/',

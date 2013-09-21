@@ -202,6 +202,14 @@ class ContactView(FormView):
         return render_to_response('mama/contact_thanks.html', context_instance=RequestContext(self.request))
 
 
+class MyProfileView(TemplateView):
+    template_name = 'mama/viewprofile.html'
+
+
+class MyProfileEdit(TemplateView):
+    template_name = 'mama/editprofile.html'
+
+
 class ProfileView(FormView):
     form_class = ProfileForm
     template_name = "mama/profile.html"

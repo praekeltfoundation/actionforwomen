@@ -19,6 +19,7 @@ from pml import forms as pml_forms
 from registration.forms import RegistrationFormTermsOfService
 from userprofile import utils
 
+from mama.constants import RELATION_TO_BABY_CHOICES, DATE_QUALIFIER_CHOICES
 
 class ContactForm(forms.Form):
     mobile_number = forms.CharField(max_length=64)
@@ -99,22 +100,39 @@ class RegistrationForm(RegistrationFormTermsOfService):
 
         class ProfileModelForm(forms.ModelForm):
             class Meta:
-                fields = ('mobile_number', 'delivery_date')
+                fields = ('mobile_number', 'delivery_date', 
+                          'relation_to_baby', 'date_qualifier', 
+                          'unknown_date')
                 model = utils.get_profile_model()
         self.fields.update(ProfileModelForm().fields)
         del self.fields['email']
         del self.fields['password2']
         self.fields.keyOrder = [
             'username',
-            'mobile_number',
-            'delivery_date',
             'password1',
+            'mobile_number',
+            'relation_to_baby',
+            'date_qualifier',
+            'delivery_date',
+            'unknown_date',
             'tos',
         ]
+        self.fields['username'].label = "Choose a username"
+        self.fields['password1'].label = "Choose a 4 digit PIN"
         self.fields['mobile_number'].required = True
-        self.fields['delivery_date'].required = True
-        self.fields['delivery_date'].label = "What is your due date or baby's birthday?"
+        self.fields['mobile_number'].label = "Your mobile number"
+        self.fields['delivery_date'].required = False
+        self.fields['delivery_date'].label = ""
         self.fields['delivery_date'].widget = SelectDateWidget()
+        self.fields['date_qualifier'].widget = forms.RadioSelect()
+        self.fields['date_qualifier'].choices = DATE_QUALIFIER_CHOICES
+        self.fields['date_qualifier'].label = \
+            "Please enter your baby's birth day or due date or select \
+            unknown if you are not sure of the due date"
+        self.fields['relation_to_baby'].widget = forms.RadioSelect()
+        self.fields['relation_to_baby'].choices = RELATION_TO_BABY_CHOICES
+        self.fields['relation_to_baby'].label = 'Are you a...'
+        self.fields['unknown_date'].label = 'Unknown'
         self.fields['tos'].label = mark_safe('I accept the <a href="%s">terms '
                                              'and conditions</a> of use.'
                                              % reverse("terms"))
@@ -132,6 +150,23 @@ class RegistrationForm(RegistrationFormTermsOfService):
                                   'password?</a>' % reverse("password_reset"))
         except mama.models.UserProfile.DoesNotExist:
             return mobile_number
+
+    def clean(self):
+        cleaned_data = super(RegistrationForm, self).clean()
+        delivery_date = cleaned_data['delivery_date']
+        date_qualifier = cleaned_data['date_qualifier']
+        unknown_date = cleaned_data['unknown_date']
+        if date_qualifier == 'birth_date' and delivery_date is None:
+            msg = 'You need to provide a birth date'
+            self._errors['delivery_date'] = self.error_class([msg])
+            del cleaned_data['delivery_date']
+        elif date_qualifier == 'due_date' and delivery_date is None \
+                and not unknown_date:
+            msg = "Either provide a due date, or check the \
+                  'Unknown' check box below the date."
+            self._errors['delivery_date'] = self.error_class([msg])
+            del cleaned_data['delivery_date']
+        return cleaned_data
 
 
 class ProfileForm(pml_forms.PMLForm):

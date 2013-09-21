@@ -6,12 +6,15 @@ from django.core.cache import cache
 from django.db import models
 from django.db.models.signals import class_prepared, post_save
 from django.dispatch import receiver
+
 from jmbo.models import ModelBase
 from likes.exceptions import CannotVoteException
 from likes.signals import likes_enabled_test, can_vote_test
-from mama.forms import RegistrationForm
 from preferences.models import Preferences
 from userprofile.models import AbstractProfileBase
+
+from mama.forms import RegistrationForm
+from mama.constants import RELATION_TO_BABY_CHOICES, DATE_QUALIFIER_CHOICES
 
 
 class Link(models.Model):
@@ -139,8 +142,23 @@ class UserProfile(AbstractProfileBase):
     origin = models.CharField(
         help_text='Where did this user register?',
         null=True,
-        max_length=255)
-
+        max_length=255
+    )
+    relation_to_baby = models.CharField(
+        max_length=30,
+        choices=RELATION_TO_BABY_CHOICES,
+        default='mom_or_mom_to_be'
+    )
+    date_qualifier = models.CharField(
+        max_length=20,
+        choices=DATE_QUALIFIER_CHOICES,
+        default='due_date'
+    )
+    unknown_date = models.BooleanField(
+        help_text='Checked if the due date is unknown.',
+        default=False,
+        blank=True,
+    )
 
     def is_prenatal(self):
         """
