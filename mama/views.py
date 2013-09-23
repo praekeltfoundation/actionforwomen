@@ -205,6 +205,23 @@ class ContactView(FormView):
 class MyProfileView(TemplateView):
     template_name = 'mama/viewprofile.html'
 
+    def get_context_data(self, **kwargs):
+        """ Retrieve the user profile
+        """
+        context = super(MyProfileView, self).get_context_data(**kwargs)
+        user = self.request.user
+        profile = user.get_profile()
+        context['username'] = user.username
+        context['avatar'] = profile.avatar
+        context['mobile_no'] = profile.mobile_number
+        context['relation_description'] = profile.relation_description()
+        context['about_me'] = profile.about_me
+        context['baby_name'] = profile.baby_name
+        context['date_type'] = profile.date_qualifier
+        context['unknown_due_date'] = profile.unknown_date
+        context['date_description'] = profile.get_date_qualifier_display
+        context['delivery_date'] = profile.delivery_date
+        return context
 
 class MyProfileEdit(TemplateView):
     template_name = 'mama/editprofile.html'

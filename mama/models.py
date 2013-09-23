@@ -13,6 +13,7 @@ from likes.signals import likes_enabled_test, can_vote_test
 from preferences.models import Preferences
 from userprofile.models import AbstractProfileBase
 
+from photologue.models import ImageModel
 from mama.forms import RegistrationForm
 from mama.constants import RELATION_TO_BABY_CHOICES, DATE_QUALIFIER_CHOICES
 
@@ -97,6 +98,11 @@ class SitePreferences(Preferences):
         verbose_name_plural = "Site preferences"
 
 
+class DefaultAvatar(ImageModel):
+    """A set of avatars users can choose from"""
+    pass
+
+
 class UserProfile(AbstractProfileBase):
     registration_form = RegistrationForm
     mobile_number = models.CharField(
@@ -159,6 +165,28 @@ class UserProfile(AbstractProfileBase):
         default=False,
         blank=True,
     )
+    about_me = models.TextField(blank=True, null=True)
+    baby_name = models.CharField(max_length=100, blank=True, null=True)
+    avatar = models.ImageField('avatar', max_length=100, 
+                               upload_to='users/profile', 
+                               blank=True, null=True)
+
+    def relation_description(self):
+        """ 
+        Returns the relationship of the registrant to the baby, taking into
+        account the relationship selected, and date type selected.
+        """
+        if self.date_qualifier == 'birth_date':
+            if self.relation_to_baby == 'mom_or_mom_to_be':
+                return 'Mom'
+            elif self.relation_to_baby == 'dad_or_dad_to_be':
+                return 'Dad'
+        elif self.date_qualifier == 'due_date':
+            if self.relation_to_baby == 'mom_or_mom_to_be':
+                return 'Mom to be'
+            elif self.relation_to_baby == 'dad_or_dad_to_be':
+                return 'Dad to be'
+        return 'Family Member'
 
     def is_prenatal(self):
         """

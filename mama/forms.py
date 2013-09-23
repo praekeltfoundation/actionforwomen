@@ -118,7 +118,8 @@ class RegistrationForm(RegistrationFormTermsOfService):
             'tos',
         ]
         self.fields['username'].label = "Choose a username"
-        self.fields['password1'].label = "Choose a 4 digit PIN"
+        # self.fields['password1'].label = "Choose a 4 digit PIN"
+        self.fields['password1'].label = "Choose a password"
         self.fields['mobile_number'].required = True
         self.fields['mobile_number'].label = "Your mobile number"
         self.fields['delivery_date'].required = False
