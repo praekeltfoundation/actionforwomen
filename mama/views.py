@@ -23,7 +23,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormView
 from django.views.generic.list import ListView
 
-from mama.forms import ContactForm, ProfileForm
+from mama.forms import ContactForm, ProfileForm, EditProfileForm
 from mama.view_modifiers import PopularViewModifier
 from mama.models import Banner
 
@@ -32,6 +32,11 @@ from category.models import Category
 from poll.forms import PollVoteForm
 from poll.models import Poll
 from post.models import Post
+
+from mama.constants import (
+    RELATION_PARENT_CHOICES, 
+    RELATION_PARENT_TO_BE_CHOICES 
+)
 
 from preferences import preferences
 
@@ -203,6 +208,10 @@ class ContactView(FormView):
 
 
 class MyProfileView(TemplateView):
+    """
+    Enables viewing of the user's profile in the HTML site, by the profile
+    owner.
+    """
     template_name = 'mama/viewprofile.html'
 
     def get_context_data(self, **kwargs):
@@ -213,7 +222,7 @@ class MyProfileView(TemplateView):
         profile = user.get_profile()
         context['username'] = user.username
         context['avatar'] = profile.avatar
-        context['mobile_no'] = profile.mobile_number
+        context['mobile_number'] = profile.mobile_number
         context['relation_description'] = profile.relation_description()
         context['about_me'] = profile.about_me
         context['baby_name'] = profile.baby_name
@@ -223,11 +232,80 @@ class MyProfileView(TemplateView):
         context['delivery_date'] = profile.delivery_date
         return context
 
-class MyProfileEdit(TemplateView):
+
+class MyProfileEdit(FormView):
+    """
+    Enables editing of the user's profile in the HTML site
+    """
+    form_class = EditProfileForm
     template_name = 'mama/editprofile.html'
+
+    def get_initial(self):
+        initial = self.initial.copy()
+        user = self.request.user
+        profile = user.get_profile()
+        initial['username'] = user.username
+        initial['avatar'] = profile.avatar
+        initial['mobile_number'] = profile.mobile_number
+        initial['relation_to_baby'] = profile.relation_to_baby
+        initial['about_me'] = profile.about_me
+        initial['baby_name'] = profile.baby_name
+        initial['date_qualifier'] = profile.date_qualifier
+        initial['unknown_date'] = profile.unknown_date
+        initial['delivery_date'] = profile.delivery_date
+        initial['baby_has_been_born'] = profile.date_qualifier == 'birth_date'
+        return initial
+
+    def get_form(self, form_class):
+        form = super(MyProfileEdit, self).get_form(form_class)
+        if form.initial['date_qualifier'] == 'due_date':
+            form.fields['relation_to_baby'].choices = RELATION_PARENT_TO_BE_CHOICES
+            form.fields['delivery_date'].label = 'Due Date'
+        else:
+            form.fields['relation_to_baby'].choices = RELATION_PARENT_CHOICES
+            form.fields['delivery_date'].label = 'Birth Date'
+            del form.fields['unknown_date']
+            del form.fields['baby_has_been_born']
+        return form
+
+    def form_valid(self, form):
+        """
+        Collect and save the updated profile information and redirect to the
+        user's profile page.
+
+        If she indicated that the baby has been born, update the date qualifier
+        and the unknown date values.
+        """
+        user = self.request.user
+        profile = user.get_profile()
+        profile.alias = form.cleaned_data['username']
+        profile.mobile_number = form.cleaned_data['mobile_number']
+        profile.relation_to_baby = form.cleaned_data['relation_to_baby']
+        # TODO: Store the avatar
+        # profile.avatar = form.cleaned_data['avatar']
+        profile.about_me = form.cleaned_data['about_me']
+        profile.baby_name = form.cleaned_data['baby_name']
+        profile.date_qualifier = form.cleaned_data['date_qualifier']
+        try:
+            profile.unknown_date = form.cleaned_data['unknown_date']
+        except KeyError:
+            pass
+        try:
+            if form.cleaned_data['baby_has_been_born']:
+                profile.date_qualifier = 'birth_date'
+                profile.unknown_date = False
+        except KeyError:
+            pass
+        profile.delivery_date = form.cleaned_data['delivery_date']
+        profile.save()
+        return HttpResponseRedirect(reverse('view_my_profile'))
 
 
 class ProfileView(FormView):
+    """
+    This seems to be the registration and profile form view specifically for
+    VLive
+    """
     form_class = ProfileForm
     template_name = "mama/profile.html"
 

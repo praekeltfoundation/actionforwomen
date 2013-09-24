@@ -5,6 +5,7 @@ import ambient
 from dateutil import parser
 from django import forms
 from django.conf import settings
+from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.models import get_current_site
@@ -18,6 +19,7 @@ import mama
 from pml import forms as pml_forms
 from registration.forms import RegistrationFormTermsOfService
 from userprofile import utils
+
 
 from mama.constants import RELATION_TO_BABY_CHOICES, DATE_QUALIFIER_CHOICES
 
@@ -153,10 +155,19 @@ class RegistrationForm(RegistrationFormTermsOfService):
             return mobile_number
 
     def clean(self):
+        """
+        Check that the birth date is provided, if the person selected birth
+        date as the date type.
+        Check that the due date is provided or the unknown check box is checked
+        if due date is selected as the date type.
+        """
         cleaned_data = super(RegistrationForm, self).clean()
         delivery_date = cleaned_data['delivery_date']
         date_qualifier = cleaned_data['date_qualifier']
-        unknown_date = cleaned_data['unknown_date']
+        try:
+            unknown_date = cleaned_data['unknown_date']
+        except KeyError:
+            pass
         if date_qualifier == 'birth_date' and delivery_date is None:
             msg = 'You need to provide a birth date'
             self._errors['delivery_date'] = self.error_class([msg])
@@ -167,6 +178,100 @@ class RegistrationForm(RegistrationFormTermsOfService):
                   'Unknown' check box below the date."
             self._errors['delivery_date'] = self.error_class([msg])
             del cleaned_data['delivery_date']
+        return cleaned_data
+
+
+class EditProfileForm(RegistrationForm):
+    """
+    The form to edit all options in the member's full profile.
+    """
+    avatar = forms.ImageField(
+        max_length=100,
+        label="Choose an Avatar",
+        required=False
+    )
+    about_me = forms.CharField(
+        widget=forms.Textarea,
+        required=False
+    )
+    baby_name = forms.CharField(
+        max_length=100,
+        label="Name",
+        required=False
+    )
+    baby_has_been_born = forms.BooleanField(
+        label="Baby has been born",
+        required=False
+    )
+
+    def __init__(self, *args, **kwargs):
+        super(EditProfileForm, self).__init__(*args, **kwargs)
+        self.fields['date_qualifier'].widget = forms.HiddenInput()
+        self.fields.keyOrder = [
+            'username',
+            'mobile_number',
+            'relation_to_baby',
+            'avatar',
+            'about_me',
+            'baby_name',
+            'date_qualifier',
+            'delivery_date',
+            'unknown_date',
+            'baby_has_been_born'
+        ]
+        self.fields['username'].label = "Username"
+        self.fields['mobile_number'].label = "Mobile Number"
+        self.fields['relation_to_baby'].label = 'I am'
+
+    def clean_mobile_number(self):
+        mobile_number = self.cleaned_data['mobile_number']
+        RegexValidator('^\d{10}$', message="Enter a valid mobile number in "
+                       "the form 0719876543")(mobile_number)
+        return mobile_number
+
+    def clean_username(self):
+        """
+        Validate that the username is alphanumeric and already exists
+        """
+        try:
+            user = User.objects.get(
+                username__iexact=self.cleaned_data['username'])
+        except User.DoesNotExist:
+            raise forms.ValidationError(
+                "Could not find a user with this username.")
+        return self.cleaned_data['username']
+
+    def clean(self):
+        """
+        Check that the birth date is provided, if the person selected birth
+        date as the date type, of if she indicated that the baby has been
+        born.
+        Check that the due date is provided or the unknown check box is checked
+        if due date is selected as the date type. If they checked the baby has
+        been born checkbox, check that a birth date was provided.
+        """
+        cleaned_data = super(EditProfileForm, self).clean()
+        delivery_date = cleaned_data['delivery_date']
+        date_qualifier = cleaned_data['date_qualifier']
+        if date_qualifier == 'due_date':
+            unknown_date = cleaned_data['unknown_date']
+            baby_has_been_born = cleaned_data['baby_has_been_born']
+        if date_qualifier == 'birth_date' and delivery_date is None:
+            msg = 'You need to provide a birth date'
+            self._errors['delivery_date'] = self.error_class([msg])
+            del cleaned_data['delivery_date']
+        elif date_qualifier == 'due_date':
+            if baby_has_been_born and delivery_date is None:
+                msg = "You have indicated that the baby has been born. \
+                       Please provide the birth date in the due date field \
+                       above."
+                self._errors['delivery_date'] = self.error_class([msg])
+                del cleaned_data['delivery_date']
+            elif not unknown_date and delivery_date is None:
+                msg = "Either provide a due date, or check the \
+                      'Unknown' check box below the date."
+                self._errors['delivery_date'] = self.error_class([msg])
+                del cleaned_data['delivery_date']
         return cleaned_data
 
 

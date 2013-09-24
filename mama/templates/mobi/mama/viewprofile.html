@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+
 <div class="h1">My Profile</div>
 <div class="content-inner">
   <div class="post">
@@ -9,7 +10,9 @@
     {% endif %}
     <div class="stamp"> 
       {{ username }}<br/>
+      {% if mobile_number %}
       Mobile No: {{ mobile_number }}</br>
+      {% endif %}
       {{ relation_description}}
     </div>
   </div>
@@ -31,7 +34,7 @@
     </div>
     {% if baby_name %}
     <div class="stamp"> 
-        {{ baby_name }}
+        Name: {{ baby_name }}
     </div>
     {% endif %}
     <div class="stamp"> 
@@ -40,8 +43,10 @@
             {% if unknown_due_date %}
             Unknown
             {% else %}
-            {{ delivery_date }}
+            {{ delivery_date|date:"d M Y" }}
             {% endif %}
+        {% else %}
+            {{ delivery_date|date:"d M Y" }}
         {% endif %}
     </div>
   </div>
@@ -51,7 +56,7 @@
       <p>
       <strong>
         <a href="{% url edit_my_profile %}">Edit My Profile &gt;</a><br/>
-        <a href="{% url password_reset %}">Edit My Password &gt;</a>
+        <a href="{% url password_reset %}">Reset My Password &gt;</a>
       </strong>
       </p>
     </div>

@@ -105,6 +105,9 @@ class DefaultAvatar(ImageModel):
 
 class UserProfile(AbstractProfileBase):
     registration_form = RegistrationForm
+    # TODO: This could be a security risk, as password reset depends on a
+    # mobile number to match a number in a user profile. So, this field should
+    # not be optional. This number should also be unique across profiles.
     mobile_number = models.CharField(
         max_length=64,
         blank=True,
@@ -114,7 +117,6 @@ class UserProfile(AbstractProfileBase):
         choices=((i, 'Week%s %s' % ('s' if i > 1 else '', i)) for i in range(1,43)),
         blank=True,
         null=True,
-
     )
     delivery_date = models.DateField(
         blank=True,
