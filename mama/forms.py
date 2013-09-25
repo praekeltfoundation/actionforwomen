@@ -273,6 +273,14 @@ class EditProfileForm(RegistrationForm):
         return mama.models.DefaultAvatar.objects.all()
 
 
+class DueDateForm(forms.Form):
+    due_date = forms.DateField(
+        required = True,
+        label = "Due Date",
+        widget = SelectDateWidget()
+    )
+
+
 class ProfileForm(pml_forms.PMLForm):
     submit_text = "Register"
     username = pml_forms.PMLTextField(

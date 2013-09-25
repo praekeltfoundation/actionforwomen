@@ -15,7 +15,7 @@ class Migration(SchemaMigration):
 
         # Adding field 'UserProfile.date_qualifier'
         db.add_column('mama_userprofile', 'date_qualifier',
-                      self.gf('django.db.models.fields.CharField')(default='due_date', max_length=20),
+                      self.gf('django.db.models.fields.CharField')(default='unspecified', max_length=20),
                       keep_default=False)
 
         # Adding field 'UserProfile.unknown_date'
@@ -144,7 +144,7 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'UserProfile'},
             'alias': ('django.db.models.fields.CharField', [], {'max_length': '128', 'null': 'True', 'blank': 'True'}),
             'banned': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'date_qualifier': ('django.db.models.fields.CharField', [], {'default': "'due_date'", 'max_length': '20'}),
+            'date_qualifier': ('django.db.models.fields.CharField', [], {'default': "'unspecified'", 'max_length': '20'}),
             'decline_surveys': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'delivery_date': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),

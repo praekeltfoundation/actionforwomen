@@ -15,7 +15,7 @@ from userprofile.models import AbstractProfileBase
 
 from photologue.models import ImageModel
 from mama.forms import RegistrationForm
-from mama.constants import RELATION_TO_BABY_CHOICES, DATE_QUALIFIER_CHOICES
+from mama.constants import RELATION_TO_BABY_CHOICES, FULL_DATE_QUALIFIER_CHOICES
 
 
 class Link(models.Model):
@@ -159,8 +159,8 @@ class UserProfile(AbstractProfileBase):
     )
     date_qualifier = models.CharField(
         max_length=20,
-        choices=DATE_QUALIFIER_CHOICES,
-        default='due_date'
+        choices=FULL_DATE_QUALIFIER_CHOICES,
+        default='unspecified'
     )
     unknown_date = models.BooleanField(
         help_text='Checked if the due date is unknown.',

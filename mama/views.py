@@ -23,7 +23,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormView
 from django.views.generic.list import ListView
 
-from mama.forms import ContactForm, ProfileForm, EditProfileForm
+from mama.forms import ContactForm, ProfileForm, EditProfileForm, DueDateForm
 from mama.view_modifiers import PopularViewModifier
 from mama.models import Banner, DefaultAvatar
 
@@ -275,7 +275,16 @@ class MyProfileEdit(FormView):
         initial['relation_to_baby'] = profile.relation_to_baby
         initial['about_me'] = profile.about_me
         initial['baby_name'] = profile.baby_name
-        initial['date_qualifier'] = profile.date_qualifier
+        if profile.date_qualifier == 'unspecified':
+            if profile.delivery_date is not None:
+                if profile.delivery_date < datetime.now().date():
+                    initial['date_qualifier'] = 'birth_date'
+                else:
+                    initial['date_qualifier'] = 'due_date'
+            else:
+                initial['date_qualifier'] = 'due_date'
+        else:
+            initial['date_qualifier'] = profile.date_qualifier
         initial['unknown_date'] = profile.unknown_date
         initial['delivery_date'] = profile.delivery_date
         initial['baby_has_been_born'] = profile.date_qualifier == 'birth_date'
@@ -332,6 +341,23 @@ class MyProfileEdit(FormView):
         return HttpResponseRedirect(reverse('view_my_profile'))
 
 
+class UpdateDueDateView(FormView):
+    form_class = DueDateForm
+    template_name = 'mama/update_due_date.html'
+
+    def get_success_url(self):
+        return reverse('home')
+
+    def form_valid(self, form):
+        user = self.request.user
+        profile = user.get_profile()
+        profile.delivery_date = form.cleaned_data['due_date']
+        profile.date_qualifier = 'due_date'
+        profile.unknown_due_date = False
+        profile.save()
+        return super(UpdateDueDateView, self).form_valid(form)
+
+
 class ProfileView(FormView):
     """
     This seems to be the registration and profile form view specifically for
@@ -342,7 +368,7 @@ class ProfileView(FormView):
 
     def form_valid(self, form):
         user = self.request.user
-        profile = user.profile
+        profile = user.get_profile()
         profile.alias = form.cleaned_data['username']
         profile.delivery_date = form.cleaned_data['delivery_date']
         profile.save()

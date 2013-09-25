@@ -8,10 +8,11 @@ from django.views.generic import TemplateView
 from haystack.views import SearchView
 from mama.views import (CategoryDetailView, CategoryListView, 
                         ContactView, 
-                        ProfileView, PublicProfileView,
+                        ProfileView,
                         AskMamaView, QuestionAnswerView, 
                         MomStoriesListView,
-                        MyProfileView, MyProfileEdit)
+                        MyProfileView, MyProfileEdit, 
+                        PublicProfileView, UpdateDueDateView)
 from mama.forms import PasswordResetForm
 import object_tools
 
@@ -161,6 +162,11 @@ urlpatterns = patterns('',
         r'^public/profile/(?P<username>\w+)/$',
         PublicProfileView.as_view(),
         name='public_profile'
+    ),
+    url(
+        r'^profile/duedate/$',
+        UpdateDueDateView.as_view(),
+        name='update_due_date'
     ),
 
     (r'^survey/', include('survey.urls', namespace='survey')),

@@ -28,6 +28,7 @@
   </div>
   {% endif %}
 
+  {% if date_type != 'unspecified' or delivery_date %}
   <div class="post">
     <div class="title">
         About My Baby
@@ -38,8 +39,16 @@
     </div>
     {% endif %}
     <div class="stamp"> 
+        {% if date_type != 'unspecified' %}
         {{ date_description }}: 
-        {% if date_type == 'due_date' %}
+        {% else %}
+            {% if delivery_date > now %}
+                Due Date:
+            {% else %}
+                Birth Date:
+            {% endif %}
+        {% endif %}
+        {% if date_type == 'due_date' or date_type == 'unspecified' %}
             {% if unknown_due_date %}
             Unknown
             {% else %}
@@ -50,6 +59,7 @@
         {% endif %}
     </div>
   </div>
+  {% endif %}
 
   <div class="text_banner">
     <div class="banner_content">

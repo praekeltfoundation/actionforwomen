@@ -15,6 +15,9 @@ from django.template import Context, Template
 from category.models import Category
 from poll.models import Poll
 from post.models import Post
+from livechat.models import LiveChat
+
+from mama.forms import DueDateForm
 
 
 register = template.Library()
@@ -26,8 +29,16 @@ def ages_and_stages(context):
     context = copy(context)
     user = context['request'].user
     if user.is_authenticated():
-        profile = user.profile
+        profile = user.get_profile()
         context.update({'profile': profile})
+
+        # Check if the due date is missing
+        if profile.date_qualifier in ['unspecified', 'due_date'] and \
+                profile.delivery_date is None:
+            context.update({'no_due_date':True})
+            context.update({'due_form': DueDateForm()})
+            return context
+
         delivery_date = profile.delivery_date
         if delivery_date:
             now = datetime.now().date()
@@ -37,6 +48,8 @@ def ages_and_stages(context):
             # Defaults in case user does not have delivery date.
             pre_post = 'pre'
             week = 21
+
+        # Get the stage category based on the due due/delivery date
         try:
             category = Category.objects.get(slug="my-pregnancy" if profile.is_prenatal() else "my-baby")
             context.update({
@@ -45,6 +58,7 @@ def ages_and_stages(context):
         except Category.DoesNotExist:
             return context
 
+        # Look for articles that fit the baby's current week.
         try:
             week_category = Category.objects.get(slug="%snatal-week-%s" % (pre_post, week))
         except Category.DoesNotExist:
@@ -57,6 +71,7 @@ def ages_and_stages(context):
         context.update({
             'object_list': object_list,
         })
+
     return context
 
 
