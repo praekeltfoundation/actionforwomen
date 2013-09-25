@@ -52,6 +52,7 @@
         {{ form.relation_to_baby }}
     </div>
     <div class="row">
+        {% comment %}
         {{ form.avatar.label_tag }}
         {% if form.avatar.errors %}
             <div class="errors">
@@ -61,8 +62,20 @@
             </div>
         {% endif %}
         {{ form.avatar }}
+        {% endcomment %}
+        {% if form.default_avatars %}
+        <div style="float: left">
+            <label for="id_avatar">Choose an avatar:</label>
+            {% for avatar in form.default_avatars %}
+            <input type="radio" 
+                   name="default_avatar_id" 
+                   value="{{ avatar.id }}" />
+            <img src="{{ avatar.image.url }}" width="32" height="32" />
+            {% endfor %}
+        </div>
+        {% endif %}
     </div>
-    <div class="row">
+    <div class="row" style="clear: both">
         {{ form.about_me.label_tag }}
         {% if form.about_me.errors %}
             <div class="errors">

@@ -185,11 +185,6 @@ class EditProfileForm(RegistrationForm):
     """
     The form to edit all options in the member's full profile.
     """
-    avatar = forms.ImageField(
-        max_length=100,
-        label="Choose an Avatar",
-        required=False
-    )
     about_me = forms.CharField(
         widget=forms.Textarea,
         required=False
@@ -211,7 +206,6 @@ class EditProfileForm(RegistrationForm):
             'username',
             'mobile_number',
             'relation_to_baby',
-            'avatar',
             'about_me',
             'baby_name',
             'date_qualifier',
@@ -273,6 +267,10 @@ class EditProfileForm(RegistrationForm):
                 self._errors['delivery_date'] = self.error_class([msg])
                 del cleaned_data['delivery_date']
         return cleaned_data
+
+    @property
+    def default_avatars(self):
+        return mama.models.DefaultAvatar.objects.all()
 
 
 class ProfileForm(pml_forms.PMLForm):
