@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<div class="h1">My Profile</div>
+<div class="h1">{{ username }}&apos;s Profile</div>
 <div class="content-inner">
   <div class="post">
     {% if avatar %}
@@ -20,7 +20,7 @@
   {% if about_me %}
   <div class="post">
     <div class="title">
-        About Me
+        About {{ username }}
     </div>
     <div class="stamp"> 
       {{ about_me|safe }}
@@ -30,7 +30,7 @@
 
   <div class="post">
     <div class="title">
-        About My Baby
+        About {{ username }}&apos;s baby
     </div>
     {% if baby_name %}
     <div class="stamp"> 
@@ -48,17 +48,6 @@
         {% else %}
             {{ delivery_date|date:"d M Y" }}
         {% endif %}
-    </div>
-  </div>
-
-  <div class="text_banner">
-    <div class="banner_content">
-      <p>
-      <strong>
-        <a href="{% url edit_my_profile %}">Edit My Profile &gt;</a><br/>
-        <a href="{% url password_reset %}">Reset My Password &gt;</a>
-      </strong>
-      </p>
     </div>
   </div>
 </div>

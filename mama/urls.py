@@ -7,7 +7,8 @@ from django.views.decorators.cache import cache_page
 from django.views.generic import TemplateView
 from haystack.views import SearchView
 from mama.views import (CategoryDetailView, CategoryListView, 
-                        ContactView, ProfileView, 
+                        ContactView, 
+                        ProfileView, PublicProfileView,
                         AskMamaView, QuestionAnswerView, 
                         MomStoriesListView,
                         MyProfileView, MyProfileEdit)
@@ -152,9 +153,14 @@ urlpatterns = patterns('',
         name='edit_my_profile'
     ),
     url(
-        r'^accounts/profile/',
+        r'^accounts/profile/$',
         login_required(ProfileView.as_view()),
         name='profile'
+    ),
+    url(
+        r'^public/profile/(?P<username>\w+)/$',
+        PublicProfileView.as_view(),
+        name='public_profile'
     ),
 
     (r'^survey/', include('survey.urls', namespace='survey')),
