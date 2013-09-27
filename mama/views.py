@@ -62,12 +62,10 @@ class CategoryDetailView(DetailView):
         context['category'] = self.category
         return context
 
-    def get_queryset(self):
-        self.category = get_object_or_404(Category, \
-                slug__iexact=self.kwargs['category_slug'])
-        return Post.permitted.filter(
-            Q(primary_category=self.category) | Q(categories=self.category)
-        ).distinct()
+    def get_object(self):
+        post = Post.permitted.get(slug=self.kwargs['slug'])
+        self.category = post.primary_category
+        return post
 
 
 class CategoryListView(ListView):
@@ -99,6 +97,109 @@ class CategoryListView(ListView):
         return super(CategoryListView, self).dispatch(*args, **kwargs)
 
 
+class GuidesView(TemplateView):
+    """
+    """
+    template_name="mama/guides.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(GuidesView, self).get_context_data(**kwargs)
+
+        # Collect the relevant categories
+        featured = self._get_category('featured')
+        mama_a2z = self._get_category('mama-a-to-z')
+        life_guides = self._get_category('life-guides')
+        context['category'] = life_guides
+
+        # Get the stage guides featured articles
+        if featured and mama_a2z:
+            qs = Post.permitted.filter(
+                primary_category=mama_a2z, 
+                categories=featured)
+            stages_leaders = [{
+                'title': item.title,
+                'slug': item.slug
+            } for item in qs]
+            context['stages_leaders'] = stages_leaders
+
+        # Get the life guides featured articles
+        if featured and life_guides:
+            qs = Post.permitted.filter(
+                primary_category=life_guides, 
+                categories=featured)
+            life_guide_leaders = [{
+                'title': item.title,
+                'slug': item.slug
+            } for item in qs]
+            context['life_guide_leaders'] = life_guide_leaders
+
+        return context
+
+    def _get_category(self, slug):
+        try:
+            category = Category.objects.get(slug=slug)
+            return category
+        except Category.DoesNotExist:
+            return None
+
+
+class GuidesTopicView(DetailView):
+    """ List the guide topices in a specific 'category'
+    """
+    template_name = 'mama/guide_topic_list.html'
+    
+    def get_object(self):
+        post = Post.permitted.get(slug=self.kwargs['slug'])
+        self.category = post.primary_category
+        return post
+
+    def get_context_data(self, **kwargs):
+        context = super(GuidesTopicView, self).get_context_data(**kwargs)
+        context['category'] = self.category
+        return context
+
+
+class MoreGuidesView(CategoryListView):
+    template_name="mama/more_guides.html"
+    paginate_by = 10
+    heading_prefix = "More"
+
+    def get_context_data(self, **kwargs):
+        context = super(MoreGuidesView, self).get_context_data(**kwargs)
+        context['category'] = self.category
+        context['sort'] = self.request.GET.get('sort','pop')
+        context['page'] = self.request.GET.get('page','1')
+        return context
+
+    def get_queryset(self):
+        """ Only return Post's that are of category "life-guides".
+        """
+        self.category = get_object_or_404(
+            Category,
+            slug__iexact='life-guides')
+        queryset = Post.permitted.filter(
+            Q(primary_category__slug__in=('life-guides', 'mama-a-to-z',)) | \
+            Q(categories__slug__in=('life-guides', 'mama-a-to-z',))
+        ).exclude(categories__slug__in=('featured',)).distinct()
+
+        sort = self.request.GET.get('sort','pop')
+        if sort == 'pop':
+            view_modifier = PopularViewModifier(self.request)
+            active_modifiers = view_modifier.get_active_items()
+            if active_modifiers:
+                self.heading_prefix = active_modifiers[0].title
+            return view_modifier.modify(queryset)
+        elif sort == 'date':
+            return queryset.order_by('-created')
+        elif sort == 'alph':
+            return queryset.order_by('title')
+        return queryset
+
+
+class GuideDetailView(CategoryDetailView):
+    template_name = "mama/topic_detail.html"
+
+
 class MomStoriesListView(CategoryListView):
     template_name = "mama/moms-stories.html"
     paginate_by = 10
@@ -124,7 +225,7 @@ class MomStoriesListView(CategoryListView):
 class AskMamaView(CategoryDetailView):
     """
     This view surfaces the AskMAMA section of the site. It is subclassing
-    CategoryListView, 
+    CategoryDetailView, 
     """
 
     template_name = "mama/askmama.html"
@@ -133,6 +234,7 @@ class AskMamaView(CategoryDetailView):
 
     def get_context_data(self, **kwargs):
         context = super(AskMamaView, self).get_context_data(**kwargs)
+        context['category'] = self.category
         context['weeks_ago'] = int(self.request.GET.get('wk', '0'))
         context['cpage'] = int(self.request.GET.get('page', '1'))
         context['sort'] = self.request.GET.get('sort','pop')

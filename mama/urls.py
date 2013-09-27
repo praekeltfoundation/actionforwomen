@@ -12,7 +12,9 @@ from mama.views import (CategoryDetailView, CategoryListView,
                         AskMamaView, QuestionAnswerView, 
                         MomStoriesListView,
                         MyProfileView, MyProfileEdit, 
-                        PublicProfileView, UpdateDueDateView)
+                        PublicProfileView, UpdateDueDateView,
+                        GuidesView, GuidesTopicView, 
+                        MoreGuidesView, GuideDetailView)
 from mama.forms import PasswordResetForm
 import object_tools
 
@@ -101,8 +103,7 @@ urlpatterns = patterns('',
         name='terms'
     ),
     url(
-        r'^ask-mama/$',
-        AskMamaView.as_view(),
+        r'^ask-mama/$', AskMamaView.as_view(),
         {},
         name='askmama_detail'
     ),
@@ -117,6 +118,30 @@ urlpatterns = patterns('',
         MomStoriesListView.as_view(),
         {},
         name='moms_stories_object_list'
+    ),
+    url(
+        r'^guides/list/$',
+        GuidesView.as_view(),
+        {},
+        name='guides_list'
+    ),
+    url(
+        r'^guides/topic/list/(?P<slug>[\w-]+)/$',
+        GuidesTopicView.as_view(),
+        {},
+        name='guides_topic_list'
+    ),
+    url(
+        r'^guides/list/more/$',
+        MoreGuidesView.as_view(),
+        {},
+        name='more_guides_list'
+    ),
+    url(
+        r'^guides/(?P<category_slug>[\w-]+)/(?P<slug>[\w-]+)/$',
+        GuideDetailView.as_view(),
+        {},
+        name='topic_detail'
     ),
     url(
         r'^content/(?P<category_slug>[\w-]+)/list/$',

@@ -14,7 +14,10 @@
         {% else %}
         <a href="{% url askmama_detail %}">AskMAMA</a> |
         {% endif %}
+        {% comment %}
         <a href="{% url category_object_list 'life-guides' %}">Guides</a>
+        {% endcomment %}
+        <a href="{% url guides_list %}">Guides</a>
     </div>
 </div>
 
