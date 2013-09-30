@@ -1,5 +1,5 @@
 from django.test import TestCase
-from mock import patch, call
+from mock import patch
 import requests
 from monitor.tasks import hotsocket_login
 from django.test.utils import override_settings
