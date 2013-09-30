@@ -298,7 +298,7 @@ CELERYBEAT_SCHEDULE = {
 # EMAIL_BACKEND = 'djcelery_email.backends.CeleryEmailBackend'
 
 SENDER = ""
-RECIPIENT = ["admin@mail.com", "admin2@mail.com"]
+RECIPIENT = ["", ""]
 
 # This stores all the settings that will be used in the api
 HOTSOCKET_BASE = "http://api.hotsocket.co.za:8080/"
