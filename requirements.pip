@@ -1,4 +1,6 @@
--e git+git@github.com:praekelt/django-pummel.git#egg=django-pummel
--e git+git://github.com/praekelt/mama-survey.git@develop#egg=mama-survey
--e git://github.com/praekelt/django-moderator.git@0.0.4.1#egg=django_moderator-dev
--e .
+# -e git+git@github.com:praekelt/django-pummel.git#egg=django-pummel
+# -e git+git://github.com/praekelt/mama-survey.git@develop#egg=mama-survey
+# -e git://github.com/praekelt/django-moderator.git@0.0.4.1#egg=django_moderator-dev
+# -e .
+requests
+xmltodict
