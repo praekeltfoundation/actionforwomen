@@ -1,0 +1,24 @@
+<h1>Below are all the recharges that failed.</h1>
+<table>
+    <th>
+        <td>denomination</td>
+        <td>external_reference</td>
+        <td>network_code</td>
+        <td>product_code</td>
+        <td>recipient_msisdn</td>
+        <td>status_date</td>
+        <td>status_desc</td>
+    </th>
+
+{% for failure in  failures %}
+    <tr>
+        <td>{{ failure.denomination }}</td>
+        <td>{{ failure.external_reference }}</td>
+        <td>{{ failure.network_code }}</td>
+        <td>{{ failure.product_code }}</td>
+        <td>{{ failure.recipient_msisdn }}</td>
+        <td>{{ failure.status_date }}</td>
+        <td>{{ failure.status_desc }}</td>
+    </tr>
+{% endfor %}
+</table>
