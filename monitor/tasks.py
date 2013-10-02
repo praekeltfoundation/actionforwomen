@@ -40,41 +40,42 @@ def status_query(token):
     Recharges
     """
     if token:
-        url = "%s%s" % (settings.HOTSOCKET_BASE, settings.HOTSOCKET_RESOURCES["statement"])
-        code = settings.HOTSOCKET_CODES
-        try:
-            now = datetime.now()
-            yesterday = now - timedelta(hours=240)
-            data = {"username": settings.HOTSOCKET_USERNAME,
-                    "token": token,
-                    "start_date": yesterday.strftime("%Y-%m-%d"),
-                    "end_date": now.strftime("%Y-%m-%d"),
-                    "as_json": True}
-
-            response = requests.post(url, data=data)
-
-            if "text/xml" in response.headers["content-type"]:
-                json_response = xml_to_json(response)
-            elif "application/json" in response.headers["content-type"]:
-                json_response = response.json()
-
-            status = json_response["response"]["status"]
-            message = json_response["response"]["message"]
-
-            if str(status) == str(code["SUCCESS"]["status"]):
-                failures = [d for d in json_response["response"]["line_item"] if d["status_desc"] != "SUCCESS"]
-                email_errors(failures)
-
-            elif status == code["TOKEN_EXPIRE"]["status"]:
-                raise TokenExpireError(message)
-
-            elif status == code["TOKEN_INVALID"]["status"]:
-                raise TokenInvalidError(message)
-
-        except (TokenInvalidError, TokenExpireError), exc:
-                    status_query.retry(args=[hotsocket_login.delay().get()], exc=exc)
-    else:
         raise RechargeException("No Token was found make sure hotsocket api is up")
+
+    url = "%s%s" % (settings.HOTSOCKET_BASE, settings.HOTSOCKET_RESOURCES["statement"])
+    code = settings.HOTSOCKET_CODES
+    try:
+        now = datetime.now()
+        yesterday = now - timedelta(hours=240)
+        data = {"username": settings.HOTSOCKET_USERNAME,
+                "token": token,
+                "start_date": yesterday.strftime("%Y-%m-%d"),
+                "end_date": now.strftime("%Y-%m-%d"),
+                "as_json": True}
+
+        response = requests.post(url, data=data)
+
+        if "text/xml" in response.headers["content-type"]:
+            json_response = xml_to_json(response)
+        elif "application/json" in response.headers["content-type"]:
+            json_response = response.json()
+
+        status = json_response["response"]["status"]
+        message = json_response["response"]["message"]
+
+        if str(status) == str(code["SUCCESS"]["status"]):
+            failures = [d for d in json_response["response"]["line_item"] if d["status_desc"] != "SUCCESS"]
+            email_errors(failures)
+
+        elif status == code["TOKEN_EXPIRE"]["status"]:
+            raise TokenExpireError(message)
+
+        elif status == code["TOKEN_INVALID"]["status"]:
+            raise TokenInvalidError(message)
+
+    except (TokenInvalidError, TokenExpireError), exc:
+                status_query.retry(args=[hotsocket_login.delay().get()], exc=exc)
+
 
 
 def xml_to_json(response):
