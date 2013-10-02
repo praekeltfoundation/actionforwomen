@@ -281,9 +281,6 @@ CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 # and execute tasks immediate instead of deferring them to the queue / workers.
 # CELERY_ALWAYS_EAGER = DEBUG
 
-# Tell Celery where to find the tasks
-# CELERY_IMPORTS = ('celery_app.tasks',)
-
 from datetime import timedelta
 
 CELERYBEAT_SCHEDULE = {
