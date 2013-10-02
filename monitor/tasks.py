@@ -87,7 +87,7 @@ def email_errors(failures):
     plain_template = get_template('email_failures.txt')
     html_template = get_template('email_failures.html')
     data = Context({ 'failures': failures })
-    subject, from_email, to = 'hello', settings.SENDER, 'to@example.com'
+    subject = 'Recharge Failures'
     text_content = plain_template.render(data)
     html_content = html_template.render(data)
 
