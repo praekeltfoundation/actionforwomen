@@ -295,7 +295,7 @@ CELERYBEAT_SCHEDULE = {
 
 # Defer email sending to Celery, except if we're in debug mode,
 # then just print the emails to stdout for debugging.
-# EMAIL_BACKEND = 'djcelery_email.backends.CeleryEmailBackend'
+EMAIL_BACKEND = 'djcelery_email.backends.CeleryEmailBackend'
 
 SENDER = ""
 RECIPIENT = ["", ""]
@@ -314,11 +314,9 @@ HOTSOCKET_RESOURCES = {
 HOTSOCKET_USERNAME = ""
 HOTSOCKET_PASSWORD = ""
 
-TOKEN_DURATION = 110  # Minutes
-
 
 HOTSOCKET_CODES = {
-    "SUCCESS": {"status": "0000", "message": "Successfully submitted recharge."},
+    "SUCCESS": {"status": "0000","message": "Successfully submitted recharge."},
     "TOKEN_INVALID": {"status": 887, "message": "Token is invalid , please login again to obtain a new one."},
     "TOKEN_EXPIRE": {"status": 889, "message": "Token has timed out , please login again to obtain a new one."},
     "MSISDN_NON_NUM": {"status": 6013, "message": "Recipient MSISDN is not numeric."},
