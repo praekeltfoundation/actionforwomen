@@ -1,10 +1,11 @@
 from celery.decorators import task
-from celery.utils.log import get_task_logger
 from django.conf import settings
 import requests
-import xmltodict, json
+import xmltodict
+import json
 from datetime import datetime, timedelta
-from monitor.custom_exceptions import TokenInvalidError, TokenExpireError, RechargeException
+from monitor.custom_exceptions import (TokenInvalidError, TokenExpireError,
+                                       RechargeException)
 from django.template.loader import get_template
 from django.template import Context
 from django.core.mail import EmailMultiAlternatives
@@ -19,9 +20,9 @@ def run_tasks():
 @task
 def hotsocket_login():
     data = {
-                "username": settings.HOTSOCKET_USERNAME,
-                "password": settings.HOTSOCKET_PASSWORD,
-                "as_json": True
+            "username": settings.HOTSOCKET_USERNAME,
+            "password": settings.HOTSOCKET_PASSWORD,
+            "as_json": True
             }
     url = "%s%s" % (settings.HOTSOCKET_BASE, settings.HOTSOCKET_RESOURCES["login"])
     response = requests.post(url, data=data)
@@ -32,6 +33,7 @@ def hotsocket_login():
         return json_response["response"]["token"]
     return None
 
+
 @task
 def status_query(token):
     """
@@ -40,7 +42,8 @@ def status_query(token):
     if not token:
         raise RechargeException("No Token was found make sure hotsocket api is up")
 
-    url = "%s%s" % (settings.HOTSOCKET_BASE, settings.HOTSOCKET_RESOURCES["statement"])
+    url = "%s%s" % (settings.HOTSOCKET_BASE,
+                    settings.HOTSOCKET_RESOURCES["statement"])
     code = settings.HOTSOCKET_CODES
     try:
         now = datetime.now()
@@ -57,8 +60,11 @@ def status_query(token):
         status = json_response["response"]["status"]
         message = json_response["response"]["message"]
 
-        if (str(status) == str(code["SUCCESS"]["status"])) and "line_item" in json_response["response"]:
-            failures = [d for d in json_response["response"]["line_item"] if d["status_desc"] != "SUCCESS"]
+        if ((str(status) == str(code["SUCCESS"]["status"])) and
+            ("line_item" in json_response["response"])):
+
+            failures = [d for d in json_response["response"]["line_item"]
+                        if d["status_desc"] != "SUCCESS"]
             email_errors(failures)
         elif "line_item" not in json_response["response"]:
             email_errors([])
@@ -70,21 +76,23 @@ def status_query(token):
             raise TokenInvalidError(message)
 
     except (TokenInvalidError, TokenExpireError), exc:
-                status_query.retry(args=[hotsocket_login.delay().get()], exc=exc)
+                status_query.retry(args=[hotsocket_login.delay().get()],
+                                   exc=exc)
 
 
 def check_response_ok(response):
     if not response.status_code == requests.codes.ok:
-        raise RechargeException("Unable to connect to API, returned status %s" % response.status_code)
+        raise RechargeException("Unable to connect to API, returned status %s"
+                                % response.status_code)
 
     if "text/xml" in response.headers["content-type"]:
         return xml_to_json(response)
     else:
         """
         According to requests documentation:
-            In case the JSON decoding fails, r.json raises an exception. For example,
-            if the response gets a 401 (Unauthorized), attempting response.json
-            raises ValueError: No JSON object could be decoded
+            In case the JSON decoding fails, r.json raises an exception.
+            For example,if the response gets a 401 (Unauthorized), attempting
+            response.json raises ValueError: No JSON object could be decoded
         """
         return response.json()
 
@@ -98,12 +106,14 @@ def xml_to_json(response):
 def email_errors(failures):
     plain_template = get_template('email_failures.txt')
     html_template = get_template('email_failures.html')
-    data = Context({ 'failures': failures })
+    data = Context({'failures': failures})
     subject = 'Recharge Failures'
     text_content = plain_template.render(data)
     html_content = html_template.render(data)
 
-    msg = EmailMultiAlternatives(subject, text_content, settings.SENDER, settings.RECIPIENT)
+    msg = EmailMultiAlternatives(subject,
+                                 text_content,
+                                 settings.SENDER,
+                                 settings.RECIPIENT)
     msg.attach_alternative(html_content, "text/html")
     msg.send()
-
