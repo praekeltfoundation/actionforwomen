@@ -10,9 +10,6 @@ from django.template import Context
 from django.core.mail import EmailMultiAlternatives
 
 
-logger = get_task_logger(__name__)
-
-
 @task
 def run_tasks():
     chain = hotsocket_login.s() | status_query.s()
@@ -26,10 +23,11 @@ def hotsocket_login():
                 "password": settings.HOTSOCKET_PASSWORD,
                 "as_json": True
             }
-
     url = "%s%s" % (settings.HOTSOCKET_BASE, settings.HOTSOCKET_RESOURCES["login"])
     response = requests.post(url, data=data)
-    json_response = response.json()
+
+    json_response = check_response_ok(response)
+
     if str(json_response["response"]["status"]) == "0000":
         return json_response["response"]["token"]
     return None
@@ -39,14 +37,14 @@ def status_query(token):
     """
     Recharges
     """
-    if token:
+    if not token:
         raise RechargeException("No Token was found make sure hotsocket api is up")
 
     url = "%s%s" % (settings.HOTSOCKET_BASE, settings.HOTSOCKET_RESOURCES["statement"])
     code = settings.HOTSOCKET_CODES
     try:
         now = datetime.now()
-        yesterday = now - timedelta(hours=240)
+        yesterday = now - timedelta(hours=24)
         data = {"username": settings.HOTSOCKET_USERNAME,
                 "token": token,
                 "start_date": yesterday.strftime("%Y-%m-%d"),
@@ -55,17 +53,15 @@ def status_query(token):
 
         response = requests.post(url, data=data)
 
-        if "text/xml" in response.headers["content-type"]:
-            json_response = xml_to_json(response)
-        elif "application/json" in response.headers["content-type"]:
-            json_response = response.json()
-
+        json_response = check_response_ok(response)
         status = json_response["response"]["status"]
         message = json_response["response"]["message"]
 
-        if str(status) == str(code["SUCCESS"]["status"]):
+        if (str(status) == str(code["SUCCESS"]["status"])) and "line_item" in json_response["response"]:
             failures = [d for d in json_response["response"]["line_item"] if d["status_desc"] != "SUCCESS"]
             email_errors(failures)
+        elif "line_item" not in json_response["response"]:
+            email_errors([])
 
         elif status == code["TOKEN_EXPIRE"]["status"]:
             raise TokenExpireError(message)
@@ -76,6 +72,21 @@ def status_query(token):
     except (TokenInvalidError, TokenExpireError), exc:
                 status_query.retry(args=[hotsocket_login.delay().get()], exc=exc)
 
+
+def check_response_ok(response):
+    if not response.status_code == requests.codes.ok:
+        raise RechargeException("Unable to connect to API, returned status %s" % response.status_code)
+
+    if "text/xml" in response.headers["content-type"]:
+        return xml_to_json(response)
+    else:
+        """
+        According to requests documentation:
+            In case the JSON decoding fails, r.json raises an exception. For example,
+            if the response gets a 401 (Unauthorized), attempting response.json
+            raises ValueError: No JSON object could be decoded
+        """
+        return response.json()
 
 
 def xml_to_json(response):
