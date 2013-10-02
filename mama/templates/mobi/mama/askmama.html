@@ -16,6 +16,7 @@ Used for the AskMAMA section
 {% block content %}
 
     {{ block.super }}
+    {% show_last_live_chat %}
     {% if lead_in_post %}
         <div class="">
             <div class="content-inner">
