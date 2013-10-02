@@ -10,6 +10,7 @@ DATABASES = {
     }
 }
 
+SENDER = "sender@mail.com"
 RECIPIENT = ["admin@mail.com", "admin2@mail.com"]
 
 HOTSOCKET_RESOURCES = {
