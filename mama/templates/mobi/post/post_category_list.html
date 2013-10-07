@@ -30,12 +30,6 @@ Used for Articles and Guides
 
 {% block content %}
 
-    {% comment %}
-    {% block above_listing %}
-        {% topic_listing category.slug 0 %}
-    {% endblock %}
-    {% endcomment %}
-
     {% if object_list %}
     <div class="{{ category.color }}">
         <div class="h1">{{ full_heading }}</div>

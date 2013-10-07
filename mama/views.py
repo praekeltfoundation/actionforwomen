@@ -77,7 +77,8 @@ class CategoryListView(ListView):
         context = super(CategoryListView, self).get_context_data(**kwargs)
         context['category'] = self.category
         context['heading_prefix'] = self.heading_prefix
-        context['full_heading'] = "%s %s" % (self.heading_prefix, self.category.title)
+        context['full_heading'] = "%s %s" % (
+            self.heading_prefix, self.category.title)
         return context
 
     def get_queryset(self):
@@ -350,7 +351,7 @@ class PublicProfileView(TemplateView):
         if profile.avatar:
             context['avatar'] = profile.avatar.url
         context['mobile_number'] = profile.mobile_number
-        # context['comments'] = Comments.objects.filter()
+        context['comments'] = user.comment_comments.all().count()
         context['relation_description'] = profile.relation_description()
         context['about_me'] = profile.about_me
         context['baby_name'] = profile.baby_name
@@ -359,6 +360,30 @@ class PublicProfileView(TemplateView):
         context['date_description'] = profile.get_date_qualifier_display
         context['delivery_date'] = profile.delivery_date
         return context
+
+
+class UserCommentsView(ListView):
+    """
+    Shows a list of the user's comments
+    """
+    template_name = 'mama/public_comments_view.html'
+    paginate_by = 5
+
+    def get_context_data(self, **kwargs):
+        """
+        Add information to the context
+        """
+        context = super(UserCommentsView, self).get_context_data(**kwargs)
+        user = auth.models.User.objects.get(username=self.kwargs['username'])
+        context['comment_maker'] = user
+        return context
+
+    def get_queryset(self):
+        """ return the comments for the user
+        """
+        user = auth.models.User.objects.get(username=self.kwargs['username'])
+        return user.comment_comments.all()
+
 
 class MyProfileEdit(FormView):
     """

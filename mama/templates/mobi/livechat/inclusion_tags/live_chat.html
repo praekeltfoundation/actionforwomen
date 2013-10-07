@@ -22,28 +22,35 @@
       {% if chat_comments %}
         {% for comment in chat_comments.object_list %}
             <div class="item comment no-pic">
-                <div class="meta">
-                  <div class="title">
-                    <a href="{% url public_profile comment.name%}">{{ comment.name }}</a>
-                  </div>
-                  <div class="stamp">{{ comment.submit_date }} | {% likes comment %} {% report_comment_abuse comment %}</a></div>
-                  <div class="stamp">{{ comment.comment|linebreaks }}</div>
+              <div class="post">
+                {% with comment.user.get_profile as profile %}
+                  {% if profile.avatar %}
+                    <img src="{{ profile.avatar.url }}" width="44" height="44" />
+                  {% endif %}
+                {% endwith %}
+              </div>
+              <div class="meta">
+                <div class="title">
+                  <a href="{% url public_profile comment.name %}">{{ comment.name }}</a>
                 </div>
+                <div class="stamp">{{ comment.submit_date }} | {% likes comment %} {% report_comment_abuse comment %}</div>
+                <div class="stamp">{{ comment.comment|linebreaks }}</div>
+              </div>
 
-                {% if comment.livechatresponse_set.exists %}
-                <div class="item comment" style="padding-left: 15px">
-                    {% for response in comment.livechatresponse_set.all %}
-                        <div class="meta">
-                            <div class="title">
-                                Response by:
-                                <a href="{% url public_profile response.author.username%}">{{ response.author.username }}</a>
-                            </div>
-                            <div class="stamp">{{ response.updated_at }}</div>
-                            <div class="stamp">{{ response.response }}</div>
-                        </div>
-                    {% endfor %}
-                </div>
-                {% endif %}
+              {% if comment.livechatresponse_set.exists %}
+              <div class="item comment" style="padding-left: 15px">
+                  {% for response in comment.livechatresponse_set.all %}
+                      <div class="meta">
+                          <div class="title">
+                              Response by:
+                              <a href="{% url public_profile response.author.username%}">{{ response.author.username }}</a>
+                          </div>
+                          <div class="stamp">{{ response.updated_at }}</div>
+                          <div class="stamp">{{ response.response }}</div>
+                      </div>
+                  {% endfor %}
+              </div>
+              {% endif %}
 
             </div>
         {% endfor %}

@@ -12,7 +12,8 @@ from mama.views import (CategoryDetailView, CategoryListView,
                         AskMamaView, QuestionAnswerView, 
                         MomStoriesListView,
                         MyProfileView, MyProfileEdit, 
-                        PublicProfileView, UpdateDueDateView,
+                        UpdateDueDateView,
+                        PublicProfileView, UserCommentsView,
                         GuidesView, GuidesTopicView, 
                         MoreGuidesView, GuideDetailView)
 from mama.forms import PasswordResetForm
@@ -188,6 +189,12 @@ urlpatterns = patterns('',
         PublicProfileView.as_view(),
         name='public_profile'
     ),
+    url(
+        r'^public/usercomments/(?P<username>\w+)/$',
+        UserCommentsView.as_view(),
+        name='public_user_comments'
+    ),
+
     url(
         r'^profile/duedate/$',
         UpdateDueDateView.as_view(),

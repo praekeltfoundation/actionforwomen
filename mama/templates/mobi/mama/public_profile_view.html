@@ -11,7 +11,9 @@
     <div class="stamp"> 
       {{ username }}<br/>
       {{ relation_description}}<br/>
-      &nbsp;
+      <a href="{% url public_user_comments username %}">
+          {{ comments }} Comments
+      </a> Made<br/>
     </div>
   </div>
 
