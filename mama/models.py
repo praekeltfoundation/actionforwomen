@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 
 from ckeditor.fields import RichTextField
 from django.contrib.comments.models import Comment
@@ -92,6 +92,38 @@ class SitePreferences(Preferences):
 
     class Meta:
         verbose_name_plural = "Site preferences"
+
+    commenting_time_on = models.TimeField(
+        blank=True,
+        null=True,
+        help_text="Time after which users are allowed to post comments."
+                  "If either time on or time off is not specified comments "
+                  "will be allowed at any time."
+    )
+    commenting_time_off = models.TimeField(
+        blank=True,
+        null=True,
+        help_text="Time after which users are not allowed to post comments "
+                  "(until time on below). If either time on or time off is "
+                  "not specified comments will be allowed at any time."
+    )
+
+
+    def comments_open(self, now=datetime.now().time()):
+        # Commenting is always allowed if both time on and time off
+        # is not provided
+        if not self.commenting_time_on:
+            return True
+        if not self.commenting_time_off:
+            return True
+
+        if self.commenting_time_on < self.commenting_time_off:
+            return self.commenting_time_on < now < self.commenting_time_off
+
+        if self.commenting_time_on > self.commenting_time_off:
+            return now > self.commenting_time_on or now < self.commenting_time_off
+
+        return True
 
 
 class UserProfile(AbstractProfileBase):
