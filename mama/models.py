@@ -109,7 +109,9 @@ class SitePreferences(Preferences):
     )
 
 
-    def comments_open(self, now=datetime.now().time()):
+    def comments_open(self, now=None):
+        if not now:
+            now = datetime.now().time()
         # Commenting is always allowed if both time on and time off
         # is not provided
         if not self.commenting_time_on:
