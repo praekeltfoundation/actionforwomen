@@ -1,4 +1,4 @@
-from datetime import date, timedelta
+from datetime import date, timedelta, time
 from unittest import TestCase
 
 from django.contrib.auth.models import User
@@ -7,7 +7,8 @@ from django.conf import settings
 
 from mama.models import UserProfile
 from mama.middleware import TrackOriginMiddleware
-
+from mama.models import SitePreferences
+from preferences import preferences
 
 class ProfileTestCase(TestCase):
     def test_is_prenatal(self):
@@ -70,3 +71,30 @@ class TrackOriginMiddlewareTestCase(TestCase):
         self.mw.process_request(request)
         updated_profile = UserProfile.objects.get(user=self.user)
         self.assertEqual(updated_profile.origin, settings.ORIGIN)
+
+
+class GeneralPrefrencesTestCase(TestCase):
+
+    def test_commenting_times_morning_to_evening(self):
+        pref = SitePreferences.objects.get(pk=preferences.SitePreferences.pk)
+
+        pref.commenting_time_on = time(9, 0, 0)
+        pref.commenting_time_off = time(22, 0, 0)
+        pref.save()
+
+        self.assertFalse(preferences.SitePreferences.comments_open(time(5,0,0)))
+        self.assertFalse(preferences.SitePreferences.comments_open(time(23,30,0)))
+        self.assertTrue(preferences.SitePreferences.comments_open(time(11,0,0)))
+        self.assertTrue(preferences.SitePreferences.comments_open(time(21,59,59)))
+
+    def test_commenting_times_evening_to_morning(self):
+        pref = SitePreferences.objects.get(pk=preferences.SitePreferences.pk)
+
+        pref.commenting_time_on = time(22, 0, 0)
+        pref.commenting_time_off = time(9, 0, 0)
+        pref.save()
+
+        self.assertFalse(preferences.SitePreferences.comments_open(time(10,0,0)))
+        self.assertFalse(preferences.SitePreferences.comments_open(time(20,30,0)))
+        self.assertTrue(preferences.SitePreferences.comments_open(time(22,30,0)))
+        self.assertTrue(preferences.SitePreferences.comments_open(time(8,59,59)))
