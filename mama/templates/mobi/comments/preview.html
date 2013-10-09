@@ -2,7 +2,7 @@
 
 {% block content %}
 {% if not comments_open %}
-<div>Commenst are currently closed.</div>
+<div>Comments are currently closed.</div>
 {% else %}
 <form action="{% url post_comment %}" method="post">
     {% csrf_token %}
