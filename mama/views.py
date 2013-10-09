@@ -531,7 +531,6 @@ class BannerView(TemplateView):
         return context
 
 
-
 def logout(request):
     auth.logout(request)
     # if 'HTTP_REFERER' in request.META:
