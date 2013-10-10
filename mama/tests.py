@@ -101,6 +101,14 @@ class TrackOriginMiddlewareTestCase(TestCase):
 
 class GeneralPrefrencesTestCase(TestCase):
 
+    def setUp(self):
+        site = Site.objects.get_current()
+        category = Category.objects.create(title='articles', slug='articles')
+        self.post = Post.objects.create(title='Test', state='published')
+        self.post.primary_category = category
+        self.post.sites.add(site)
+        self.post.save()
+
     def test_commenting_times_morning_to_evening(self):
         pref = SitePreferences.objects.get(pk=preferences.SitePreferences.pk)
 
@@ -126,23 +134,16 @@ class GeneralPrefrencesTestCase(TestCase):
         self.assertTrue(preferences.SitePreferences.comments_open(time(8,59,59)))
 
     def test_comment_views(self):
-        site = Site.objects.get_current()
-        category = Category.objects.create(title='articles', slug='articles')
-        post = Post.objects.create(title='Test', state='published')
-        post.primary_category = category
-        post.sites.add(site)
-        post.save()
-
         #Page detail should show detail page with comment form
         article_url = reverse('category_object_detail',
-            kwargs={'category_slug': 'articles', 'slug': post.slug})
+            kwargs={'category_slug': 'articles', 'slug': self.post.slug})
 
         self.client = Client(HTTP_REFERER='http://localhost%s' % article_url)
         resp = self.client.get(article_url)
         self.assertNotContains(resp, 'Comments are closed.')
 
         #Comment should be submitted successfully
-        params = params_for_comments(post, 'sample comment')
+        params = params_for_comments(self.post, 'sample comment')
         resp = self.client.post(reverse('post_comment'), params)
         self.assertEqual(Comment.objects.all().count(), 1)
 
@@ -157,12 +158,49 @@ class GeneralPrefrencesTestCase(TestCase):
 
         #Comments should be closed
         resp = self.client.get(reverse('category_object_detail',
-            kwargs={'category_slug': 'articles', 'slug': post.slug}))
+            kwargs={'category_slug': 'articles', 'slug': self.post.slug}))
         self.assertContains(resp, 'Comments are currently closed.')
 
         #Comment post should fail
-        params = params_for_comments(post, 'sample comment')
+        params = params_for_comments(self.post, 'sample comment')
         resp = self.client.post(reverse('post_comment'), params)
         self.assertEqual(resp.status_code, 400)
 
         self.assertEqual(Comment.objects.all().count(), 1)
+
+    def test_banned_words(self):
+        article_url = reverse('category_object_detail',
+            kwargs={'category_slug': 'articles', 'slug': self.post.slug})
+
+        self.client = Client(HTTP_REFERER='http://localhost%s' % article_url)
+        pref = SitePreferences.objects.get(pk=preferences.SitePreferences.pk)
+        pref.comment_banned_patterns = 'crap\ndoodle'
+        pref.save()
+
+        params = params_for_comments(self.post, 'sample comment')
+        resp = self.client.post(reverse('post_comment'), params)
+        self.assertEqual(resp.status_code, 302)
+
+        params = params_for_comments(self.post, 'some comment with crap')
+        resp = self.client.post(reverse('post_comment'), params)
+        self.assertContains(resp, 'inappropriate content')
+
+    def test_silenced_words(self):
+        article_url = reverse('category_object_detail',
+            kwargs={'category_slug': 'articles', 'slug': self.post.slug})
+
+        self.client = Client(HTTP_REFERER='http://localhost%s' % article_url)
+        pref = SitePreferences.objects.get(pk=preferences.SitePreferences.pk)
+        pref.comment_silenced_patterns = 'doodle'
+        pref.save()
+
+        params = params_for_comments(self.post, 'sample comment')
+        resp = self.client.post(reverse('post_comment'), params)
+        self.assertEqual(resp.status_code, 302)
+
+        params = params_for_comments(self.post, 'some doodle with crap')
+        resp = self.client.post(reverse('post_comment'), params)
+        self.assertEqual(resp.status_code, 302)
+
+        resp = self.client.get(article_url)
+        self.assertContains(resp, 'some ****** with crap')
