@@ -18,6 +18,10 @@ class MamaCommentForm(CommentForm):
         if banned_patterns:
             for pattern in banned_patterns.split('\n'):
                 pattern = pattern.replace('\r', '').replace('*', "\*").replace('.', "\.")
+
+                if not pattern:
+                    continue
+
                 match = re.search(pattern.lower(), comment.lower())
                 if match:
                     raise forms.ValidationError("Please don't post inappropriate content(%s). "
@@ -28,6 +32,10 @@ class MamaCommentForm(CommentForm):
         if silenced_patterns:
             for pattern in silenced_patterns.split('\n'):
                 pattern = pattern.replace('\r', '')
+
+                if not pattern:
+                    continue
+
                 comment = re.sub(
                     pattern,
                     lambda x: '*' * len(x.group()),
