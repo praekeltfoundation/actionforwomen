@@ -2,6 +2,11 @@
 {% load pml_inclusion_tags %}
 
 {% block content %}
+    {% if not comments_open %}
+    <CONTAINER type="data">
+        <TEXT>Comments are currently closed.</TEXT>
+    </CONTAINER>
+    {% else %}
     <CONTAINER type="form">
         <FORM method="GET" href="{% url post_comment %}" submit_text="Post">
             <FIELD name="csrfmiddlewaretoken" value="{{ csrf_token }}" type="hidden"/>
@@ -18,4 +23,5 @@
             <br />
         </FORM>
     </CONTAINER>
+    {% endif %}
 {% endblock %}
