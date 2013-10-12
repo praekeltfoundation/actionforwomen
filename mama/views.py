@@ -345,7 +345,7 @@ class PublicProfileView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(PublicProfileView, self).get_context_data(**kwargs)
-        user = auth.models.User.objects.get(username=kwargs['username'])
+        user = auth.models.User.objects.get(pk=kwargs['user_id'])
         profile = user.get_profile()
         context['username'] = user.username
         if profile.avatar:

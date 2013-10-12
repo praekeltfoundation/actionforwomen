@@ -1,0 +1,19 @@
+{% if live_chat_advert %}
+<MODULE>
+  <CONTAINER type="data">
+    <TEXT>
+      <strong>
+        <LINK href="{{ live_chat_advert.url }}">
+          <TEXT>Live Chat:</TEXT>
+        </LINK>
+        {{ live_chat_advert.title }}
+      </strong>
+    </TEXT>
+    {% if live_chat_advert.description %}
+    <TEXT>
+      {{ live_chat_advert.description|linebreaks|safe }}
+    </TEXT>
+    {% endif %}
+  </CONTAINER>
+</MODULE>
+{% endif %}

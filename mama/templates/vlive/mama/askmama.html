@@ -1,0 +1,41 @@
+{% extends 'pml/base.xml' %}
+
+{% comment %}
+Used for the AskMAMA section
+{% endcomment %}
+
+{% load pml_inclusion_tags %}
+{% load mama_inclusion_tags %}
+{% load askmama_inclusion_tags %}
+{% load livechat_tags %}
+
+{% block following_header %}
+{{ block.super }}
+{% registration_banner %}
+{% endblock %}
+
+{% block body %}
+
+  {{ block.super }}
+  {% show_last_live_chat %}
+  {% if lead_in_post %}
+    {% if weeks_ago == 0 %}
+      {% header lead_in_post.title maroon %}
+      {% live_chat_banner %}
+      <MODULE>
+      <CONTAINER type="data">
+        <TEXT>
+        {{ lead_in_post.content|linebreaks }}
+        </TEXT>
+      </CONTAINER>
+      </MODULE>
+    {% endif %}
+    {% favourite_questions_for_week lead_in_post weeks_ago cpage sort %}
+  {% else %}
+    {% live_chat_banner %}
+  {% endif %}
+
+  {% block below_listing %}
+  {% endblock %}
+
+{% endblock %}

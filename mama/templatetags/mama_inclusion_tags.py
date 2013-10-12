@@ -63,13 +63,13 @@ def ages_and_stages(context):
             week_category = Category.objects.get(slug="%snatal-week-%s" % (pre_post, week))
         except Category.DoesNotExist:
             context.update({
-                'object_list': [],
+                'stages_object_list': [],
             })
             return context
         object_list = Post.permitted.filter(Q(primary_category=week_category) |
                                             Q(categories=week_category)).distinct()
         context.update({
-            'object_list': object_list,
+            'stages_object_list': object_list,
         })
 
     return context
@@ -132,36 +132,55 @@ def random_guide_banner(context):
 @register.inclusion_tag('mama/inclusion_tags/page_header.html', takes_context=True)
 def pml_page_header(context):
     context = copy(context)
+    request = context['request']
+
     help_post = Post.permitted.filter(slug='mama-help')
-    links = [
-        {
-            'title': 'Home',
-            'url': reverse('home'),
-        },
-        {
-            'title': 'A-to-Z',
-            'url': reverse('category_object_list', kwargs={'category_slug': 'mama-a-to-z'}),
-        },
-        {
-            'title': 'Life Guides',
-            'url': reverse('category_object_list', kwargs={'category_slug': 'life-guides'}),
-        },
-        {
-            'title': 'Articles',
-            'url': reverse('category_object_list', kwargs={'category_slug': 'articles'}),
-        },
-        {
-            'title': "Moms' Stories",
-            'url': reverse('category_object_list', kwargs={'category_slug': 'moms-stories'}),
-        }
-    ]
+
+    links = []
+    links.append({
+        'title': 'Home',
+        'url': reverse('home'),
+    })
+    if request.user.is_authenticated():
+        links.append({
+            'title': 'My Profile',
+            'url': reverse('view_my_profile')
+        })
+    else:
+        links.append({
+            'title': 'Sign In',
+            'url': reverse('login')
+        })
+    links.append({
+        'title': 'Articles',
+        'url': reverse('category_object_list', 
+                       kwargs={'category_slug': 'articles'})
+    })
+    links.append({
+        'title': 'Stories',
+        'url': reverse('moms_stories_object_list')
+    })
+    if context.has_key('live_chat'):
+        chat = context['live_chat']['current_live_chat']
+        links.append({
+            'title': 'Ask MAMA',
+            'url': reverse('livechat:show_livechat',
+                           kwargs={'slug': chat.slug})
+        })
+    else:
+        links.append({
+            'title': 'Ask MAMA',
+            'url': reverse('askmama_detail')
+        })
+    links.append({
+        'title': "Guides",
+        'url': reverse('guides_list')
+    })
     if help_post:
-        links.append(
-            {
-                'title': 'Help',
-                'url': help_post[0].get_absolute_category_url(),
-            }
-        )
+        links.append({
+            'title': 'Help',
+            'url': help_post[0].get_absolute_category_url(),
+        })
     context['links'] = links
     return context
 

@@ -13,5 +13,7 @@ urlpatterns = patterns('',
     ),
     (r'^survey/',
         include('mama.sites.vlive.survey_urls', namespace='survey')),
+    (r'^yourwords/',
+        include('mama.sites.vlive.yw_urls')),
     (r'^carousel\.xml$', BannerView.as_view()),
 ) + urlpatterns
