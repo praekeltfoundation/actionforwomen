@@ -230,3 +230,16 @@ class GeneralPrefrencesTestCase(TestCase):
         params = params_for_comments(self.post, 'sample comment')
         resp = self.client.post(reverse('post_comment'), params)
         self.assertEqual(resp.status_code, 302)
+
+    def test_regex_patterns(self):
+        article_url = reverse('category_object_detail',
+            kwargs={'category_slug': 'articles', 'slug': self.post.slug})
+
+        self.client = Client(HTTP_REFERER='http://localhost%s' % article_url)
+        pref = SitePreferences.objects.get(pk=preferences.SitePreferences.pk)
+        pref.comment_banned_patterns = 'crap\ndoodle\nf**k'
+        pref.save()
+
+        params = params_for_comments(self.post, 'some comment with f**k word')
+        resp = self.client.post(reverse('post_comment'), params)
+        self.assertContains(resp, 'inappropriate content')

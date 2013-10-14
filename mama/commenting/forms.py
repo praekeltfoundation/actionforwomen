@@ -17,7 +17,7 @@ class MamaCommentForm(CommentForm):
         banned_patterns = preferences.SitePreferences.comment_banned_patterns
         if banned_patterns:
             for pattern in banned_patterns.split('\n'):
-                pattern = pattern.replace('\r', '').replace('*', "\*").replace('.', "\.")
+                pattern = re.escape(pattern)
 
                 if not pattern:
                     continue
