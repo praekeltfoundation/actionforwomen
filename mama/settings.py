@@ -267,9 +267,6 @@ try:
 except ImportError:
     pass
 
-
-SECRET_KEY = '1'
-
 # Celery configuration options
 BROKER_URL = 'amqp://guest:guest@localhost:5672/'
 
