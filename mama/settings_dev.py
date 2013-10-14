@@ -36,10 +36,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
     # DEBUGGING STUFF
 INTERNAL_IPS = ("http://127.0.0.1")
 
-# EMAIL
-# In order to debug do python smtp hosting on port 1025
-EMAIL_HOST = "127.0.0.1"
-# EMAIL_HOST_USER = "user"
-# EMAIL_HOST_PASSWORD = ""
-EMAIL_PORT = 1025
-EMAIL_USER_TLS = True
+# EMAIL backend for testing, prints outbound email in the console
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
