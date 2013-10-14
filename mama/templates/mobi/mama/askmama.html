@@ -4,6 +4,7 @@
 Used for the AskMAMA section
 {% endcomment %}
 
+{% load cache  %}
 {% load mama_inclusion_tags %}
 {% load askmama_inclusion_tags %}
 {% load livechat_tags %}
@@ -40,7 +41,9 @@ Used for the AskMAMA section
                 </div>
                 {% endif %}
 
+                {% cache 3600 questions_for_week %}
                 {% favourite_questions_for_week lead_in_post weeks_ago cpage sort %}
+                {% endcache %}
             </div>
         </div>
     {% else %}
