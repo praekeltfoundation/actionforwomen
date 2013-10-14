@@ -254,9 +254,12 @@ class AskMamaView(CategoryDetailView):
         """
         self.category = get_object_or_404(Category,
                                           slug__iexact='ask-mama')
-        return Post.permitted.filter(
-            pin__category=self.category
-        ).latest('created')
+        try:
+            return Post.permitted.filter(
+                pin__category=self.category
+            ).latest('created')
+        except Post.DoesNotExist:
+            return None
 
 
 class QuestionAnswerView(TemplateView):
