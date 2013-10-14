@@ -93,6 +93,19 @@ class SitePreferences(Preferences):
     class Meta:
         verbose_name_plural = "Site preferences"
 
+    comment_banned_patterns = models.TextField(
+        blank=True,
+        null=True,
+        help_text='Comments containing these words or regular'
+                  'expressions(one per line) will not be allowed to be posted.'
+    )
+    comment_silenced_patterns = models.TextField(
+        blank=True,
+        null=True,
+        help_text='Sections or words in comments containing these words or '
+                  'regular expressions(one per line) will be blocked out with '
+                  'stars.'
+    )
     commenting_time_on = models.TimeField(
         blank=True,
         null=True,
