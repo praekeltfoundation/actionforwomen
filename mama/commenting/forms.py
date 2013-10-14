@@ -22,7 +22,7 @@ class MamaCommentForm(CommentForm):
                 if not pattern:
                     continue
 
-                match = re.search(pattern.lower(), comment.lower())
+                match = re.search(pattern, comment, re.IGNORECASE)
                 if match:
                     raise forms.ValidationError("Please don't post inappropriate content(%s). "
                                                 "Your action has been noted." % match.group())
@@ -40,13 +40,13 @@ class MamaCommentForm(CommentForm):
                     pattern,
                     lambda x: '*' * len(x.group()),
                     comment,
-                    flags=re.DOTALL
+                    flags=re.DOTALL | re.IGNORECASE
                 )
                 comment = re.sub(
-                    pattern.lower(),
+                    pattern,
                     lambda x: '*' * len(x.group()),
                     comment,
-                    flags=re.DOTALL
+                    flags=re.DOTALL | re.IGNORECASE
                 )
 
         return comment

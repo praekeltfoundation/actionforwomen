@@ -238,8 +238,20 @@ class GeneralPrefrencesTestCase(TestCase):
         self.client = Client(HTTP_REFERER='http://localhost%s' % article_url)
         pref = SitePreferences.objects.get(pk=preferences.SitePreferences.pk)
         pref.comment_banned_patterns = 'crap\ndoodle\nf**k'
+        pref.comment_silenced_patterns = 'monkey'
         pref.save()
 
         params = params_for_comments(self.post, 'some comment with f**k word')
         resp = self.client.post(reverse('post_comment'), params)
         self.assertContains(resp, 'inappropriate content')
+
+        params = params_for_comments(self.post, 'some comment with CRAP in caps')
+        resp = self.client.post(reverse('post_comment'), params)
+        self.assertContains(resp, 'inappropriate content')
+
+        params = params_for_comments(self.post, 'word MONKEY which is silenced')
+        resp = self.client.post(reverse('post_comment'), params)
+        self.assertEqual(resp.status_code, 302)
+
+        resp = self.client.get(article_url)
+        self.assertContains(resp, 'word ****** which is silenced')
