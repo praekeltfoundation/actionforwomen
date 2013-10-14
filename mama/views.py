@@ -348,7 +348,7 @@ class PublicProfileView(TemplateView):
         user = auth.models.User.objects.get(pk=kwargs['user_id'])
         profile = user.get_profile()
         context['user_id'] = user.id
-        context['username'] = user.username
+        context['alias'] = profile.alias if profile.alias else 'Anon.'
         if profile.avatar:
             context['avatar'] = profile.avatar.url
         context['mobile_number'] = profile.mobile_number
