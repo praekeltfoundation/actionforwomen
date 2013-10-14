@@ -345,8 +345,9 @@ class PublicProfileView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(PublicProfileView, self).get_context_data(**kwargs)
-        user = auth.models.User.objects.get(username=kwargs['username'])
+        user = auth.models.User.objects.get(pk=kwargs['user_id'])
         profile = user.get_profile()
+        context['user_id'] = user.id
         context['username'] = user.username
         if profile.avatar:
             context['avatar'] = profile.avatar.url
@@ -374,14 +375,14 @@ class UserCommentsView(ListView):
         Add information to the context
         """
         context = super(UserCommentsView, self).get_context_data(**kwargs)
-        user = auth.models.User.objects.get(username=self.kwargs['username'])
+        user = auth.models.User.objects.get(pk=self.kwargs['user_id'])
         context['comment_maker'] = user
         return context
 
     def get_queryset(self):
         """ return the comments for the user
         """
-        user = auth.models.User.objects.get(username=self.kwargs['username'])
+        user = auth.models.User.objects.get(pk=self.kwargs['user_id'])
         return user.comment_comments.all()
 
 

@@ -31,7 +31,7 @@
               </div>
               <div class="meta">
                 <div class="title">
-                  <a href="{% url public_profile comment.name %}">{{ comment.name }}</a>
+                  <a href="{% url public_profile comment.user.id %}">{{ comment.name }}</a>
                 </div>
                 <div class="stamp">{{ comment.submit_date }} | {% likes comment %} {% report_comment_abuse comment %}</div>
                 <div class="stamp">{{ comment.comment|linebreaks }}</div>
@@ -43,7 +43,7 @@
                       <div class="meta">
                           <div class="title">
                               Response by:
-                              <a href="{% url public_profile response.author.username%}">{{ response.author.username }}</a>
+                              <a href="{% url public_profile response.author.id %}">{{ response.author.username }}</a>
                           </div>
                           <div class="stamp">{{ response.updated_at }}</div>
                           <div class="stamp">{{ response.response }}</div>

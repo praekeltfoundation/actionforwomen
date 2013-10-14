@@ -185,12 +185,12 @@ urlpatterns = patterns('',
         name='profile'
     ),
     url(
-        r'^public/profile/(?P<username>\w+)/$',
+        r'^public/profile/(?P<user_id>\d+)/$',
         PublicProfileView.as_view(),
         name='public_profile'
     ),
     url(
-        r'^public/usercomments/(?P<username>\w+)/$',
+        r'^public/usercomments/(?P<user_id>\d+)/$',
         UserCommentsView.as_view(),
         name='public_user_comments'
     ),
