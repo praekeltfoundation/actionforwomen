@@ -21,8 +21,8 @@ HOTSOCKET_RESOURCES = {
         "balance": "test/balance",
     }
 
-HOTSOCKET_USERNAME = "trial_acc_1212"
-HOTSOCKET_PASSWORD = "tr14l_l1k3m00n"
+HOTSOCKET_USERNAME = ""
+HOTSOCKET_PASSWORD = ""
 
 # South configuration variables
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
