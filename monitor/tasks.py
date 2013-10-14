@@ -66,8 +66,6 @@ def status_query(token):
             failures = [d for d in json_response["response"]["line_item"]
                         if d["status_desc"] != "SUCCESS"]
             email_errors(failures)
-        elif "line_item" not in json_response["response"]:
-            email_errors([])
 
         elif status == code["TOKEN_EXPIRE"]["status"]:
             raise TokenExpireError(message)
