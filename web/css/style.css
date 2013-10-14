@@ -190,6 +190,14 @@
             .news .half .title a { padding: 0; color: #000; font-weight: normal; }
             .news .half .title a:hover { color: #f54f16; }
             .news .half p { margin: 0; }
+            /* news detail page */
+            .border_top { margin: 0 20px; border-top: 3px solid #dcdcdd; }
+            .content.full { padding: 0 40px 40px; }
+            .article_body { padding: 20px 0 0; }
+            .article_body img { float: left; margin: 10px 30px 20px 0; }
+            .article_body a.back { font-family: HelvN; font-size: 16px; color: #666; text-transform: uppercase; text-decoration: none; }
+            .article_body h2 { margin: 10px 0 0; padding: 0 0 5px 0; font-family: HelvN; font-size: 30px; font-weight: normal; color: #000; text-transform: uppercase; }
+            .article_body p { margin: 5px 0 20px; }
 
         /* founders */
         .founders { width: 860px; float; left; padding: 17px 0 0 0; border-top: 7px solid #f58d16; }

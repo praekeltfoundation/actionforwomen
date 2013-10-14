@@ -99,6 +99,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.messages.context_processors.messages",
     "django.core.context_processors.request",
     "preferences.context_processors.preferences_cp",
+    "mama.context_processors.comments_open"
 )
 
 # List of callables that know how to import templates from various sources.
