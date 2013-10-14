@@ -162,7 +162,10 @@ INSTALLED_APPS = (
     'gunicorn',
 
     'survey',
+    'mama.commenting',
 )
+
+COMMENTS_APP = 'mama.commenting'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
