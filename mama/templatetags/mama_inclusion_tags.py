@@ -86,22 +86,6 @@ def page_header(context):
     return context
 
 
-@register.inclusion_tag(
-    'mama/inclusion_tags/registration_banner.html',
-    takes_context=True)
-def registration_banner(context):
-    context = copy(context)
-    return context
-
-
-@register.inclusion_tag(
-    'mama/inclusion_tags/askmama_banner.html',
-    takes_context=True)
-def askmama_banner(context):
-    context = copy(context)
-    return context
-
-
 @ register.inclusion_tag(
     'mama/inclusion_tags/random_guide_banner.html',
     takes_context=True)
