@@ -11,30 +11,7 @@ class Migration(DataMigration):
         # Note: Don't use "from appname.models import ModelName". 
         # Use orm.ModelName to refer to models in this application,
         # and orm['appname.ModelName'] for models in other applications.
-        Site = ['sites.Site']
-        Post = orm['post.Post']
         Category = orm['category.Category']
-
-        site = Site.objects.get_current()
-        featured = Category.objects.get(slug='featured')
-
-        if not Post.permitted.filter(slug='ask-mama').exists():
-            post = Post.objects.create(
-                title='Ask MAMA',
-                description='MAMA is here to help you through anything! Have \
-                        a question for her? Each week 10 of the most \
-                        requested questions will be answered by our expert. \
-                        Vote for your favourite question or submit your own.',
-                content='MAMA is here to help you through anything! Have \
-                        a question for her? Each week 10 of the most \
-                        requested questions will be answered by our expert. \
-                        Vote for your favourite question or submit your own.',
-                state='published',
-            )
-            post.sites.add(site)
-            post.categories.add(featured)
-        else:
-            post = Post.permitted.get(slug='ask-mama')
 
         if not Category.objects.filter(slug='ask-mama').exists():
             category = Category.objects.create(
@@ -42,8 +19,6 @@ class Migration(DataMigration):
                 slug='ask-mama',
                 color='maroon'
             )
-            category.pin_set.add(post)
-            post.primary_category = category
 
         if not Category.objects.filter(slug='live-chat').exists():
             category = Category.objects.create(
@@ -54,11 +29,8 @@ class Migration(DataMigration):
 
     def backwards(self, orm):
         "Write your backwards methods here."
-        Post = orm['post.Post']
         Category = orm['category.Category']
 
-        if Post.permitted.filter(slug='ask-mama').exists():
-            Post.permitted.get(slug='ask-mama').delete()
         if Category.objects.filter(slug='ask-mama').exists():
             Category.objects.get(slug='ask-mama').delete():
         if Category.objects.filter(slug='live-chat').exists():
