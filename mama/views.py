@@ -577,6 +577,11 @@ def post_comment(request, next=None, using=None):
     data["email"] = 'commentor@askmama.mobi'
     data["url"] = request.META['HTTP_REFERER']
     request.POST = data
+
+    # Reject comments if commenting is closed
+    if not preferences.SitePreferences.comments_open():
+        return comments.CommentPostBadRequest("Comments are closed.")
+
     # Ignore comments containing URLs
     if re.search(URL_REGEX, data['comment']):
         return comments.CommentPostBadRequest("URLs are not allowed.")

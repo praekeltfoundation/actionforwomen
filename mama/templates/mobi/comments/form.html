@@ -1,3 +1,6 @@
+{% if not comments_open %}
+<div>Comments are currently closed.</div>
+{% else %}
 <form action="{% url post_comment %}" method="post">
     {% csrf_token %}
     <div class="row" style="display:none;">
@@ -26,3 +29,4 @@
     </div>
     <div class="clear"></div>
 </form>
+{% endif %}
