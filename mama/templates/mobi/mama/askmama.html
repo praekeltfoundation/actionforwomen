@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% comment %}
+Used for the AskMAMA section
+{% endcomment %}
+
+{% load cache  %}
+{% load mama_inclusion_tags %}
+{% load askmama_inclusion_tags %}
+{% load livechat_tags %}
+
+{% block following_header %}
+{{ block.super }}
+{% include "mama/inclusion_tags/registration_banner.html" %}
+{% endblock %}
+
+{% block content %}
+
+    {{ block.super }}
+    {% show_last_live_chat %}
+    {% if lead_in_post %}
+        <div class="">
+            <div class="content-inner">
+                {% if weeks_ago == 0 %}
+                <div class="items {{category.color}}">
+                    <div class="item no-pic">
+                        <div class="h1">
+                            {{ lead_in_post.title }}
+                        </div>
+                    </div>
+                </div>
+                {% live_chat_banner %}
+                <div class="items {{category.color}}">
+                    <div class="item no-pic">
+                        <div class="meta">
+                            <div class="stamp">
+                                {{ lead_in_post.content|safe }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% cache 3600 questions_for_week %}
+                {% favourite_questions_for_week lead_in_post weeks_ago cpage sort %}
+                {% endcache %}
+            </div>
+        </div>
+    {% else %}
+        {% live_chat_banner %}
+    {% endif %}
+
+    {% block below_listing %}
+    {% endblock %}
+
+{% endblock %}

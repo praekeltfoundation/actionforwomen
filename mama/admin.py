@@ -1,13 +1,18 @@
 from django.contrib import admin
+from django.contrib.contenttypes import generic
+
 from jmbo.admin import ModelBaseAdmin
-from mama.models import Link, NavigationLink, SitePreferences, Banner
+from mama.models import (Link, NavigationLink, SitePreferences, Banner,
+                         DefaultAvatar)
 from post.models import Post
+from livechat.models import LiveChat
 from preferences.admin import PreferencesAdmin
 
 
 class LinkInline(admin.TabularInline):
     model = Link
     fk_name = 'source'
+
 
 class NavigationLinkInline(admin.TabularInline):
     model = NavigationLink
@@ -17,8 +22,9 @@ class NavigationLinkInline(admin.TabularInline):
 class PostAdmin(ModelBaseAdmin):
     inlines = ModelBaseAdmin.inlines + [
         LinkInline,
-        NavigationLinkInline,
+        NavigationLinkInline
     ]
+
 
 class BannerAdmin(ModelBaseAdmin):
 
@@ -36,7 +42,20 @@ class BannerAdmin(ModelBaseAdmin):
         return 'Randomly selected by Vlive'
 
 
+class DefaultAvatarAdmin(admin.ModelAdmin):
+    list_display = ('_image',)
+
+    def _image(self, obj):
+        # todo: use correct photologue scale
+        if obj.image:
+            return """<img src="%s" height="48" width="48" />""" % obj.image.url
+        return ""
+    _image.short_description = 'Image'
+    _image.allow_tags = True
+
+
 admin.site.register(SitePreferences, PreferencesAdmin)
 admin.site.unregister(Post)
 admin.site.register(Post, PostAdmin)
 admin.site.register(Banner, BannerAdmin)
+admin.site.register(DefaultAvatar, DefaultAvatarAdmin)

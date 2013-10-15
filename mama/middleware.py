@@ -1,4 +1,4 @@
-from django.core.exceptions import ImproperlyConfigured
+from django.core.exceptions import ImproperlyConfigured, ObjectDoesNotExist
 from django.conf import settings
 
 
@@ -14,7 +14,10 @@ class TrackOriginMiddleware(object):
             if request.user.is_anonymous():
                 return
 
-            profile = request.user.get_profile()
-            if profile.origin != settings.ORIGIN:
-                profile.origin = settings.ORIGIN
-                profile.save()
+            try:
+                profile = request.user.get_profile()
+                if profile.origin != settings.ORIGIN:
+                    profile.origin = settings.ORIGIN
+                    profile.save()
+            except ObjectDoesNotExist:
+                pass

@@ -98,6 +98,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.messages.context_processors.messages",
     "django.core.context_processors.request",
     "preferences.context_processors.preferences_cp",
+    "livechat.context_processors.current_livechat",
     "mama.context_processors.comments_open"
 )
 
@@ -138,7 +139,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'jmbo',
     'post',
     'mama',
     'category',
@@ -147,7 +148,6 @@ INSTALLED_APPS = (
     'generate',
     'google_credentials',
     'haystack',
-    'jmbo',
     'likes',
     'moderator',
     'photologue',
@@ -160,8 +160,9 @@ INSTALLED_APPS = (
     'south_admin',
     'userprofile',
     'gunicorn',
-
     'survey',
+    'jmboyourwords',
+    'livechat',
     'mama.commenting',
 )
 
@@ -204,6 +205,10 @@ SOUTH_MIGRATION_MODULES = {
 #       `user.get_profile()` because it allows for easier mocking
 USER_PROFILE_MODULE = AUTH_PROFILE_MODULE = 'mama.UserProfile'
 
+# New login and logout urls as set in mama.urls
+LOGIN_URL = '/login/'
+LOGOUT_URL = '/logout/'
+
 # If no 'next' value found during login redirect home.
 LOGIN_REDIRECT_URL = '/survey/check-for-survey/'
 
@@ -217,6 +222,9 @@ EMAIL_SUBJECT_PREFIX = '[MAMA] '
 
 AMBIENT_API_KEY = ''
 AMBIENT_GATEWAY_PASSWORD = ''
+
+LIVECHAT_PRIMARY_CATEGORY = 'ask-mama'
+LIVECHAT_CATEGORIES = ('live-chat',)
 
 MODERATOR = {
     'CLASSIFIER': 'moderator.storage.RedisClassifier',

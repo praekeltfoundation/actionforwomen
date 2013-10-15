@@ -1,11 +1,30 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="h1">Register</div>
+<div class="h1">Sign Up</div>
 <div class="content-inner">
     <div class="post">
-        <b>Thank you! You have been successfully registered.</b><br />
-        Now go check out the <a href="{% url home %}">homepage.</a>
+        <b>Thank you for registering with {{ site }}</b><br />
+        Remember to sign in each week to see the latest information on your
+        baby's growth and development. This will be displayed on the home page.
+    </div>
+
+    <div class="text_banner">
+        <div class="banner_content">
+            <p>
+            <strong>
+                <a href="{% url view_my_profile %}">
+                    Edit my Profile &gt;
+                </a><br/>
+                <a href="{% url home %}">
+                    Take me to my weekly update &gt;
+                </a><br/>
+                <a href="{% url askmama_detail %}">
+                    I want to ask an expert &gt;
+                </a>
+            </strong>    
+            </p>
+        </div>
     </div>
 </div>
 

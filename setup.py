@@ -31,6 +31,7 @@ setup(
         'django-registration==0.8',
         'django-userprofile>=0.0.6',
         'django-registration==0.8',
+        'django-ckeditor',
         'gunicorn',
         'jmbo==0.5.5',
         'jmbo-poll>=0.0.9',

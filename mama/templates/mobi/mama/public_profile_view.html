@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="h1">{{ alias }}&apos;s Profile</div>
+<div class="content-inner">
+  <div class="post">
+    {% if avatar %}
+        <img src="{{ avatar }}" width="44" height="44" />
+    {% endif %}
+    <div class="stamp"> 
+      {{ alias }}<br/>
+      {{ relation_description}}<br/>
+      <a href="{% url public_user_comments user_id %}">
+          {{ comments }} Comments
+      </a> Made<br/>
+    </div>
+  </div>
+
+  {% if about_me %}
+  <div class="post">
+    <div class="title">
+        About {{ alias }}
+    </div>
+    <div class="stamp"> 
+      {{ about_me|safe }}
+    </div>
+  </div>
+  {% endif %}
+
+  {% if date_type != 'unspecified' or delivery_date %}
+  <div class="post">
+    <div class="title">
+        About {{ alias }}&apos;s baby
+    </div>
+    {% if baby_name %}
+    <div class="stamp"> 
+        Name: {{ baby_name }}
+    </div>
+    {% endif %}
+    <div class="stamp"> 
+        {% if date_type != 'unspecified' %}
+        {{ date_description }}: 
+        {% else %}
+            {% if delivery_date > now %}
+                Due Date:
+            {% else %}
+                Birth Date:
+            {% endif %}
+        {% endif %}
+        {% if date_type == 'due_date' or date_type == 'unspecified' %}
+            {% if unknown_due_date %}
+            Unknown
+            {% else %}
+            {{ delivery_date|date:"d M Y" }}
+            {% endif %}
+        {% else %}
+            {{ delivery_date|date:"d M Y" }}
+        {% endif %}
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}
+
+{% block footer_search_form %}
+{% endblock %}
