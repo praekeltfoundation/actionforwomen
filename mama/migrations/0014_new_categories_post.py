@@ -8,20 +8,20 @@ class Migration(DataMigration):
 
     def forwards(self, orm):
         "Write your forwards methods here."
-        # Note: Don't use "from appname.models import ModelName". 
+        # Note: Don't use "from appname.models import ModelName".
         # Use orm.ModelName to refer to models in this application,
         # and orm['appname.ModelName'] for models in other applications.
         Category = orm['category.Category']
 
         if not Category.objects.filter(slug='ask-mama').exists():
-            category = Category.objects.create(
+            Category.objects.create(
                 title='Ask MAMA',
                 slug='ask-mama',
                 color='maroon'
             )
 
         if not Category.objects.filter(slug='live-chat').exists():
-            category = Category.objects.create(
+            Category.objects.create(
                 title='Live Chat',
                 slug='live-chat',
                 color='maroon'
@@ -32,9 +32,9 @@ class Migration(DataMigration):
         Category = orm['category.Category']
 
         if Category.objects.filter(slug='ask-mama').exists():
-            Category.objects.get(slug='ask-mama').delete():
+            Category.objects.get(slug='ask-mama').delete()
         if Category.objects.filter(slug='live-chat').exists():
-            Category.objects.get(slug='live-chat').delete():
+            Category.objects.get(slug='live-chat').delete()
 
     models = {
         'auth.group': {
