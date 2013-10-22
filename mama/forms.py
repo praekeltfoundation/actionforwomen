@@ -97,16 +97,38 @@ class PasswordResetForm(PasswordResetForm):
 
 
 class RegistrationForm(RegistrationFormTermsOfService):
+    mobile_number = forms.CharField(
+        max_length=64, 
+        required=True,
+        label="Your mobile number"
+    )
+    relation_to_baby = forms.ChoiceField(
+        widget=forms.RadioSelect(),
+        choices=RELATION_TO_BABY_CHOICES,
+        label='Are you a...',
+        initial='mom_or_mom_to_be'
+    )
+
+    date_qualifier = forms.ChoiceField(
+        widget=forms.RadioSelect(),
+        initial='due_date',
+        choices=DATE_QUALIFIER_CHOICES,
+        label="Please enter your baby's birth day or due date or select \
+            unknown if you are not sure of the due date"
+    )
+    delivery_date = forms.DateField(
+        required=False,
+        label="",
+        widget=SelectDateWidget()
+    )
+    unknown_date = forms.BooleanField(
+        required=False,
+        label='Unknown'
+    )
+
     def __init__(self, *args, **kwargs):
         super(RegistrationForm, self).__init__(*args, **kwargs)
 
-        class ProfileModelForm(forms.ModelForm):
-            class Meta:
-                fields = ('mobile_number', 'delivery_date', 
-                          'relation_to_baby', 'date_qualifier', 
-                          'unknown_date')
-                model = utils.get_profile_model()
-        self.fields.update(ProfileModelForm().fields)
         del self.fields['email']
         del self.fields['password2']
         self.fields.keyOrder = [
@@ -120,22 +142,7 @@ class RegistrationForm(RegistrationFormTermsOfService):
             'tos',
         ]
         self.fields['username'].label = "Choose a username"
-        # self.fields['password1'].label = "Choose a 4 digit PIN"
         self.fields['password1'].label = "Choose a password"
-        self.fields['mobile_number'].required = True
-        self.fields['mobile_number'].label = "Your mobile number"
-        self.fields['delivery_date'].required = False
-        self.fields['delivery_date'].label = ""
-        self.fields['delivery_date'].widget = SelectDateWidget()
-        self.fields['date_qualifier'].widget = forms.RadioSelect()
-        self.fields['date_qualifier'].choices = DATE_QUALIFIER_CHOICES
-        self.fields['date_qualifier'].label = \
-            "Please enter your baby's birth day or due date or select \
-            unknown if you are not sure of the due date"
-        self.fields['relation_to_baby'].widget = forms.RadioSelect()
-        self.fields['relation_to_baby'].choices = RELATION_TO_BABY_CHOICES
-        self.fields['relation_to_baby'].label = 'Are you a...'
-        self.fields['unknown_date'].label = 'Unknown'
         self.fields['tos'].label = mark_safe('I accept the <a href="%s">terms '
                                              'and conditions</a> of use.'
                                              % reverse("terms"))

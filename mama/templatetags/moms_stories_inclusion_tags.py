@@ -21,5 +21,8 @@ def your_story_competition(context):
     qs = YourStoryCompetition.objects.filter(published=True)
     qs = qs.filter(sites=Site.objects.get_current())
     qs = qs.order_by('-publish_on')
-    context['your_story_competition'] = qs.latest('publish_on')
+    try:
+        context['your_story_competition'] = qs.latest('publish_on')
+    except YourStoryCompetition.DoesNotExist:
+        pass
     return context

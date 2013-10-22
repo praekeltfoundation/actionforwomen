@@ -1,0 +1,22 @@
+[
+  {
+    "pk": 100,
+    "model": "category.category",
+    "fields": {
+      "color": "maroon",
+      "slug": "live-chat",
+      "parent": null,
+      "title": "Live Chat"
+    }
+  },
+  {
+    "pk": 101,
+    "model": "category.category",
+    "fields": {
+      "color": "maroon",
+      "slug": "ask-mama",
+      "parent": null,
+      "title": "Ask MAMA"
+    }
+  }
+]

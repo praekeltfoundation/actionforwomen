@@ -254,9 +254,12 @@ class AskMamaView(CategoryDetailView):
         """
         self.category = get_object_or_404(Category,
                                           slug__iexact='ask-mama')
-        return Post.permitted.filter(
-            pin__category=self.category
-        ).latest('created')
+        try:
+            return Post.permitted.filter(
+                pin__category=self.category
+            ).latest('created')
+        except Post.DoesNotExist:
+            return None
 
 
 class QuestionAnswerView(TemplateView):
@@ -347,7 +350,8 @@ class PublicProfileView(TemplateView):
         context = super(PublicProfileView, self).get_context_data(**kwargs)
         user = auth.models.User.objects.get(pk=kwargs['user_id'])
         profile = user.get_profile()
-        context['username'] = user.username
+        context['user_id'] = user.id
+        context['alias'] = profile.alias if profile.alias else 'Anon.'
         if profile.avatar:
             context['avatar'] = profile.avatar.url
         context['mobile_number'] = profile.mobile_number
@@ -374,14 +378,14 @@ class UserCommentsView(ListView):
         Add information to the context
         """
         context = super(UserCommentsView, self).get_context_data(**kwargs)
-        user = auth.models.User.objects.get(username=self.kwargs['username'])
+        user = auth.models.User.objects.get(pk=self.kwargs['user_id'])
         context['comment_maker'] = user
         return context
 
     def get_queryset(self):
         """ return the comments for the user
         """
-        user = auth.models.User.objects.get(username=self.kwargs['username'])
+        user = auth.models.User.objects.get(pk=self.kwargs['user_id'])
         return user.comment_comments.all()
 
 
@@ -573,6 +577,11 @@ def post_comment(request, next=None, using=None):
     data["email"] = 'commentor@askmama.mobi'
     data["url"] = request.META['HTTP_REFERER']
     request.POST = data
+
+    # Reject comments if commenting is closed
+    if not preferences.SitePreferences.comments_open():
+        return comments.CommentPostBadRequest("Comments are closed.")
+
     # Ignore comments containing URLs
     if re.search(URL_REGEX, data['comment']):
         return comments.CommentPostBadRequest("URLs are not allowed.")

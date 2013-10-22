@@ -1,10 +1,5 @@
 from copy import copy
 from datetime import datetime
-try:
-  from random import SystemRandom
-  random = SystemRandom()
-except:
-  import random
 
 from django import template
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -86,22 +81,6 @@ def page_header(context):
     return context
 
 
-@register.inclusion_tag(
-    'mama/inclusion_tags/registration_banner.html',
-    takes_context=True)
-def registration_banner(context):
-    context = copy(context)
-    return context
-
-
-@register.inclusion_tag(
-    'mama/inclusion_tags/askmama_banner.html',
-    takes_context=True)
-def askmama_banner(context):
-    context = copy(context)
-    return context
-
-
 @ register.inclusion_tag(
     'mama/inclusion_tags/random_guide_banner.html',
     takes_context=True)
@@ -111,11 +90,11 @@ def random_guide_banner(context):
     # get the published, featured guides
     qs = Post.permitted.filter(
             primary_category__slug='life-guides',
-            categories__slug='featured')
+            categories__slug='featured').order_by('?')
 
     # select a guide at random
-    try:
-        random_guide = random.choice(qs)
+    random_guide = qs[0] if qs.exists() else None
+    if random_guide is not None:
         context.update({
             'random_guide': {
                 'title': random_guide.title,
@@ -123,8 +102,6 @@ def random_guide_banner(context):
                 'url': random_guide.get_absolute_category_url()
             }
         })
-    except IndexError:
-        pass
 
     return context
 

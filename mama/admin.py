@@ -9,19 +9,6 @@ from livechat.models import LiveChat
 from preferences.admin import PreferencesAdmin
 
 
-# class LiveChatInlineAdmin(generic.GenericStackedInline):
-#     model = LiveChat
-#     max_num = 1     # limit the livechat objects to 1 instance
-#     extra = 0
-#     fields = (
-#         'title',
-#         'subtitle',
-#         'description',
-#         'comments_closed',
-#         'likes_closed',
-#     )
-
-
 class LinkInline(admin.TabularInline):
     model = Link
     fk_name = 'source'
@@ -35,15 +22,14 @@ class NavigationLinkInline(admin.TabularInline):
 class PostAdmin(ModelBaseAdmin):
     inlines = ModelBaseAdmin.inlines + [
         LinkInline,
-        NavigationLinkInline,
-        # LiveChatInlineAdmin
+        NavigationLinkInline
     ]
 
 
 class BannerAdmin(ModelBaseAdmin):
 
     list_display = (
-        'title', 'description', 'thumbnail', 'schedule', 'state')
+        'title', 'description', 'thumbnail', 'schedule', '_actions')
 
     def thumbnail(self, obj, *args, **kwargs):
         return '<img src="%s" />' % (obj.image.url,)

@@ -99,6 +99,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.request",
     "preferences.context_processors.preferences_cp",
     "livechat.context_processors.current_livechat",
+    "mama.context_processors.comments_open"
 )
 
 # List of callables that know how to import templates from various sources.
@@ -162,7 +163,10 @@ INSTALLED_APPS = (
     'survey',
     'jmboyourwords',
     'livechat',
+    'mama.commenting',
 )
+
+COMMENTS_APP = 'mama.commenting'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
