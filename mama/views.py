@@ -484,7 +484,7 @@ class UpdateDueDateView(FormView):
         profile = user.get_profile()
         profile.delivery_date = form.cleaned_data['due_date']
         profile.date_qualifier = 'due_date'
-        profile.unknown_due_date = False
+        profile.unknown_date = False
         profile.save()
         return super(UpdateDueDateView, self).form_valid(form)
 
