@@ -8,7 +8,12 @@
                 {% for object in object_list %}
                     {% render_object object "block" %}
                 {% endfor %}
-                <div class="item-nav"><a href="{{ category.get_absolute_url }}">All</a> | <a href="{{ category.get_absolute_url }}?by=popular">Popular</a></div>
+            </div>
+            <div class="more-links">
+              <br/>
+              <a href="{{ category.get_absolute_url }}">
+                More {{ category.title|capfirst }} >
+              </a>
             </div>
         </div>
     </div>

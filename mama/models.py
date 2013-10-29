@@ -6,12 +6,16 @@ from django.core.cache import cache
 from django.db import models
 from django.db.models.signals import class_prepared, post_save
 from django.dispatch import receiver
+
 from jmbo.models import ModelBase
 from likes.exceptions import CannotVoteException
 from likes.signals import likes_enabled_test, can_vote_test
-from mama.forms import RegistrationForm
 from preferences.models import Preferences
 from userprofile.models import AbstractProfileBase
+
+from photologue.models import ImageModel
+from mama.forms import RegistrationForm
+from mama.constants import RELATION_TO_BABY_CHOICES, FULL_DATE_QUALIFIER_CHOICES
 
 
 class Link(models.Model):
@@ -93,6 +97,19 @@ class SitePreferences(Preferences):
     class Meta:
         verbose_name_plural = "Site preferences"
 
+    comment_banned_patterns = models.TextField(
+        blank=True,
+        null=True,
+        help_text='Comments containing these words or regular'
+                  'expressions(one per line) will not be allowed to be posted.'
+    )
+    comment_silenced_patterns = models.TextField(
+        blank=True,
+        null=True,
+        help_text='Sections or words in comments containing these words or '
+                  'regular expressions(one per line) will be blocked out with '
+                  'stars.'
+    )
     commenting_time_on = models.TimeField(
         blank=True,
         null=True,
@@ -128,8 +145,16 @@ class SitePreferences(Preferences):
         return True
 
 
+class DefaultAvatar(ImageModel):
+    """A set of avatars users can choose from"""
+    pass
+
+
 class UserProfile(AbstractProfileBase):
     registration_form = RegistrationForm
+    # TODO: This could be a security risk, as password reset depends on a
+    # mobile number to match a number in a user profile. So, this field should
+    # not be optional. This number should also be unique across profiles.
     mobile_number = models.CharField(
         max_length=64,
         blank=True,
@@ -139,7 +164,6 @@ class UserProfile(AbstractProfileBase):
         choices=((i, 'Week%s %s' % ('s' if i > 1 else '', i)) for i in range(1,43)),
         blank=True,
         null=True,
-
     )
     delivery_date = models.DateField(
         blank=True,
@@ -173,8 +197,45 @@ class UserProfile(AbstractProfileBase):
     origin = models.CharField(
         help_text='Where did this user register?',
         null=True,
-        max_length=255)
+        max_length=255
+    )
+    relation_to_baby = models.CharField(
+        max_length=30,
+        choices=RELATION_TO_BABY_CHOICES,
+        default='mom_or_mom_to_be'
+    )
+    date_qualifier = models.CharField(
+        max_length=20,
+        choices=FULL_DATE_QUALIFIER_CHOICES,
+        default='unspecified'
+    )
+    unknown_date = models.BooleanField(
+        help_text='Checked if the due date is unknown.',
+        default=False,
+        blank=True,
+    )
+    about_me = models.TextField(blank=True, null=True)
+    baby_name = models.CharField(max_length=100, blank=True, null=True)
+    avatar = models.ImageField('avatar', max_length=100, 
+                               upload_to='users/profile', 
+                               blank=True, null=True)
 
+    def relation_description(self):
+        """ 
+        Returns the relationship of the registrant to the baby, taking into
+        account the relationship selected, and date type selected.
+        """
+        if self.date_qualifier == 'birth_date':
+            if self.relation_to_baby == 'mom_or_mom_to_be':
+                return 'Mom'
+            elif self.relation_to_baby == 'dad_or_dad_to_be':
+                return 'Dad'
+        elif self.date_qualifier == 'due_date':
+            if self.relation_to_baby == 'mom_or_mom_to_be':
+                return 'Mom to be'
+            elif self.relation_to_baby == 'dad_or_dad_to_be':
+                return 'Dad to be'
+        return 'Family Member'
 
     def is_prenatal(self):
         """
