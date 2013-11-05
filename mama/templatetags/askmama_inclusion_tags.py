@@ -61,6 +61,9 @@ def favourite_questions_for_week(context, post,
         object_pk=post.id)
     questions = questions.exclude(is_removed=True)
 
+    # leave out the moderator answers
+    questions = questions.exclude(user__is_staff=True)
+
     # Work out the vote count for the questions, to sort by the most liked
     # questions, i.e. questions with the most votes. (This is taken from the
     # MostLikedItem view modifier item in jmbo)
@@ -89,12 +92,8 @@ vote=-1 AND object_id=%s.%s AND content_type_id=%s)' % (
     elif sort == 'alph':
         questions = questions.order_by('comment')
 
-    # leave out replies
-    result = [itm for itm in list(questions) \
-        if itm.reply_comment_set.count() == 0]
-
     # return the results paginated.
-    paginator = Paginator(result, 10)
+    paginator = Paginator(questions, 10)
     comments_page = paginator.page(cpage)
 
     # check if we can comment. we need to be authenticated, at least

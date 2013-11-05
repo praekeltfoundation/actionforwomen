@@ -28,8 +28,9 @@ def ages_and_stages(context):
         context.update({'profile': profile})
 
         # Check if the due date is missing
-        if profile.date_qualifier in ['unspecified', 'due_date'] and \
-                profile.delivery_date is None:
+        if (profile.date_qualifier in (
+                'unspecified', 'due_date'
+            ) and profile.delivery_date is None) or profile.unknown_date:
             context.update({'no_due_date':True})
             context.update({'due_form': DueDateForm()})
             return context
