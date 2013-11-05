@@ -33,26 +33,26 @@ Used for the More Guides List view
         <TEXT>
           <p>
           {% if sort == 'pop' %}
-          <LINK href="{% url more_guides_list %}?sort=date&page={{page}}">
+          <LINK href="{% url more_guides_list %}?sort=date&amp;page={{page}}">
             <TEXT>Latest</TEXT>
           </LINK> | Popular | 
-          <LINK href="{% url more_guides_list %}?sort=alph&page={{page}}">
+          <LINK href="{% url more_guides_list %}?sort=alph&amp;page={{page}}">
             <TEXT>Alphabetical</TEXT>
           </LINK>
           {% else %}
             {% if sort == 'date' %}
               Latest | 
-              <LINK href="{% url more_guides_list %}?sort=pop&page={{page}}">
+              <LINK href="{% url more_guides_list %}?sort=pop&amp;page={{page}}">
                 <TEXT>Popular</TEXT>
               </LINK> |
-              <LINK href="{% url more_guides_list %}?sort=alph&page={{page}}">
+              <LINK href="{% url more_guides_list %}?sort=alph&amp;page={{page}}">
                 <TEXT>Alphabetical</TEXT>
               </LINK>
             {% else %}
-              <LINK href="{% url more_guides_list %}?sort=date&page={{page}}">
+              <LINK href="{% url more_guides_list %}?sort=date&amp;page={{page}}">
                 <TEXT>Latest</TEXT>
               </LINK> | 
-              <LINK href="{% url more_guides_list %}?sort=pop&page={{page}}">
+              <LINK href="{% url more_guides_list %}?sort=pop&amp;page={{page}}">
                 <TEXT>Popular</TEXT>
               </LINK> | Alphabetical
             {% endif %}
