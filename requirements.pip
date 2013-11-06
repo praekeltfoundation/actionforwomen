@@ -6,3 +6,8 @@ django-tastypie
 mimeparse
 -e git://github.com/praekelt/django-moderator.git@0.0.4.1#egg=django_moderator-dev
 -e .
+requests
+xmltodict
+mock
+nose
+django-nose
