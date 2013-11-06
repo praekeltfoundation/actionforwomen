@@ -22,6 +22,7 @@
       {% if chat_comments %}
         {% for comment in chat_comments.object_list %}
             <div class="item comment no-pic">
+              {% if comment.user %}
               <div class="post">
                 {% with comment.user.get_profile as profile %}
                   {% if profile.avatar %}
@@ -29,9 +30,14 @@
                   {% endif %}
                 {% endwith %}
               </div>
+              {% endif %}
               <div class="meta">
                 <div class="title">
+                  {% if comment.user %}
                   <a href="{% url public_profile comment.user.id %}">{{ comment.name }}</a>
+                  {% else %}
+                  {{ comment.name }}
+                  {% endif %}
                 </div>
                 <div class="stamp">{{ comment.submit_date }} | {% likes comment %} {% report_comment_abuse comment %}</div>
                 <div class="stamp">{{ comment.comment|linebreaks }}</div>
