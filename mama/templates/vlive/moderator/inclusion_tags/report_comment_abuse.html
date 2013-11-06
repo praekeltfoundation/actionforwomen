@@ -1,8 +1,10 @@
 {% if previously_reported or can_report %}
     |
     {% if previously_reported %}
-        Abuse Reported
+      <TEXT>Abuse Reported</TEXT>
     {% else %}
-        <a class="reporter-comment-abuse" href="{% url like content_type content_obj.id -1 %}">Report Abuse</a>
+      <LINK href="{% url like content_type content_obj.id -1 %}">
+      <TEXT>Report Abuse</TEXT>
+      </LINK>
     {% endif %}
 {% endif %}

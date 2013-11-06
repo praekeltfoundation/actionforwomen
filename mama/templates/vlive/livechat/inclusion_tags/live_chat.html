@@ -1,0 +1,101 @@
+{% load jmbo_inclusion_tags %}
+{% load jmbo_template_tags %}
+{% load comments %}
+{% load likes_inclusion_tags %}
+{% load moderator_inclusion_tags %}
+{% load livechat_tags %}
+{% load mama_inclusion_tags %}
+{% load pml_inclusion_tags %}
+
+{% header text='{{live_chat.current_live_chat.title}}' %}
+<MODULE>
+  <CONTAINER type="data">
+    <TEXT>
+      {{ live_chat.current_live_chat.description|safe|linebreaks }}
+    </TEXT>
+  </CONTAINER>
+</MODULE>
+
+{% header text='Questions and Responses' %}
+<MODULE>
+  {% if chat_comments %}
+    <CONTAINER type="data">
+      {% for comment in chat_comments.object_list %}
+        <TEXT>
+          {% if comment.user %}
+            {% with comment.user.get_profile as profile %}
+              {% if profile.avatar %}
+                <IMAGE src="{{ profile.avatar.url }}" align="left" width="44" height="44" />
+              {% endif %}
+            {% endwith %}
+          {% endif %}
+
+          {% if comment.user %}
+            <LINK href="{% url public_profile comment.user.id %}">
+            <TEXT><b>{{ comment.name }}</b></TEXT>
+            </LINK><br/>
+          {% else %}
+            <b>{{ comment.name }}</b><br/>
+          {% endif %}
+
+          {{ comment.submit_date }} | 
+          {% likes comment %} {% report_comment_abuse comment %}<br/>
+          {{ comment.comment|linebreaks }}<br/>
+        </TEXT>
+
+        {% if comment.livechatresponse_set.exists %}
+        <TEXT>
+          {% for response in comment.livechatresponse_set.all %}
+            Response by:
+            <LINK href="{% url public_profile response.author.id %}">
+            <TEXT color="red"><b>{{ response.author.username }}</b></TEXT>
+            </LINK><br/>
+            {{ response.updated_at }}<br/>
+            {{ response.response }}
+          {% endfor %}
+        </TEXT>
+        {% endif %}
+      {% endfor %}
+    </CONTAINER>
+
+    <CONTAINER type="data">
+      {% if chat_comments.has_previous %}
+        <LINK href="?p={{chat_comments.previous_page_number}}&amp;answered={{answered}}&amp;popular={{popular}}"><TEXT>Previous</TEXT></LINK> |
+      {% else %}
+          <TEXT>Previous</TEXT> |
+      {% endif %}
+      <TEXT>
+          Page {{ chat_comments.number }} of {{ chat_comments.paginator.num_pages }}
+      </TEXT>
+      {% if chat_comments.has_next %}
+          | <LINK href="?p={{chat_comments.next_page_number}}&amp;answered={{answered}}&amp;popular={{popular}}"><TEXT>Next</TEXT></LINK>
+      {% else %}
+          | <TEXT>Next</TEXT>
+      {% endif %}
+    </CONTAINER>
+
+  {% else %}
+    <CONTAINER type="data">
+      <TEXT>
+        No questions yet. Go ahead and ask a question.
+      </TEXT>
+    </CONTAINER>
+  {% endif %}
+</MODULE>
+
+<MODULE>
+  {% if live_chat.can_render_comment_form %}
+    <CONTAINER type="form">
+      {% render_comment_form for live_chat.current_live_chat %}
+    </CONTAINER>
+  {% else %}
+    {% if live_chat.can_comment_code == 'auth_required' %}
+      <CONTAINER type="data">
+        <LINK href="{% url login %}?next={{ request.META.PATH_INFO }}">
+        <TEXT>Sign in to comment or ask a question</TEXT>
+        </LINK>
+      </CONTAINER>
+    {% endif %}
+  {% endif %}
+</MODULE>
+
