@@ -14,10 +14,7 @@ class TrackOriginMiddleware(object):
             if request.user.is_anonymous():
                 return
 
-            try:
-                profile = request.user.get_profile()
-                if profile.origin != settings.ORIGIN:
-                    profile.origin = settings.ORIGIN
-                    profile.save()
-            except ObjectDoesNotExist:
-                pass
+            profile = request.user.get_profile()
+            if profile.origin != settings.ORIGIN:
+                profile.origin = settings.ORIGIN
+                profile.save()
