@@ -1,5 +1,10 @@
 {% extends "base.html" %}
-{% load cache jmbo_inclusion_tags mama_inclusion_tags jmbo_template_tags likes_inclusion_tags livechat_tags%}
+{% load cache %}
+{% load jmbo_inclusion_tags %}
+{% load mama_inclusion_tags %}
+{% load jmbo_template_tags %}
+{% load likes_inclusion_tags %}
+{% load livechat_tags%}
 
 {% block content %}
     <div class="{{ category.color }}">
@@ -50,9 +55,11 @@
         </div>
     </div>
 
+    {% comment %}
     {% cache 3600 topic_listing category.slug %}
         {% topic_listing category.slug 1 %}
     {% endcache %}
+    {% endcomment %}
 
     {% object_comments object %}
 
