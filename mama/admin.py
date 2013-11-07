@@ -61,7 +61,7 @@ class MamaYourStoryEntryAdmin(YourStoryEntryAdmin):
 
     def user_msisdn(self, obj):
         # return the msisdn of the user
-        profile = obj.user.get_profile()
+        profile = obj.user.profile
         return profile.mobile_number
 
 
