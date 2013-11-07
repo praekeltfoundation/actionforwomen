@@ -7,6 +7,8 @@ from mama.models import (Link, NavigationLink, SitePreferences, Banner,
 from post.models import Post
 from livechat.models import LiveChat
 from preferences.admin import PreferencesAdmin
+from jmboyourwords.admin import YourStoryEntryAdmin
+from jmboyourwords.models import YourStoryEntry
 
 
 class LinkInline(admin.TabularInline):
@@ -54,8 +56,19 @@ class DefaultAvatarAdmin(admin.ModelAdmin):
     _image.allow_tags = True
 
 
+class MamaYourStoryEntryAdmin(YourStoryEntryAdmin):
+    list_display = ('name', 'user', 'user_msisdn', 'text', 'created',)
+
+    def user_msisdn(self, obj):
+        # return the msisdn of the user
+        profile = obj.user.profile
+        return profile.mobile_number
+
+
 admin.site.register(SitePreferences, PreferencesAdmin)
 admin.site.unregister(Post)
 admin.site.register(Post, PostAdmin)
 admin.site.register(Banner, BannerAdmin)
+admin.site.unregister(YourStoryEntry)
+admin.site.register(YourStoryEntry, MamaYourStoryEntryAdmin)
 admin.site.register(DefaultAvatar, DefaultAvatarAdmin)
