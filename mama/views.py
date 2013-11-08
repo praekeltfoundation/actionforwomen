@@ -71,7 +71,7 @@ class CategoryDetailView(DetailView):
 class CategoryListView(ListView):
     template_name = "post/post_category_list.html"
     paginate_by = 10
-    heading_prefix = "More"
+    heading_prefix = ""
 
     def get_context_data(self, **kwargs):
         context = super(CategoryListView, self).get_context_data(**kwargs)
@@ -93,9 +93,9 @@ class CategoryListView(ListView):
             self.heading_prefix = active_modifiers[0].title
         return view_modifier.modify(queryset)
 
-    @method_decorator(cache_page(60 * 60))
-    def dispatch(self, *args, **kwargs):
-        return super(CategoryListView, self).dispatch(*args, **kwargs)
+    # @method_decorator(cache_page(60 * 60))
+    # def dispatch(self, *args, **kwargs):
+    #     return super(CategoryListView, self).dispatch(*args, **kwargs)
 
 
 class GuidesView(TemplateView):

@@ -29,6 +29,7 @@
       </div>
       {% cache 3600 links object.id %}
         <div class="post-menu">
+          <div class="h1">Related Content</div>
           <div class="items">
             {% with object.link_target_set.all as links %}
               {% for link in links %}
