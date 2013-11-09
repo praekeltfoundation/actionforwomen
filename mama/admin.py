@@ -10,8 +10,13 @@ from django.contrib.contenttypes.models import ContentType
 
 from jmbo.admin import ModelBaseAdmin
 from secretballot.models import Vote
-from mama.models import (Link, NavigationLink, SitePreferences, Banner,
-                         DefaultAvatar)
+from mama.models import (
+    Link, 
+    NavigationLink, 
+    SitePreferences, 
+    Banner,
+    DefaultAvatar
+)
 from post.models import Post
 from livechat.models import LiveChat
 from preferences.admin import PreferencesAdmin

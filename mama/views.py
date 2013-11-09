@@ -23,7 +23,13 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormView
 from django.views.generic.list import ListView
 
-from mama.forms import ContactForm, ProfileForm, EditProfileForm, DueDateForm
+from mama.forms import (
+    ContactForm,
+    DueDateForm,
+    ProfileForm,
+    VLiveProfileEditForm,
+    EditProfileForm
+)
 from mama.view_modifiers import PopularViewModifier
 from mama.models import Banner, DefaultAvatar
 
@@ -491,8 +497,7 @@ class UpdateDueDateView(FormView):
 
 class ProfileView(FormView):
     """
-    This seems to be the registration and profile form view specifically for
-    VLive
+    This seems to be the registration form view specifically for VLive
     """
     form_class = ProfileForm
     template_name = "mama/profile.html"
@@ -508,6 +513,14 @@ class ProfileView(FormView):
             "Thank you! You have successfully been registered. You will be redirected to the homepage shortly."
         )
         return HttpResponseRedirect(reverse('home'))
+
+
+class VLiveEditProfileEdit(MyProfileEdit):
+    """
+    The profile edit form view specifically for VLive
+    """
+    form_class = VLiveProfileEditForm
+    template_name = "mama/profile.html"
 
 
 class BannerView(TemplateView):

@@ -108,7 +108,6 @@ class RegistrationForm(RegistrationFormTermsOfService):
         label='Are you a...',
         initial='mom_or_mom_to_be'
     )
-
     date_qualifier = forms.ChoiceField(
         widget=forms.RadioSelect(),
         initial='due_date',
@@ -289,29 +288,36 @@ class DueDateForm(forms.Form):
 
 
 class ProfileForm(pml_forms.PMLForm):
-    submit_text = "Register"
+    # submit_text = "Register"
     username = pml_forms.PMLTextField(
         label="Username",
         help_text="This name will appear next to all your comments."
     )
+    relation_to_baby = pml_forms.PMLRadioField(
+        choices=RELATION_TO_BABY_CHOICES,
+        label='Are you a...',
+        initial='mom_or_mom_to_be'
+    )
+    date_qualifier = pml_forms.PMLRadioField(
+        initial='due_date',
+        choices=DATE_QUALIFIER_CHOICES,
+        label="Please enter your baby's birth day or due date or select unknown if you are not sure of the due date"
+    )
     delivery_date = pml_forms.PMLTextField(
-        label="What is your due date or baby's birthday?",
+        label="What is your due date or baby's birthday?"
+    )
+    unknown_date = pml_forms.PMLCheckBoxField(
+        required=False,
+        choices=(("unknown", "I don't know the delivery date"),)
     )
     tos = pml_forms.PMLCheckBoxField(
         choices=(
-            ("accept", 'I accept the terms and conditions of use.'),
+            (
+            "accept", 
+            mark_safe('I accept the <LINK href="%s">terms and conditions</LINK> of use.' % reverse("terms"))
+            ),
         )
     )
-
-    def __init__(self, *args, **kwargs):
-        super(ProfileForm, self).__init__(*args, **kwargs)
-        self.fields['tos'] = pml_forms.PMLCheckBoxField(
-            choices=(
-                ("accept", mark_safe('I accept the <LINK href="%s">terms '
-                                     'and conditions</LINK> of use.'
-                                     % reverse("terms"))),
-            )
-        )
 
     def clean_delivery_date(self):
         delivery_date = self.cleaned_data['delivery_date']
@@ -319,5 +325,63 @@ class ProfileForm(pml_forms.PMLForm):
             delivery_date = parser.parse(delivery_date)
         except ValueError:
             raise ValidationError('Please enter a date in the format day/month/year(i.e. 17/8/2013).')
-
         return delivery_date
+
+    def clean(self):
+        """
+        Check that the birth date is provided, if the person selected birth
+        date as the date type.
+        Check that the due date is provided or the unknown check box is checked
+        if due date is selected as the date type.
+        """
+        cleaned_data = super(ProfileForm, self).clean()
+        delivery_date = cleaned_data['delivery_date']
+        date_qualifier = cleaned_data['date_qualifier']
+        try:
+            unknown_date = cleaned_data['unknown_date']
+        except KeyError:
+            unknown_date = 'na'
+        if date_qualifier == 'birth_date' and delivery_date is None:
+            msg = 'You need to provide a birth date'
+            self._errors['delivery_date'] = self.error_class([msg])
+            del cleaned_data['delivery_date']
+        elif date_qualifier == 'due_date' and delivery_date is None \
+                and unknown_date == 'na':
+            msg = "Either provide a due date, or check the \
+                  'Unknown' check box below the date."
+            self._errors['delivery_date'] = self.error_class([msg])
+            del cleaned_data['delivery_date']
+        return cleaned_data
+
+
+class VLiveProfileEditForm(ProfileForm):
+    """
+    The VLive form to edit all options in the member's full profile.
+    """
+    about_me = forms.PMLTextField(
+        label="About Me",
+        required=False
+    )
+    baby_name = forms.PMLTextField(
+        label="The Baby's Name",
+        required=False
+    )
+    baby_has_been_born = forms.PMLCheckBoxField(
+        required=False,
+        choices=(("unknown", "Baby has been born"),)
+    )
+
+    def __init__(self, *args, **kwargs):
+        super(VLiveProfileEditForm, self).__init__(*args, **kwargs)
+        self.fields['date_qualifier'] = pml_forms.PMLHiddenField()
+        self.fields.keyOrder = [
+            'username',
+            'mobile_number',
+            'relation_to_baby',
+            'about_me',
+            'baby_name',
+            'date_qualifier',
+            'delivery_date',
+            'unknown_date',
+            'baby_has_been_born'
+        ]
