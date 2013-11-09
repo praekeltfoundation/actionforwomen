@@ -1,3 +1,5 @@
+{% extends "pml/base.xml" %}
+
 {% load jmbo_inclusion_tags %}
 {% load jmbo_template_tags %}
 {% load comments %}
@@ -7,20 +9,26 @@
 {% load mama_inclusion_tags %}
 {% load pml_inclusion_tags %}
 
-{% header text='{{live_chat.current_live_chat.title}}' %}
+{% block body %}
+{% header object.title %}
 <MODULE>
   <CONTAINER type="data">
     <TEXT>
-      {{ live_chat.current_live_chat.description|safe|linebreaks }}
+      <p><b>For those who missed this live chat, that was held on
+        {{ object.chat_ends_at|date:"d M Y" }}
+        we present this archive of the chat. Please note that voting and
+        comments are no longer available.
+      </b></p>
+      {{ object.description|safe|linebreaks }}
     </TEXT>
   </CONTAINER>
 </MODULE>
 
-{% header text='Questions and Responses' %}
+{% header "Questions and Responses" %}
 <MODULE>
   {% if chat_comments %}
-    <CONTAINER type="data">
-      {% for comment in chat_comments.object_list %}
+    {% for comment in chat_comments.object_list %}
+      <CONTAINER type="data">
         <TEXT>
           {% if comment.user %}
             {% with comment.user.get_profile as profile %}
@@ -29,34 +37,27 @@
               {% endif %}
             {% endwith %}
           {% endif %}
-
-          {% if comment.user %}
-            <LINK href="{% url public_profile comment.user.id %}">
-            <TEXT><b>{{ comment.name }}</b></TEXT>
-            </LINK><br/>
-          {% else %}
-            <b>{{ comment.name }}</b><br/>
-          {% endif %}
-
-          {{ comment.submit_date }} | 
-          {% likes comment %} {% report_comment_abuse comment %}<br/>
-          {{ comment.comment|linebreaks }}<br/>
+          <b>{{ comment.name }}</b><br/>
+          {{ comment.submit_date }}<br/>
+          {{ comment.comment|linebreaks }}
         </TEXT>
+      </CONTAINER>
 
-        {% if comment.livechatresponse_set.exists %}
-        <TEXT>
-          {% for response in comment.livechatresponse_set.all %}
-            Response by:
-            <LINK href="{% url public_profile response.author.id %}">
-            <TEXT color="red"><b>{{ response.author.username }}</b></TEXT>
-            </LINK><br/>
+      {% if comment.livechatresponse_set.exists %}
+        {% for response in comment.livechatresponse_set.all %}
+          <CONTAINER type="data">
+            <TEXT color="maroon">Response by: 
+            <b>{{ response.author.username }}</b>
+            </TEXT>
+            <TEXT>
             {{ response.updated_at }}<br/>
             {{ response.response }}
-          {% endfor %}
-        </TEXT>
-        {% endif %}
-      {% endfor %}
-    </CONTAINER>
+            </TEXT>
+          </CONTAINER>
+        {% endfor %}
+      {% endif %}
+
+    {% endfor %}
 
     <CONTAINER type="data">
       {% if chat_comments.has_previous %}
@@ -82,19 +83,5 @@
     </CONTAINER>
   {% endif %}
 </MODULE>
+{% endblock %}
 
-<MODULE>
-  {% if live_chat.can_render_comment_form %}
-    <CONTAINER type="form">
-      {% render_comment_form for live_chat.current_live_chat %}
-    </CONTAINER>
-  {% else %}
-    {% if live_chat.can_comment_code == 'auth_required' %}
-      <CONTAINER type="data">
-        <LINK href="{% url login %}?next={{ request.META.PATH_INFO }}">
-        <TEXT>Sign in to comment or ask a question</TEXT>
-        </LINK>
-      </CONTAINER>
-    {% endif %}
-  {% endif %}
-</MODULE>
