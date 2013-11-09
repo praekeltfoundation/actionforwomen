@@ -119,16 +119,10 @@ def pml_page_header(context):
         'title': 'Home',
         'url': reverse('home'),
     })
-    if request.user.is_authenticated():
-        links.append({
-            'title': 'My Profile',
-            'url': reverse('view_my_profile')
-        })
-    else:
-        links.append({
-            'title': 'Sign In',
-            'url': reverse('login')
-        })
+    links.append({
+        'title': 'My Profile',
+        'url': reverse('view_my_profile')
+    })
     links.append({
         'title': 'Articles',
         'url': reverse('category_object_list', 
@@ -154,11 +148,6 @@ def pml_page_header(context):
         'title': "Guides",
         'url': reverse('guides_list')
     })
-    if help_post:
-        links.append({
-            'title': 'Help',
-            'url': help_post[0].get_absolute_category_url(),
-        })
     context['links'] = links
     return context
 
