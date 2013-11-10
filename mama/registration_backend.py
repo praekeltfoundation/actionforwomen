@@ -1,13 +1,7 @@
 from userprofile.backends.simple import SimpleBackend
-from mama.forms import RegistrationForm
 
 
 class MamaBackend(SimpleBackend):
-
-    def get_form_class(self, request):
-        # Override this here to prevent a circular import between mama models
-        # and forms.
-        return RegistrationForm
 
     def register(self, request, **kwargs):
         """

@@ -13,7 +13,7 @@ from jmbo.models import ModelBase
 from preferences.models import Preferences
 from userprofile.models import AbstractProfileBase
 from photologue.models import ImageModel
-# from mama.forms import RegistrationForm
+from mama.forms import RegistrationForm
 
 from mama.constants import (
     RELATION_TO_BABY_CHOICES, 
@@ -156,7 +156,7 @@ class DefaultAvatar(ImageModel):
 class UserProfile(AbstractProfileBase):
     """ The mama user profile model
     """
-    # registration_form = RegistrationForm
+    registration_form = RegistrationForm
 
     # TODO: This could be a security risk, as password reset depends on a
     # mobile number to match a number in a user profile. So, this field should
