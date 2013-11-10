@@ -7,15 +7,18 @@ from django.db import models
 from django.db.models.signals import class_prepared, post_save
 from django.dispatch import receiver
 
-from jmbo.models import ModelBase
 from likes.exceptions import CannotVoteException
 from likes.signals import likes_enabled_test, can_vote_test
+from jmbo.models import ModelBase
 from preferences.models import Preferences
 from userprofile.models import AbstractProfileBase
-
 from photologue.models import ImageModel
-from mama.forms import RegistrationForm
-from mama.constants import RELATION_TO_BABY_CHOICES, FULL_DATE_QUALIFIER_CHOICES
+# from mama.forms import RegistrationForm
+
+from mama.constants import (
+    RELATION_TO_BABY_CHOICES, 
+    FULL_DATE_QUALIFIER_CHOICES
+)
 
 
 class Link(models.Model):
@@ -151,7 +154,10 @@ class DefaultAvatar(ImageModel):
 
 
 class UserProfile(AbstractProfileBase):
-    registration_form = RegistrationForm
+    """ The mama user profile model
+    """
+    # registration_form = RegistrationForm
+
     # TODO: This could be a security risk, as password reset depends on a
     # mobile number to match a number in a user profile. So, this field should
     # not be optional. This number should also be unique across profiles.

@@ -9,7 +9,15 @@ from django.contrib.admin.sites import NotRegistered
 from django.contrib.contenttypes.models import ContentType
 
 from jmbo.admin import ModelBaseAdmin
+from preferences.admin import PreferencesAdmin
+from moderator.admin import CommentAdmin
+
 from secretballot.models import Vote
+from post.models import Post
+from livechat.models import LiveChat
+from jmboyourwords.admin import YourStoryEntryAdmin
+from jmboyourwords.models import YourStoryEntry
+from category.models import Category
 from mama.models import (
     Link, 
     NavigationLink, 
@@ -17,13 +25,6 @@ from mama.models import (
     Banner,
     DefaultAvatar
 )
-from post.models import Post
-from livechat.models import LiveChat
-from preferences.admin import PreferencesAdmin
-from jmboyourwords.admin import YourStoryEntryAdmin
-from jmboyourwords.models import YourStoryEntry
-from moderator.admin import CommentAdmin
-from category.models import Category
 
 
 class LinkInline(admin.TabularInline):

@@ -15,13 +15,18 @@ from django.core.validators import RegexValidator
 from django.forms.extras.widgets import SelectDateWidget
 from django.utils.http import int_to_base36
 from django.utils.safestring import mark_safe
-import mama
+
 from pml import forms as pml_forms
 from registration.forms import RegistrationFormTermsOfService
 from userprofile import utils
 
+from mama.models import UserProfile, DefaultAvatar
 
-from mama.constants import RELATION_TO_BABY_CHOICES, DATE_QUALIFIER_CHOICES
+from mama.constants import (
+    RELATION_TO_BABY_CHOICES, 
+    DATE_QUALIFIER_CHOICES
+)
+
 
 class ContactForm(forms.Form):
     mobile_number = forms.CharField(max_length=64)
@@ -45,11 +50,11 @@ class PasswordResetForm(PasswordResetForm):
         mobile_number = self.cleaned_data['mobile_number']
         # Fail with invalid number.
         try:
-            self.profile = mama.models.UserProfile.objects.get(
+            self.profile = UserProfile.objects.get(
                 mobile_number__exact=mobile_number
             )
             self.user = self.profile.user
-        except mama.models.UserProfile.DoesNotExist:
+        except UserProfile.DoesNotExist:
             raise forms.ValidationError("Unable to find an account for the "
                                         "provided mobile number. Please try "
                                         "again.")
@@ -151,13 +156,13 @@ class RegistrationForm(RegistrationFormTermsOfService):
         RegexValidator('^\d{10}$', message="Enter a valid mobile number in "
                        "the form 0719876543")(mobile_number)
         try:
-            mama.models.UserProfile.objects.get(
+            UserProfile.objects.get(
                 mobile_number__exact=mobile_number
             )
             raise ValidationError('A user with that mobile number already '
                                   'exists. <a href="%s">Forgotten your '
                                   'password?</a>' % reverse("password_reset"))
-        except mama.models.UserProfile.DoesNotExist:
+        except UserProfile.DoesNotExist:
             return mobile_number
 
     def clean(self):
@@ -276,7 +281,7 @@ class EditProfileForm(RegistrationForm):
 
     @property
     def default_avatars(self):
-        return mama.models.DefaultAvatar.objects.all()
+        return DefaultAvatar.objects.all()
 
 
 class DueDateForm(forms.Form):
@@ -288,7 +293,7 @@ class DueDateForm(forms.Form):
 
 
 class ProfileForm(pml_forms.PMLForm):
-    # submit_text = "Register"
+    submit_text = "Register"
     username = pml_forms.PMLTextField(
         label="Username",
         help_text="This name will appear next to all your comments."
@@ -312,12 +317,11 @@ class ProfileForm(pml_forms.PMLForm):
     )
     tos = pml_forms.PMLCheckBoxField(
         choices=(
-            (
-            "accept", 
-            mark_safe('I accept the <LINK href="%s">terms and conditions</LINK> of use.' % reverse("terms"))
+            ( 
+                "accept", 
+                mark_safe("""I accept the <LINK href="/terms/"><TEXT>terms and conditions</TEXT></LINK> of use.""")
             ),
-        )
-    )
+        ))
 
     def clean_delivery_date(self):
         delivery_date = self.cleaned_data['delivery_date']
@@ -358,15 +362,15 @@ class VLiveProfileEditForm(ProfileForm):
     """
     The VLive form to edit all options in the member's full profile.
     """
-    about_me = forms.PMLTextField(
+    about_me = pml_forms.PMLTextField(
         label="About Me",
         required=False
     )
-    baby_name = forms.PMLTextField(
+    baby_name = pml_forms.PMLTextField(
         label="The Baby's Name",
         required=False
     )
-    baby_has_been_born = forms.PMLCheckBoxField(
+    baby_has_been_born = pml_forms.PMLCheckBoxField(
         required=False,
         choices=(("unknown", "Baby has been born"),)
     )
