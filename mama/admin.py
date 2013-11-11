@@ -19,6 +19,7 @@ from jmboyourwords.admin import YourStoryEntryAdmin
 from jmboyourwords.models import YourStoryEntry
 from moderator.admin import CommentAdmin
 from category.models import Category
+from survey.models import EUQuizToPost
 
 
 class LinkInline(admin.TabularInline):
@@ -31,10 +32,16 @@ class NavigationLinkInline(admin.TabularInline):
     fk_name = 'source'
 
 
+class EUNutritionQuizInline(admin.TabularInline):
+    model = EUQuizToPost
+    fk_name = 'post'
+
+
 class PostAdmin(ModelBaseAdmin):
     inlines = ModelBaseAdmin.inlines + [
         LinkInline,
-        NavigationLinkInline
+        NavigationLinkInline,
+        EUNutritionQuizInline
     ]
 
 
