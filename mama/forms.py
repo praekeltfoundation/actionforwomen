@@ -19,8 +19,8 @@ from django.utils.safestring import mark_safe
 from pml import forms as pml_forms
 from registration.forms import RegistrationFormTermsOfService
 from userprofile import utils
+import mama
 
-from mama.models import UserProfile, DefaultAvatar
 
 from mama.constants import (
     RELATION_TO_BABY_CHOICES, 
@@ -50,11 +50,11 @@ class PasswordResetForm(PasswordResetForm):
         mobile_number = self.cleaned_data['mobile_number']
         # Fail with invalid number.
         try:
-            self.profile = UserProfile.objects.get(
+            self.profile = mama.models.UserProfile.objects.get(
                 mobile_number__exact=mobile_number
             )
             self.user = self.profile.user
-        except UserProfile.DoesNotExist:
+        except mama.models.UserProfile.DoesNotExist:
             raise forms.ValidationError("Unable to find an account for the "
                                         "provided mobile number. Please try "
                                         "again.")
@@ -156,13 +156,13 @@ class RegistrationForm(RegistrationFormTermsOfService):
         RegexValidator('^\d{10}$', message="Enter a valid mobile number in "
                        "the form 0719876543")(mobile_number)
         try:
-            UserProfile.objects.get(
+            mama.models.UserProfile.objects.get(
                 mobile_number__exact=mobile_number
             )
             raise ValidationError('A user with that mobile number already '
                                   'exists. <a href="%s">Forgotten your '
                                   'password?</a>' % reverse("password_reset"))
-        except UserProfile.DoesNotExist:
+        except mama.models.UserProfile.DoesNotExist:
             return mobile_number
 
     def clean(self):
@@ -281,7 +281,7 @@ class EditProfileForm(RegistrationForm):
 
     @property
     def default_avatars(self):
-        return DefaultAvatar.objects.all()
+        return mama.models.DefaultAvatar.objects.all()
 
 
 class DueDateForm(forms.Form):
