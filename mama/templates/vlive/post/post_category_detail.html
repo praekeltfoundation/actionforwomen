@@ -13,7 +13,7 @@
         {% render_object object "inline" %}
     {% endcache %}
 
-    {% post_EU_nutrition_quizzes object %}
+    {% post_content_quizzes object %}
 
     {% cache 3600 topic_listing category.slug %}
         {% topic_listing category.slug 1 %}
