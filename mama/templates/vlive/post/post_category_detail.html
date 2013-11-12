@@ -3,6 +3,7 @@
 {% load cache %}
 {% load jmbo_inclusion_tags %}
 {% load mama_inclusion_tags %}
+{% load survey_inclusion_tags %}
 {% load jmbo_template_tags %}
 {% load likes_inclusion_tags %}
 {% load livechat_tags%}
@@ -23,14 +24,15 @@
     </TEXT>
   </CONTAINER>
 </MODULE>
-  {% if object.get_thumb_url %}
-  <MODULE>
-    <CONTAINER type="image">
-      <IMAGE href="{{ object.get_thumb_url }}" align="left" />
-    </CONTAINER>
-  </MODULE>
-  {% endif %}
-  {% text_module object.content %}
+
+{% if object.get_thumb_url %}
+<MODULE>
+  <CONTAINER type="image">
+    <IMAGE href="{{ object.get_thumb_url }}" align="left" />
+  </CONTAINER>
+</MODULE>
+{% endif %}
+{% text_module object.content %}
 
 {% cache 3600 links object.id %}
   <MODULE>
@@ -77,6 +79,8 @@
     {% endif %}
   {% endwith %}
 {% endcache %}
+
+{% post_content_quizzes object %}
 
 {% object_comments object %}
 

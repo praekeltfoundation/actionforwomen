@@ -1,0 +1,19 @@
+{% load pml_inclusion_tags %}
+
+{% for survey in quizzes %}
+  {% header text='{{survey.title}}' color='orange' %}
+  <MODULE>
+  <CONTAINER type="data">
+    <TEXT>
+      <p>
+      {{ survey.banner_description|linebreaks }}
+      </p>
+      <p>
+      <LINK href="{% url survey:survey_form survey.id %}">
+      <TEXT><b>Click here to participate!<b></TEXT>
+      </LINK> 
+      </p>
+    </TEXT>
+  </CONTAINER>
+  </MODULE>
+{% endfor %}

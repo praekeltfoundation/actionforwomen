@@ -4,7 +4,8 @@
 {% load mama_inclusion_tags %}
 {% load jmbo_template_tags %}
 {% load likes_inclusion_tags %}
-{% load livechat_tags%}
+{% load livechat_tags %}
+{% load survey_inclusion_tags %}
 
 {% block content %}
     <div class="{{ category.color }}">
@@ -55,6 +56,12 @@
             {% endcache %}
         </div>
     </div>
+
+    {% post_content_quizzes object %}
+
+    {% cache 3600 topic_listing category.slug %}
+        {% topic_listing category.slug 1 %}
+    {% endcache %}
 
     {% object_comments object %}
 

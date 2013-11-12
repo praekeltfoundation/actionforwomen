@@ -18,6 +18,7 @@ from livechat.models import LiveChat
 from jmboyourwords.admin import YourStoryEntryAdmin
 from jmboyourwords.models import YourStoryEntry
 from category.models import Category
+from survey.models import ContentQuizToPost
 from mama.models import (
     Link, 
     NavigationLink, 
@@ -37,10 +38,16 @@ class NavigationLinkInline(admin.TabularInline):
     fk_name = 'source'
 
 
+class ContentQuizInline(admin.TabularInline):
+    model = ContentQuizToPost
+    fk_name = 'post'
+
+
 class PostAdmin(ModelBaseAdmin):
     inlines = ModelBaseAdmin.inlines + [
         LinkInline,
-        NavigationLinkInline
+        NavigationLinkInline,
+        ContentQuizInline
     ]
 
 
