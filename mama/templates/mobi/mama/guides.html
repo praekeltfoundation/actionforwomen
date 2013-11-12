@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block following_header %}
+{% include "mama/inclusion_tags/registration_banner.html" %}
+{% endblock %}
+
 {% block above_content %}
 <div>
     <div class="{{ category.color }}">

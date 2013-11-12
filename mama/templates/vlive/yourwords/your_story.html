@@ -1,0 +1,24 @@
+{% extends 'pml/base.xml' %}
+
+{% load pml_inclusion_tags %}
+
+{% block body %}
+
+    {% header competition.title 'orange' %}
+
+    <MODULE>
+    <CONTAINER type="form">
+        <FORM method="GET" 
+              href="{% url your_story competition.id %}" 
+              submit_text="Submit">
+            <FIELD name="csrfmiddlewaretoken" 
+                   value="{{ csrf_token }}" 
+                   type="hidden" />
+            {% for field in form %}
+            {{ field }}<br />
+            {% endfor %}
+        </FORM>
+    </CONTAINER>
+    </MODULE>
+
+{% endblock %}
