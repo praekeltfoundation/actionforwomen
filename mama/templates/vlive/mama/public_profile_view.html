@@ -32,7 +32,7 @@
   {% if about_me %}
   <CONTAINER type="data">
     <TITLE>About {{ alias }}</TITLE><br/>
-    <TEXT>{{ about_me|safe }}</TEXT>
+    <TEXT>{{ about_me|linebreaks }}</TEXT>
   </CONTAINER>
   {% endif %}
 

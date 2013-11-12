@@ -4,19 +4,6 @@
 {% if weeks_ago == 0 %}
   {% if can_render_comment_form %}
       {% render_comment_form for lead_in_post %}
-      {% comment %}
-      <script type="text/javascript">
-        var labels = document.getElementsByTagName('LABEL');
-        for (var i = 0; i < labels.length; i++) {
-            if (labels[i].htmlFor != '') {
-                 var elem = document.getElementById(labels[i].htmlFor);
-                 if (elem)
-                    elem.label = labels[i];			
-            }
-        };
-        document.getElementById('id_comment').label.innerHTML = 'Type your Question';
-      </script>
-      {% endcomment %}
   {% endif %}
 {% endif %}
 

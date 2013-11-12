@@ -56,12 +56,6 @@
         </div>
     </div>
 
-    {% comment %}
-    {% cache 3600 topic_listing category.slug %}
-        {% topic_listing category.slug 1 %}
-    {% endcache %}
-    {% endcomment %}
-
     {% object_comments object %}
 
 {% endblock %}
