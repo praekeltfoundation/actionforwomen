@@ -1,0 +1,20 @@
+{% load pml_inclusion_tags %}
+
+{% for survey in eu_quizzes %}
+  {% header text='{{survey.title}}' color='orange' %}
+  <MODULE>
+  <CONTAINER type="data">
+    <TEXT>
+      <p>
+      {{ survey.banner_description|linebreaks }}
+      </p>
+      <p>
+      <LINK href="{% url survey:survey_form survey.id %}">
+      <TEXT>Click here to participate</TEXT>
+      </LINK> 
+      in the survey. By participating, you stand a chance to win airtime!
+      </p>
+    </TEXT>
+  </CONTAINER>
+  </MODULE>
+{% endfor %}

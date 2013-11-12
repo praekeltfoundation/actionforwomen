@@ -1,6 +1,10 @@
 {% extends 'pml/base.xml' %}
 
-{% load cache jmbo_inclusion_tags mama_inclusion_tags pml_inclusion_tags %}
+{% load cache %}
+{% load jmbo_inclusion_tags %}
+{% load mama_inclusion_tags %}
+{% load survey_inclusion_tags %}
+{% load pml_inclusion_tags %}
 
 {% block body %}
     {% with 'grey' as color %}
@@ -9,11 +13,13 @@
         {% render_object object "inline" %}
     {% endcache %}
 
-    {% vlive_object_comments object %}
+    {% post_EU_nutrition_quizzes object %}
 
     {% cache 3600 topic_listing category.slug %}
         {% topic_listing category.slug 1 %}
     {% endcache %}
+
+    {% vlive_object_comments object %}
     {% endwith %}
 
 {% endblock %}
