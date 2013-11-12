@@ -2,6 +2,7 @@ from userprofile.backends.simple import SimpleBackend
 
 
 class MamaBackend(SimpleBackend):
+
     def register(self, request, **kwargs):
         """
         Create and immediately log in a new user.

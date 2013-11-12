@@ -1,25 +1,84 @@
-{% extends 'pml/base.xml' %}
+{% extends "pml/base.xml" %}
 
-{% load cache jmbo_inclusion_tags mama_inclusion_tags pml_inclusion_tags %}
+{% load cache %}
+{% load jmbo_inclusion_tags %}
+{% load mama_inclusion_tags %}
+{% load jmbo_template_tags %}
+{% load likes_inclusion_tags %}
+{% load livechat_tags%}
+{% load pml_inclusion_tags %}
 
 {% block body %}
-    {% with 'grey' as color %}
-    {% cache 600 post_inline object.id %}
-        {% header text=category.title color=color %}
-        {% render_object object "inline" %}
-    {% endcache %}
 
-    {% vlive_object_comments object %}
+<MODULE>
+  <CONTAINER type="data">
+    <TITLE color="{{ category.color }}">
+      {{ category.title }}
+    </TITLE>
+    <TEXT>
+      <b>{{ object.title }}</b><br/>
+      {% if object.comments_enabled %}
+        {% humanize_time_diff object.created "Ago" %} - {{ object.comment_count }} Comments - {% likes object %}
+      {% endif %}
+    </TEXT>
+  </CONTAINER>
+</MODULE>
+  {% if object.get_thumb_url %}
+  <MODULE>
+    <CONTAINER type="image">
+      <IMAGE href="{{ object.get_thumb_url }}" align="left" />
+    </CONTAINER>
+  </MODULE>
+  {% endif %}
+  {% text_module object.content %}
 
-    {% cache 3600 topic_listing category.slug %}
-        {% topic_listing category.slug 1 %}
-    {% endcache %}
-    {% endwith %}
+{% cache 3600 links object.id %}
+  <MODULE>
+    <CONTAINER type="list">
+      {% with object.link_target_set.all as links %}
+          {% for link in links %}
+              {% if link.target.is_permitted %}
+                  <LINK href="{{ link.target.get_absolute_category_url }}">
+                  <TEXT>
+                    &gt;
+                    {% if link.title %}
+                    {{ link.title }}
+                    {% else %}
+                    {{ link.target.title }}
+                    {% endif %}
+                  </TEXT>
+                  </LINK>
+              {% endif %}
+          {% endfor %}
+      {% endwith %}
+    </CONTAINER>
+  </MODULE>
+
+  {% babycenter_byline object %}
+
+  {% with object.navigation_link_target_set.all as navigation_links %}
+    {% if navigation_links %}
+    <MODULE>
+      <CONTAINER type="list">
+        {% for navigation_link in navigation_links %}
+            <LINK href="{{ navigation_link.target.get_absolute_category_url }}">
+            <TEXT>
+              &lt; Back to 
+              {% if navigation_link.title %}
+              {{ navigation_link.title }}
+              {% else %}
+              {{ navigation_link.target.title }}
+              {% endif %}
+            </TEXT>
+            </LINK>
+        {% endfor %}
+      </CONTAINER>
+    </MODULE>
+    {% endif %}
+  {% endwith %}
+{% endcache %}
+
+{% object_comments object %}
 
 {% endblock %}
 
-{% block footer %}
-    {% with 'grey' as color %}
-        {{ block.super }}
-    {% endwith %}
-{% endblock %}

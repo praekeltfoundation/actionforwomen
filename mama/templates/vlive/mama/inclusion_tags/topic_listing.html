@@ -4,4 +4,14 @@
     {% header text=full_heading color=color %}
 
     {% link_list objects=object_list url_property='get_absolute_category_url' text_property='title' color='grey' %}
+
+    <MODULE>
+      <CONTAINER type="data">
+        <TEXT>
+          <LINK href="{{ category.get_absolute_url }}">
+          <TEXT>More {{ category.title }} &gt;</TEXT>
+          </LINK>
+        </TEXT>
+      </CONTAINER>
+    </MODULE>
 {% endif %}

@@ -1,14 +1,20 @@
 {% extends 'pml/base.xml' %}
 
-{% load cache mama_inclusion_tags pml_inclusion_tags survey_inclusion_tags %}
+{% load cache mama_inclusion_tags livechat_tags pml_inclusion_tags survey_inclusion_tags %}
+
+{% block following_header %}
+{% include "mama/inclusion_tags/registration_banner.html" %}
+{% live_chat_banner %}
+{% banner image_url="{{ STATIC_URL }}mama/img/logo.jpg?2" %}
+{% random_guide_banner %}
+{% endblock %}
 
 {% block body %}
-    {% ages_and_stages %}
+{% ages_and_stages %}
     {% cache 3600 home %}
+        {% stories_listing "moms-stories" %}
         {% post_listing "articles" %}
-        {% post_listing "moms-stories" %}
-        {% topic_listing "mama-a-to-z" 0 %}
-        {% topic_listing "life-guides" 0 %}
+        {% include "mama/inclusion_tags/askmama_banner.html" %}
     {% endcache %}
     {% poll_listing %}
     {% show_survey %}

@@ -1,0 +1,15 @@
+{% if random_guide %}
+  <MODULE>
+  <CONTAINER type="data">
+    <TEXT>
+      <p>
+      <a href="{{ random_guide.url }}">{{ random_guide.title }}</a>
+      {% if random_guide.description %}
+      <br/>
+      {{ random_guide.description|truncatewords:10 }}
+      {% endif %}
+      </p>
+    </TEXT>
+  </CONTAINER>
+  </MODULE>
+{% endif %}

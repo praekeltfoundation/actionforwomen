@@ -5,11 +5,6 @@
 <div class="{{ live_chat.current_live_chat.primary_category.color}} ">
   <div class="h1">
     {{ live_chat.current_live_chat.title }}
-    {% comment %}
-    <div class="stamp">
-        {% humanize_time_diff live_chat.current_live_chat.created "Ago" %} // <a href="#comments">{{ live_chat.current_live_chat.comment_count }} Comments</a> // {% likes live_chat.current_live_chat %}
-    </div>
-    {% endcomment %}
   </div>
 
   <div class="content-inner">
@@ -23,15 +18,16 @@
         {% for comment in chat_comments.object_list %}
             <div class="item comment no-pic">
               {% if comment.user %}
-              <div class="post">
+              <div class="post" style="float: left">
                 {% with comment.user.get_profile as profile %}
                   {% if profile.avatar %}
-                    <img src="{{ profile.avatar.url }}" width="44" height="44" />
+                    <img src="{{ profile.avatar.url }}" width="44" height="44"
+                    style="padding: 0;" />
                   {% endif %}
                 {% endwith %}
               </div>
               {% endif %}
-              <div class="meta">
+              <div class="meta" style="float: left">
                 <div class="title">
                   {% if comment.user %}
                   <a href="{% url public_profile comment.user.id %}">{{ comment.name }}</a>
@@ -44,7 +40,7 @@
               </div>
 
               {% if comment.livechatresponse_set.exists %}
-              <div class="item comment" style="padding-left: 15px">
+              <div class="item comment" style="padding-left: 25px; background-color: rgb(244, 229, 234)">
                   {% for response in comment.livechatresponse_set.all %}
                       <div class="meta">
                           <div class="title">

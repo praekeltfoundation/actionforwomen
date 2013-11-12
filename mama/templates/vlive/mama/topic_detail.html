@@ -1,0 +1,86 @@
+{% extends "pml/base.xml" %}
+
+{% load cache %}
+{% load jmbo_inclusion_tags %}
+{% load mama_inclusion_tags %}
+{% load jmbo_template_tags %}
+{% load likes_inclusion_tags %}
+{% load livechat_tags%}
+{% load pml_inclusion_tags %}
+
+{% block body %}
+
+<MODULE backgroundColor="true" palette="{{category.color}}">
+  <HEADER>
+    <LABEL>
+    <LINK href="{% url guides_list %}">
+    <TEXT>Guides</TEXT>
+    </LINK> &gt; 
+    <LINK href="{% url more_guides_list %}">
+    <TEXT>{{ category.title }}</TEXT>
+    </LINK>
+    </LABEL>
+  </HEADER>
+</MODULE>
+
+{% header object.title %}
+
+<MODULE>
+<CONTAINER type="data">
+  {% if object.comments_enabled %}
+  <TEXT>
+    {% humanize_time_diff object.created "Ago" %} 
+    - 
+    {{ object.comment_count }} Comments 
+    - 
+    {% likes object %}
+  </TEXT>
+  {% endif %}
+</CONTAINER>
+</MODULE>
+
+<MODULE>
+  <CONTAINER type="data">
+    {% if object.get_thumb_url %}
+    <IMAGE href="{{ object.get_thumb_url }}" mime-type="image/jpeg" />
+    {% endif %}
+    <TEXT>
+      {{ object.content|linebreaks }}
+    </TEXT>
+  </CONTAINER>
+</MODULE>
+
+{% cache 3600 links object.id %}
+<MODULE>
+  {% with object.link_target_set.all as links %}
+  <CONTAINER type="list">
+    {% for link in links %}
+      {% if link.target.is_permitted %}
+      <LINK href="{% url topic_detail link.target.primary_category.slug link.target.slug %}">
+      <TEXT>{{ link.target.title }}</TEXT>
+      </LINK>
+      {% endif %}
+    {% endfor %}
+  </CONTAINER>
+  {% endwith %}
+</MODULE>
+
+{% babycenter_byline object %}
+
+{% with object.navigation_link_target_set.all as navigation_links %}
+  {% if navigation_links %}
+  <MODULE>
+    <CONTAINER type="list">
+      {% for navigation_link in navigation_links %}
+      <LINK href="{% url guides_topic_list navigation_link.target.slug %}">
+      <TEXT>&lt; Back to {{ navigation_link.target.title }}</TEXT>
+      </LINK>
+      {% endfor %}
+    </CONTAINER>
+  </MODULE>
+  {% endif %}
+{% endwith %}
+
+{% endcache %}
+
+{% endblock %}
