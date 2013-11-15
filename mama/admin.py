@@ -110,6 +110,13 @@ class WeeklyFilter(admin.filters.SimpleListFilter):
         )
 
     def queryset(self, request, queryset):
+        # see if there is a filter value in place, to apply
+        try:
+            weeks_ago = int(self.value())
+        except TypeError:
+            # there is no filter value
+            return queryset
+
         # Find the dates for the current week, starting last Sunday and ending
         # next Saturday
         NOW = datetime.now()
@@ -122,11 +129,6 @@ class WeeklyFilter(admin.filters.SimpleListFilter):
                                            microseconds=-1)
 
         # Subtract the amount of weeks in the past.
-        try:
-            weeks_ago = int(self.value())
-        except TypeError:
-            weeks_ago = 0
-
         if weeks_ago > 0:
             start_sunday = start_sunday + relativedelta(weeks=-weeks_ago)
             end_saturday = end_saturday + relativedelta(weeks=-weeks_ago)
@@ -137,27 +139,28 @@ class WeeklyFilter(admin.filters.SimpleListFilter):
                                                            end_saturday,))
         else:
             # Filter all the older questions.
-            queryset = queryset.filter(submit_date__lt=(start_sunday)) 
+            queryset = queryset.filter(submit_date__lt=(end_saturday)) 
 
         # Work out the vote count for the questions, to sort by the most liked
         # questions, i.e. questions with the most votes. (This is taken from the
         # MostLikedItem view modifier item in jmbo)
-        queryset = queryset.extra(
-            select={
-                'vote_score': '(SELECT COUNT(*) from %s WHERE vote=1 AND \
-    object_id=%s.%s AND content_type_id=%s) - (SELECT COUNT(*) from %s WHERE \
-    vote=-1 AND object_id=%s.%s AND content_type_id=%s)' % (
-                    Vote._meta.db_table,
-                    Comment._meta.db_table,
-                    Comment._meta.pk.attname,
-                    ContentType.objects.get_for_model(Comment).id,
-                    Vote._meta.db_table,
-                    Comment._meta.db_table,
-                    Comment._meta.pk.attname,
-                    ContentType.objects.get_for_model(Comment).id
-                )
-            }
-        )
+        if queryset.exists():
+            queryset = queryset.extra(
+                select={
+                    'vote_score': '(SELECT COUNT(*) from %s WHERE vote=1 AND \
+        object_id=%s.%s AND content_type_id=%s) - (SELECT COUNT(*) from %s WHERE \
+        vote=-1 AND object_id=%s.%s AND content_type_id=%s)' % (
+                        Vote._meta.db_table,
+                        Comment._meta.db_table,
+                        Comment._meta.pk.attname,
+                        ContentType.objects.get_for_model(Comment).id,
+                        Vote._meta.db_table,
+                        Comment._meta.db_table,
+                        Comment._meta.pk.attname,
+                        ContentType.objects.get_for_model(Comment).id
+                    )
+                }
+            )
         return queryset
 
 
@@ -166,7 +169,7 @@ class AskMamaQuestionAdmin(CommentAdmin):
     """
     list_display = ('comment_text', 'user', 'submit_date',
                     'classification', 'moderator_replied', 'is_removed')
-    list_filter = (WeeklyFilter,)
+    list_filter = (WeeklyFilter, 'is_removed',)
     date_hierarchy = None
 
     def queryset(self, request):
@@ -180,7 +183,7 @@ class AskMamaQuestionAdmin(CommentAdmin):
         questions = AskMamaQuestion.objects.filter(
             content_type=pct,
             object_pk=latest_pinned.id)
-        questions = questions.exclude(is_removed=True)
+        # questions = questions.exclude(is_removed=True)
 
         # leave out the moderator answers
         questions = questions.exclude(user__is_staff=True)

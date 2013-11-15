@@ -52,7 +52,7 @@ def favourite_questions_for_week(context, post,
                                                                end_saturday,))
     else:
         # Filter all the older questions.
-        questions = Comment.objects.filter(submit_date__lt=(start_sunday)) 
+        questions = Comment.objects.filter(submit_date__lt=(end_saturday)) 
 
     # Filter the comments linked to the post
     pct = ContentType.objects.get_for_model(post.__class__)
