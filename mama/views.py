@@ -331,7 +331,7 @@ class MyProfileView(TemplateView):
         """
         context = super(MyProfileView, self).get_context_data(**kwargs)
         user = self.request.user
-        profile = user.get_profile()
+        profile = user.profile
         context['username'] = user.username
         if profile.avatar:
             context['avatar'] = profile.avatar.url
@@ -355,7 +355,7 @@ class PublicProfileView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(PublicProfileView, self).get_context_data(**kwargs)
         user = auth.models.User.objects.get(pk=kwargs['user_id'])
-        profile = user.get_profile()
+        profile = user.profile
         context['user_id'] = user.id
         context['alias'] = profile.alias if profile.alias else 'Anon.'
         if profile.avatar:
@@ -405,7 +405,7 @@ class MyProfileEdit(FormView):
     def get_initial(self):
         initial = self.initial.copy()
         user = self.request.user
-        profile = user.get_profile()
+        profile = user.profile
         initial['username'] = user.username
         initial['avatar'] = profile.avatar
         initial['mobile_number'] = profile.mobile_number
@@ -448,7 +448,7 @@ class MyProfileEdit(FormView):
         and the unknown date values.
         """
         user = self.request.user
-        profile = user.get_profile()
+        profile = user.profile
         profile.alias = form.cleaned_data['username']
         profile.mobile_number = form.cleaned_data['mobile_number']
         profile.relation_to_baby = form.cleaned_data['relation_to_baby']
@@ -487,7 +487,7 @@ class UpdateDueDateView(FormView):
 
     def form_valid(self, form):
         user = self.request.user
-        profile = user.get_profile()
+        profile = user.profile
         profile.delivery_date = form.cleaned_data['due_date']
         profile.date_qualifier = 'due_date'
         profile.unknown_date = False
@@ -504,7 +504,7 @@ class ProfileView(FormView):
 
     def form_valid(self, form):
         user = self.request.user
-        profile = user.get_profile()
+        profile = user.profile
         profile.alias = form.cleaned_data['username']
         profile.delivery_date = form.cleaned_data['delivery_date']
         profile.save()

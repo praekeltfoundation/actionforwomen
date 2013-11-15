@@ -31,7 +31,7 @@
       <CONTAINER type="data">
         <TEXT>
           {% if comment.user %}
-            {% with comment.user.get_profile as profile %}
+            {% with comment.user.profile as profile %}
               {% if profile.avatar %}
                 <IMAGE href="{{ profile.avatar.url }}" align="left" width="44" height="44" />
               {% endif %}

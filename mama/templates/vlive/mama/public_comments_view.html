@@ -10,8 +10,8 @@
 <CONTAINER type="data">
 
     <TITLE>Comments by 
-    {% if comment_maker.get_profile.alias %}
-        {{ comment_maker.get_profile.alias }}
+    {% if comment_maker.profile.alias %}
+        {{ comment_maker.profile.alias }}
     {% else %}
         Anon.
     {% endif %}

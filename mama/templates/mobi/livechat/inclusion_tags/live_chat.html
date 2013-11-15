@@ -19,7 +19,7 @@
             <div class="item comment no-pic">
               {% if comment.user %}
               <div class="post" style="float: left">
-                {% with comment.user.get_profile as profile %}
+                {% with comment.user.profile as profile %}
                   {% if profile.avatar %}
                     <img src="{{ profile.avatar.url }}" width="44" height="44"
                     style="padding: 0;" />

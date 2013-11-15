@@ -24,7 +24,7 @@ def ages_and_stages(context):
     context = copy(context)
     user = context['request'].user
     if user.is_authenticated():
-        profile = user.get_profile()
+        profile = user.profile
         context.update({'profile': profile})
 
         # Check if the due date is missing
