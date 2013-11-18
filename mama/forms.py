@@ -323,14 +323,6 @@ class ProfileForm(pml_forms.PMLForm):
             ),
         ))
 
-    def clean_delivery_date(self):
-        try:
-            delivery_date = self.cleaned_data['delivery_date']
-            delivery_date = parser.parse(delivery_date)
-        except (KeyError, ValueError):
-            raise ValidationError('Please enter a date in the format day/month/year(i.e. 17/8/2013).')
-        return delivery_date
-
     def clean(self):
         """
         Check that the birth date is provided, if the person selected birth
@@ -341,7 +333,8 @@ class ProfileForm(pml_forms.PMLForm):
         cleaned_data = super(ProfileForm, self).clean()
         try:
             delivery_date = cleaned_data['delivery_date']
-        except KeyError:
+            delivery_date = parser.parse(delivery_date)
+        except (KeyError, ValueError):
             delivery_date = None
         try:
             date_qualifier = cleaned_data['date_qualifier']
