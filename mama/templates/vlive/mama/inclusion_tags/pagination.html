@@ -1,3 +1,23 @@
 {% load jmbo_template_tags pml_inclusion_tags %}
 
-{% text_include template='mama/pml_includes/pagination_include.html' color=color %}
+{% if page_obj.has_other_pages %}
+    {% if previous_url %}
+    <LINK href="{{ previous_url|force_escape }}">
+    <TEXT>&lt; Prev</TEXT>
+    </LINK>
+    {% endif %}
+    {% for page in pages %}
+        {% if page_obj.number == page.number %}
+            {{ page.number }}
+        {% else %}
+        <LINK href="{{ page.url|force_escape }}">
+        <TEXT>{{ page.number }}</TEXT>
+        </LINK>
+        {% endif %}
+    {% endfor %}
+    {% if next_url %}
+    <LINK href="{{ next_url|force_escape }}">
+    <TEXT>Next &gt;</TEXT>
+    </LINK>
+    {% endif %}
+{% endif %}
