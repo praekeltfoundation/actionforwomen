@@ -345,13 +345,12 @@ class ProfileForm(pml_forms.PMLForm):
         except KeyError:
             unknown_date = 'na'
         if date_qualifier == 'birth_date' and delivery_date is None:
-            msg = 'You need to provide a birth date'
+            msg = 'You need to provide a birth date in the format day/month/year(i.e. 17/8/2013).'
             self._errors['delivery_date'] = self.error_class([msg])
             del cleaned_data['delivery_date']
         elif date_qualifier == 'due_date' and delivery_date is None \
                 and unknown_date == 'na':
-            msg = "Either provide a due date, or check the \
-                  'Unknown' check box below the date."
+            msg = "Either provide a due date in the format day/month/year(i.e. 17/8/2013), or check the 'Unknown' check box below the date."
             self._errors['delivery_date'] = self.error_class([msg])
             del cleaned_data['delivery_date']
         return cleaned_data
