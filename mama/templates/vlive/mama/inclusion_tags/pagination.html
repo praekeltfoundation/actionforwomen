@@ -3,6 +3,7 @@
 {% if page_obj.has_other_pages %}
 <MODULE>
   <CONTAINER type="data">
+    <TEXT>
     {% if previous_url %}
     <LINK href="{{ previous_url|force_escape }}">
     <TEXT>&lt; Prev</TEXT>
@@ -22,6 +23,7 @@
     <TEXT>Next &gt;</TEXT>
     </LINK>
     {% endif %}
+    </TEXT>
   </CONTAINER>
 </MODULE>
 {% endif %}
