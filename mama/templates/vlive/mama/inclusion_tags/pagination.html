@@ -1,6 +1,8 @@
 {% load jmbo_template_tags pml_inclusion_tags %}
 
 {% if page_obj.has_other_pages %}
+<MODULE>
+  <CONTAINER type="data">
     {% if previous_url %}
     <LINK href="{{ previous_url|force_escape }}">
     <TEXT>&lt; Prev</TEXT>
@@ -20,4 +22,6 @@
     <TEXT>Next &gt;</TEXT>
     </LINK>
     {% endif %}
+  </CONTAINER>
+</MODULE>
 {% endif %}
