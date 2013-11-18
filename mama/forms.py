@@ -386,7 +386,6 @@ class VLiveProfileEditForm(ProfileForm):
         self.fields['date_qualifier'] = pml_forms.PMLHiddenField()
         self.fields.keyOrder = [
             'username',
-            'mobile_number',
             'relation_to_baby',
             'about_me',
             'baby_name',
