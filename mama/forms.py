@@ -324,10 +324,10 @@ class ProfileForm(pml_forms.PMLForm):
         ))
 
     def clean_delivery_date(self):
-        delivery_date = self.cleaned_data['delivery_date']
         try:
+            delivery_date = self.cleaned_data['delivery_date']
             delivery_date = parser.parse(delivery_date)
-        except ValueError:
+        except (KeyError, ValueError):
             raise ValidationError('Please enter a date in the format day/month/year(i.e. 17/8/2013).')
         return delivery_date
 
@@ -339,8 +339,14 @@ class ProfileForm(pml_forms.PMLForm):
         if due date is selected as the date type.
         """
         cleaned_data = super(ProfileForm, self).clean()
-        delivery_date = cleaned_data['delivery_date']
-        date_qualifier = cleaned_data['date_qualifier']
+        try:
+            delivery_date = cleaned_data['delivery_date']
+        except KeyError:
+            delivery_date = None
+        try:
+            date_qualifier = cleaned_data['date_qualifier']
+        except KeyError:
+            date_qualifier = 'due_date'
         try:
             unknown_date = cleaned_data['unknown_date']
         except KeyError:
