@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% comment %}
+Used for Mom's Stories
+{% endcomment %}
+
+{% load jmbo_inclusion_tags %}
+{% load mama_inclusion_tags moms_stories_inclusion_tags %}
+
+{% block following_header %}
+{{ block.super }}
+{% include "mama/inclusion_tags/registration_banner.html" %}
+{% endblock %}
+
+{% block above_content %}
+<div>
+    <div class="{{ category.color }}">
+        <div class="h1">Mom's Stories</div>
+        <div class="item">&nbsp;</div>
+    </div>
+    <div class="item">
+        <form id="frmSearch" method="get" action="{% url haystack_search %}">
+            <div class="row">
+                <input type="text" name="q" value="{{ query }}" class="short" />
+            </div>
+            <div class="row">
+                <input type="submit" name="submit" value="Search" class="btn" />
+            </div>
+            <div class="clear"></div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+
+    {% block above_listing %}
+    {% your_story_competition %}
+    {% endblock %}
+
+    {% if object_list %}
+    <div class="{{ category.color }}">
+        <div class="content-inner">
+            <a name="listing-top" />
+            <div class="item">
+                {% for object in post_list %}
+                    {% render_object object "block" %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% pagination page_obj %}
+
+    {% if object_list %}
+    <div class="item back-to-top-link">
+        <a href="#listing-top">Back to top ></a>
+    </div>
+    {% endif %}
+
+    {% block below_listing %}
+    {% your_story_competition %}
+    {% endblock %}
+
+    {% block footer_search_form %}
+    {% endblock %}
+
+{% endblock %}

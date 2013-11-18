@@ -1,33 +1,60 @@
 {% load jmbo_inclusion_tags %}
 
 {% if request.user.is_authenticated %}
-    {% if object_list %}
-        <div class="h1">{{ category.title }}</div>
-        <div class="content-inner">
-            <div class="items">
-                {% for object in object_list %}
-                    {% render_object object "block" %}
-                {% endfor %}
-                {% if request.user.profile.is_prenatal %}
-                    <div class="item-nav"><a href="{{ category.get_absolute_url }}">More about your pregnancy stage</a></div>
-                {% else %}
-                    <div class="item-nav"><a href="{{ category.get_absolute_url }}">More about your baby's age</a></div>
-                {% endif %}
-            </div>
-        </div>
-    {% endif %}
-{% else %}
-    <div class="h1">{{ category.title }}</div>
+  {% if no_due_date %}
+
+    <div class="h1">Your Baby</div>
     <div class="content-inner">
-        <div class="items">
-            <div class="item">
-                <a href="baby.html" class="intro-pic"><img src="{{ STATIC_URL }}mama/img/preg_23.png"></a>
-                <div class="meta">
-                    <div class="title"><a href="{% url registration_register %}">Sign Up Now!</a></div>
-                    <div class="description">Tell us your due date or baby’s birthday to get weekly updates on your growing baby.</div>
-                </div>
-            </div>
-            <div class="item-nav"><a href="{% url login %}">Already registered? Click here to sign in.</a></div>
+      <div class="items">
+        <div class="item no-pic">
+          <div class="meta">
+            You haven&apos;t entered a due date yet. Please enter one so we can
+            provide you with stage based information unique to your baby.
+          </div>
         </div>
+        <form method="POST" action="{% url update_due_date %}">
+          {% csrf_token %}
+          <div class="row shorter">
+              {{ due_form.due_date.label_tag }}
+              {% if due_form.due_date.errors %}
+                  <div class="errors">
+                      {% for error in due_form.due_date.errors %}
+                          <p>{{ error }}</p>
+                      {% endfor %}
+                  </div>
+              {% endif %}
+              {{ due_form.due_date }}
+          </div>
+          <div class="row">
+              <input type="submit" name="submit" value="Save" class="btn" />
+          </div>
+        </form>
+      </div>
     </div>
+
+  {% else %}
+
+    {% if object_list %}
+      <div class="h1">
+        {% if profile.is_prenatal %}
+            Your Pregnancy
+        {% else %}
+            Your Baby
+        {% endif %}
+      </div>
+      <div class="content-inner">
+          <div class="items">
+              {% for object in object_list %}
+                  {% render_object object "block" %}
+              {% endfor %}
+              {% if request.user.profile.is_prenatal %}
+                  <div class="item-nav"><a href="{{ category.get_absolute_url }}">Your Pregnancy</a></div>
+              {% else %}
+                  <div class="item-nav"><a href="{{ category.get_absolute_url }}">Your Baby</a></div>
+              {% endif %}
+          </div>
+      </div>
+    {% endif %}
+
+  {% endif %}
 {% endif %}

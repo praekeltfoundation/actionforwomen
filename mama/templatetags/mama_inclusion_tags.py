@@ -1,14 +1,18 @@
 from copy import copy
 from datetime import datetime
 
-from category.models import Category
 from django import template
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.template import Context, Template
+
+from category.models import Category
 from poll.models import Poll
 from post.models import Post
+from livechat.models import LiveChat
+
+from mama.forms import DueDateForm
 
 
 register = template.Library()
@@ -20,8 +24,17 @@ def ages_and_stages(context):
     context = copy(context)
     user = context['request'].user
     if user.is_authenticated():
-        profile = user.profile
+        profile = user.get_profile()
         context.update({'profile': profile})
+
+        # Check if the due date is missing
+        if (profile.date_qualifier in (
+                'unspecified', 'due_date'
+            ) and profile.delivery_date is None) or profile.unknown_date:
+            context.update({'no_due_date':True})
+            context.update({'due_form': DueDateForm()})
+            return context
+
         delivery_date = profile.delivery_date
         if delivery_date:
             now = datetime.now().date()
@@ -31,6 +44,8 @@ def ages_and_stages(context):
             # Defaults in case user does not have delivery date.
             pre_post = 'pre'
             week = 21
+
+        # Get the stage category based on the due due/delivery date
         try:
             category = Category.objects.get(slug="my-pregnancy" if profile.is_prenatal() else "my-baby")
             context.update({
@@ -39,6 +54,7 @@ def ages_and_stages(context):
         except Category.DoesNotExist:
             return context
 
+        # Look for articles that fit the baby's current week.
         try:
             week_category = Category.objects.get(slug="%snatal-week-%s" % (pre_post, week))
         except Category.DoesNotExist:
@@ -51,6 +67,7 @@ def ages_and_stages(context):
         context.update({
             'object_list': object_list,
         })
+
     return context
 
 
@@ -62,6 +79,31 @@ def page_header(context):
         context.update({
             'help_post': help_post[0],
         })
+    return context
+
+
+@ register.inclusion_tag(
+    'mama/inclusion_tags/random_guide_banner.html',
+    takes_context=True)
+def random_guide_banner(context):
+    context = copy(context)
+
+    # get the published, featured guides
+    qs = Post.permitted.filter(
+            primary_category__slug='life-guides',
+            categories__slug='featured').order_by('?')
+
+    # select a guide at random
+    random_guide = qs[0] if qs.exists() else None
+    if random_guide is not None:
+        context.update({
+            'random_guide': {
+                'title': random_guide.title,
+                'description': random_guide.description,
+                'url': random_guide.get_absolute_category_url()
+            }
+        })
+
     return context
 
 
@@ -135,19 +177,34 @@ def poll_listing(context):
 @register.inclusion_tag('mama/inclusion_tags/post_listing.html', \
         takes_context=True)
 def post_listing(context, category_slug):
-    context = copy(context)
+    result = _get_content_object_list(context, category_slug)
+    result['object_list'] = result['object_list'][:2]
+    return result
+
+
+@register.inclusion_tag('mama/inclusion_tags/stories_listing.html',
+        takes_context=True)
+def stories_listing(context, category_slug):
+    result = _get_content_object_list(context, category_slug)
+    result['object_list'] = result['object_list'][:3]
+    return result
+
+
+def _get_content_object_list(ctx_dict, category_slug):
+    ctx_dict = copy(ctx_dict)
     try:
         category = Category.objects.get(slug__exact=category_slug)
     except Category.DoesNotExist:
-        return {}
+        return ctx_dict
     object_list = Post.permitted.filter(Q(primary_category=category) | \
-            Q(categories=category)).filter(categories__slug='featured').distinct()
+            Q(categories=category))
+    object_list = object_list.filter(categories__slug='featured').distinct()
 
-    context.update({
+    ctx_dict.update({
         'category': category,
         'object_list': object_list,
     })
-    return context
+    return ctx_dict
 
 
 @register.inclusion_tag('mama/inclusion_tags/pagination.html', takes_context=True)

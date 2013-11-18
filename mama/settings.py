@@ -1,6 +1,7 @@
 # Django settings for project project.
 
 import os
+import djcelery
 
 PATH = os.getcwd()
 
@@ -98,6 +99,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.messages.context_processors.messages",
     "django.core.context_processors.request",
     "preferences.context_processors.preferences_cp",
+    "livechat.context_processors.current_livechat",
     "mama.context_processors.comments_open"
 )
 
@@ -138,7 +140,8 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'jmbo',
+    'django_nose',
     'post',
     'mama',
     'category',
@@ -147,7 +150,6 @@ INSTALLED_APPS = (
     'generate',
     'google_credentials',
     'haystack',
-    'jmbo',
     'likes',
     'moderator',
     'photologue',
@@ -160,9 +162,12 @@ INSTALLED_APPS = (
     'south_admin',
     'userprofile',
     'gunicorn',
-
     'survey',
+    'jmboyourwords',
+    'livechat',
     'mama.commenting',
+    'monitor',
+    'djcelery',
 )
 
 COMMENTS_APP = 'mama.commenting'
@@ -204,6 +209,10 @@ SOUTH_MIGRATION_MODULES = {
 #       `user.get_profile()` because it allows for easier mocking
 USER_PROFILE_MODULE = AUTH_PROFILE_MODULE = 'mama.UserProfile'
 
+# New login and logout urls as set in mama.urls
+LOGIN_URL = '/login/'
+LOGOUT_URL = '/logout/'
+
 # If no 'next' value found during login redirect home.
 LOGIN_REDIRECT_URL = '/survey/check-for-survey/'
 
@@ -217,6 +226,9 @@ EMAIL_SUBJECT_PREFIX = '[MAMA] '
 
 AMBIENT_API_KEY = ''
 AMBIENT_GATEWAY_PASSWORD = ''
+
+LIVECHAT_PRIMARY_CATEGORY = 'ask-mama'
+LIVECHAT_CATEGORIES = ('live-chat',)
 
 MODERATOR = {
     'CLASSIFIER': 'moderator.storage.RedisClassifier',
@@ -265,3 +277,98 @@ try:
     from production_settings import *
 except ImportError:
     pass
+
+# Celery configuration options
+BROKER_URL = 'amqp://guest:guest@localhost:5672/'
+
+CELERY_RESULT_BACKEND = "database"
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+
+# CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+
+# Uncomment if you're running in DEBUG mode and you want to skip the broker
+# and execute tasks immediate instead of deferring them to the queue / workers.
+# CELERY_ALWAYS_EAGER = DEBUG
+
+from datetime import timedelta
+
+CELERYBEAT_SCHEDULE = {
+    'login-every-24-hours': {
+        'task': 'monitor.tasks.run_tasks',
+        'schedule': timedelta(hours=24),
+    },
+}
+
+# Defer email sending to Celery, except if we're in debug mode,
+# then just print the emails to stdout for debugging.
+EMAIL_BACKEND = 'djcelery_email.backends.CeleryEmailBackend'
+
+SENDER = ""
+RECIPIENT = []
+
+# This stores all the settings that will be used in the api
+HOTSOCKET_BASE = "http://api.hotsocket.co.za:8080/"
+
+HOTSOCKET_RESOURCES = {
+    "login": "login",
+    "recharge": "recharge",
+    "status": "status",
+    "statement": "statement",
+    "balance": "balance",
+}
+
+HOTSOCKET_USERNAME = ""
+HOTSOCKET_PASSWORD = ""
+
+
+HOTSOCKET_CODES = {
+  "SUCCESS": {
+    "status": "0000",
+    "message": "Successfully submitted recharge."
+  },
+  "TOKEN_INVALID": {
+    "status": 887,
+    "message": "Token is invalid , please login again to obtain a new one."
+  },
+  "TOKEN_EXPIRE": {
+    "status": 889,
+    "message": "Token has timed out , please login again to obtain a new one."
+  },
+  "MSISDN_NON_NUM": {
+    "status": 6013,
+    "message": "Recipient MSISDN is not numeric."
+  },
+  "MSISDN_MALFORMED": {
+    "status": 6014,
+    "message": "Recipient MSISDN is malformed."
+  },
+  "PRODUCT_CODE_BAD": {
+    "status": 6011,
+    "message": ("Unrecognized product code, valid codes are AIRTIME, DATA, "
+                "and SMS.")
+  },
+  "NETWORK_CODE_BAD": {
+    "status": 6012,
+    "message": "Unrecognized network code."
+  },
+  "COMBO_BAD": {
+    "status": 6020,
+    "message": (" Network code + Product Code + Denomination combination "
+                "is invalid.")
+  },
+  "REF_DUPLICATE": {
+    "status": 6016,
+    "message": "Reference must be unique."
+  },
+  "REF_NON_NUM": {
+    "status": 6017,
+    "message": "Reference must be a numeric value."
+  }
+}
+
+HS_RECHARGE_STATUS_CODES = {
+    "PENDING": {"code": 0},
+    "PRE_SUB_ERROR": {"code": 1},
+    "FAILED": {"code": 2},
+    "SUCCESS": {"code": 3},
+}

@@ -1,7 +1,22 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="h1">Register</div>
+<div class="h1">Sign Up</div>
+
+<div class="content-inner">
+    <div class="items">
+        <div class="item no-pic">
+            <div class="meta">
+                <div class="stamp">
+                If you register with us, you can get up to date information on your
+                baby's growth and development each week. You also get to submit
+                questions to our experts and stand a chance to win airtime.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% if form.errors or form.non_field_errors %}
 <div class="errors">
     <p>Oops, please make sure of the following:</p>
@@ -17,7 +32,6 @@
 {% csrf_token %}
     <div class="row">
         {{ form.username.label_tag }}
-        This name will appear next to all your comments.
         {% if form.username.errors %}
             <div class="errors">
                 {% for error in form.username.errors %}
@@ -40,7 +54,6 @@
     </div>
     <div class="row">
         {{ form.mobile_number.label_tag }}
-        We'll use this to give you updated pregnancy / baby info
         {% if form.mobile_number.errors %}
             <div class="errors">
                 {% for error in form.mobile_number.errors %}
@@ -49,9 +62,31 @@
             </div>
         {% endif %}
         {{ form.mobile_number }}
+        e.g. 0719876543
+    </div>
+    <div class="row">
+        {{ form.relation_to_baby.label_tag }}
+        {% if form.relation_to_baby.errors %}
+            <div class="errors">
+                {% for error in form.relation_to_baby.errors %}
+                    <p>{{ error|safe }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {{ form.relation_to_baby }}
+    </div>
+    <div class="row">
+        {{ form.date_qualifier.label_tag }}
+        {% if form.date_qualifier.errors %}
+            <div class="errors">
+                {% for error in form.date_qualifier.errors %}
+                    <p>{{ error|safe }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {{ form.date_qualifier }}
     </div>
     <div class="row shorter">
-        {{ form.delivery_date.label_tag }}
         {% if form.delivery_date.errors %}
             <div class="errors">
                 {% for error in form.delivery_date.errors %}
@@ -60,6 +95,16 @@
             </div>
         {% endif %}
         {{ form.delivery_date }}
+    </div>
+    <div class="row">
+        {% if form.unknown_date.errors %}
+            <div class="errors">
+                {% for error in form.unknown_date.errors %}
+                    <p>{{ error|safe }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {{ form.unknown_date }} {{ form.unknown_date.label }}
     </div>
     <div class="row">
         {% if form.tos.errors %}

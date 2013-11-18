@@ -1,0 +1,24 @@
+{% load jmbo_inclusion_tags %}
+
+{% if object_list %}
+    <div class="{{ category.color }}">
+        <div class="h1"> {{ category.title }}</div>
+        <div class="content-inner">
+            <div class="items">
+                {% for object in object_list %}
+                    {% render_object object "block" %}
+                {% endfor %}
+            </div>
+            <div class="more-links">
+              <br/>
+              <a href="{{ category.get_absolute_url }}">
+                Tell Your Story and Win! >
+              </a>
+              <br/>
+              <a href="{{ category.get_absolute_url }}">
+                More Stories >
+              </a>
+            </div>
+        </div>
+    </div>
+{% endif %}

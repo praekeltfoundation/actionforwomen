@@ -11,3 +11,6 @@ build/
 logs/
 static/
 tmp/
+*_hjb.py
+.vagrant
+tags
