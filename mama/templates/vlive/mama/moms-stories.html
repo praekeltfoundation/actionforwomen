@@ -5,12 +5,13 @@ Used for Mom's Stories
 {% endcomment %}
 
 {% load jmbo_inclusion_tags %}
-{% load mama_inclusion_tags moms_stories_inclusion_tags %}
+{% load mama_inclusion_tags %}
+{% load moms_stories_inclusion_tags %}
 {% load pml_inclusion_tags %}
 
 {% block following_header %}
 {{ block.super }}
-{% registration_banner %}
+{% include "mama/inclusion_tags/registration_banner.html" %}
 {% endblock %}
 
 {% block above_content %}
