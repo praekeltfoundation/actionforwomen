@@ -1,0 +1,29 @@
+{% extends "pml/base.xml" %}
+
+{% load pml_inclusion_tags %}
+
+{% block body %}
+
+    {% header text="Edit Profile" color="grey" %}
+
+    <MODULE>
+    <CONTAINER type="form">
+        <FORM method="GET" 
+              href="{% url edit_vlive_profile %}" 
+              submit_text="Save">
+            <FIELD name="csrfmiddlewaretoken" 
+                   value="{{ csrf_token }}" 
+                   type="hidden" />
+            {% for field in form %}
+            {{ field }}<br />
+            {% endfor %}
+        </FORM>
+    </CONTAINER>
+    </MODULE>
+
+
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
+

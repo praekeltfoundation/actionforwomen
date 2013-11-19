@@ -294,6 +294,7 @@ class DueDateForm(forms.Form):
 
 class ProfileForm(pml_forms.PMLForm):
     submit_text = "Register"
+
     username = pml_forms.PMLTextField(
         label="Username",
         help_text="This name will appear next to all your comments."
@@ -342,6 +343,8 @@ class ProfileForm(pml_forms.PMLForm):
             date_qualifier = 'due_date'
         try:
             unknown_date = cleaned_data['unknown_date']
+            if not unknown_date:
+                unknown_date = 'na'
         except KeyError:
             unknown_date = 'na'
         if date_qualifier == 'birth_date' and delivery_date is None:
@@ -356,10 +359,21 @@ class ProfileForm(pml_forms.PMLForm):
         return cleaned_data
 
 
-class VLiveProfileEditForm(ProfileForm):
+class VLiveProfileEditForm(pml_forms.PMLForm):
     """
     The VLive form to edit all options in the member's full profile.
     """
+    submit_text="Save"
+
+    username = pml_forms.PMLTextField(
+        label="Username",
+        help_text="This name will appear next to all your comments."
+    )
+    relation_to_baby = pml_forms.PMLRadioField(
+        choices=RELATION_TO_BABY_CHOICES,
+        label='Are you a...',
+        initial='mom_or_mom_to_be'
+    )
     about_me = pml_forms.PMLTextField(
         label="About Me",
         required=False
@@ -368,6 +382,16 @@ class VLiveProfileEditForm(ProfileForm):
         label="The Baby's Name",
         required=False
     )
+    date_qualifier = pml_forms.PMLHiddenField(
+        initial='due_date'
+    )
+    delivery_date = pml_forms.PMLTextField(
+        label="What is your due date or baby's birthday? (yyyy-mm-dd)"
+    )
+    unknown_date = pml_forms.PMLCheckBoxField(
+        required=False,
+        choices=(("unknown", "I don't know the delivery date"),)
+    )
     baby_has_been_born = pml_forms.PMLCheckBoxField(
         required=False,
         choices=(("unknown", "Baby has been born"),)
@@ -375,14 +399,32 @@ class VLiveProfileEditForm(ProfileForm):
 
     def __init__(self, *args, **kwargs):
         super(VLiveProfileEditForm, self).__init__(*args, **kwargs)
-        self.fields['date_qualifier'] = pml_forms.PMLHiddenField()
-        self.fields.keyOrder = [
-            'username',
-            'relation_to_baby',
-            'about_me',
-            'baby_name',
-            'date_qualifier',
-            'delivery_date',
-            'unknown_date',
-            'baby_has_been_born'
-        ]
+
+    def clean(self):
+        cleaned_data = super(VLiveProfileEditForm, self).clean()
+
+        delivery_date = cleaned_data['delivery_date']
+        if delivery_date is not None:
+            delivery_date = parser.parse(delivery_date)
+
+        date_qualifier = cleaned_data['date_qualifier']
+        if date_qualifier == 'due_date':
+            unknown_date = cleaned_data['unknown_date']
+            baby_has_been_born = cleaned_data['baby_has_been_born']
+        if date_qualifier == 'birth_date' and delivery_date is None:
+            msg = 'You need to provide a birth date'
+            self._errors['delivery_date'] = self.error_class([msg])
+            del cleaned_data['delivery_date']
+        elif date_qualifier == 'due_date':
+            if baby_has_been_born and delivery_date is None:
+                msg = "You have indicated that the baby has been born. \
+                       Please provide the birth date in the due date field \
+                       above."
+                self._errors['delivery_date'] = self.error_class([msg])
+                del cleaned_data['delivery_date']
+            elif not unknown_date and delivery_date is None:
+                msg = "Either provide a due date, or check the \
+                      'Unknown' check box below the date."
+                self._errors['delivery_date'] = self.error_class([msg])
+                del cleaned_data['delivery_date']
+        return cleaned_data

@@ -8,7 +8,7 @@ from django.views.generic import TemplateView
 from haystack.views import SearchView
 from mama.views import (CategoryDetailView, CategoryListView, 
                         ContactView, 
-                        ProfileView,
+                        ProfileView, VLiveEditProfileEdit,
                         AskMamaView, QuestionAnswerView, 
                         MomStoriesListView,
                         MyProfileView, MyProfileEdit, 
@@ -183,6 +183,11 @@ urlpatterns = patterns('',
         r'^accounts/profile/$',
         login_required(ProfileView.as_view()),
         name='profile'
+    ),
+    url(
+        r'^accounts/profile/edit/$',
+        login_required(VLiveEditProfileEdit.as_view()),
+        name='edit_vlive_profile'
     ),
     url(
         r'^public/profile/(?P<user_id>\d+)/$',
