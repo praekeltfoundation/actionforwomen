@@ -1,6 +1,7 @@
 import re
 import urlparse
 from datetime import datetime
+from dateutil import parser
 
 from django.conf import settings
 from django.contrib import auth
@@ -506,7 +507,8 @@ class ProfileView(FormView):
         user = self.request.user
         profile = user.profile
         profile.alias = form.cleaned_data['username']
-        profile.delivery_date = form.cleaned_data['delivery_date']
+        profile.delivery_date = parser.parse(
+            form.cleaned_data['delivery_date'])
         profile.save()
         messages.success(
             self.request,

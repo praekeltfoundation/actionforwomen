@@ -309,7 +309,7 @@ class ProfileForm(pml_forms.PMLForm):
         label="Please enter your baby's birth day or due date or select unknown if you are not sure of the due date"
     )
     delivery_date = pml_forms.PMLTextField(
-        label="What is your due date or baby's birthday?"
+        label="What is your due date or baby's birthday? (yyyy-mm-dd)"
     )
     unknown_date = pml_forms.PMLCheckBoxField(
         required=False,
@@ -345,12 +345,12 @@ class ProfileForm(pml_forms.PMLForm):
         except KeyError:
             unknown_date = 'na'
         if date_qualifier == 'birth_date' and delivery_date is None:
-            msg = 'You need to provide a birth date in the format day/month/year(i.e. 17/8/2013).'
+            msg = 'You need to provide a birth date in the format yyyy-mm-dd (i.e. 2013-08-15).'
             self._errors['delivery_date'] = self.error_class([msg])
             del cleaned_data['delivery_date']
         elif date_qualifier == 'due_date' and delivery_date is None \
                 and unknown_date == 'na':
-            msg = "Either provide a due date in the format day/month/year(i.e. 17/8/2013), or check the 'Unknown' check box below the date."
+            msg = "Either provide a due date in the format yyyy-mm-dd (i.e. 2013-08-15), or check the 'Unknown' check box below the date."
             self._errors['delivery_date'] = self.error_class([msg])
             del cleaned_data['delivery_date']
         return cleaned_data
