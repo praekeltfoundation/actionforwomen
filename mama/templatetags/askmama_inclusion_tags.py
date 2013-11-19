@@ -93,7 +93,7 @@ vote=-1 AND object_id=%s.%s AND content_type_id=%s)' % (
         questions = questions.order_by('comment')
 
     # return the results paginated.
-    paginator = Paginator(questions, 10)
+    paginator = Paginator(questions, 50)
     comments_page = paginator.page(cpage)
 
     # check if we can comment. we need to be authenticated, at least

@@ -85,18 +85,16 @@
   {% endif %}
 </MODULE>
 
-<MODULE>
   {% if live_chat.can_render_comment_form %}
-    <CONTAINER type="form">
-      {% render_comment_form for live_chat.current_live_chat %}
-    </CONTAINER>
+    {% render_comment_form for live_chat.current_live_chat %}
   {% else %}
     {% if live_chat.can_comment_code == 'auth_required' %}
+    <MODULE>
       <CONTAINER type="data">
         <LINK href="{% url login %}?next={{ request.META.PATH_INFO }}">
         <TEXT>Sign in to comment or ask a question</TEXT>
         </LINK>
       </CONTAINER>
+    </MODULE>
     {% endif %}
   {% endif %}
-</MODULE>
