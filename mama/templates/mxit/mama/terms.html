@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="h1">Terms of Use</div>
+    <div class="content-inner">
+        <div class="post">
+            {{ preferences.SitePreferences.terms|safe }}
+        </div>
+    </div>
+{% endblock %}

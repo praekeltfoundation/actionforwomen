@@ -1,0 +1,15 @@
+{% load jmbo_inclusion_tags %}
+
+{% if object_list %}
+    <div class="{{ category.color }}">
+        <div class="h1">{{ full_heading }}</div>
+        <div id="menu">
+            <div class="items">
+                {% for object in object_list %}
+                    {% render_object object "link" %}
+                {% endfor %}
+                <div class="item-nav"><a href="{{ category.get_absolute_url }}">More {{ category.title }}</a></div>
+            </div>
+        </div>
+    </div>
+{% endif %}

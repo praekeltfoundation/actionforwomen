@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="h1">My Profile</div>
+<div class="content-inner">
+  <div class="post">
+    {% if avatar %}
+        <img src="{{ avatar }}" width="44" height="44" />
+    {% endif %}
+    <div class="stamp"> 
+      {{ username }}<br/>
+      {% if mobile_number %}
+      Mobile No: {{ mobile_number }}</br>
+      {% endif %}
+      {{ relation_description}}
+    </div>
+  </div>
+
+  {% if about_me %}
+  <div class="post">
+    <div class="title">
+        About Me
+    </div>
+    <div class="stamp"> 
+      {{ about_me|safe }}
+    </div>
+  </div>
+  {% endif %}
+
+  {% if date_type != 'unspecified' or delivery_date %}
+  <div class="post">
+    <div class="title">
+        About My Baby
+    </div>
+    {% if baby_name %}
+    <div class="stamp"> 
+        Name: {{ baby_name }}
+    </div>
+    {% endif %}
+    <div class="stamp"> 
+        {% if date_type != 'unspecified' %}
+        {{ date_description }}: 
+        {% else %}
+            {% if delivery_date > now %}
+                Due Date:
+            {% else %}
+                Birth Date:
+            {% endif %}
+        {% endif %}
+        {% if date_type == 'due_date' or date_type == 'unspecified' %}
+            {% if unknown_due_date %}
+            Unknown
+            {% else %}
+            {{ delivery_date|date:"d M Y" }}
+            {% endif %}
+        {% else %}
+            {{ delivery_date|date:"d M Y" }}
+        {% endif %}
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="text_banner">
+    <div class="banner_content">
+      <p>
+      <strong>
+        <a href="{% url edit_my_profile %}">Edit My Profile &gt;</a><br/>
+        <a href="{% url password_reset %}">Reset My Password &gt;</a>
+      </strong>
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block footer_search_form %}
+{% endblock %}

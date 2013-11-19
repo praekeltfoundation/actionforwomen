@@ -1,0 +1,32 @@
+{% if not comments_open %}
+<div>Comments are currently closed.</div>
+{% else %}
+<form action="{% url post_comment %}" method="post">
+    {% csrf_token %}
+    <div class="row" style="display:none;">
+        {% for field in form %}
+            {% if field.is_hidden %}
+                {{ field }}
+            {% else %}
+                <p {% ifequal field.name "honeypot" %} style="display:none;"{% endifequal %}>{{ field }}</p>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div class="row">
+        {{ form.comment.label_tag }}
+        {% if form.comment.errors %}
+            <div class="errors">
+                {% for error in form.comment.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {{ form.comment }}
+    </div>
+    <div class="row">
+        <input type="submit" name="post" value="Post" class="btn" />
+        {% if next %}<div><input type="hidden" name="next" value="{{ next }}" /></div>{% endif %}
+    </div>
+    <div class="clear"></div>
+</form>
+{% endif %}
