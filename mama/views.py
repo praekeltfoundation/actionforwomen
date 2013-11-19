@@ -524,6 +524,45 @@ class VLiveEditProfileEdit(MyProfileEdit):
     form_class = VLiveProfileEditForm
     template_name = "mama/profile.html"
 
+    def form_valid(self, form):
+        """
+        Collect and save the updated profile information and redirect to the
+        user's profile page.
+
+        If she indicated that the baby has been born, update the date qualifier
+        and the unknown date values.
+        """
+        user = self.request.user
+        profile = user.profile
+        profile.alias = form.cleaned_data['username']
+        profile.mobile_number = form.cleaned_data['mobile_number']
+        profile.relation_to_baby = form.cleaned_data['relation_to_baby']
+        profile.about_me = form.cleaned_data['about_me']
+        profile.baby_name = form.cleaned_data['baby_name']
+        profile.date_qualifier = form.cleaned_data['date_qualifier']
+        try:
+            profile.unknown_date = form.cleaned_data['unknown_date']
+        except KeyError:
+            pass
+        try:
+            if form.cleaned_data['baby_has_been_born']:
+                profile.date_qualifier = 'birth_date'
+                profile.unknown_date = False
+        except KeyError:
+            pass
+        profile.delivery_date = parser.parse(
+            form.cleaned_data['delivery_date'])
+
+        # save the avatar from the raw form data
+        if form.data.has_key('default_avatar_id'):
+            obj = DefaultAvatar.objects.get(
+                id=int(form.data['default_avatar_id'])
+            )
+            profile.avatar = obj.image
+
+        profile.save()
+        return HttpResponseRedirect(reverse('view_my_profile'))
+
 
 class BannerView(TemplateView):
     template_name = "pml/carousel.xml"
