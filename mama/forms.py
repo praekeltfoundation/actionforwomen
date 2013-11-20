@@ -296,7 +296,7 @@ class ProfileForm(pml_forms.PMLForm):
     submit_text = "Register"
 
     username = pml_forms.PMLTextField(
-        label="Username",
+        label="Alias",
         help_text="This name will appear next to all your comments."
     )
     relation_to_baby = pml_forms.PMLRadioField(
@@ -366,7 +366,7 @@ class VLiveProfileEditForm(pml_forms.PMLForm):
     submit_text="Save"
 
     username = pml_forms.PMLTextField(
-        label="Username",
+        label="Alias",
         help_text="This name will appear next to all your comments."
     )
     relation_to_baby = pml_forms.PMLRadioField(

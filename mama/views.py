@@ -528,7 +528,7 @@ class VLiveEditProfile(FormView):
         initial = self.initial.copy()
         user = self.request.user
         profile = user.profile
-        initial['username'] = user.username
+        initial['username'] = profile.alias
         initial['relation_to_baby'] = profile.relation_to_baby
         initial['about_me'] = profile.about_me
         initial['baby_name'] = profile.baby_name
