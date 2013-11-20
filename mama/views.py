@@ -507,8 +507,10 @@ class ProfileView(FormView):
         user = self.request.user
         profile = user.profile
         profile.alias = form.cleaned_data['username']
-        profile.delivery_date = parser.parse(
-            form.cleaned_data['delivery_date'])
+        if form.cleaned_data['delivery_date']:
+            # parser returns today's date for an empty string.
+            profile.delivery_date = parser.parse(
+                form.cleaned_data['delivery_date'])
         profile.save()
         messages.success(
             self.request,
@@ -584,8 +586,9 @@ class VLiveEditProfile(FormView):
                 profile.unknown_date = False
         except KeyError:
             pass
-        profile.delivery_date = parser.parse(
-            form.cleaned_data['delivery_date'])
+        if form.cleaned_data['delivery_date']:
+            profile.delivery_date = parser.parse(
+                form.cleaned_data['delivery_date'])
 
         # save the avatar from the raw form data
         if form.data.has_key('default_avatar_id'):
