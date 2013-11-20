@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.contrib.auth.decorators import login_required
 from mama.urls import urlpatterns
-from mama.views import ProfileView, VLiveEditProfileEdit, BannerView
+from mama.views import ProfileView, VLiveEditProfile, BannerView
 
 
 urlpatterns = patterns('',
@@ -13,8 +13,8 @@ urlpatterns = patterns('',
     ),
     url(
         r'^edit/myprofile/$',
-        login_required(VLiveEditProfileEdit.as_view()),
-        name='edit_my_profile'
+        login_required(VLiveEditProfile.as_view()),
+        name='edit_vlive_profile'
     ),
     (r'^survey/',
         include('mama.sites.vlive.survey_urls', namespace='survey')),

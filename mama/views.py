@@ -517,7 +517,7 @@ class ProfileView(FormView):
         return HttpResponseRedirect(reverse('home'))
 
 
-class VLiveEditProfileEdit(FormView):
+class VLiveEditProfile(FormView):
     """
     The profile edit form view specifically for VLive
     """
@@ -548,7 +548,7 @@ class VLiveEditProfileEdit(FormView):
         return initial
 
     def get_form(self, form_class):
-        form = super(VLiveEditProfileEdit, self).get_form(form_class)
+        form = super(VLiveEditProfile, self).get_form(form_class)
         if form.initial['date_qualifier'] == 'due_date':
             form.fields['relation_to_baby'].choices = RELATION_PARENT_TO_BE_CHOICES
             form.fields['delivery_date'].label = 'Due Date'
