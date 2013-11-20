@@ -32,7 +32,13 @@
   </CONTAINER>
 </MODULE>
 {% endif %}
-{% text_module object.content %}
+<MODULE>
+  <CONTAINER type="data">
+    <TEXT>
+      {{ object.content }}
+    </TEXT>
+  </CONTAINER>
+</MODULE>
 
 {% cache 3600 links object.id %}
   <MODULE>
