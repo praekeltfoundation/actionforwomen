@@ -403,14 +403,28 @@ class VLiveProfileEditForm(pml_forms.PMLForm):
     def clean(self):
         cleaned_data = super(VLiveProfileEditForm, self).clean()
 
-        delivery_date = cleaned_data['delivery_date']
-        if delivery_date is not None:
+        try:
+            delivery_date = cleaned_data['delivery_date']
             delivery_date = parser.parse(delivery_date)
-
-        date_qualifier = cleaned_data['date_qualifier']
-        if date_qualifier == 'due_date':
+        except (KeyError, ValueError):
+            delivery_date = None
+        try:
+            date_qualifier = cleaned_data['date_qualifier']
+        except KeyError:
+            date_qualifier = 'due_date'
+        try:
             unknown_date = cleaned_data['unknown_date']
+            if not unknown_date:
+                unknown_date = False
+        except KeyError:
+            unknown_date = False
+        try:
             baby_has_been_born = cleaned_data['baby_has_been_born']
+            if not baby_has_been_born:
+                baby_has_been_born = False
+        except KeyError:
+            baby_has_been_born = False
+
         if date_qualifier == 'birth_date' and delivery_date is None:
             msg = 'You need to provide a birth date'
             self._errors['delivery_date'] = self.error_class([msg])
