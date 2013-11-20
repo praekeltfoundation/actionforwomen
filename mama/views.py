@@ -517,12 +517,47 @@ class ProfileView(FormView):
         return HttpResponseRedirect(reverse('home'))
 
 
-class VLiveEditProfileEdit(MyProfileEdit):
+class VLiveEditProfile(FormView):
     """
     The profile edit form view specifically for VLive
     """
     form_class = VLiveProfileEditForm
-    template_name = "mama/profile.html"
+    template_name = "mama/editprofile.html"
+
+    def get_initial(self):
+        initial = self.initial.copy()
+        user = self.request.user
+        profile = user.profile
+        initial['username'] = profile.alias
+        initial['relation_to_baby'] = profile.relation_to_baby
+        initial['about_me'] = profile.about_me
+        initial['baby_name'] = profile.baby_name
+        if profile.date_qualifier == 'unspecified':
+            if profile.delivery_date is not None:
+                if profile.delivery_date < datetime.now().date():
+                    initial['date_qualifier'] = 'birth_date'
+                else:
+                    initial['date_qualifier'] = 'due_date'
+            else:
+                initial['date_qualifier'] = 'due_date'
+        else:
+            initial['date_qualifier'] = profile.date_qualifier
+        initial['unknown_date'] = profile.unknown_date
+        initial['delivery_date'] = profile.delivery_date
+        initial['baby_has_been_born'] = profile.date_qualifier == 'birth_date'
+        return initial
+
+    def get_form(self, form_class):
+        form = super(VLiveEditProfile, self).get_form(form_class)
+        if form.initial['date_qualifier'] == 'due_date':
+            form.fields['relation_to_baby'].choices = RELATION_PARENT_TO_BE_CHOICES
+            form.fields['delivery_date'].label = 'Due Date'
+        else:
+            form.fields['relation_to_baby'].choices = RELATION_PARENT_CHOICES
+            form.fields['delivery_date'].label = 'Birth Date'
+            del form.fields['unknown_date']
+            del form.fields['baby_has_been_born']
+        return form
 
     def form_valid(self, form):
         """
@@ -535,7 +570,6 @@ class VLiveEditProfileEdit(MyProfileEdit):
         user = self.request.user
         profile = user.profile
         profile.alias = form.cleaned_data['username']
-        profile.mobile_number = form.cleaned_data['mobile_number']
         profile.relation_to_baby = form.cleaned_data['relation_to_baby']
         profile.about_me = form.cleaned_data['about_me']
         profile.baby_name = form.cleaned_data['baby_name']
