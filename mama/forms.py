@@ -310,7 +310,8 @@ class ProfileForm(pml_forms.PMLForm):
         label="Please enter your baby's birth day or due date or select unknown if you are not sure of the due date"
     )
     delivery_date = pml_forms.PMLTextField(
-        label="What is your due date or baby's birthday? (yyyy-mm-dd)"
+        label="What is your due date or baby's birthday? (yyyy-mm-dd)",
+        required=False
     )
     unknown_date = pml_forms.PMLCheckBoxField(
         required=False,
@@ -386,7 +387,8 @@ class VLiveProfileEditForm(pml_forms.PMLForm):
         initial='due_date'
     )
     delivery_date = pml_forms.PMLTextField(
-        label="What is your due date or baby's birthday? (yyyy-mm-dd)"
+        label="What is your due date or baby's birthday? (yyyy-mm-dd)",
+        required=False
     )
     unknown_date = pml_forms.PMLCheckBoxField(
         required=False,
