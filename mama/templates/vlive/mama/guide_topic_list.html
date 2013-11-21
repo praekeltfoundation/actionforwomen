@@ -29,10 +29,6 @@
     {% for link in links %}
       {% if link.target.is_permitted %}
       <CONTAINER type="data">
-        <LINK href="{% url topic_detail link.target.primary_category.slug link.target.slug %}">
-          <IMAGE href="link.target.get_thumb_url" mime-type="image/jpeg" />
-        </LINK>
-
         <TEXT>
           <LINK href="{% url topic_detail link.target.primary_category.slug link.target.slug %}">
           <TEXT>{{ link.target.title }}</TEXT>
