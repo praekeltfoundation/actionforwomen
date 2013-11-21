@@ -6,7 +6,7 @@
   {% for object in object_list %}
       {% render_object object "block" %}
   {% endfor %}
-  {% if request.user.profile.is_prenatal %}
+  {% if profile.is_prenatal %}
     <LINK href="{{ category.get_absolute_url }}">More about your pregnancy stage</LINK>
   {% else %}
     <LINK href="{{ category.get_absolute_url }}">More about your baby's age</LINK>
