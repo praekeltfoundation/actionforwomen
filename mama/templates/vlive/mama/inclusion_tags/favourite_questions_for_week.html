@@ -13,26 +13,26 @@
     <TEXT>
       <p>
       {% if sort == 'pop' %}
-      <LINK href="{% url askmama_detail %}?wk=2&sort=date">
+      <LINK href="{% url askmama_detail %}?wk=2&amp;sort=date">
         <TEXT>Latest</TEXT>
       </LINK> | Popular | 
-      <LINK href="{% url askmama_detail %}?wk=2&sort=alph">
+      <LINK href="{% url askmama_detail %}?wk=2&amp;sort=alph">
         <TEXT>Alphabetical</TEXT>
       </LINK>
       {% else %}
         {% if sort == 'date' %}
           Latest | 
-          <LINK href="{% url askmama_detail %}?wk=2&sort=pop">
+          <LINK href="{% url askmama_detail %}?wk=2&amp;sort=pop">
             <TEXT>Popular</TEXT>
           </LINK> |
-          <LINK href="{% url askmama_detail %}?wk=2&sort=alph">
+          <LINK href="{% url askmama_detail %}?wk=2&amp;sort=alph">
             <TEXT>Alphabetical</TEXT>
           </LINK>
         {% else %}
-          <LINK href="{% url askmama_detail %}?wk=2&sort=date">
+          <LINK href="{% url askmama_detail %}?wk=2&amp;sort=date">
             <TEXT>Latest</TEXT>
           </LINK> | 
-          <LINK href="{% url askmama_detail %}?wk=2&sort=pop">
+          <LINK href="{% url askmama_detail %}?wk=2&amp;sort=pop">
             <TEXT>Popular</TEXT>
           </LINK> | Alphabetical
         {% endif %}
@@ -111,7 +111,7 @@
   {% if questions.has_other_pages %}
   <CONTAINER type="data">
     {% if questions.has_previous %}
-    <LINK href="?page={{ questions.previous_page_number }}&wk={{ weeks_ago }}&sort={{ sort }}"><TEXT>&laquo; Prev</TEXT></LINK>
+    <LINK href="?page={{ questions.previous_page_number }}&wk={{ weeks_ago }}&amp;sort={{ sort }}"><TEXT>&laquo; Prev</TEXT></LINK>
     {% else %}
     &laquo; Prev
     {% endif %}
@@ -119,7 +119,7 @@
     Page {{ questions.number }} of {{ questions.paginator.num_pages }}
     |
     {% if questions.has_next %}
-    <LINK href="?page={{ questions.next_page_number }}&wk={{ weeks_ago }}&sort={{ sort }}"><TEXT>Next &raquo;</TEXT></LINK>
+    <LINK href="?page={{ questions.next_page_number }}&wk={{ weeks_ago }}&amp;sort={{ sort }}"><TEXT>Next &raquo;</TEXT></LINK>
     {% else %}
     Next &raquo;
     {% endif %}
