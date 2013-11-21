@@ -1,14 +1,18 @@
 {% load jmbo_inclusion_tags pml_inclusion_tags %}
 
 {% if profile.delivery_date %}
-    {% header text=category.title color='orange' %}
-    {% banner image_url="{{ STATIC_URL }}mama/img/banner_vlive.jpg?3" %}
-    {% for object in object_list %}
-        {% render_object object "block" %}
-    {% endfor %}
-    {% text_include template='mama/pml_includes/ages_and_stages_byline.html' color='grey' %}
+  {% header text=category.title color='orange' %}
+  {% banner image_url="{{ STATIC_URL }}mama/img/banner_vlive.jpg?3" %}
+  {% for object in object_list %}
+      {% render_object object "block" %}
+  {% endfor %}
+  {% if request.user.profile.is_prenatal %}
+    <LINK href="{{ category.get_absolute_url }}">More about your pregnancy stage</LINK>
+  {% else %}
+    <LINK href="{{ category.get_absolute_url }}">More about your baby's age</LINK>
+  {% endif %}
 {% else %}
-    {% header text='Register' color='orange' %}
-    {% banner image_url="{{ STATIC_URL }}mama/img/banner_vlive.jpg?3" %}
-    {% thumbnail_include image_url='{{ STATIC_URL }}mama/img/preg_23.png' template='mama/pml_includes/ages_and_stages_cta.html' %}
+  {% header text='Register' color='orange' %}
+  {% banner image_url="{{ STATIC_URL }}mama/img/banner_vlive.jpg?3" %}
+  {% thumbnail_include image_url='{{ STATIC_URL }}mama/img/preg_23.png' template='mama/pml_includes/ages_and_stages_cta.html' %}
 {% endif %}
