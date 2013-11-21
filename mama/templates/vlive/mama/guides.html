@@ -24,26 +24,26 @@
 {% if stages_leaders %}
 {% header 'Stages Guides' 'orange' %}
 <MODULE>
+<CONTAINER type="list">
 {% for item in stages_leaders %}
-    <CONTAINER type="data">
     <LINK href="{% url guides_topic_list item.slug %}">
     <TEXT>{{ item.title }}</TEXT>
     </LINK>
-    </CONTAINER>
 {% endfor %}
+</CONTAINER>
 </MODULE>
 {% endif %}
 
 {% if life_guide_leaders %}
 {% header 'Our Most Popular Guides' 'orange' %}
 <MODULE>
+<CONTAINER type="list">
 {% for item in life_guide_leaders %}
-    <CONTAINER type="data">
     <LINK href="{% url guides_topic_list item.slug %}">
     <TEXT>{{ item.title }}</TEXT>
     </LINK>
-    </CONTAINER>
 {% endfor %}
+</CONTAINER>
 </MODULE>
 {% endif %}
 
