@@ -117,29 +117,31 @@ class WeeklyFilter(admin.filters.SimpleListFilter):
             # there is no filter value
             return queryset
 
-        # Find the dates for the current week, starting last Sunday and ending
-        # next Saturday
+        # Find the dates for the current week, starting last Friday and ending
+        # next Thursday
         NOW = datetime.now()
-        start_sunday = NOW + relativedelta(weekday=SU(-1),
+        start_friday = NOW + relativedelta(weekday=FR(-1),
                                            hour=0, minute=0,
                                            second=0, microsecond=0)
-        end_saturday = NOW + relativedelta(weekday=SA(+1),
+        end_thursday = NOW + relativedelta(weekday=TH(+1),
                                            hour=0, minute=0,
                                            second=0, microsecond=0, 
                                            microseconds=-1)
+        if end_thursday < start_friday:
+            end_thursday += relativedelta(weeks=1)
 
         # Subtract the amount of weeks in the past.
         if weeks_ago > 0:
-            start_sunday = start_sunday + relativedelta(weeks=-weeks_ago)
-            end_saturday = end_saturday + relativedelta(weeks=-weeks_ago)
+            start_friday = start_friday + relativedelta(weeks=-weeks_ago)
+            end_thursday = end_thursday + relativedelta(weeks=-weeks_ago)
 
         if weeks_ago < 2:
             # Filter the questions between the date range
-            queryset = queryset.filter(submit_date__range=(start_sunday, 
-                                                           end_saturday,))
+            queryset = queryset.filter(submit_date__range=(start_friday, 
+                                                           end_thursday,))
         else:
             # Filter all the older questions.
-            queryset = queryset.filter(submit_date__lt=(end_saturday)) 
+            queryset = queryset.filter(submit_date__lt=(end_thursday)) 
 
         # Work out the vote count for the questions, to sort by the most liked
         # questions, i.e. questions with the most votes. (This is taken from the

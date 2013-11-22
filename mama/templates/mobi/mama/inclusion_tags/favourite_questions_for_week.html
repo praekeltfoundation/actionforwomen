@@ -55,20 +55,6 @@
     {% endif %}
   </div>
 
-  {% if weeks_ago == 0 %}
-  <div class="text_banner">
-    <div class="banner_content">
-      <p>
-      <strong>
-        <a href="{% url askmama_detail %}?wk=1">
-          See last week's Q&amp;A &gt;
-        </a>
-      </strong>    
-      </p>
-    </div>
-  </div>
-  {% endif %}
-
   <div class="content-inner">
     <div class="items">
       {% for question in questions.object_list %}
@@ -136,13 +122,13 @@
     {% endif %}
   {% endif %}
 
-  {% if weeks_ago < 2 %}
+  {% if weeks_ago == 0 %}
   <div class="text_banner">
     <div class="banner_content">
       <p>
       <strong>
-        <a href="{% url askmama_detail %}?wk=2&sort=pop">
-          See older questions &gt;
+        <a href="{% url askmama_detail %}?wk=1">
+          See last week's Q&amp;A &gt;
         </a>
       </strong>    
       </p>

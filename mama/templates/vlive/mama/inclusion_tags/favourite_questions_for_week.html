@@ -68,20 +68,6 @@
     </LABEL>
   </HEADER>
 
-  {% if weeks_ago == 0 %}
-  <CONTAINER type="data">
-    <TEXT>
-      <p>
-      <strong>
-        <LINK href="{% url askmama_detail %}?wk=1">
-          <TEXT>See last week's Q&amp;A &gt;</TEXT>
-        </LINK>
-      </strong>    
-      </p>
-    </TEXT>
-  </CONTAINER>
-  {% endif %}
-
   {% for question in questions.object_list %}
     <CONTAINER type="data">
       <TEXT>
@@ -143,18 +129,18 @@
     {% endif %}
   {% endif %}
 
-  {% if weeks_ago < 2 %}
-    <CONTAINER type="data">
-      <TEXT>
+  {% if weeks_ago == 0 %}
+  <CONTAINER type="data">
+    <TEXT>
       <p>
       <strong>
-        <LINK href="{% url askmama_detail %}?wk=2">
-          <TEXT>See older questions &gt;</TEXT>
+        <LINK href="{% url askmama_detail %}?wk=1">
+          <TEXT>See last week's Q&amp;A &gt;</TEXT>
         </LINK>
       </strong>    
       </p>
-      </TEXT>
-    </CONTAINER>
+    </TEXT>
+  </CONTAINER>
   {% endif %}
   {% if weeks_ago > 0 %}
     <CONTAINER type="data">

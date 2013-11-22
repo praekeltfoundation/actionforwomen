@@ -22,13 +22,7 @@ Used for the AskMAMA section
     {% if weeks_ago == 0 %}
       {% header lead_in_post.title maroon %}
       {% live_chat_banner %}
-      <MODULE>
-      <CONTAINER type="data">
-        <TEXT>
-        {{ lead_in_post.content|linebreaks }}
-        </TEXT>
-      </CONTAINER>
-      </MODULE>
+      {% text_module template=lead_in_post.content|safe %}
     {% endif %}
     {% favourite_questions_for_week lead_in_post weeks_ago cpage sort %}
   {% else %}

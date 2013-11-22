@@ -4,6 +4,7 @@
 
 {% block following_header %}
 {% include "mama/inclusion_tags/registration_banner.html" %}
+{% show_last_live_chat %}
 {% live_chat_banner %}
 <div id="banner"><img src="{{ STATIC_URL }}mama/img/banner.jpg" /></div>
 {% random_guide_banner %}
