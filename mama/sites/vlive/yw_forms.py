@@ -10,8 +10,12 @@ class PMLYourStoryForm(PMLForm):
     next = PMLHiddenField()
     name = PMLHiddenField()
     email = PMLHiddenField()
+    competition_id = PMLHiddenField()
     text = PMLTextField(required=True)
-    terms = PMLCheckBoxField()
+    terms = PMLCheckBoxField(
+        required=False,
+        choices=(("accept", "I accept the terms and conditions"),)
+    )
 
     def clean_terms(self):
         terms = self.cleaned_data['terms']

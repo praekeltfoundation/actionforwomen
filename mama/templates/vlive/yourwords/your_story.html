@@ -9,7 +9,7 @@
     <MODULE>
     <CONTAINER type="form">
         <FORM method="GET" 
-              href="{% url your_story competition.id %}" 
+              href="/yourwords/{{competition.id}}/" 
               submit_text="Submit">
             <FIELD name="csrfmiddlewaretoken" 
                    value="{{ csrf_token }}" 
