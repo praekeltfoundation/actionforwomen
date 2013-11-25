@@ -1,0 +1,34 @@
+{% extends "pml/base.xml" %}
+
+{% load mama_inclusion_tags %}
+{% load pml_inclusion_tags %}
+
+{% block body %}
+
+<MODULE>
+
+<CONTAINER type="data">
+
+    <TITLE>Comments by 
+    {% if comment_maker.profile.alias %}
+        {{ comment_maker.profile.alias }}
+    {% else %}
+        Anon.
+    {% endif %}
+    </TITLE>
+
+    {% for comment in object_list %}
+    <TEXT>
+        <b>{{ comment.name }}</b><br/>
+        {{ comment.submit_date }}<br/>
+        {{ comment.comment|linebreaks }}<br/>
+    </TEXT>
+    {% endfor %}
+
+</CONTAINER>
+
+</MODULE>
+
+{% pagination page_obj %}
+
+{% endblock %}

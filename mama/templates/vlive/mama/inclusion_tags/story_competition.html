@@ -1,0 +1,17 @@
+{% if your_story_competition %}
+<MODULE>
+  <CONTAINER type="data">
+    <TEXT>
+      <p>
+      <strong>
+        <LINK href="{% url your_story your_story_competition.pk %}">
+          <TEXT>Submit Your Story &gt;</TEXT>
+        </LINK>
+      </strong>
+      </p>
+    </TEXT>
+  </CONTAINER>
+</MODULE>
+{% endif %}
+
+

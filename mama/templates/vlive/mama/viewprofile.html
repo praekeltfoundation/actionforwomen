@@ -1,0 +1,89 @@
+{% extends "pml/base.xml" %}
+
+{% load cache %}
+{% load jmbo_inclusion_tags %}
+{% load mama_inclusion_tags %}
+{% load jmbo_template_tags %}
+{% load likes_inclusion_tags %}
+{% load livechat_tags%}
+{% load pml_inclusion_tags %}
+
+{% block body %}
+
+{% header "My Profile" %}
+
+<MODULE>
+  {% if avatar %}
+  <CONTAINER type="image">
+    <IMAGE href="{{ avatar }}" align="left" width="44" height="44" mime-type="image/jpeg"/>
+  </CONTAINER>
+  {% endif %}
+
+  <CONTAINER type="data">
+    <TEXT>
+      {{ username }}<br/>
+      {% if mobile_number %}
+      Mobile No: {{ mobile_number }}<br/>
+      {% endif %}
+      {{ relation_description}}
+    </TEXT>
+  </CONTAINER>
+
+  {% if about_me %}
+  <CONTAINER type="data">
+    <TITLE>About Me</TITLE><br/>
+    <TEXT>{{ about_me|linebreaks }}</TEXT>
+  </CONTAINER>
+  {% endif %}
+
+  {% if date_type != 'unspecified' or delivery_date %}
+  <CONTAINER type="data">
+    <TITLE>About My Baby</TITLE>
+    <TEXT>
+
+    {% if baby_name %}
+    Name: {{ baby_name }}<br/>
+    {% endif %}
+
+    {% if date_type != 'unspecified' %}
+    {{ date_description }}: 
+    {% else %}
+        {% if delivery_date > now %}
+            Due Date:
+        {% else %}
+            Birth Date:
+        {% endif %}
+    {% endif %}
+    {% if date_type == 'due_date' or date_type == 'unspecified' %}
+        {% if unknown_due_date %}
+        Unknown
+        {% else %}
+        {{ delivery_date|date:"d M Y" }}
+        {% endif %}
+    {% else %}
+        {{ delivery_date|date:"d M Y" }}
+    {% endif %}
+
+    </TEXT>
+  </CONTAINER>
+  {% endif %}
+
+  <CONTAINER type="data">
+  <TEXT>
+    <b>
+      <LINK href="{% url edit_vlive_profile %}">
+      <TEXT>Edit My Profile &gt;</TEXT>
+      </LINK><br/>
+      <LINK href="{% url password_reset %}">
+      <TEXT>Reset My Password &gt;</TEXT>
+      </LINK>
+    </b>
+  </TEXT>
+  </CONTAINER>
+
+</MODULE>
+
+{% endblock %}
+
+{% block footer_search_form %}
+{% endblock %}

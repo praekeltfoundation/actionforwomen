@@ -1,0 +1,24 @@
+{% extends "pml/base.xml" %}
+
+{% load livechat_tags %}
+{% load pml_inclusion_tags %}
+
+{% block above_content %}
+{{ block.super }}
+<MODULE>
+  <CONTAINER type="data">
+    <TEXT>
+    <p>
+      <LINK href="{% url askmama_detail %}">
+      <TEXT><b>Ask MAMA a Question &gt;</b></TEXT>
+      </LINK>
+    </p>
+    </TEXT>
+  </CONTAINER>
+</MODULE>
+{% endblock %}
+
+{% block body %}
+{% show_live_chat %}
+{% endblock %}
+

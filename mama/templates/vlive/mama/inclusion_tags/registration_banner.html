@@ -1,0 +1,18 @@
+{% load pml_inclusion_tags %}
+
+{% if user.is_anonymous %}
+  {% header text="Register" color='orange' %}
+  <MODULE>
+  <CONTAINER type="data">
+    <TEXT>
+      <p>
+      <LINK href="{% url registration_register %}">
+      <TEXT>Register for MAMA</TEXT>
+      </LINK>
+      <br />
+      Get weekly updates unique to your baby!
+      </p>
+    </TEXT>
+  </CONTAINER>
+  </MODULE>
+{% endif %}

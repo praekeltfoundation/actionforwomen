@@ -1,0 +1,158 @@
+{% load comments likes_inclusion_tags moderator_inclusion_tags %}
+{% load pml_inclusion_tags %}
+
+{% if weeks_ago == 0 %}
+  {% if can_render_comment_form %}
+      {% render_comment_form for lead_in_post %}
+  {% endif %}
+{% endif %}
+
+{% if weeks_ago > 1 %}
+<MODULE>
+  <CONTAINER type="data">
+    <TEXT>
+      <p>
+      {% if sort == 'pop' %}
+      <LINK href="{% url askmama_detail %}?wk=2&amp;sort=date">
+        <TEXT>Latest</TEXT>
+      </LINK> | Popular | 
+      <LINK href="{% url askmama_detail %}?wk=2&amp;sort=alph">
+        <TEXT>Alphabetical</TEXT>
+      </LINK>
+      {% else %}
+        {% if sort == 'date' %}
+          Latest | 
+          <LINK href="{% url askmama_detail %}?wk=2&amp;sort=pop">
+            <TEXT>Popular</TEXT>
+          </LINK> |
+          <LINK href="{% url askmama_detail %}?wk=2&amp;sort=alph">
+            <TEXT>Alphabetical</TEXT>
+          </LINK>
+        {% else %}
+          <LINK href="{% url askmama_detail %}?wk=2&amp;sort=date">
+            <TEXT>Latest</TEXT>
+          </LINK> | 
+          <LINK href="{% url askmama_detail %}?wk=2&amp;sort=pop">
+            <TEXT>Popular</TEXT>
+          </LINK> | Alphabetical
+        {% endif %}
+      {% endif %}
+      </p>
+    </TEXT>
+  </CONTAINER>
+</MODULE>
+{% endif %}
+
+<MODULE backgroundColor="true" palette="MiMaroon">
+  {% if weeks_ago == 1 %}
+    <HEADER id="comments">
+      <LABEL>
+        <LINK href="{% url askmama_detail %}">
+          <TEXT>AskMAMA</TEXT>
+        </LINK> &gt; Last week's Q&amp;A
+      </LABEL>
+    </HEADER>
+  {% endif %}
+
+  <HEADER id="comments">
+    <LABEL>
+    {% if weeks_ago == 0 %}
+      This Week's Favourite Questions
+    {% else %}
+      {% if weeks_ago == 1 %}
+        {{ week_start|date:"d M Y" }} 
+      {% else %}
+        Questions older than {{ week_end|date:"d M Y" }} 
+      {% endif %}
+    {% endif %}
+    </LABEL>
+  </HEADER>
+
+  {% for question in questions.object_list %}
+    <CONTAINER type="data">
+      <TEXT>
+        <p>
+        {% likes question %}<br/>
+        {% if question.replied_to_comment_set.count > 0 %}
+        <LINK href="{% url askmama_answer_detail question.id %}">
+          <TEXT>{{ question.comment|linebreaks }}</TEXT>
+        </LINK>
+        {% else %}
+          {{ question.comment|linebreaks }}
+        {% endif %}
+        </p>
+      </TEXT>
+    </CONTAINER>
+  {% empty %}
+    <CONTAINER type="data">
+      <TEXT>
+        No questions have been asked. 
+        {% if weeks_ago == 0 %}
+        Use the form below to submit the first question.
+        {% endif %}
+      </TEXT>
+    </CONTAINER>
+  {% endfor %}
+
+  {% if questions.has_other_pages %}
+  <CONTAINER type="data">
+    {% if questions.has_previous %}
+    <LINK href="?page={{ questions.previous_page_number }}&wk={{ weeks_ago }}&amp;sort={{ sort }}"><TEXT>&laquo; Prev</TEXT></LINK>
+    {% else %}
+    &laquo; Prev
+    {% endif %}
+    |
+    Page {{ questions.number }} of {{ questions.paginator.num_pages }}
+    |
+    {% if questions.has_next %}
+    <LINK href="?page={{ questions.next_page_number }}&wk={{ weeks_ago }}&amp;sort={{ sort }}"><TEXT>Next &raquo;</TEXT></LINK>
+    {% else %}
+    Next &raquo;
+    {% endif %}
+  </CONTAINER>
+  {% endif %}
+
+  {% if weeks_ago == 0 %}
+    {% if not can_render_comment_form %}
+      {% if can_comment_code == 'auth_required' %}
+        <CONTAINER type="data">
+          <TEXT>
+          <p>You must be signed in to submit your own question.</p>
+          <p>
+            <LINK href="{% url login %}?next={% url askmama_detail %}">
+              <TEXT>Sign in &gt;</TEXT>
+            </LINK>
+          </p>
+          </TEXT>
+        </CONTAINER>
+      {% endif %}
+    {% endif %}
+  {% endif %}
+
+  {% if weeks_ago == 0 %}
+  <CONTAINER type="data">
+    <TEXT>
+      <p>
+      <strong>
+        <LINK href="{% url askmama_detail %}?wk=1">
+          <TEXT>See last week's Q&amp;A &gt;</TEXT>
+        </LINK>
+      </strong>    
+      </p>
+    </TEXT>
+  </CONTAINER>
+  {% endif %}
+  {% if weeks_ago > 0 %}
+    <CONTAINER type="data">
+      <TEXT>
+      <p>
+      <strong>
+        <a href="{% url askmama_detail %}">
+          &lt; Back to AskMAMA
+        </a>
+      </strong>    
+      </p>
+      </TEXT>
+    </CONTAINER>
+  {% endif %}
+</MODULE>

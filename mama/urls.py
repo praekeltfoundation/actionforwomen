@@ -8,7 +8,7 @@ from django.views.generic import TemplateView
 from haystack.views import SearchView
 from mama.views import (CategoryDetailView, CategoryListView, 
                         ContactView, 
-                        ProfileView,
+                        ProfileView, VLiveEditProfile,
                         AskMamaView, QuestionAnswerView, 
                         MomStoriesListView,
                         MyProfileView, MyProfileEdit, 

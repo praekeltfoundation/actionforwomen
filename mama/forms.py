@@ -15,13 +15,18 @@ from django.core.validators import RegexValidator
 from django.forms.extras.widgets import SelectDateWidget
 from django.utils.http import int_to_base36
 from django.utils.safestring import mark_safe
-import mama
+
 from pml import forms as pml_forms
 from registration.forms import RegistrationFormTermsOfService
 from userprofile import utils
+import mama
 
 
-from mama.constants import RELATION_TO_BABY_CHOICES, DATE_QUALIFIER_CHOICES
+from mama.constants import (
+    RELATION_TO_BABY_CHOICES, 
+    DATE_QUALIFIER_CHOICES
+)
+
 
 class ContactForm(forms.Form):
     mobile_number = forms.CharField(max_length=64)
@@ -108,7 +113,6 @@ class RegistrationForm(RegistrationFormTermsOfService):
         label='Are you a...',
         initial='mom_or_mom_to_be'
     )
-
     date_qualifier = forms.ChoiceField(
         widget=forms.RadioSelect(),
         initial='due_date',
@@ -290,34 +294,153 @@ class DueDateForm(forms.Form):
 
 class ProfileForm(pml_forms.PMLForm):
     submit_text = "Register"
+
     username = pml_forms.PMLTextField(
-        label="Username",
+        label="Alias",
         help_text="This name will appear next to all your comments."
     )
+    relation_to_baby = pml_forms.PMLRadioField(
+        choices=RELATION_TO_BABY_CHOICES,
+        label='Are you a...',
+        initial='mom_or_mom_to_be'
+    )
+    date_qualifier = pml_forms.PMLRadioField(
+        initial='due_date',
+        choices=DATE_QUALIFIER_CHOICES,
+        label="Please enter your baby's birth day or due date or select unknown if you are not sure of the due date"
+    )
     delivery_date = pml_forms.PMLTextField(
-        label="What is your due date or baby's birthday?",
+        label="What is your due date or baby's birthday? (yyyy-mm-dd)",
+        required=False
+    )
+    unknown_date = pml_forms.PMLCheckBoxField(
+        required=False,
+        choices=(("unknown", "I don't know the delivery date"),)
     )
     tos = pml_forms.PMLCheckBoxField(
         choices=(
-            ("accept", 'I accept the terms and conditions of use.'),
-        )
+            ( 
+                "accept", 
+                mark_safe("""I accept the <LINK href="/terms/"><TEXT>terms and conditions</TEXT></LINK> of use.""")
+            ),
+        ))
+
+    def clean(self):
+        """
+        Check that the birth date is provided, if the person selected birth
+        date as the date type.
+        Check that the due date is provided or the unknown check box is checked
+        if due date is selected as the date type.
+        """
+        cleaned_data = super(ProfileForm, self).clean()
+        try:
+            delivery_date = cleaned_data['delivery_date']
+            delivery_date = parser.parse(delivery_date)
+        except (KeyError, ValueError):
+            delivery_date = None
+        try:
+            date_qualifier = cleaned_data['date_qualifier']
+        except KeyError:
+            date_qualifier = 'due_date'
+        try:
+            unknown_date = cleaned_data['unknown_date']
+            if not unknown_date:
+                unknown_date = 'na'
+        except KeyError:
+            unknown_date = 'na'
+        if date_qualifier == 'birth_date' and delivery_date is None:
+            msg = 'You need to provide a birth date in the format yyyy-mm-dd (i.e. 2013-08-15).'
+            self._errors['delivery_date'] = self.error_class([msg])
+            del cleaned_data['delivery_date']
+        elif date_qualifier == 'due_date' and delivery_date is None \
+                and unknown_date == 'na':
+            msg = "Either provide a due date in the format yyyy-mm-dd (i.e. 2013-08-15), or check the 'Unknown' check box below the date."
+            self._errors['delivery_date'] = self.error_class([msg])
+            del cleaned_data['delivery_date']
+        return cleaned_data
+
+
+class VLiveProfileEditForm(pml_forms.PMLForm):
+    """
+    The VLive form to edit all options in the member's full profile.
+    """
+    submit_text="Save"
+
+    username = pml_forms.PMLTextField(
+        label="Alias",
+        help_text="This name will appear next to all your comments."
+    )
+    relation_to_baby = pml_forms.PMLRadioField(
+        choices=RELATION_TO_BABY_CHOICES,
+        label='Are you a...',
+        initial='mom_or_mom_to_be'
+    )
+    about_me = pml_forms.PMLTextField(
+        label="About Me",
+        required=False
+    )
+    baby_name = pml_forms.PMLTextField(
+        label="The Baby's Name",
+        required=False
+    )
+    date_qualifier = pml_forms.PMLHiddenField(
+        initial='due_date'
+    )
+    delivery_date = pml_forms.PMLTextField(
+        label="What is your due date or baby's birthday? (yyyy-mm-dd)",
+        required=False
+    )
+    unknown_date = pml_forms.PMLCheckBoxField(
+        required=False,
+        choices=(("unknown", "I don't know the delivery date"),)
+    )
+    baby_has_been_born = pml_forms.PMLCheckBoxField(
+        required=False,
+        choices=(("unknown", "Baby has been born"),)
     )
 
     def __init__(self, *args, **kwargs):
-        super(ProfileForm, self).__init__(*args, **kwargs)
-        self.fields['tos'] = pml_forms.PMLCheckBoxField(
-            choices=(
-                ("accept", mark_safe('I accept the <LINK href="%s">terms '
-                                     'and conditions</LINK> of use.'
-                                     % reverse("terms"))),
-            )
-        )
+        super(VLiveProfileEditForm, self).__init__(*args, **kwargs)
 
-    def clean_delivery_date(self):
-        delivery_date = self.cleaned_data['delivery_date']
+    def clean(self):
+        cleaned_data = super(VLiveProfileEditForm, self).clean()
+
         try:
+            delivery_date = cleaned_data['delivery_date']
             delivery_date = parser.parse(delivery_date)
-        except ValueError:
-            raise ValidationError('Please enter a date in the format day/month/year(i.e. 17/8/2013).')
+        except (KeyError, ValueError):
+            delivery_date = None
+        try:
+            date_qualifier = cleaned_data['date_qualifier']
+        except KeyError:
+            date_qualifier = 'due_date'
+        try:
+            unknown_date = cleaned_data['unknown_date']
+            if not unknown_date:
+                unknown_date = False
+        except KeyError:
+            unknown_date = False
+        try:
+            baby_has_been_born = cleaned_data['baby_has_been_born']
+            if not baby_has_been_born:
+                baby_has_been_born = False
+        except KeyError:
+            baby_has_been_born = False
 
-        return delivery_date
+        if date_qualifier == 'birth_date' and delivery_date is None:
+            msg = 'You need to provide a birth date'
+            self._errors['delivery_date'] = self.error_class([msg])
+            del cleaned_data['delivery_date']
+        elif date_qualifier == 'due_date':
+            if baby_has_been_born and delivery_date is None:
+                msg = "You have indicated that the baby has been born. \
+                       Please provide the birth date in the due date field \
+                       above."
+                self._errors['delivery_date'] = self.error_class([msg])
+                del cleaned_data['delivery_date']
+            elif not unknown_date and delivery_date is None:
+                msg = "Either provide a due date, or check the \
+                      'Unknown' check box below the date."
+                self._errors['delivery_date'] = self.error_class([msg])
+                del cleaned_data['delivery_date']
+        return cleaned_data

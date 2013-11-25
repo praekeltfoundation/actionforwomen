@@ -1,0 +1,28 @@
+{% load jmbo_inclusion_tags %}
+{% load pml_inclusion_tags %}
+
+{% if object_list %}
+  {% header category.title %}
+  {% for object in object_list %}
+      {% render_object object "block" %}
+  {% endfor %}
+
+  <MODULE>
+  <CONTAINER type="data">
+    <TEXT>
+      <p>
+        <br/>
+        <LINK href="{% url moms_stories_object_list %}">
+        <TEXT>Tell Your Story and Win! &gt;</TEXT>
+        </LINK>
+        <br/>
+        <LINK href="{{ category.get_absolute_url }}">
+        <TEXT>More Stories &gt;</TEXT>
+        </LINK>
+        <br/>
+      </p>
+    </TEXT>
+  </CONTAINER>
+  </MODULE>
+{% endif %}
+

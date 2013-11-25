@@ -5,11 +5,6 @@
 <div class="{{ live_chat.current_live_chat.primary_category.color}} ">
   <div class="h1">
     {{ live_chat.current_live_chat.title }}
-    {% comment %}
-    <div class="stamp">
-        {% humanize_time_diff live_chat.current_live_chat.created "Ago" %} // <a href="#comments">{{ live_chat.current_live_chat.comment_count }} Comments</a> // {% likes live_chat.current_live_chat %}
-    </div>
-    {% endcomment %}
   </div>
 
   <div class="content-inner">
@@ -22,23 +17,30 @@
       {% if chat_comments %}
         {% for comment in chat_comments.object_list %}
             <div class="item comment no-pic">
-              <div class="post">
-                {% with comment.user.get_profile as profile %}
+              {% if comment.user %}
+              <div class="post" style="float: left">
+                {% with comment.user.profile as profile %}
                   {% if profile.avatar %}
-                    <img src="{{ profile.avatar.url }}" width="44" height="44" />
+                    <img src="{{ profile.avatar.url }}" width="44" height="44"
+                    style="padding: 0;" />
                   {% endif %}
                 {% endwith %}
               </div>
+              {% endif %}
               <div class="meta">
                 <div class="title">
+                  {% if comment.user %}
                   <a href="{% url public_profile comment.user.id %}">{{ comment.name }}</a>
+                  {% else %}
+                  {{ comment.name }}
+                  {% endif %}
                 </div>
                 <div class="stamp">{{ comment.submit_date }} | {% likes comment %} {% report_comment_abuse comment %}</div>
                 <div class="stamp">{{ comment.comment|linebreaks }}</div>
               </div>
 
               {% if comment.livechatresponse_set.exists %}
-              <div class="item comment" style="padding-left: 15px">
+              <div class="item comment" style="padding-left: 25px; background-color: rgb(244, 229, 234)">
                   {% for response in comment.livechatresponse_set.all %}
                       <div class="meta">
                           <div class="title">

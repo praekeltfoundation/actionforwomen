@@ -12,8 +12,10 @@ Used for Articles and Guides
 {% endblock %}
 
 {% block above_content %}
-<div>
-    <div class="h1">Search</div>
+    <div class="{{ category.color }}">
+        <div class="h1">{{ full_heading }}</div>
+        <div class="item">&nbsp;</div>
+    </div>
     <div class="item">
         <form id="frmSearch" method="get" action="{% url haystack_search %}">
             <div class="row">
@@ -32,7 +34,6 @@ Used for Articles and Guides
 
     {% if object_list %}
     <div class="{{ category.color }}">
-        <div class="h1">{{ full_heading }}</div>
         <div class="content-inner">
             <a name="listing-top" />
             <div class="item">
@@ -48,7 +49,7 @@ Used for Articles and Guides
 
     {% if object_list %}
     <div class="item back-to-top-link">
-        <a href="#listing-top">Back to top ></a>
+        <a href="#listing-top">Back to top &gt;</a>
     </div>
     {% endif %}
 
