@@ -21,6 +21,7 @@ class PMLYourStoryView(FormView):
                 YourStoryCompetition, 
                 pk=self.competition_id)
             context['competition'] = competition
+            context['competition_id'] = competition.id
         except AttributeError:
             pass
         return context
@@ -30,7 +31,10 @@ class PMLYourStoryView(FormView):
         initial['next'] = reverse('moms_stories_object_list')
         user = self.request.user
         initial['name'] = user.username
-        initial['email'] = user.email
+        if user.email:
+            initial['email'] = user.email
+        else:
+            initial['email'] = 'unspecified@askmama.mobi'
         try:
             initial['competition_id'] = self.competition_id
         except AttributeError:
