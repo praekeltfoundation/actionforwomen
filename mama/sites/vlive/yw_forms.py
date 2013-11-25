@@ -16,10 +16,3 @@ class PMLYourStoryForm(PMLForm):
         required=False,
         choices=(("accept", "I accept the terms and conditions"),)
     )
-
-    def clean_terms(self):
-        terms = self.cleaned_data['terms']
-        if terms == False:
-            raise ValidationError(u'You must agree to the terms and conditions')
-
-        return terms
