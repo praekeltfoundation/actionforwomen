@@ -1,11 +1,13 @@
 {% load likes_inclusion_tags moderator_inclusion_tags %}
 
-<CONTAINER type="data">
+<MODULE>
   {% for comment in comment_list %}
+  <CONTAINER type="data">
     <TEXT>
     <b>{{ comment.name }}</b><br/>
     {{ comment.submit_date }} | {% likes comment %} {% report_comment_abuse comment %}<br/>
     {{ comment.comment|linebreaks }}<br/>
     </TEXT>
+  </CONTAINER>
   {% endfor %}
-</CONTAINER>
+</MODULE>
