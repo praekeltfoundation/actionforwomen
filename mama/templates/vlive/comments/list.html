@@ -1,7 +1,7 @@
 {% load likes_inclusion_tags moderator_inclusion_tags %}
 
+{% for comment in comment_list %}
 <MODULE>
-  {% for comment in comment_list %}
   <CONTAINER type="data">
     <TEXT>
     <b>{{ comment.name }}</b><br/>
@@ -9,5 +9,5 @@
     {{ comment.comment|linebreaks }}<br/>
     </TEXT>
   </CONTAINER>
-  {% endfor %}
 </MODULE>
+{% endfor %}
