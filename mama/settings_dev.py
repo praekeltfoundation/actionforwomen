@@ -3,13 +3,6 @@ from mama.settings import *
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'mama.sqlite',
-    }
-}
-
 SENDER = "sender@mail.com"
 RECIPIENT = ["admin@mail.com", "admin2@mail.com"]
 
@@ -32,7 +25,7 @@ SOUTH_TESTS_MIGRATE = False  # Do not run the migrations for our tests.
                              # We are assuming that our models.py are correct
                              # for the tests and as such nothing needs to be
                              # migrated.
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
     # DEBUGGING STUFF
 INTERNAL_IPS = ("http://127.0.0.1")
 

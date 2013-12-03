@@ -46,6 +46,8 @@ setup(
         'raven',
         'south',
         'Whoosh==2.4.1',
+        #'python-mxit',
+        'django-mxit',
     ],
     tests_require=[
         'django-setuptest',

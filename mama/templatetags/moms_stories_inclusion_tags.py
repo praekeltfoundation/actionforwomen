@@ -25,4 +25,5 @@ def your_story_competition(context):
         context['your_story_competition'] = qs.latest('publish_on')
     except YourStoryCompetition.DoesNotExist:
         pass
+    import pdb;pdb.set_trace()
     return context

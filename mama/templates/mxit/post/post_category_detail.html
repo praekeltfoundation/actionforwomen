@@ -3,26 +3,25 @@
 {% load jmbo_inclusion_tags %}
 {% load mama_inclusion_tags %}
 {% load jmbo_template_tags %}
-{% load likes_inclusion_tags %}
 {% load livechat_tags %}
 {% load survey_inclusion_tags %}
 
 {% block content %}
     <div class="{{ category.color }}">
-        <div class="h1">{{ category.title }}</div>
+        <h1>{{ category.title }}</h1>
         <div class="content-inner">
             <div class="post">
+                <h2>{{ object.title }}</h2>
                 <div class="title">
-                    {{ object.title }}
                     {% if object.comments_enabled %}
                         <div class="stamp">
-                            {% humanize_time_diff object.created "Ago" %} // <a href="#comments">{{ object.comment_count }} Comments</a> // {% likes object %}
+                            {% humanize_time_diff object.created "Ago" %} // <a href="#comments">{{ object.comment_count }} Comments</a>
                         </div>
                     {% endif %}
                 </div>
-                <div> </div>
                 {% if object.get_thumb_url %}
                     <img src="{{ object.get_thumb_url }}" />
+                <br/>
                 {% endif %}
                 {{ object.content|safe }}
             </div>

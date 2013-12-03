@@ -588,7 +588,12 @@ def post_comment(request, next=None, using=None):
             data['name'] = profile.alias
 
     data["email"] = 'commentor@askmama.mobi'
-    data["url"] = request.META['HTTP_REFERER']
+    data["url"] = request.META.get('HTTP_REFERER', None)
+
+    # For mxit, we add a next field to the comment form
+    if not data["url"] and data.get("next", None):
+        data["url"] = data["next"]
+
     request.POST = data
 
     # Reject comments if commenting is closed

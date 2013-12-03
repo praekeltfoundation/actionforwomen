@@ -18,17 +18,6 @@ Used for Mom's Stories
         <div class="h1">Mom's Stories</div>
         <div class="item">&nbsp;</div>
     </div>
-    <div class="item">
-        <form id="frmSearch" method="get" action="{% url haystack_search %}">
-            <div class="row">
-                <input type="text" name="q" value="{{ query }}" class="short" />
-            </div>
-            <div class="row">
-                <input type="submit" name="submit" value="Search" class="btn" />
-            </div>
-            <div class="clear"></div>
-        </form>
-    </div>
 </div>
 {% endblock %}
 
@@ -43,7 +32,7 @@ Used for Mom's Stories
         <div class="content-inner">
             <a name="listing-top" />
             <div class="item">
-                {% for object in post_list %}
+                {% for object in object_list %}
                     {% render_object object "block" %}
                 {% endfor %}
             </div>
@@ -53,17 +42,8 @@ Used for Mom's Stories
 
     {% pagination page_obj %}
 
-    {% if object_list %}
-    <div class="item back-to-top-link">
-        <a href="#listing-top">Back to top &gt;</a>
-    </div>
-    {% endif %}
-
     {% block below_listing %}
     {% your_story_competition %}
-    {% endblock %}
-
-    {% block footer_search_form %}
     {% endblock %}
 
 {% endblock %}

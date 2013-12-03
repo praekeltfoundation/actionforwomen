@@ -6,9 +6,18 @@
     {% if object.comments_enabled %}
         <div class="{{ category.color }}">
             <div class="h1" id="comments">Comments</div>
+            {% if request.GET.commentaction == 'show' %}
             {% render_comment_list for object %}
+            {% else %}
+            <a href="{{ request.path }}?commentaction=show">Load Comments &gt;</a>
+            <br/>
+            {% endif %}
+            {% if request.GET.commentaction == 'add' %}
             {% if can_render_comment_form %}
                 {% render_comment_form for object %}
+            {% endif %}
+            {% else %}
+            <a href="{{ request.path }}?commentaction=add">Add Your Comment &gt;</a>
             {% endif %}
         </div>
     {% endif %}
