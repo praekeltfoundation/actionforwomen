@@ -30,6 +30,8 @@
                value="{{ user.username }}" />
         <input type="hidden" name="email" 
                value="{{ user.email }}" />
+        <input type="hidden" name="terms" 
+               value="true" />
 
         <div class="errorlist">
             {{ form.non_field_errors }}
@@ -37,24 +39,18 @@
 
         <div class="field">
             <div class="required">
-                <label for="id_text">Your Story:</label>
+                <label for="id_text">Please type your story and press send:</label>
                 {{ form.text.errors }}
                 <div class="helptext"></div> 
                 {{ form.text }}
             </div>
         </div>
 
-        <div class="field">
-            <div class="required">
-                {{ form.terms.errors }}
-                {{ form.terms }} 
-                <label for="id_terms" style="display: inline">I
-                    accept</label> the <a href="/terms/">Terms and
-                    Conditions</a> and agree to let MAMA publish if it is
-                good enough to win a prize.
-                <div class="helptext"></div> 
-            </div>
-        </div>
+        <p>
+            By submitting your story, you accept the <a href="/terms/">Terms and
+                Conditions</a> and agree to let MAMA publish if it is good enough
+            to win a prize.
+        </p>
 
         <div class="row">
             <input type="submit" class="btn" value="Submit" /> 
