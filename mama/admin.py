@@ -14,6 +14,8 @@ from moderator.admin import CommentAdmin
 
 from secretballot.models import Vote
 from post.models import Post
+from poll.models import Poll
+from poll.admin import PollAdmin
 from livechat.models import LiveChat
 from jmboyourwords.admin import YourStoryEntryAdmin
 from jmboyourwords.models import YourStoryEntry
@@ -26,6 +28,9 @@ from mama.models import (
     Banner,
     DefaultAvatar
 )
+
+class MamaModelbaseAdmin(ModelBaseAdmin):
+    raw_id_fields = ('owner', )
 
 
 class LinkInline(admin.TabularInline):
@@ -43,7 +48,7 @@ class ContentQuizInline(admin.TabularInline):
     fk_name = 'post'
 
 
-class PostAdmin(ModelBaseAdmin):
+class PostAdmin(MamaModelbaseAdmin):
     inlines = ModelBaseAdmin.inlines + [
         LinkInline,
         NavigationLinkInline,
@@ -51,7 +56,11 @@ class PostAdmin(ModelBaseAdmin):
     ]
 
 
-class BannerAdmin(ModelBaseAdmin):
+class MamaPollAdmin(PollAdmin):
+    raw_id_fields = ('owner', )
+
+
+class BannerAdmin(MamaModelbaseAdmin):
 
     list_display = (
         'title', 'description', 'thumbnail', 'schedule', '_actions')
@@ -207,15 +216,21 @@ class AskMamaQuestionAdmin(CommentAdmin):
             return None
 
 
-admin.site.register(SitePreferences, PreferencesAdmin)
+class AskMamaPreferencesAdmin(PreferencesAdmin):
+    raw_id_fields = ('contact_email_recipients', )
+
+
+admin.site.register(SitePreferences, AskMamaPreferencesAdmin)
 admin.site.register(Banner, BannerAdmin)
 admin.site.register(DefaultAvatar, DefaultAvatarAdmin)
 
 try:
     admin.site.unregister(Post)
+    admin.site.unregister(Poll)
 except NotRegistered:
     pass
 admin.site.register(Post, PostAdmin)
+admin.site.register(Poll, MamaPollAdmin)
 
 try:
     admin.site.unregister(YourStoryEntry)
