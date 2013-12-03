@@ -4,12 +4,12 @@
 {% block content %}
   <div class="{{ category.color }}">
     <div class="{{ category.color }}">
-      <div class="h1">
+      <h1>
         <a href="{% url guides_list %}">Guides</a> &gt;
         <a href="{% url more_guides_list %}">{{ category.title }}</a>
-      </div>
+      </h1>
     </div>
-    <div class="h1">{{ object.title }}</div>
+    <h1>{{ object.title }}</h1>
 
     <div class="content-inner">
       {% cache 3600 links object.id %}

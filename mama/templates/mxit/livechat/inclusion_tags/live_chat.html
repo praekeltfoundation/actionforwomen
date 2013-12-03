@@ -3,16 +3,16 @@
 {% load livechat_tags mama_inclusion_tags %}
 
 <div class="{{ live_chat.current_live_chat.primary_category.color}} ">
-  <div class="h1">
+  <h1>
     {{ live_chat.current_live_chat.title }}
-  </div>
+  </h1>
 
   <div class="content-inner">
     <div class="post">
       {{ live_chat.current_live_chat.description|safe|linebreaks }}
     </div>
 
-    <div class="h1">Questions and Responses</div>
+    <h1>Questions and Responses</h1>
     <div class="items">
       {% if chat_comments %}
         {% for comment in chat_comments.object_list %}

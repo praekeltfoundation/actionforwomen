@@ -3,13 +3,13 @@
 
 {% block content %}
 
-<div class="h1">Comments by 
+<h1>Comments by 
 {% if comment_maker.get_profile.alias %}
     {{ comment_maker.get_profile.alias }}
 {% else %}
     Anon.
 {% endif %}
-</div>
+</h1>
 
 <div class="content-inner">
 

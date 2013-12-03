@@ -3,7 +3,7 @@
 {% if request.user.is_authenticated %}
   {% if no_due_date %}
 
-    <div class="h1">Your Baby</div>
+    <h1>Your Baby</h1>
     <div class="content-inner">
       <div class="items peach">
         <div class="item no-pic">
@@ -35,13 +35,13 @@
   {% else %}
 
     {% if stages_object_list %}
-      <div class="h1">
+      <h1>
         {% if profile.is_prenatal %}
             Your Pregnancy
         {% else %}
             Your Baby
         {% endif %}
-      </div>
+      </h1>
       <div class="content-inner">
           <div class="items peach">
               {% for object in stages_object_list %}
