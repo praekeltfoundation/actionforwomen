@@ -10,7 +10,7 @@
             {{ form.as_div }}
             <div class="row">
                 <input type="submit" value="{% trans "Vote" %}" class="btn" />
-                <a href="{{ object.get_absolute_url }}?results=1" onclick="document.getElementById('poll-widget-results-{{ object.id }}').style.display = 'block'; document.getElementById('poll-widget-form-{{ object.id }}').style.display = 'none'; return false;">{% trans "See results" %}</a>                
+                <a href="{{ object.get_absolute_url }}?results=1" >{% trans "See results" %}</a>                
             </div>
         </form>
     {% endif %}

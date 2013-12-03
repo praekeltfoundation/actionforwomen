@@ -5,23 +5,7 @@
 {% endblock %}
 
 {% block above_content %}
-<div>
-    <div class="{{ category.color }}">
-        <div class="h1">MAMA Guides</div>
-        <div class="item">&nbsp;</div>
-    </div>
-    <div class="item">
-        <form id="frmSearch" method="get" action="{% url haystack_search %}">
-            <div class="row">
-                <input type="text" name="q" value="{{ query }}" class="short" />
-            </div>
-            <div class="row">
-                <input type="submit" name="submit" value="Search" class="btn" />
-            </div>
-            <div class="clear"></div>
-        </form>
-    </div>
-</div>
+        <h1>MAMA Guides</h1>
 {% endblock %}
 
 {% block content %}

@@ -8,32 +8,13 @@ Used for the More Guides List view
 
 {% block above_content %}
 {{ block.super }}
-<div class="{{ category.color }}">
-  <div class="h1">
+  <h1>
     <a href="{% url guides_list %}">Guides</a> &gt;
     {{ full_heading }}
-  </div>
-</div>
-
-<div>
-    <div class="h1">Search</div>
-    <div class="item">
-        <form id="frmSearch" method="get" action="{% url haystack_search %}">
-            <div class="row">
-                <input type="text" name="q" value="{{ query }}" class="short" />
-            </div>
-            <div class="row">
-                <input type="submit" name="submit" value="Search" class="btn" />
-            </div>
-            <div class="clear"></div>
-        </form>
-    </div>
-</div>
+  </h1>
 {% endblock %}
 
 {% block content %}
-
-
     {% if object_list %}
       <div class="text_banner">
         <div class="banner_content">
