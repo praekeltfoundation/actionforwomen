@@ -14,6 +14,8 @@ from moderator.admin import CommentAdmin
 
 from secretballot.models import Vote
 from post.models import Post
+from poll.models import Poll
+from poll.admin import PollAdmin
 from livechat.models import LiveChat
 from jmboyourwords.admin import YourStoryEntryAdmin
 from jmboyourwords.models import YourStoryEntry
@@ -52,6 +54,10 @@ class PostAdmin(MamaModelbaseAdmin):
         NavigationLinkInline,
         ContentQuizInline
     ]
+
+
+class MamaPollAdmin(PollAdmin):
+    raw_id_fields = ('owner', )
 
 
 class BannerAdmin(MamaModelbaseAdmin):
@@ -220,9 +226,11 @@ admin.site.register(DefaultAvatar, DefaultAvatarAdmin)
 
 try:
     admin.site.unregister(Post)
+    admin.site.unregister(Poll)
 except NotRegistered:
     pass
 admin.site.register(Post, PostAdmin)
+admin.site.register(Poll, MamaPollAdmin)
 
 try:
     admin.site.unregister(YourStoryEntry)
