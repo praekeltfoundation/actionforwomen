@@ -207,7 +207,11 @@ class AskMamaQuestionAdmin(CommentAdmin):
             return None
 
 
-admin.site.register(SitePreferences, PreferencesAdmin)
+class AskMamaPreferencesAdmin(PreferencesAdmin):
+    raw_id_fields = ('contact_email_recipients', )
+
+
+admin.site.register(SitePreferences, AskMamaPreferencesAdmin)
 admin.site.register(Banner, BannerAdmin)
 admin.site.register(DefaultAvatar, DefaultAvatarAdmin)
 
