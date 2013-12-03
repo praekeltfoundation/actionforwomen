@@ -27,6 +27,9 @@ from mama.models import (
     DefaultAvatar
 )
 
+class MamaModelbaseAdmin(ModelBaseAdmin):
+    raw_id_fields = ('owner', )
+
 
 class LinkInline(admin.TabularInline):
     model = Link
@@ -43,7 +46,7 @@ class ContentQuizInline(admin.TabularInline):
     fk_name = 'post'
 
 
-class PostAdmin(ModelBaseAdmin):
+class PostAdmin(MamaModelbaseAdmin):
     inlines = ModelBaseAdmin.inlines + [
         LinkInline,
         NavigationLinkInline,
@@ -51,7 +54,7 @@ class PostAdmin(ModelBaseAdmin):
     ]
 
 
-class BannerAdmin(ModelBaseAdmin):
+class BannerAdmin(MamaModelbaseAdmin):
 
     list_display = (
         'title', 'description', 'thumbnail', 'schedule', '_actions')
