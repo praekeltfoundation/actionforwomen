@@ -1,16 +1,16 @@
-{% extends 'pml/base.xml' %}
+{% extends "pml/base.xml" %}
 
 {% load pml_inclusion_tags %}
 
 {% block body %}
 
-    {% header competition.title 'orange' %}
+    {% header text="Edit Profile" color="grey" %}
 
     <MODULE>
     <CONTAINER type="form">
         <FORM method="GET" 
-              href="/yourwords/{{competition.id}}/" 
-              submit_text="Submit">
+              href="{% url edit_vlive_profile %}" 
+              submit_text="Save">
             <FIELD name="csrfmiddlewaretoken" 
                    value="{{ csrf_token }}" 
                    type="hidden" />
@@ -21,4 +21,9 @@
     </CONTAINER>
     </MODULE>
 
+
 {% endblock %}
+
+{% block footer %}
+{% endblock %}
+

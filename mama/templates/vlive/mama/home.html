@@ -4,9 +4,11 @@
 {% load mama_inclusion_tags %}
 {% load pml_inclusion_tags %}
 {% load survey_inclusion_tags %}
+{% load livechat_tags %}
 
 {% block following_header %}
 {% include "mama/inclusion_tags/registration_banner.html" %}
+{% show_last_live_chat %}
 {% live_chat_banner %}
 {% banner image_url="{{ STATIC_URL }}mama/img/logo.jpg?2" %}
 {% random_guide_banner %}

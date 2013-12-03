@@ -38,7 +38,11 @@
             {% if not homelink %}
                 <MODULE backgroundColor="true" palette="MiGrey">
                     <CONTAINER type="data">
-                        <TEXT><LINK href="{% url home %}">&lt; Mama Home</LINK></TEXT>
+                      <TEXT>
+                        <LINK href="{% url home %}">
+                          <TEXT>&lt; Mama Home</TEXT>
+                        </LINK>
+                      </TEXT>
                     </CONTAINER>
                 </MODULE>
             {% endif %}
