@@ -3,6 +3,13 @@ from mama.settings import *
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',  # migrated
+        'NAME': 'mama.sqlite',
+    }
+}
+
 SENDER = "sender@mail.com"
 RECIPIENT = ["admin@mail.com", "admin2@mail.com"]
 
