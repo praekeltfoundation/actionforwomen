@@ -1,0 +1,12 @@
+{% if user.is_anonymous %}
+<div class="text_banner">
+  <div class="banner_content">
+    <p>
+    <strong>
+      <a href="{% url registration_register %}">Register for MAMA</a>
+    </strong><br/>
+    Get weekly updates unique to your baby!
+    </p>
+  </div>
+</div>
+{% endif %}

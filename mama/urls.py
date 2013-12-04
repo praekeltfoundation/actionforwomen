@@ -13,6 +13,7 @@ from mama.views import (CategoryDetailView, CategoryListView,
                         MomStoriesListView,
                         MyProfileView, MyProfileEdit, 
                         UpdateDueDateView,
+                        MxitUpdateDueDateView,
                         PublicProfileView, UserCommentsView,
                         GuidesView, GuidesTopicView, 
                         MoreGuidesView, GuideDetailView)
@@ -199,6 +200,12 @@ urlpatterns = patterns('',
         r'^profile/duedate/$',
         UpdateDueDateView.as_view(),
         name='update_due_date'
+    ),
+
+    url(
+        r'^profile/mxitduedate/$',
+        MxitUpdateDueDateView.as_view(),
+        name='mxit_update_due_date'
     ),
 
     (r'^survey/', include('survey.urls', namespace='survey')),

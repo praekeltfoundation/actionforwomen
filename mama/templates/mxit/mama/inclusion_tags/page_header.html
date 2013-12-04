@@ -1,0 +1,17 @@
+<div id="header">
+    <div class="logo">
+        <a href="{% url home %}"><img src="{{ STATIC_URL }}mama/img/logo.png" border="0" /></a>
+    </div>
+    <div class="nav">
+        <a href="{% url category_object_list 'articles' %}">Articles</a> | 
+        <a href="{% url moms_stories_object_list %}">Stories</a> |
+        {% if live_chat %}
+        <a href="{% url livechat:show_livechat live_chat.current_live_chat.slug %}">AskMAMA</a> |
+        {% else %}
+        <a href="{% url askmama_detail %}">AskMAMA</a> |
+        {% endif %}
+        <a href="{% url guides_list %}">Guides</a>
+    </div>
+</div>
+
+<div id="divider"><img src="{{ STATIC_URL }}mama/img/divider.jpg" /></div>

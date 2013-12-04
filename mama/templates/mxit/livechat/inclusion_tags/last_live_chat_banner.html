@@ -1,0 +1,18 @@
+{% if last_live_chat %}
+<div class="text_banner">
+  <div class="banner_content live_chat">
+    <div>
+      <strong>
+        Live Chat of {{ last_live_chat.chat_ends_at|date:"d M Y" }}
+      </strong>
+    </div>
+    <div class="live_chat_description">
+      If you missed this chat, you can view the archived conversation by 
+      <a href="{{ last_live_chat.url }}">
+        clicking here.
+      </a>
+    </div>
+  </div>
+</div>
+{% endif %}
+

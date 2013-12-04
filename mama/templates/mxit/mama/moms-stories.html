@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% comment %}
+Used for Mom's Stories
+{% endcomment %}
+
+{% load jmbo_inclusion_tags %}
+{% load mama_inclusion_tags moms_stories_inclusion_tags %}
+
+{% block following_header %}
+{{ block.super }}
+{% include "mama/inclusion_tags/registration_banner.html" %}
+{% endblock %}
+
+{% block above_content %}
+<div>
+    <div class="{{ category.color }}">
+        <h1>Mom's Stories</h1>
+        <div class="item">&nbsp;</div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+
+    {% block above_listing %}
+    {% your_story_competition %}
+    {% endblock %}
+
+    {% if object_list %}
+    <div class="{{ category.color }}">
+        <div class="content-inner">
+            <a name="listing-top" />
+            <div class="item">
+                {% for object in object_list %}
+                    {% render_object object "block" %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% pagination page_obj %}
+
+    {% block below_listing %}
+    {% your_story_competition %}
+    {% endblock %}
+
+{% endblock %}

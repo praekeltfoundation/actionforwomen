@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block following_header %}
+{% include "mama/inclusion_tags/registration_banner.html" %}
+{% endblock %}
+
+{% block above_content %}
+        <h1>MAMA Guides</h1>
+{% endblock %}
+
+{% block content %}
+
+<div class="{{ category.color }}">
+  <div class="content-inner">
+    <div class="items">
+      <div class="item no-pic">
+        <div class="meta">
+          <div class="stamp">
+            MAMA has so much information to share with you. We have compiled her
+            best advice into guide books for you to read. Try our search function
+            to find information on a certain topic.
+          </div>
+        </div>
+      </div>
+
+      {% if stages_leaders %}
+      <h1>Stages Guides</h1>
+      <div id="menu">
+        {% for item in stages_leaders %}
+        <div class="item">
+          <a href="{% url guides_topic_list item.slug %}">{{ item.title }}</a>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      {% if life_guide_leaders %}
+      <h1>Our Most Popular Guides</h1>
+      <div id="menu">
+        {% for item in life_guide_leaders %}
+        <div class="item">
+          <a href="{% url guides_topic_list item.slug %}">{{ item.title }}</a>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+    </div>
+  </div>
+
+  <div class="text_banner">
+    <div class="banner_content">
+      <p>
+      <strong>
+        <a href="{% url more_guides_list %}">
+          More Guides &gt; 
+        </a>
+      </strong>    
+      </p>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

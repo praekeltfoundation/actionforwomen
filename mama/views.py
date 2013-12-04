@@ -27,6 +27,7 @@ from django.views.generic.list import ListView
 from mama.forms import (
     ContactForm,
     DueDateForm,
+    MxitDueDateForm,
     ProfileForm,
     VLiveProfileEditForm,
     EditProfileForm
@@ -496,6 +497,23 @@ class UpdateDueDateView(FormView):
         return super(UpdateDueDateView, self).form_valid(form)
 
 
+class MxitUpdateDueDateView(FormView):
+    form_class = MxitDueDateForm
+    template_name = 'mama/update_due_date.html'
+
+    def get_success_url(self):
+        return reverse('home')
+
+    def form_valid(self, form):
+        user = self.request.user
+        profile = user.profile
+        profile.delivery_date = form.cleaned_data['due_date']
+        profile.date_qualifier = 'due_date'
+        profile.unknown_date = False
+        profile.save()
+        return super(MxitUpdateDueDateView, self).form_valid(form)
+
+
 class ProfileView(FormView):
     """
     This seems to be the registration form view specifically for VLive
@@ -666,7 +684,12 @@ def post_comment(request, next=None, using=None):
             data['name'] = profile.alias
 
     data["email"] = 'commentor@askmama.mobi'
-    data["url"] = request.META['HTTP_REFERER']
+    data["url"] = request.META.get('HTTP_REFERER', None)
+
+    # For mxit, we add a next field to the comment form
+    if not data["url"] and data.get("next", None):
+        data["url"] = data["next"]
+
     request.POST = data
 
     # Reject comments if commenting is closed

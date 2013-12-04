@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+{% load cache mama_inclusion_tags %}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+    <head>
+        <meta name="description" content="{% if object %}{{ object.description }}{% else %}www.askmama.mobi is a week-by-week guide to pregnancy, birth and early childhood for South African mothers. It was founded by the Mobile Alliance for Maternal Action to put the power of health in every mama's hand.{% endif %}">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>MAMA Mobile Community / {% if object %}{{ object.title }}{% else %}SA's week-by-week guide to pregnancy and infants{% endif %}</title>
+    </head>
+
+    <body>
+
+        {% page_header %}
+
+        {% block following_header %}
+        {% endblock %}
+
+
+        {% block above_content %}
+        {% endblock %}
+
+        {% block content %}
+        {% endblock %}
+
+        {% block pagectrl %}
+        <div class="page-controls">
+            <p>
+                <a href="{{ request.META.HTTP_REFERER }}" style="text-decoration:underline;">Back</a>
+                |
+                <a href="{% url home %}" style="text-decoration:underline;">Home</a>
+            </p>
+            {% comment %}
+            <p>
+                {% if request.user.is_authenticated %}<a href="{% url view_my_profile %}">MY PROFILE</a>{% else %}<a href="{% url login %}">SIGN IN</a>{% endif %}
+            </p>
+            {% endcomment %}
+        </div>
+        {% endblock %}
+
+        {% block searchlink %}
+        <p>
+            <a href="{% url haystack_search %}">Search the Site</a>
+        </p>
+        {% endblock %}
+
+    </body>
+</html>

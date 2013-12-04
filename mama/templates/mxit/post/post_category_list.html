@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% comment %}
+Used for Articles and Guides
+{% endcomment %}
+
+{% load jmbo_inclusion_tags mama_inclusion_tags %}
+
+{% block following_header %}
+{{ block.super }}
+{% include "mama/inclusion_tags/registration_banner.html" %}
+{% endblock %}
+
+{% block above_content %}
+        <h1>{{ full_heading }}</h1>
+{% endblock %}
+
+{% block content %}
+
+    {% if object_list %}
+    <div class="{{ category.color }}">
+        <div class="content-inner">
+            <a name="listing-top" />
+            <div class="item">
+                {% for object in post_list %}
+                    {% render_object object "block" %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% pagination page_obj %}
+
+    {% block below_listing %}
+    {% endblock %}
+
+    {% block footer_search_form %}
+    {% endblock %}
+
+{% endblock %}

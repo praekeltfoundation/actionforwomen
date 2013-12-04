@@ -194,7 +194,11 @@ def post_listing(context, category_slug):
         takes_context=True)
 def stories_listing(context, category_slug):
     result = _get_content_object_list(context, category_slug)
-    result['object_list'] = result['object_list'][:3]
+    # Trim to 3 objects, or provide empty list if it doesn't have one.
+    if 'object_list' in result:
+        result['object_list'] = result['object_list'][:3]
+    else:
+        result['object_list'] = []
     return result
 
 

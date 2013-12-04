@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load jmbo_inclusion_tags mama_inclusion_tags %}
+
+{% block content %}
+{% if request.GET.q %}
+<h1>Search Results for '{{ query }}'</h1>
+<div class="content-inner">
+    {% if page.object_list %}
+    <div class="items">
+        {% for object in page.object_list %}
+        {% render_object object.object "block" %}
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="post">
+        <p><strong>Try Again...</strong></p>
+        <p>Unfortunately no results were found for '{{ query }}'. Please try again with a different query.</p>
+    </div>
+    {% endif %}
+</div>
+
+{% pagination page %}
+{% endif %}
+<div id="search">
+    <p>Type in what you want to search for</p>
+    <form name="search-form" action="{% url haystack_search %}" method="get">
+        <input type="text" name="q" class="txt"{% if request.GET.q %} value="{{ request.GET.q }}"{% endif %} />
+        <input type="submit" name="search-btn" value="Search" />
+    </form>
+</div>
+{% endblock %}
+
+{% block searchlink %}{% endblock %}
