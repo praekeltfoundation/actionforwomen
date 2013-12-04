@@ -12,23 +12,7 @@
             provide you with stage based information unique to your baby.
           </div>
         </div>
-        <form method="POST" action="{% url update_due_date %}">
-          {% csrf_token %}
-          <div class="row shorter">
-              {{ due_form.due_date.label_tag }}
-              {% if due_form.due_date.errors %}
-                  <div class="errors">
-                      {% for error in due_form.due_date.errors %}
-                          <p>{{ error }}</p>
-                      {% endfor %}
-                  </div>
-              {% endif %}
-              {{ due_form.due_date }}
-          </div>
-          <div class="row">
-              <input type="submit" name="submit" value="Save" class="btn" />
-          </div>
-        </form>
+        <a href="{% url mxit_update_due_date %}">Enter a due date &gt;</a>
       </div>
     </div>
 

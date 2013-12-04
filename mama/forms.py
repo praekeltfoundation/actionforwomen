@@ -444,3 +444,10 @@ class VLiveProfileEditForm(pml_forms.PMLForm):
                 self._errors['delivery_date'] = self.error_class([msg])
                 del cleaned_data['delivery_date']
         return cleaned_data
+
+
+class MxitDueDateForm(forms.Form):
+    due_date = forms.CharField(
+        required = True,
+        label = "Due Date",
+    )

@@ -27,6 +27,7 @@ from django.views.generic.list import ListView
 from mama.forms import (
     ContactForm,
     DueDateForm,
+    MxitDueDateForm,
     ProfileForm,
     VLiveProfileEditForm,
     EditProfileForm
@@ -494,6 +495,23 @@ class UpdateDueDateView(FormView):
         profile.unknown_date = False
         profile.save()
         return super(UpdateDueDateView, self).form_valid(form)
+
+
+class MxitUpdateDueDateView(FormView):
+    form_class = MxitDueDateForm
+    template_name = 'mama/update_due_date.html'
+
+    def get_success_url(self):
+        return reverse('home')
+
+    def form_valid(self, form):
+        user = self.request.user
+        profile = user.profile
+        profile.delivery_date = form.cleaned_data['due_date']
+        profile.date_qualifier = 'due_date'
+        profile.unknown_date = False
+        profile.save()
+        return super(MxitUpdateDueDateView, self).form_valid(form)
 
 
 class ProfileView(FormView):
