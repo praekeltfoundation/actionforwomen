@@ -6,6 +6,7 @@ TEMPLATE_DIRS = (
 
 CACHES['default']['KEY_PREFIX'] = 'mama_mxit'
 
+ORIGIN = 'mxit'
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
