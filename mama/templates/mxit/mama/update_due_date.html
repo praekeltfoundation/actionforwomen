@@ -10,7 +10,7 @@
           provide you with stage based information unique to your baby. Just type in the due date or birthdate of your baby (yyyy-mm-dd) and send.
         </div>
       </div>
-      <form method="POST" action="{% url update_due_date %}">
+      <form method="POST" action="{% url mxit_update_due_date %}">
         {% csrf_token %}
         <div class="row shorter">
             {% if form.due_date.errors %}

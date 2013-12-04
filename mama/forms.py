@@ -451,3 +451,17 @@ class MxitDueDateForm(forms.Form):
         required = True,
         label = "Due Date",
     )
+
+    def clean(self):
+        """
+        Check that the due date is provided and correct.
+        """
+        cleaned_data = super(MxitDueDateForm, self).clean()
+        try:
+            delivery_date = cleaned_data['due_date']
+            delivery_date = parser.parse(delivery_date)
+        except (KeyError, ValueError):
+            msg = "The due date was entered incorrectly. Please enter the due date in the format yyyy-mm-dd"
+            self.errors['due_date'] = self.error_class([msg])
+            del cleaned_data['due_date']
+        return cleaned_data
