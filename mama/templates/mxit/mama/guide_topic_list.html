@@ -20,7 +20,7 @@
               <div class="item">
                 <a class="intro-pic" 
                    href="{% url topic_detail link.target.primary_category.slug link.target.slug %}">
-                  <img src="link.target.get_thumb_url" />
+                   <img src="{{ link.target.get_thumb_url }}" />
                 </a>
                 <div class="meta">
                   <div class="title">
