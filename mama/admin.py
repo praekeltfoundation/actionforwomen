@@ -102,6 +102,7 @@ class AskMamaQuestion(Comment):
         proxy = True
         verbose_name = "Question for MAMA"
         verbose_name_plural = "Questions for MAMA"
+        ordering = None
 
 
 class WeeklyFilter(admin.filters.SimpleListFilter):
@@ -152,36 +153,21 @@ class WeeklyFilter(admin.filters.SimpleListFilter):
             # Filter all the older questions.
             queryset = queryset.filter(submit_date__lt=(end_thursday)) 
 
-        # Work out the vote count for the questions, to sort by the most liked
-        # questions, i.e. questions with the most votes. (This is taken from the
-        # MostLikedItem view modifier item in jmbo)
-        if queryset.exists():
-            queryset = queryset.extra(
-                select={
-                    'vote_score': '(SELECT COUNT(*) from %s WHERE vote=1 AND \
-        object_id=%s.%s AND content_type_id=%s) - (SELECT COUNT(*) from %s WHERE \
-        vote=-1 AND object_id=%s.%s AND content_type_id=%s)' % (
-                        Vote._meta.db_table,
-                        Comment._meta.db_table,
-                        Comment._meta.pk.attname,
-                        ContentType.objects.get_for_model(Comment).id,
-                        Vote._meta.db_table,
-                        Comment._meta.db_table,
-                        Comment._meta.pk.attname,
-                        ContentType.objects.get_for_model(Comment).id
-                    )
-                }
-            )
         return queryset
 
 
 class AskMamaQuestionAdmin(CommentAdmin):
     """ Add a filter to filter out 'This week's favourite stories' in CMS
     """
-    list_display = ('comment_text', 'user', 'submit_date',
+    list_display = ('comment_text', 'user', 'vote_score', 'submit_date',
                     'classification', 'moderator_replied', 'is_removed')
     list_filter = (WeeklyFilter, 'is_removed',)
     date_hierarchy = None
+    ordering = None
+
+    def vote_score(self, obj):
+        return obj.vote_score
+    vote_score.admin_order_field = 'vote_score'
 
     def queryset(self, request):
         """ Filter the questions that have been submitted this week in the
@@ -194,10 +180,30 @@ class AskMamaQuestionAdmin(CommentAdmin):
         questions = AskMamaQuestion.objects.filter(
             content_type=pct,
             object_pk=latest_pinned.id)
-        # questions = questions.exclude(is_removed=True)
 
         # leave out the moderator answers
         questions = questions.exclude(user__is_staff=True)
+
+        # Work out the vote count for the questions, to sort by the most liked
+        # questions, i.e. questions with the most votes. (This is taken from the
+        # MostLikedItem view modifier item in jmbo)
+        questions = questions.extra(
+            select={
+                'vote_score': '(SELECT COUNT(*) from %s WHERE vote=1 AND \
+    object_id=%s.%s AND content_type_id=%s) - (SELECT COUNT(*) from %s WHERE \
+    vote=-1 AND object_id=%s.%s AND content_type_id=%s)' % (
+                    Vote._meta.db_table,
+                    Comment._meta.db_table,
+                    Comment._meta.pk.attname,
+                    ContentType.objects.get_for_model(Comment).id,
+                    Vote._meta.db_table,
+                    Comment._meta.db_table,
+                    Comment._meta.pk.attname,
+                    ContentType.objects.get_for_model(Comment).id
+                )
+            }
+        )
+        questions = questions.order_by('-vote_score', '-submit_date')
 
         return questions
         
