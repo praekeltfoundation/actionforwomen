@@ -197,6 +197,21 @@ LOGGING = {
 
 CKEDITOR_UPLOAD_PATH = os.path.join(PATH, 'media/uploads')
 
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': [
+            ['Undo', 'Redo',
+              '-', 'Bold', 'Italic', 'Underline', 'RemoveFormat'
+            ],
+            ['-', 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord',
+              '-', 'Unlink',
+              '-', 'Source',
+            ]
+        ],
+        'forcePasteAsPlainText': True,
+    }
+}
+
 # Since we monkey-patch color field to category, override
 # categories migration scripts with our own.
 # Also preferences __module__ override requires our own migrations.
