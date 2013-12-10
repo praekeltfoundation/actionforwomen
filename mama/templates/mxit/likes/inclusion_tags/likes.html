@@ -4,12 +4,12 @@
     {% if weeks_ago %}
       {% if weeks_ago == 0 %}
         {% if can_vote %}
-            <a href="{% url like content_type content_obj.id 1 %}">| Vote</a>
+            | <a href="{% url like content_type content_obj.id 1 %}">Vote</a>
         {% endif %}
       {% endif %}
     {% else %}
       {% if can_vote %}
-          <a href="{% url like content_type content_obj.id 1 %}">| Vote</a>
+          | <a href="{% url like content_type content_obj.id 1 %}">Vote</a>
       {% endif %}
     {% endif %}
 {% endif %}
