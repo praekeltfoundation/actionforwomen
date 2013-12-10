@@ -4,18 +4,19 @@
     {% if object.image %}<div class="image"><img src="{{ object.get_modelbase_list_item_thumbnail_LAYER_url }}"/></div>{% endif %}
     <div class="poll-form-title">{{ object.title }}</div>
 
-    {% if can_vote_on_poll %}
+    {% if can_vote_on_poll and not request.GET.results %}
         <form action="{% url poll_vote object.slug %}" method="POST" id="poll-widget-form-{{ object.id }}">
             {% csrf_token %}
             {{ form.as_div }}
             <div class="row">
                 <input type="submit" value="{% trans "Vote" %}" class="btn" />
-                <a href="{{ object.get_absolute_url }}?results=1" >{% trans "See results" %}</a>                
             </div>
         </form>
+        <a href="{{ request.path }}?results=1" >{% trans "See results" %}</a>                
     {% endif %}
 
-    <div id="poll-widget-results-{{ object.id }}" {% if can_vote_on_poll %}style="display: none;"{% endif %}>
+    {% if not can_vote_on_poll or request.GET.results %}
+    <div id="poll-widget-results-{{ object.id }}">
         <table class="poll-results" cellspacing="0">
         {% for obj in object.polloption_set.all %}
             <tr class="poll-result-{{ forloop.counter }}">
@@ -31,10 +32,11 @@
         </table>
         {% if can_vote_on_poll %}
         <div class="row">
-          <input type="button" class="btn" value="Vote" onclick="document.getElementById('poll-widget-results-{{ object.id }}').style.display = 'none'; document.getElementById('poll-widget-form-{{ object.id }}').style.display = 'block'; return false;" />
+          <a href="{{ request.path }}" >{% trans "Vote" %}</a>                
         </div>
         {% endif %}
     </div>
+    {% endif %}
 
     {% if not can_vote_on_poll %}
         {% if reason == 'auth_required' %}
