@@ -5,3 +5,8 @@ TEMPLATE_DIRS += (
 )
 
 CACHES['default']['KEY_PREFIX'] = 'mama_mobi'
+
+MIDDLEWARE_CLASSES = MIDDLEWARE_CLASSES + (
+    'likes.middleware.SecretBallotUserIpUseragentMiddleware',
+    'mama.middleware.TrackOriginMiddleware',
+)
