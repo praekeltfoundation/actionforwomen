@@ -36,13 +36,11 @@ class Command(BaseCommand):
         vlive_users = User.objects.filter(userprofile__origin='vlive')
 
         print "Pushing Vlive Weekly Users"
-        unique_users = vlive_users.filter(userprofile__range=(range_start,
-                                                              range_end))\
-            .count()
-        reg_users = vlive_users.filter(date_joined__range=(range_start,
-                                                           range_end),
-                                       userprofile__delivery_date__isnull=False)\
-            .count()
+        unique_users = vlive_users.filter(
+            userprofile__range=(range_start, range_end)).count()
+        reg_users = vlive_users.filter(
+            date_joined__range=(range_start, range_end),
+            userprofile__delivery_date__isnull=False).count()
         client.send(
             samples=(
                 ("Unique Users", unique_users),
@@ -92,10 +90,10 @@ class Command(BaseCommand):
         vlive_userprofile = UserProfile.objects.filter(origin='vlive')
         client.send(
             samples=(
-                ("Prenatal", vlive_userprofile.filter(delivery_date__gte=
-                                                      datetime_obj).count()),
-                ("Postnatal", vlive_userprofile.filter(delivery_date__lt=
-                                                       datetime_obj).count()),
+                ("Prenatal", vlive_userprofile.filter(
+                    delivery_date__gte=datetime_obj).count()),
+                ("Postnatal", vlive_userprofile.filter(
+                    delivery_date__lt=datetime_obj).count()),
             ),
             api_key='db14a155cb9c49a2b6c2185246b9cf10',
             timestamp=datetime_obj,
@@ -115,9 +113,9 @@ class Command(BaseCommand):
 
         print "Pushing Mobi Users Cumulative"
         unique_users = vlive_users.filter(date_joined__lte=range_end).count()
-        reg_users = vlive_users.filter(date_joined__lte=range_end,
-                                       userprofile__delivery_date__isnull=False)\
-            .count()
+        reg_users = vlive_users.filter(
+            date_joined__lte=range_end,
+            userprofile__delivery_date__isnull=False).count()
         client.send(
             samples=(
                 ("Unique Users", unique_users),
