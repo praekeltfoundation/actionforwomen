@@ -39,7 +39,7 @@ class Command(BaseCommand):
         client.send(
             samples=(
                 ("Unique Users", vlive_users.filter(
-                    userprofile__range=(range_start, range_end)).count()),
+                    date_joined__range=(range_start, range_end)).count()),
                 ("Registration", vlive_users.filter(
                     date_joined__range=(range_start, range_end),
                     userprofile__delivery_date__isnull=False).count()),
