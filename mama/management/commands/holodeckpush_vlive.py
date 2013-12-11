@@ -13,7 +13,6 @@ init_date = datetime(2013, 8, 26, 0, 0, 0)
 class Command(BaseCommand):
     help = 'Pushes various metrics to Holodeck dashboard.'
 
-
     def handle(self, *args, **options):
         #for i in range (0,20):
         #    self.push(datetime.now() - timedelta(days=i*7))
@@ -37,19 +36,17 @@ class Command(BaseCommand):
         vlive_users = User.objects.filter(userprofile__origin='vlive')
 
         print "Pushing Vlive Weekly Users"
-        query = ga_service.data().ga().get(
-            ids='ga:%d' % GA_PROFILE_ID,
-            start_date=str(range_start.date()),
-            end_date=str(range_end.date()),
-            segment='gaid::-11', # mobile users only
-            metrics='ga:visitors'
-        )
-
-        results = query.execute()
+        unique_users = vlive_users.filter(userprofile__range=(range_start,
+                                                              range_end))\
+            .count()
+        reg_users = vlive_users.filter(date_joined__range=(range_start,
+                                                           range_end),
+                                       userprofile__delivery_date__isnull=False)\
+            .count()
         client.send(
             samples=(
-                ("Unique Users", results['totalsForAllResults']['ga:visitors']),
-                ("Registration", vlive_users.filter(date_joined__range=(range_start, range_end)).count()),
+                ("Unique Users", unique_users),
+                ("Registration", reg_users),
             ),
             api_key='fb14e8498e564872b05ceda5fc0e5400',
             timestamp=datetime_obj,
@@ -60,7 +57,7 @@ class Command(BaseCommand):
             ids='ga:%d' % GA_PROFILE_ID,
             start_date=str(range_start.date()),
             end_date=str(range_end.date()),
-            segment='gaid::-11', # mobile users only
+            segment='gaid::-11',  # mobile users only
             metrics='ga:pageviews'
         )
 
@@ -80,7 +77,7 @@ class Command(BaseCommand):
             end_date=str(range_end.date()),
             metrics='ga:visitors',
             dimensions='ga:visitorType',
-            segment='gaid::-11', # mobile users only
+            segment='gaid::-11',  # mobile users only
         )
 
         results = query.execute()
@@ -95,13 +92,14 @@ class Command(BaseCommand):
         vlive_userprofile = UserProfile.objects.filter(origin='vlive')
         client.send(
             samples=(
-                ("Prenatal", vlive_userprofile.filter(delivery_date__gte=datetime_obj).count()),
-                ("Postnatal", vlive_userprofile.filter(delivery_date__lt=datetime_obj).count()),
+                ("Prenatal", vlive_userprofile.filter(delivery_date__gte=
+                                                      datetime_obj).count()),
+                ("Postnatal", vlive_userprofile.filter(delivery_date__lt=
+                                                       datetime_obj).count()),
             ),
             api_key='db14a155cb9c49a2b6c2185246b9cf10',
             timestamp=datetime_obj,
         )
-
 
     def push_cumulative(self, datetime_obj):
         #Don't use stats older than Vlive launch date
@@ -116,19 +114,14 @@ class Command(BaseCommand):
         vlive_users = User.objects.filter(userprofile__origin='vlive')
 
         print "Pushing Mobi Users Cumulative"
-        query = ga_service.data().ga().get(
-            ids='ga:%d' % GA_PROFILE_ID,
-            start_date=str(range_start_cumulative.date()),
-            end_date=str(range_end.date()),
-            metrics='ga:visitors',
-            segment='gaid::-11', # mobile users only
-        )
-
-        results = query.execute()
+        unique_users = vlive_users.filter(date_joined__lte=range_end).count()
+        reg_users = vlive_users.filter(date_joined__lte=range_end,
+                                       userprofile__delivery_date__isnull=False)\
+            .count()
         client.send(
             samples=(
-                ("Unique Users", results['totalsForAllResults']['ga:visitors']),
-                ("Registration", vlive_users.filter(date_joined__range=(range_start_cumulative, range_end)).count()),
+                ("Unique Users", unique_users),
+                ("Registration", reg_users),
             ),
             api_key='1db783e1c9d344e7a39ca685f210633e',
             timestamp=datetime_obj,
@@ -140,7 +133,7 @@ class Command(BaseCommand):
             start_date=str(range_start_cumulative.date()),
             end_date=str(range_end.date()),
             metrics='ga:pageviews',
-            segment='gaid::-11', # mobile users only
+            segment='gaid::-11',  # mobile users only
         )
 
         results = query.execute()
