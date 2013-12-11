@@ -30,16 +30,19 @@ from mama.forms import (
     MxitDueDateForm,
     ProfileForm,
     VLiveProfileEditForm,
-    EditProfileForm
+    EditProfileForm,
+    MomsStoryEntryForm
 )
 from mama.view_modifiers import PopularViewModifier
-from mama.models import Banner, DefaultAvatar
+from mama.models import Banner, DefaultAvatar, MomsStoriesCompetition
 
 from category.models import Category
 
 from poll.forms import PollVoteForm
 from poll.models import Poll
 from post.models import Post
+
+from jmboyourwords.models import YourStoryEntry
 
 from mama.constants import (
     RELATION_PARENT_CHOICES, 
@@ -229,6 +232,40 @@ class MomStoriesListView(CategoryListView):
         if active_modifiers:
             self.heading_prefix = active_modifiers[0].title
         return view_modifier.modify(queryset)
+
+
+class MomStoryFormView(FormView):
+    """ View to render the Mom's Story Entry form without a terms and
+        conditions checkbox, but with the terms and conditions text displayed.
+    """
+    form_class = MomsStoryEntryForm
+    template_name = 'yourwords/your_story.html'
+
+    def get_success_url(self):
+        return reverse('moms_stories_object_list')
+
+    def dispatch(self, request, *args, **kwargs):
+        # Store the competition in the kwargs
+        competition = get_object_or_404(MomsStoriesCompetition,
+                                        pk=int(kwargs['competition_id']))
+        kwargs.update({ 'competition': competition })
+        return super(MomStoryFormView, self).dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        # Add the competition to the context
+        kwargs.update({'competition': self.kwargs['competition']})
+        return kwargs
+
+    def form_valid(self, form):
+        # save the story entry and redirect to the success url
+        YourStoryEntry.objects.create(
+            your_story_competition = self.kwargs['competition'],
+            user = self.request.user,
+            name = form.cleaned_data['name'],
+            email = form.cleaned_data['email'],
+            text = form.cleaned_data['text'],
+            terms = True)
+        return HttpResponseRedirect(self.get_success_url())
 
 
 class AskMamaView(CategoryDetailView):

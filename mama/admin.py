@@ -17,8 +17,8 @@ from post.models import Post
 from poll.models import Poll
 from poll.admin import PollAdmin
 from livechat.models import LiveChat
-from jmboyourwords.admin import YourStoryEntryAdmin
-from jmboyourwords.models import YourStoryEntry
+from jmboyourwords.admin import YourStoryEntryAdmin, YourStoryCompetitionAdmin
+from jmboyourwords.models import YourStoryEntry, YourStoryCompetition
 from category.models import Category
 from survey.models import ContentQuizToPost
 from mama.models import (
@@ -26,7 +26,8 @@ from mama.models import (
     NavigationLink, 
     SitePreferences, 
     Banner,
-    DefaultAvatar
+    DefaultAvatar,
+    MomsStoriesCompetition
 )
 
 class MamaModelbaseAdmin(ModelBaseAdmin):
@@ -95,6 +96,34 @@ class MamaYourStoryEntryAdmin(YourStoryEntryAdmin):
         # return the msisdn of the user
         profile = obj.user.profile
         return profile.mobile_number
+
+
+class MomsStoriesCompetitionAdmin(YourStoryCompetitionAdmin):
+    """ Add the terms and conditions field to the your story competition admin
+        model, by overriding the fieldsets tuple. """
+    fieldsets = (
+        (None, {
+            'fields': (
+                'title', 'description', 
+                'image', 'content', 
+                'publish_on', 'retract_on',
+            ),
+        }),
+        ('Advanced', {
+            'fields': ('slug',),
+            'classes': ('collapse',)
+        }),
+        (None, {
+            'fields': ('terms_and_conditions',),
+        }),
+        ('Advanced', {
+            'fields': ('categories', 'tags',),
+            'classes': ('collapse',)
+        }),
+        (None, {
+            'fields': ('sites',),
+        })
+    )
 
 
 class AskMamaQuestion(Comment):
@@ -243,5 +272,11 @@ try:
 except NotRegistered:
     pass
 admin.site.register(YourStoryEntry, MamaYourStoryEntryAdmin)
+
+try:
+    admin.site.unregister(YourStoryCompetition)
+except NotRegistered:
+    pass
+admin.site.register(MomsStoriesCompetition, MomsStoriesCompetitionAdmin)
 
 admin.site.register(AskMamaQuestion, AskMamaQuestionAdmin)

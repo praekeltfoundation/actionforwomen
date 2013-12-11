@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
 
 from mama.sites.vlive.yw_forms import PMLYourStoryForm
-from jmboyourwords.models import YourStoryCompetition, YourStoryEntry
+from mama.models import MomsStoriesCompetition, YourStoryEntry
 
 
 class PMLYourStoryView(FormView):
@@ -18,7 +18,7 @@ class PMLYourStoryView(FormView):
         context = super(PMLYourStoryView, self).get_context_data(**kwargs)
         try:
             competition = get_object_or_404(
-                YourStoryCompetition, 
+                MomsStoriesCompetition, 
                 pk=self.competition_id)
             context['competition'] = competition
             context['competition_id'] = competition.id
@@ -43,7 +43,7 @@ class PMLYourStoryView(FormView):
 
     def form_valid(self, form):
         competition = get_object_or_404(
-            YourStoryCompetition, 
+            MomsStoriesCompetition, 
             pk=int(form.cleaned_data['competition_id']))
         YourStoryEntry.objects.create(
             your_story_competition = competition,
@@ -51,7 +51,7 @@ class PMLYourStoryView(FormView):
             name = form.cleaned_data['name'],
             email = form.cleaned_data['email'],
             text = form.cleaned_data['text'],
-            terms = form.cleaned_data['terms'] != ''
+            terms = True
         )
         return super(PMLYourStoryView, self).form_valid(form)
 

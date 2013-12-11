@@ -18,6 +18,7 @@ from django.utils.safestring import mark_safe
 
 from pml import forms as pml_forms
 from registration.forms import RegistrationFormTermsOfService
+from jmboyourwords.models import YourStoryEntry
 from userprofile import utils
 import mama
 
@@ -465,3 +466,12 @@ class MxitDueDateForm(forms.Form):
             self.errors['due_date'] = self.error_class([msg])
             del cleaned_data['due_date']
         return cleaned_data
+
+
+class MomsStoryEntryForm(forms.ModelForm):
+    class Meta:
+        model = YourStoryEntry
+        exclude = ('user', 'your_story_competition', 'terms')
+
+    def clean_terms(self):
+        return True

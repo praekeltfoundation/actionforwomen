@@ -13,6 +13,7 @@ from jmbo.models import ModelBase
 from preferences.models import Preferences
 from userprofile.models import AbstractProfileBase
 from photologue.models import ImageModel
+from jmboyourwords.models import YourStoryCompetition
 from mama.forms import RegistrationForm
 
 from mama.constants import (
@@ -260,6 +261,19 @@ class UserProfile(AbstractProfileBase):
         if not self.delivery_date:
             return False
         return date.today() > self.delivery_date
+
+
+class MomsStoriesCompetition(YourStoryCompetition):
+    """ Add a terms and conditions field to the MomsStoriesCompetition model 
+        to contain the text for each competition.
+    """
+    terms_and_conditions = models.TextField(
+        help_text="Please supply the terms and conditions text for this \
+                   Mom's Stories competition."
+    )
+
+    class Meta:
+        app_label = "jmboyourwords"
 
 
 class Banner(ModelBase):
