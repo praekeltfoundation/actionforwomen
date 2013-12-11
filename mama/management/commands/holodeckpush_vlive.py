@@ -36,15 +36,13 @@ class Command(BaseCommand):
         vlive_users = User.objects.filter(userprofile__origin='vlive')
 
         print "Pushing Vlive Weekly Users"
-        unique_users = vlive_users.filter(
-            userprofile__range=(range_start, range_end)).count()
-        reg_users = vlive_users.filter(
-            date_joined__range=(range_start, range_end),
-            userprofile__delivery_date__isnull=False).count()
         client.send(
             samples=(
-                ("Unique Users", unique_users),
-                ("Registration", reg_users),
+                ("Unique Users", vlive_users.filter(
+                    userprofile__range=(range_start, range_end)).count()),
+                ("Registration", vlive_users.filter(
+                    date_joined__range=(range_start, range_end),
+                    userprofile__delivery_date__isnull=False).count()),
             ),
             api_key='fb14e8498e564872b05ceda5fc0e5400',
             timestamp=datetime_obj,
@@ -112,14 +110,13 @@ class Command(BaseCommand):
         vlive_users = User.objects.filter(userprofile__origin='vlive')
 
         print "Pushing Mobi Users Cumulative"
-        unique_users = vlive_users.filter(date_joined__lte=range_end).count()
-        reg_users = vlive_users.filter(
-            date_joined__lte=range_end,
-            userprofile__delivery_date__isnull=False).count()
         client.send(
             samples=(
-                ("Unique Users", unique_users),
-                ("Registration", reg_users),
+                ("Unique Users", vlive_users.filter(
+                    date_joined__lte=range_end).count()),
+                ("Registration", vlive_users.filter(
+                    date_joined__lte=range_end,
+                    userprofile__delivery_date__isnull=False).count()),
             ),
             api_key='1db783e1c9d344e7a39ca685f210633e',
             timestamp=datetime_obj,
