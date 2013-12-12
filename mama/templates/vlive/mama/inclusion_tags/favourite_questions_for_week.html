@@ -97,7 +97,7 @@
   {% if questions.has_other_pages %}
   <CONTAINER type="data">
     {% if questions.has_previous %}
-    <LINK href="?page={{ questions.previous_page_number }}&wk={{ weeks_ago }}&amp;sort={{ sort }}"><TEXT>&#171; Prev</TEXT></LINK>
+    <LINK href="?page={{ questions.previous_page_number }}&amp;wk={{ weeks_ago }}&amp;sort={{ sort }}"><TEXT>&#171; Prev</TEXT></LINK>
     {% else %}
     &#171; Prev
     {% endif %}
@@ -105,7 +105,7 @@
     Page {{ questions.number }} of {{ questions.paginator.num_pages }}
     |
     {% if questions.has_next %}
-    <LINK href="?page={{ questions.next_page_number }}&wk={{ weeks_ago }}&amp;sort={{ sort }}"><TEXT>Next &#187;</TEXT></LINK>
+    <LINK href="?page={{ questions.next_page_number }}&amp;wk={{ weeks_ago }}&amp;sort={{ sort }}"><TEXT>Next &#187;</TEXT></LINK>
     {% else %}
     Next &#187;
     {% endif %}
