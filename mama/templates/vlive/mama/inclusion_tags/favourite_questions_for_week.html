@@ -15,13 +15,13 @@
       {% if sort == 'pop' %}
       <LINK href="{% url askmama_detail %}?wk=2&amp;sort=date">
         <TEXT>Latest</TEXT>
-      </LINK> | Popular | 
+      </LINK> | Popular |
       <LINK href="{% url askmama_detail %}?wk=2&amp;sort=alph">
         <TEXT>Alphabetical</TEXT>
       </LINK>
       {% else %}
         {% if sort == 'date' %}
-          Latest | 
+          Latest |
           <LINK href="{% url askmama_detail %}?wk=2&amp;sort=pop">
             <TEXT>Popular</TEXT>
           </LINK> |
@@ -31,7 +31,7 @@
         {% else %}
           <LINK href="{% url askmama_detail %}?wk=2&amp;sort=date">
             <TEXT>Latest</TEXT>
-          </LINK> | 
+          </LINK> |
           <LINK href="{% url askmama_detail %}?wk=2&amp;sort=pop">
             <TEXT>Popular</TEXT>
           </LINK> | Alphabetical
@@ -60,9 +60,9 @@
       This Week's Favourite Questions
     {% else %}
       {% if weeks_ago == 1 %}
-        {{ week_start|date:"d M Y" }} 
+        {{ week_start|date:"d M Y" }}
       {% else %}
-        Questions older than {{ week_end|date:"d M Y" }} 
+        Questions older than {{ week_end|date:"d M Y" }}
       {% endif %}
     {% endif %}
     </LABEL>
@@ -86,7 +86,7 @@
   {% empty %}
     <CONTAINER type="data">
       <TEXT>
-        No questions have been asked. 
+        No questions have been asked.
         {% if weeks_ago == 0 %}
         Use the form below to submit the first question.
         {% endif %}
@@ -97,17 +97,17 @@
   {% if questions.has_other_pages %}
   <CONTAINER type="data">
     {% if questions.has_previous %}
-    <LINK href="?page={{ questions.previous_page_number }}&wk={{ weeks_ago }}&amp;sort={{ sort }}"><TEXT>&laquo; Prev</TEXT></LINK>
+    <LINK href="?page={{ questions.previous_page_number }}&amp;wk={{ weeks_ago }}&amp;sort={{ sort }}"><TEXT>&#171; Prev</TEXT></LINK>
     {% else %}
-    &laquo; Prev
+    &#171; Prev
     {% endif %}
     |
     Page {{ questions.number }} of {{ questions.paginator.num_pages }}
     |
     {% if questions.has_next %}
-    <LINK href="?page={{ questions.next_page_number }}&wk={{ weeks_ago }}&amp;sort={{ sort }}"><TEXT>Next &raquo;</TEXT></LINK>
+    <LINK href="?page={{ questions.next_page_number }}&amp;wk={{ weeks_ago }}&amp;sort={{ sort }}"><TEXT>Next &#187;</TEXT></LINK>
     {% else %}
-    Next &raquo;
+    Next &#187;
     {% endif %}
   </CONTAINER>
   {% endif %}
@@ -137,7 +137,7 @@
         <LINK href="{% url askmama_detail %}?wk=1">
           <TEXT>See last week's Q&amp;A &gt;</TEXT>
         </LINK>
-      </strong>    
+      </strong>
       </p>
     </TEXT>
   </CONTAINER>
@@ -150,7 +150,7 @@
         <a href="{% url askmama_detail %}">
           &lt; Back to AskMAMA
         </a>
-      </strong>    
+      </strong>
       </p>
       </TEXT>
     </CONTAINER>
