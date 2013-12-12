@@ -3,7 +3,8 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
 
 from mama.sites.vlive.yw_forms import PMLYourStoryForm
-from mama.models import MomsStoriesCompetition, YourStoryEntry
+from mama.models import MomsStoriesCompetition
+from jmboyourwords.models import YourStoryEntry
 
 
 class PMLYourStoryView(FormView):
