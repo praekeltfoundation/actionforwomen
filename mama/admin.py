@@ -27,7 +27,6 @@ from mama.models import (
     SitePreferences, 
     Banner,
     DefaultAvatar,
-    MomsStoriesCompetition
 )
 
 class MamaModelbaseAdmin(ModelBaseAdmin):
@@ -96,34 +95,6 @@ class MamaYourStoryEntryAdmin(YourStoryEntryAdmin):
         # return the msisdn of the user
         profile = obj.user.profile
         return profile.mobile_number
-
-
-class MomsStoriesCompetitionAdmin(YourStoryCompetitionAdmin):
-    """ Add the terms and conditions field to the your story competition admin
-        model, by overriding the fieldsets tuple. """
-    fieldsets = (
-        (None, {
-            'fields': (
-                'title', 'description', 
-                'image', 'content', 
-                'publish_on', 'retract_on',
-            ),
-        }),
-        ('Advanced', {
-            'fields': ('slug',),
-            'classes': ('collapse',)
-        }),
-        (None, {
-            'fields': ('terms_and_conditions',),
-        }),
-        ('Advanced', {
-            'fields': ('categories', 'tags',),
-            'classes': ('collapse',)
-        }),
-        (None, {
-            'fields': ('sites',),
-        })
-    )
 
 
 class AskMamaQuestion(Comment):
@@ -272,11 +243,5 @@ try:
 except NotRegistered:
     pass
 admin.site.register(YourStoryEntry, MamaYourStoryEntryAdmin)
-
-try:
-    admin.site.unregister(YourStoryCompetition)
-except NotRegistered:
-    pass
-admin.site.register(MomsStoriesCompetition, MomsStoriesCompetitionAdmin)
 
 admin.site.register(AskMamaQuestion, AskMamaQuestionAdmin)

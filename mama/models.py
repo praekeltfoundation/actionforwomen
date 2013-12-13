@@ -263,19 +263,6 @@ class UserProfile(AbstractProfileBase):
         return date.today() > self.delivery_date
 
 
-class MomsStoriesCompetition(YourStoryCompetition):
-    """ Add a terms and conditions field to the MomsStoriesCompetition model 
-        to contain the text for each competition.
-    """
-    terms_and_conditions = models.TextField(
-        help_text="Please supply the terms and conditions text for this \
-                   Mom's Stories competition."
-    )
-
-    class Meta:
-        app_label = "jmboyourwords"
-
-
 class Banner(ModelBase):
     url = models.CharField(
         max_length=256,

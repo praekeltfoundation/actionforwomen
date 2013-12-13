@@ -34,7 +34,7 @@ from mama.forms import (
     MomsStoryEntryForm
 )
 from mama.view_modifiers import PopularViewModifier
-from mama.models import Banner, DefaultAvatar, MomsStoriesCompetition
+from mama.models import Banner, DefaultAvatar
 
 from category.models import Category
 
@@ -42,7 +42,7 @@ from poll.forms import PollVoteForm
 from poll.models import Poll
 from post.models import Post
 
-from jmboyourwords.models import YourStoryEntry
+from jmboyourwords.models import YourStoryEntry, YourStoryCompetition
 
 from mama.constants import (
     RELATION_PARENT_CHOICES, 
@@ -244,22 +244,19 @@ class MomStoryFormView(FormView):
     def get_success_url(self):
         return reverse('moms_stories_object_list')
 
-    def dispatch(self, request, *args, **kwargs):
-        # Store the competition in the kwargs
-        competition = get_object_or_404(MomsStoriesCompetition,
-                                        pk=int(kwargs['competition_id']))
-        kwargs.update({ 'competition': competition })
-        return super(MomStoryFormView, self).dispatch(request, *args, **kwargs)
-
     def get_context_data(self, **kwargs):
         # Add the competition to the context
-        kwargs.update({'competition': self.kwargs['competition']})
+        competition = get_object_or_404(YourStoryCompetition,
+                                        pk=int(self.kwargs['competition_id']))
+        kwargs.update({'competition': competition})
         return kwargs
 
     def form_valid(self, form):
         # save the story entry and redirect to the success url
+        competition = get_object_or_404(YourStoryCompetition,
+                                        pk=int(self.kwargs['competition_id']))
         YourStoryEntry.objects.create(
-            your_story_competition = self.kwargs['competition'],
+            your_story_competition = competition,
             user = self.request.user,
             name = form.cleaned_data['name'],
             email = form.cleaned_data['email'],

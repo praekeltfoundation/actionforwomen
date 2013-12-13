@@ -12,7 +12,3 @@ class PMLYourStoryForm(PMLForm):
     email = PMLHiddenField()
     competition_id = PMLHiddenField()
     text = PMLTextField(required=True)
-    # terms = PMLCheckBoxField(
-    #     required=False,
-    #     choices=(("accept", "I accept the terms and conditions"),)
-    # )
