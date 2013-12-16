@@ -14,20 +14,10 @@
 </div>
 {% endif %}
 
-<form method="post" id="frmLogin" action="{% url password_reset %}">
 {% csrf_token %}
-    {% if request.user.is_anonymous %}
-        <div class="row">
-            {{ form.mobile_number.label_tag }}
-            {% if form.mobile_number.errors %}
-                <div class="errors">
-                    {% for error in form.mobile_number.errors %}
-                        <p>{{ error }}</p>
-                    {% endfor %}
-                </div>
-            {% endif %}
-            {{ form.mobile_number }}
-        </div>
+    {% if request.user.is_authenticated %}
+    {% comment %} This is a dummy value to circumvent the number for mxit {% endcomment %}
+    <input type="hidden" name="mobile_number" value="0123456789" />
     {% endif %}
     <div class="row">
         {{ form.message.label_tag }}
@@ -42,9 +32,6 @@
     </div>
     <div class="row">
         <input type="submit" name="submit" value="Send" class="btn" />
-        {% if request.user.is_authenticated %}
-            <input type="hidden" name="mobile_number" value="{{ request.user.profile.mobile_number }}" />
-        {% endif %}
     </div>
     <div class="clear"></div>
 </form>
