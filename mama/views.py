@@ -298,8 +298,8 @@ class ContactView(FormView):
         mobile_number = form.cleaned_data['mobile_number']
 
         # For mxit we use the mxit user name, not the mobile number
-        if request.user.profile.origin == 'mxit':
-            message = "Mxit username: \n%s\n\nMessage: \n%s" % (request.user.username, form.cleaned_data['message'])
+        if self.request.user.profile.origin == 'mxit':
+            message = "Mxit username: \n%s\n\nMessage: \n%s" % (self.request.user.username, form.cleaned_data['message'])
         else:
             message = "Mobile Number: \n%s\n\nMessage: \n%s" % (mobile_number, form.cleaned_data['message'])
 
