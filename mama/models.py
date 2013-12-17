@@ -13,6 +13,7 @@ from jmbo.models import ModelBase
 from preferences.models import Preferences
 from userprofile.models import AbstractProfileBase
 from photologue.models import ImageModel
+from jmboyourwords.models import YourStoryCompetition
 from mama.forms import RegistrationForm
 
 from mama.constants import (

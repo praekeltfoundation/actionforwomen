@@ -11,6 +11,7 @@ from mama.views import (CategoryDetailView, CategoryListView,
                         ProfileView, VLiveEditProfile,
                         AskMamaView, QuestionAnswerView, 
                         MomStoriesListView,
+                        MomStoryFormView,
                         MyProfileView, MyProfileEdit, 
                         UpdateDueDateView,
                         MxitUpdateDueDateView,
@@ -208,6 +209,12 @@ urlpatterns = patterns('',
         name='mxit_update_due_date'
     ),
 
+    url(
+        r'^yourwords/(?P<competition_id>\d+)/$',
+        MomStoryFormView.as_view(),
+        name='your_story'
+    ),
+
     (r'^survey/', include('survey.urls', namespace='survey')),
     (r'^livechat/', include('livechat.urls', namespace='livechat')),
     (r'^admin/', include(admin.site.urls)),
@@ -215,7 +222,6 @@ urlpatterns = patterns('',
     (r'^ckeditor/', include('ckeditor.urls')),
     url(r'^google-credentials/', include('google_credentials.urls')),
     (r'^likes/', include('likes.urls')),
-    (r'^yourwords/', include('jmboyourwords.urls')),
     (r'^', include('jmbo.urls')),
 )
 

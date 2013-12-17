@@ -17,8 +17,8 @@ from post.models import Post
 from poll.models import Poll
 from poll.admin import PollAdmin
 from livechat.models import LiveChat
-from jmboyourwords.admin import YourStoryEntryAdmin
-from jmboyourwords.models import YourStoryEntry
+from jmboyourwords.admin import YourStoryEntryAdmin, YourStoryCompetitionAdmin
+from jmboyourwords.models import YourStoryEntry, YourStoryCompetition
 from category.models import Category
 from survey.models import ContentQuizToPost
 from mama.models import (
@@ -26,7 +26,7 @@ from mama.models import (
     NavigationLink, 
     SitePreferences, 
     Banner,
-    DefaultAvatar
+    DefaultAvatar,
 )
 
 class MamaModelbaseAdmin(ModelBaseAdmin):

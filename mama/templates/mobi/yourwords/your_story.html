@@ -46,12 +46,8 @@
 
         <div class="field">
             <div class="required">
-                {{ form.terms.errors }}
-                {{ form.terms }} 
-                <label for="id_terms" style="display: inline">I accept</label>
-                the Terms and Conditions and agree to let MAMA publish if it is
-                good enough to win a prize.
-                <div class="helptext"></div> 
+                <strong>Terms and Conditions</strong> 
+                {{ competition.terms_and_conditions|safe }}
             </div>
         </div>
 
