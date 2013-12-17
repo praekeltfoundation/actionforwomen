@@ -18,7 +18,7 @@
             {% for link in links %}
               {% if link.target.is_permitted %}
               <div class="item">
-                {% if link.target.get_thumb_url %}
+                {% if link.target.image %}
                 <a class="intro-pic" 
                    href="{% url topic_detail link.target.primary_category.slug link.target.slug %}">
                    <img src="{{ link.target.get_thumb_url }}" />
