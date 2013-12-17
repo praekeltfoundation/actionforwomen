@@ -30,3 +30,5 @@ CACHES = {
     }
 }
 
+# EMAIL backend for testing, prints outbound email in the console
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

@@ -45,5 +45,9 @@
         </p>
         {% endblock %}
 
+        <div id="footer">
+            <span>&copy; MAMA SA {% now "Y" %}</span><br />
+            <a href="{% url about %}">About</a> | <a href="{% url terms %}">Terms</a> | <a href="{% url contact %}">Contact</a> 
+        </div>
     </body>
 </html>

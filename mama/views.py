@@ -296,7 +296,12 @@ class ContactView(FormView):
         recipients = [recipient.email for recipient in \
                 preferences.SitePreferences.contact_email_recipients.all()]
         mobile_number = form.cleaned_data['mobile_number']
-        message = "Mobile Number: \n%s\n\nMessage: \n%s" % (mobile_number, form.cleaned_data['message'])
+
+        # For mxit we use the mxit user name, not the mobile number
+        if self.request.user.profile.origin == 'mxit':
+            message = "Mxit username: \n%s\n\nMessage: \n%s" % (self.request.user.username, form.cleaned_data['message'])
+        else:
+            message = "Mobile Number: \n%s\n\nMessage: \n%s" % (mobile_number, form.cleaned_data['message'])
 
         if not recipients:
             mail_managers(
