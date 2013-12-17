@@ -17,7 +17,7 @@
         {% endif %}
     <textarea id="id_comment" name="comment"></textarea>
     <input id="submit-comment" type="submit" class="btn" value="{% trans "Comment" %}"/>
-    <input type="hidden" name="next" value="{{ request.META.HTTP_REFERER }}" />
+    <input type="hidden" name="next" value="{{ request.path}}" />
 </form>
 {% else %}
 <div>Comments are currently closed.</div>
