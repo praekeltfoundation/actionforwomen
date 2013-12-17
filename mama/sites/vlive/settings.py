@@ -13,11 +13,13 @@ INSTALLED_APPS += (
 )
 
 MIDDLEWARE_CLASSES = MIDDLEWARE_CLASSES + (
+    'pml.middleware.VLiveRemoteUserMiddleware',
     'pml.middleware.XMLResponseMiddleware',
     'pml.middleware.FormMiddleware',
     'pml.middleware.RedirectMiddleware',
-    'pml.middleware.VLiveRemoteUserMiddleware',
     'pml.middleware.NoCacheMiddleware',
+    'likes.middleware.SecretBallotUserIpUseragentMiddleware', #This also needs to be included after the remote user middleware
+    'mama.middleware.TrackOriginMiddleware',
     'google_analytics.middleware.GoogleAnalyticsMiddleware',
 )
 

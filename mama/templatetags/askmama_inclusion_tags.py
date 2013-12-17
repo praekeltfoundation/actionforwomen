@@ -31,28 +31,31 @@ def favourite_questions_for_week(context, post,
     """
     context = copy(context)
 
-    # Find the dates for the current week, starting last Sunday and ending
-    # next Saturday
+    # Find the dates for the current week, starting last Friday and ending
+    # next Thursday
     NOW = datetime.now()
-    start_sunday = NOW + relativedelta(weekday=SU(-1),
+    start_friday = NOW + relativedelta(weekday=FR(-1),
                                        hour=0, minute=0,
                                        second=0, microsecond=0)
-    end_saturday = NOW + relativedelta(weekday=SA(+1),
+    end_thursday = NOW + relativedelta(weekday=TH(+1),
                                        hour=0, minute=0,
                                        second=0, microsecond=0, 
                                        microseconds=-1)
+    if end_thursday < start_friday:
+        end_thursday += relativedelta(weeks=1)
+
     # Subtract the amount of weeks in the past.
     if weeks_ago > 0:
-        start_sunday = start_sunday + relativedelta(weeks=-weeks_ago)
-        end_saturday = end_saturday + relativedelta(weeks=-weeks_ago)
+        start_friday = start_friday + relativedelta(weeks=-weeks_ago)
+        end_thursday = end_thursday + relativedelta(weeks=-weeks_ago)
 
     if weeks_ago < 2:
         # Filter the questions between the date range
-        questions = Comment.objects.filter(submit_date__range=(start_sunday, 
-                                                               end_saturday,))
+        questions = Comment.objects.filter(submit_date__range=(start_friday, 
+                                                               end_thursday,))
     else:
         # Filter all the older questions.
-        questions = Comment.objects.filter(submit_date__lt=(end_saturday)) 
+        questions = Comment.objects.filter(submit_date__lt=(end_thursday)) 
 
     # Filter the comments linked to the post
     pct = ContentType.objects.get_for_model(post.__class__)
@@ -93,7 +96,7 @@ vote=-1 AND object_id=%s.%s AND content_type_id=%s)' % (
         questions = questions.order_by('comment')
 
     # return the results paginated.
-    paginator = Paginator(questions, 10)
+    paginator = Paginator(questions, 50)
     comments_page = paginator.page(cpage)
 
     # check if we can comment. we need to be authenticated, at least
@@ -107,7 +110,7 @@ vote=-1 AND object_id=%s.%s AND content_type_id=%s)' % (
     context['sort'] = sort
     context['questions'] = comments_page
     context['weeks_ago'] = weeks_ago
-    context['week_start'] = start_sunday
-    context['week_end'] = end_saturday
+    context['week_start'] = start_friday
+    context['week_end'] = end_thursday
 
     return context

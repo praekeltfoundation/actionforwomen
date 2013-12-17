@@ -1,6 +1,7 @@
 import re
 import urlparse
 from datetime import datetime
+from dateutil import parser
 
 from django.conf import settings
 from django.contrib import auth
@@ -26,6 +27,7 @@ from django.views.generic.list import ListView
 from mama.forms import (
     ContactForm,
     DueDateForm,
+    MxitDueDateForm,
     ProfileForm,
     VLiveProfileEditForm,
     EditProfileForm
@@ -294,7 +296,12 @@ class ContactView(FormView):
         recipients = [recipient.email for recipient in \
                 preferences.SitePreferences.contact_email_recipients.all()]
         mobile_number = form.cleaned_data['mobile_number']
-        message = "Mobile Number: \n%s\n\nMessage: \n%s" % (mobile_number, form.cleaned_data['message'])
+
+        # For mxit we use the mxit user name, not the mobile number
+        if self.request.user.profile.origin == 'mxit':
+            message = "Mxit username: \n%s\n\nMessage: \n%s" % (self.request.user.username, form.cleaned_data['message'])
+        else:
+            message = "Mobile Number: \n%s\n\nMessage: \n%s" % (mobile_number, form.cleaned_data['message'])
 
         if not recipients:
             mail_managers(
@@ -495,6 +502,23 @@ class UpdateDueDateView(FormView):
         return super(UpdateDueDateView, self).form_valid(form)
 
 
+class MxitUpdateDueDateView(FormView):
+    form_class = MxitDueDateForm
+    template_name = 'mama/update_due_date.html'
+
+    def get_success_url(self):
+        return reverse('home')
+
+    def form_valid(self, form):
+        user = self.request.user
+        profile = user.profile
+        profile.delivery_date = form.cleaned_data['due_date']
+        profile.date_qualifier = 'due_date'
+        profile.unknown_date = False
+        profile.save()
+        return super(MxitUpdateDueDateView, self).form_valid(form)
+
+
 class ProfileView(FormView):
     """
     This seems to be the registration form view specifically for VLive
@@ -506,7 +530,10 @@ class ProfileView(FormView):
         user = self.request.user
         profile = user.profile
         profile.alias = form.cleaned_data['username']
-        profile.delivery_date = form.cleaned_data['delivery_date']
+        if form.cleaned_data['delivery_date']:
+            # parser returns today's date for an empty string.
+            profile.delivery_date = parser.parse(
+                form.cleaned_data['delivery_date'])
         profile.save()
         messages.success(
             self.request,
@@ -515,12 +542,86 @@ class ProfileView(FormView):
         return HttpResponseRedirect(reverse('home'))
 
 
-class VLiveEditProfileEdit(MyProfileEdit):
+class VLiveEditProfile(FormView):
     """
     The profile edit form view specifically for VLive
     """
     form_class = VLiveProfileEditForm
-    template_name = "mama/profile.html"
+    template_name = "mama/editprofile.html"
+
+    def get_initial(self):
+        initial = self.initial.copy()
+        user = self.request.user
+        profile = user.profile
+        initial['username'] = profile.alias
+        initial['relation_to_baby'] = profile.relation_to_baby
+        initial['about_me'] = profile.about_me
+        initial['baby_name'] = profile.baby_name
+        if profile.date_qualifier == 'unspecified':
+            if profile.delivery_date is not None:
+                if profile.delivery_date < datetime.now().date():
+                    initial['date_qualifier'] = 'birth_date'
+                else:
+                    initial['date_qualifier'] = 'due_date'
+            else:
+                initial['date_qualifier'] = 'due_date'
+        else:
+            initial['date_qualifier'] = profile.date_qualifier
+        initial['unknown_date'] = profile.unknown_date
+        initial['delivery_date'] = profile.delivery_date
+        initial['baby_has_been_born'] = profile.date_qualifier == 'birth_date'
+        return initial
+
+    def get_form(self, form_class):
+        form = super(VLiveEditProfile, self).get_form(form_class)
+        if form.initial['date_qualifier'] == 'due_date':
+            form.fields['relation_to_baby'].choices = RELATION_PARENT_TO_BE_CHOICES
+            form.fields['delivery_date'].label = 'Due Date'
+        else:
+            form.fields['relation_to_baby'].choices = RELATION_PARENT_CHOICES
+            form.fields['delivery_date'].label = 'Birth Date'
+            del form.fields['unknown_date']
+            del form.fields['baby_has_been_born']
+        return form
+
+    def form_valid(self, form):
+        """
+        Collect and save the updated profile information and redirect to the
+        user's profile page.
+
+        If she indicated that the baby has been born, update the date qualifier
+        and the unknown date values.
+        """
+        user = self.request.user
+        profile = user.profile
+        profile.alias = form.cleaned_data['username']
+        profile.relation_to_baby = form.cleaned_data['relation_to_baby']
+        profile.about_me = form.cleaned_data['about_me']
+        profile.baby_name = form.cleaned_data['baby_name']
+        profile.date_qualifier = form.cleaned_data['date_qualifier']
+        try:
+            profile.unknown_date = form.cleaned_data['unknown_date']
+        except KeyError:
+            pass
+        try:
+            if form.cleaned_data['baby_has_been_born']:
+                profile.date_qualifier = 'birth_date'
+                profile.unknown_date = False
+        except KeyError:
+            pass
+        if form.cleaned_data['delivery_date']:
+            profile.delivery_date = parser.parse(
+                form.cleaned_data['delivery_date'])
+
+        # save the avatar from the raw form data
+        if form.data.has_key('default_avatar_id'):
+            obj = DefaultAvatar.objects.get(
+                id=int(form.data['default_avatar_id'])
+            )
+            profile.avatar = obj.image
+
+        profile.save()
+        return HttpResponseRedirect(reverse('view_my_profile'))
 
 
 class BannerView(TemplateView):
@@ -588,7 +689,12 @@ def post_comment(request, next=None, using=None):
             data['name'] = profile.alias
 
     data["email"] = 'commentor@askmama.mobi'
-    data["url"] = request.META['HTTP_REFERER']
+    data["url"] = request.META.get('HTTP_REFERER', None)
+
+    # For mxit, we add a next field to the comment form
+    if not data["url"] and data.get("next", None):
+        data["url"] = data["next"]
+
     request.POST = data
 
     # Reject comments if commenting is closed

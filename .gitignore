@@ -7,9 +7,9 @@ mama.sublime-project
 mama.sublime-workspace
 whoosh.index/
 /media/photologue/
+/media/your_words/
 build/
 logs/
-static/
 tmp/
 *_hjb.py
 .vagrant

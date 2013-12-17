@@ -116,8 +116,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'likes.middleware.SecretBallotUserIpUseragentMiddleware',
-    'mama.middleware.TrackOriginMiddleware',
 )
 
 ROOT_URLCONF = 'mama.urls'
@@ -196,6 +194,21 @@ LOGGING = {
 }
 
 CKEDITOR_UPLOAD_PATH = os.path.join(PATH, 'media/uploads')
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': [
+            ['Undo', 'Redo',
+              '-', 'Bold', 'Italic', 'Underline', 'RemoveFormat'
+            ],
+            ['-', 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord',
+              '-', 'Unlink',
+              '-', 'Source',
+            ]
+        ],
+        'forcePasteAsPlainText': True,
+    }
+}
 
 # Since we monkey-patch color field to category, override
 # categories migration scripts with our own.

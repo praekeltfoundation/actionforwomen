@@ -38,7 +38,7 @@
             <b>{{ comment.name }}</b><br/>
           {% endif %}
 
-          {{ comment.submit_date }} | 
+          {{ comment.submit_date }} |
           {% likes comment %} {% report_comment_abuse comment %}<br/>
           {{ comment.comment|linebreaks }}<br/>
         </TEXT>
@@ -48,7 +48,7 @@
           {% for response in comment.livechatresponse_set.all %}
             Response by:
             <LINK href="{% url public_profile response.author.id %}">
-            <TEXT color="red"><b>{{ response.author.username }}</b></TEXT>
+            <TEXT><color value="red"><b>{{ response.author.username }}</b></color></TEXT>
             </LINK><br/>
             {{ response.updated_at }}<br/>
             {{ response.response }}
@@ -59,6 +59,7 @@
     </CONTAINER>
 
     <CONTAINER type="data">
+      <TEXT>
       {% if chat_comments.has_previous %}
         <LINK href="?p={{chat_comments.previous_page_number}}&amp;answered={{answered}}&amp;popular={{popular}}"><TEXT>Previous</TEXT></LINK> |
       {% else %}
@@ -72,6 +73,7 @@
       {% else %}
           | <TEXT>Next</TEXT>
       {% endif %}
+      </TEXT>
     </CONTAINER>
 
   {% else %}
@@ -83,18 +85,16 @@
   {% endif %}
 </MODULE>
 
-<MODULE>
   {% if live_chat.can_render_comment_form %}
-    <CONTAINER type="form">
-      {% render_comment_form for live_chat.current_live_chat %}
-    </CONTAINER>
+    {% render_comment_form for live_chat.current_live_chat %}
   {% else %}
     {% if live_chat.can_comment_code == 'auth_required' %}
+    <MODULE>
       <CONTAINER type="data">
         <LINK href="{% url login %}?next={{ request.META.PATH_INFO }}">
         <TEXT>Sign in to comment or ask a question</TEXT>
         </LINK>
       </CONTAINER>
+    </MODULE>
     {% endif %}
   {% endif %}
-</MODULE>

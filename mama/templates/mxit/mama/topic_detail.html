@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load cache jmbo_inclusion_tags mama_inclusion_tags jmbo_template_tags likes_inclusion_tags livechat_tags%}
+
+{% block content %}
+  <div class="{{ category.color }}">
+    <h1>
+      <a href="{% url guides_list %}">Guides</a> &gt;
+      <a href="{% url more_guides_list %}">{{ category.title }}</a>
+    </h1>
+    <h1>{{ object.title }}</h1>
+
+    <div class="content-inner">
+      <div class="post">
+        {% if object.comments_enabled %}
+          <div class="stats">
+            <div class="stamp">
+              {% humanize_time_diff object.created "Ago" %} // {{ object.comment_count }} Comments // {% likes object %}
+            </div>
+          </div>
+        {% endif %}
+        <div class="title">
+          {{ object.title }}
+        </div>
+        <div> </div>
+        {% if object.get_thumb_url %}
+          <img src="{{ object.get_thumb_url }}" />
+        {% endif %}
+        {{ object.content|safe }}
+      </div>
+      {% cache 3600 links object.id %}
+        <div class="post-menu">
+          <h1>Related Content</h1>
+          <div class="items">
+            {% with object.link_target_set.all as links %}
+              {% for link in links %}
+                {% if link.target.is_permitted %}
+                <div class="item">
+                  <a href="{% url topic_detail link.target.primary_category.slug link.target.slug %}">&raquo; {{ link.target.title }}</a></div>
+                {% endif %}
+              {% endfor %}
+            {% endwith %}
+          </div>
+        </div>
+        {% babycenter_byline object %}
+        {% with object.navigation_link_target_set.all as navigation_links %}
+          {% if navigation_links %}
+            <div class="post-menu">
+              <div class="items">
+                <div class="item-nav">
+                  {% for navigation_link in navigation_links %}
+                  <a href="{% url guides_topic_list navigation_link.target.slug %}">&lt; Back to {{ navigation_link.target.title }}</a><br />
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        {% endwith %}
+      {% endcache %}
+    </div>
+  </div>
+
+  {% object_comments object %}
+
+{% endblock %}
+
+{% block footer_search_form %}
+{% endblock %}

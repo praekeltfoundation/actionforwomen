@@ -1,0 +1,25 @@
+{% load jmbo_template_tags %}
+
+{% if page_obj.has_other_pages %}
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+        <a href="{% smart_query_string 'page' page_obj.previous_page_number %}" class="prev">&lsaquo;&lsaquo; Prev</a>
+        {% else %}
+            <span class="disabled prev">&lsaquo;&lsaquo; Prev</span>
+        {% endif %}
+        {% for page_number in paginator.page_range %}
+            {% if page_number == page_obj.number %}
+            <span class="current page">
+              | page {{ page_number }} of {{ paginator.num_pages }} |
+            </span>
+            {% else %}
+                <a href="{% smart_query_string 'page' page_number %}" class="page">{{ page_number }}</a>
+            {% endif %}
+        {% endfor %}
+        {% if page_obj.has_next %}
+            <a href="{% smart_query_string 'page' page_obj.next_page_number %}" class="next">Next &rsaquo;&rsaquo;</a>
+        {% else %}
+            <span class="disabled next">Next &rsaquo;&rsaquo;</span>
+        {% endif %}
+    </div><!--/pagination-->
+{% endif %}

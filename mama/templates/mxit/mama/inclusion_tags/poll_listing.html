@@ -1,0 +1,8 @@
+{% load jmbo_inclusion_tags poll_tags %}
+
+{% if object_list %}
+    <h1>Have your say</h1>
+    {% for object in object_list %}
+        {% poll_widget object %}
+    {% endfor %}
+{% endif %}

@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='mama',
-    version='0.3.2',
+    version='0.3.6',
     description='Mama Django project.',
     long_description=open('README.rst', 'r').read() + open('AUTHORS.rst', 'r').read() + open('CHANGELOG.rst', 'r').read(),
     author='Praekelt Foundation',
@@ -46,6 +46,8 @@ setup(
         'raven',
         'south',
         'Whoosh==2.4.1',
+        #'python-mxit',
+        'django-mxit',
     ],
     tests_require=[
         'django-setuptest',

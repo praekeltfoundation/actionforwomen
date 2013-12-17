@@ -294,8 +294,9 @@ class DueDateForm(forms.Form):
 
 class ProfileForm(pml_forms.PMLForm):
     submit_text = "Register"
+
     username = pml_forms.PMLTextField(
-        label="Username",
+        label="Alias",
         help_text="This name will appear next to all your comments."
     )
     relation_to_baby = pml_forms.PMLRadioField(
@@ -309,7 +310,8 @@ class ProfileForm(pml_forms.PMLForm):
         label="Please enter your baby's birth day or due date or select unknown if you are not sure of the due date"
     )
     delivery_date = pml_forms.PMLTextField(
-        label="What is your due date or baby's birthday?"
+        label="What is your due date or baby's birthday? (yyyy-mm-dd)",
+        required=False
     )
     unknown_date = pml_forms.PMLCheckBoxField(
         required=False,
@@ -323,14 +325,6 @@ class ProfileForm(pml_forms.PMLForm):
             ),
         ))
 
-    def clean_delivery_date(self):
-        delivery_date = self.cleaned_data['delivery_date']
-        try:
-            delivery_date = parser.parse(delivery_date)
-        except ValueError:
-            raise ValidationError('Please enter a date in the format day/month/year(i.e. 17/8/2013).')
-        return delivery_date
-
     def clean(self):
         """
         Check that the birth date is provided, if the person selected birth
@@ -339,29 +333,48 @@ class ProfileForm(pml_forms.PMLForm):
         if due date is selected as the date type.
         """
         cleaned_data = super(ProfileForm, self).clean()
-        delivery_date = cleaned_data['delivery_date']
-        date_qualifier = cleaned_data['date_qualifier']
+        try:
+            delivery_date = cleaned_data['delivery_date']
+            delivery_date = parser.parse(delivery_date)
+        except (KeyError, ValueError):
+            delivery_date = None
+        try:
+            date_qualifier = cleaned_data['date_qualifier']
+        except KeyError:
+            date_qualifier = 'due_date'
         try:
             unknown_date = cleaned_data['unknown_date']
+            if not unknown_date:
+                unknown_date = 'na'
         except KeyError:
             unknown_date = 'na'
         if date_qualifier == 'birth_date' and delivery_date is None:
-            msg = 'You need to provide a birth date'
+            msg = 'You need to provide a birth date in the format yyyy-mm-dd (i.e. 2013-08-15).'
             self._errors['delivery_date'] = self.error_class([msg])
             del cleaned_data['delivery_date']
         elif date_qualifier == 'due_date' and delivery_date is None \
                 and unknown_date == 'na':
-            msg = "Either provide a due date, or check the \
-                  'Unknown' check box below the date."
+            msg = "Either provide a due date in the format yyyy-mm-dd (i.e. 2013-08-15), or check the 'Unknown' check box below the date."
             self._errors['delivery_date'] = self.error_class([msg])
             del cleaned_data['delivery_date']
         return cleaned_data
 
 
-class VLiveProfileEditForm(ProfileForm):
+class VLiveProfileEditForm(pml_forms.PMLForm):
     """
     The VLive form to edit all options in the member's full profile.
     """
+    submit_text="Save"
+
+    username = pml_forms.PMLTextField(
+        label="Alias",
+        help_text="This name will appear next to all your comments."
+    )
+    relation_to_baby = pml_forms.PMLRadioField(
+        choices=RELATION_TO_BABY_CHOICES,
+        label='Are you a...',
+        initial='mom_or_mom_to_be'
+    )
     about_me = pml_forms.PMLTextField(
         label="About Me",
         required=False
@@ -370,6 +383,17 @@ class VLiveProfileEditForm(ProfileForm):
         label="The Baby's Name",
         required=False
     )
+    date_qualifier = pml_forms.PMLHiddenField(
+        initial='due_date'
+    )
+    delivery_date = pml_forms.PMLTextField(
+        label="What is your due date or baby's birthday? (yyyy-mm-dd)",
+        required=False
+    )
+    unknown_date = pml_forms.PMLCheckBoxField(
+        required=False,
+        choices=(("unknown", "I don't know the delivery date"),)
+    )
     baby_has_been_born = pml_forms.PMLCheckBoxField(
         required=False,
         choices=(("unknown", "Baby has been born"),)
@@ -377,15 +401,67 @@ class VLiveProfileEditForm(ProfileForm):
 
     def __init__(self, *args, **kwargs):
         super(VLiveProfileEditForm, self).__init__(*args, **kwargs)
-        self.fields['date_qualifier'] = pml_forms.PMLHiddenField()
-        self.fields.keyOrder = [
-            'username',
-            'mobile_number',
-            'relation_to_baby',
-            'about_me',
-            'baby_name',
-            'date_qualifier',
-            'delivery_date',
-            'unknown_date',
-            'baby_has_been_born'
-        ]
+
+    def clean(self):
+        cleaned_data = super(VLiveProfileEditForm, self).clean()
+
+        try:
+            delivery_date = cleaned_data['delivery_date']
+            delivery_date = parser.parse(delivery_date)
+        except (KeyError, ValueError):
+            delivery_date = None
+        try:
+            date_qualifier = cleaned_data['date_qualifier']
+        except KeyError:
+            date_qualifier = 'due_date'
+        try:
+            unknown_date = cleaned_data['unknown_date']
+            if not unknown_date:
+                unknown_date = False
+        except KeyError:
+            unknown_date = False
+        try:
+            baby_has_been_born = cleaned_data['baby_has_been_born']
+            if not baby_has_been_born:
+                baby_has_been_born = False
+        except KeyError:
+            baby_has_been_born = False
+
+        if date_qualifier == 'birth_date' and delivery_date is None:
+            msg = 'You need to provide a birth date'
+            self._errors['delivery_date'] = self.error_class([msg])
+            del cleaned_data['delivery_date']
+        elif date_qualifier == 'due_date':
+            if baby_has_been_born and delivery_date is None:
+                msg = "You have indicated that the baby has been born. \
+                       Please provide the birth date in the due date field \
+                       above."
+                self._errors['delivery_date'] = self.error_class([msg])
+                del cleaned_data['delivery_date']
+            elif not unknown_date and delivery_date is None:
+                msg = "Either provide a due date, or check the \
+                      'Unknown' check box below the date."
+                self._errors['delivery_date'] = self.error_class([msg])
+                del cleaned_data['delivery_date']
+        return cleaned_data
+
+
+class MxitDueDateForm(forms.Form):
+    due_date = forms.CharField(
+        required = True,
+        label = "Due Date",
+    )
+
+    def clean(self):
+        """
+        Check that the due date is provided and correct.
+        """
+        cleaned_data = super(MxitDueDateForm, self).clean()
+        try:
+            delivery_date = cleaned_data['due_date']
+            delivery_date = parser.parse(delivery_date)
+        except (KeyError, ValueError):
+            msg = "The due date was entered incorrectly. Please enter the due date in the format yyyy-mm-dd"
+            self.errors['due_date'] = self.error_class([msg])
+            del cleaned_data['due_date']
+        return cleaned_data

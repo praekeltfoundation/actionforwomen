@@ -1,0 +1,15 @@
+{% if random_guide %}
+<div class="text_banner">
+  <div class="banner_content">
+    <p>
+    <strong>
+      <a href="{{ random_guide.url }}">{{ random_guide.title }}</a>
+    </strong>
+    {% if random_guide.description %}
+    <br/>
+    {{ random_guide.description|truncatewords:10 }}
+    {% endif %}
+    </p>
+  </div>
+</div>
+{% endif %}

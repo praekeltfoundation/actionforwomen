@@ -32,7 +32,8 @@
   </CONTAINER>
 </MODULE>
 {% endif %}
-{% text_module object.content %}
+
+{% text_module template=object.content|safe %}
 
 {% cache 3600 links object.id %}
   <MODULE>

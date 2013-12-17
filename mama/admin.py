@@ -14,6 +14,8 @@ from moderator.admin import CommentAdmin
 
 from secretballot.models import Vote
 from post.models import Post
+from poll.models import Poll
+from poll.admin import PollAdmin
 from livechat.models import LiveChat
 from jmboyourwords.admin import YourStoryEntryAdmin
 from jmboyourwords.models import YourStoryEntry
@@ -26,6 +28,9 @@ from mama.models import (
     Banner,
     DefaultAvatar
 )
+
+class MamaModelbaseAdmin(ModelBaseAdmin):
+    raw_id_fields = ('owner', )
 
 
 class LinkInline(admin.TabularInline):
@@ -43,7 +48,7 @@ class ContentQuizInline(admin.TabularInline):
     fk_name = 'post'
 
 
-class PostAdmin(ModelBaseAdmin):
+class PostAdmin(MamaModelbaseAdmin):
     inlines = ModelBaseAdmin.inlines + [
         LinkInline,
         NavigationLinkInline,
@@ -51,7 +56,11 @@ class PostAdmin(ModelBaseAdmin):
     ]
 
 
-class BannerAdmin(ModelBaseAdmin):
+class MamaPollAdmin(PollAdmin):
+    raw_id_fields = ('owner', )
+
+
+class BannerAdmin(MamaModelbaseAdmin):
 
     list_display = (
         'title', 'description', 'thumbnail', 'schedule', '_actions')
@@ -93,6 +102,7 @@ class AskMamaQuestion(Comment):
         proxy = True
         verbose_name = "Question for MAMA"
         verbose_name_plural = "Questions for MAMA"
+        ordering = None
 
 
 class WeeklyFilter(admin.filters.SimpleListFilter):
@@ -117,60 +127,47 @@ class WeeklyFilter(admin.filters.SimpleListFilter):
             # there is no filter value
             return queryset
 
-        # Find the dates for the current week, starting last Sunday and ending
-        # next Saturday
+        # Find the dates for the current week, starting last Friday and ending
+        # next Thursday
         NOW = datetime.now()
-        start_sunday = NOW + relativedelta(weekday=SU(-1),
+        start_friday = NOW + relativedelta(weekday=FR(-1),
                                            hour=0, minute=0,
                                            second=0, microsecond=0)
-        end_saturday = NOW + relativedelta(weekday=SA(+1),
+        end_thursday = NOW + relativedelta(weekday=TH(+1),
                                            hour=0, minute=0,
                                            second=0, microsecond=0, 
                                            microseconds=-1)
+        if end_thursday < start_friday:
+            end_thursday += relativedelta(weeks=1)
 
         # Subtract the amount of weeks in the past.
         if weeks_ago > 0:
-            start_sunday = start_sunday + relativedelta(weeks=-weeks_ago)
-            end_saturday = end_saturday + relativedelta(weeks=-weeks_ago)
+            start_friday = start_friday + relativedelta(weeks=-weeks_ago)
+            end_thursday = end_thursday + relativedelta(weeks=-weeks_ago)
 
         if weeks_ago < 2:
             # Filter the questions between the date range
-            queryset = queryset.filter(submit_date__range=(start_sunday, 
-                                                           end_saturday,))
+            queryset = queryset.filter(submit_date__range=(start_friday, 
+                                                           end_thursday,))
         else:
             # Filter all the older questions.
-            queryset = queryset.filter(submit_date__lt=(end_saturday)) 
+            queryset = queryset.filter(submit_date__lt=(end_thursday)) 
 
-        # Work out the vote count for the questions, to sort by the most liked
-        # questions, i.e. questions with the most votes. (This is taken from the
-        # MostLikedItem view modifier item in jmbo)
-        if queryset.exists():
-            queryset = queryset.extra(
-                select={
-                    'vote_score': '(SELECT COUNT(*) from %s WHERE vote=1 AND \
-        object_id=%s.%s AND content_type_id=%s) - (SELECT COUNT(*) from %s WHERE \
-        vote=-1 AND object_id=%s.%s AND content_type_id=%s)' % (
-                        Vote._meta.db_table,
-                        Comment._meta.db_table,
-                        Comment._meta.pk.attname,
-                        ContentType.objects.get_for_model(Comment).id,
-                        Vote._meta.db_table,
-                        Comment._meta.db_table,
-                        Comment._meta.pk.attname,
-                        ContentType.objects.get_for_model(Comment).id
-                    )
-                }
-            )
         return queryset
 
 
 class AskMamaQuestionAdmin(CommentAdmin):
     """ Add a filter to filter out 'This week's favourite stories' in CMS
     """
-    list_display = ('comment_text', 'user', 'submit_date',
+    list_display = ('comment_text', 'user', 'vote_score', 'submit_date',
                     'classification', 'moderator_replied', 'is_removed')
     list_filter = (WeeklyFilter, 'is_removed',)
     date_hierarchy = None
+    ordering = None
+
+    def vote_score(self, obj):
+        return obj.vote_score
+    vote_score.admin_order_field = 'vote_score'
 
     def queryset(self, request):
         """ Filter the questions that have been submitted this week in the
@@ -183,10 +180,30 @@ class AskMamaQuestionAdmin(CommentAdmin):
         questions = AskMamaQuestion.objects.filter(
             content_type=pct,
             object_pk=latest_pinned.id)
-        # questions = questions.exclude(is_removed=True)
 
         # leave out the moderator answers
         questions = questions.exclude(user__is_staff=True)
+
+        # Work out the vote count for the questions, to sort by the most liked
+        # questions, i.e. questions with the most votes. (This is taken from the
+        # MostLikedItem view modifier item in jmbo)
+        questions = questions.extra(
+            select={
+                'vote_score': '(SELECT COUNT(*) from %s WHERE vote=1 AND \
+    object_id=%s.%s AND content_type_id=%s) - (SELECT COUNT(*) from %s WHERE \
+    vote=-1 AND object_id=%s.%s AND content_type_id=%s)' % (
+                    Vote._meta.db_table,
+                    Comment._meta.db_table,
+                    Comment._meta.pk.attname,
+                    ContentType.objects.get_for_model(Comment).id,
+                    Vote._meta.db_table,
+                    Comment._meta.db_table,
+                    Comment._meta.pk.attname,
+                    ContentType.objects.get_for_model(Comment).id
+                )
+            }
+        )
+        questions = questions.order_by('-vote_score', '-submit_date')
 
         return questions
         
@@ -205,15 +222,21 @@ class AskMamaQuestionAdmin(CommentAdmin):
             return None
 
 
-admin.site.register(SitePreferences, PreferencesAdmin)
+class AskMamaPreferencesAdmin(PreferencesAdmin):
+    raw_id_fields = ('contact_email_recipients', )
+
+
+admin.site.register(SitePreferences, AskMamaPreferencesAdmin)
 admin.site.register(Banner, BannerAdmin)
 admin.site.register(DefaultAvatar, DefaultAvatarAdmin)
 
 try:
     admin.site.unregister(Post)
+    admin.site.unregister(Poll)
 except NotRegistered:
     pass
 admin.site.register(Post, PostAdmin)
+admin.site.register(Poll, MamaPollAdmin)
 
 try:
     admin.site.unregister(YourStoryEntry)
