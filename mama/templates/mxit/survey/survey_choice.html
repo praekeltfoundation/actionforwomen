@@ -1,9 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>askMAMA SURVEY</h1>
+<div class="h1">askMAMA SURVEY</div>
 <div class="content-inner">
     <div class="items">
+        <div class="item no-pic">
+            <div class="meta">
+                <div class="title" style="font-weight: bold">
+                    {{ survey.title }}
+                </div>
+                <div class="description">{{ survey.introduction_text|safe }}</div>
+            </div>
+        </div>
+
         <form id="frmDoSurvey" method="post" action="">
             {% csrf_token %}
 
@@ -19,4 +28,3 @@
     </div>
 </div>
 {% endblock %}
-
