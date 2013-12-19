@@ -48,6 +48,7 @@ setup(
         'Whoosh==2.4.1',
         #'python-mxit',
         'django-mxit',
+        'django-celery-email',
     ],
     tests_require=[
         'django-setuptest',
