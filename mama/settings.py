@@ -285,12 +285,6 @@ CACHES = {
 
 ORIGIN = 'mobi'
 
-# Puppet will put this on the server.
-try:
-    from production_settings import *
-except ImportError:
-    pass
-
 # Celery configuration options
 BROKER_URL = 'amqp://guest:guest@localhost:5672/'
 
@@ -385,3 +379,9 @@ HS_RECHARGE_STATUS_CODES = {
     "FAILED": {"code": 2},
     "SUCCESS": {"code": 3},
 }
+
+# Puppet will put this on the server.
+try:
+    from production_settings import *
+except ImportError:
+    pass

@@ -45,8 +45,8 @@ from post.models import Post
 from jmboyourwords.models import YourStoryEntry, YourStoryCompetition
 
 from mama.constants import (
-    RELATION_PARENT_CHOICES, 
-    RELATION_PARENT_TO_BE_CHOICES 
+    RELATION_PARENT_CHOICES,
+    RELATION_PARENT_TO_BE_CHOICES
 )
 
 from preferences import preferences
@@ -97,7 +97,7 @@ class CategoryListView(ListView):
                 slug__iexact=self.kwargs['category_slug'])
         queryset = Post.permitted.filter(
             Q(primary_category=self.category) | Q(categories=self.category)
-        ).exclude(categories__slug='featured').distinct()
+        ).distinct()
         view_modifier = PopularViewModifier(self.request)
         active_modifiers = view_modifier.get_active_items()
         if active_modifiers:
@@ -126,7 +126,7 @@ class GuidesView(TemplateView):
         # Get the stage guides featured articles
         if featured and mama_a2z:
             qs = Post.permitted.filter(
-                primary_category=mama_a2z, 
+                primary_category=mama_a2z,
                 categories=featured)
             stages_leaders = [{
                 'title': item.title,
@@ -137,7 +137,7 @@ class GuidesView(TemplateView):
         # Get the life guides featured articles
         if featured and life_guides:
             qs = Post.permitted.filter(
-                primary_category=life_guides, 
+                primary_category=life_guides,
                 categories=featured)
             life_guide_leaders = [{
                 'title': item.title,
@@ -159,7 +159,7 @@ class GuidesTopicView(DetailView):
     """ List the guide topices in a specific 'category'
     """
     template_name = 'mama/guide_topic_list.html'
-    
+
     def get_object(self):
         post = Post.permitted.get(slug=self.kwargs['slug'])
         self.category = post.primary_category
@@ -192,7 +192,7 @@ class MoreGuidesView(CategoryListView):
         queryset = Post.permitted.filter(
             Q(primary_category__slug__in=('life-guides', 'mama-a-to-z',)) | \
             Q(categories__slug__in=('life-guides', 'mama-a-to-z',))
-        ).exclude(categories__slug__in=('featured',)).distinct()
+        ).distinct()
 
         sort = self.request.GET.get('sort','pop')
         if sort == 'pop':
@@ -226,7 +226,7 @@ class MomStoriesListView(CategoryListView):
         queryset = Post.permitted.filter(
             Q(primary_category=self.category) | \
             Q(categories=self.category)
-        ).exclude(categories__slug__in=('featured',)).distinct()
+        ).distinct()
         view_modifier = PopularViewModifier(self.request)
         active_modifiers = view_modifier.get_active_items()
         if active_modifiers:
@@ -268,7 +268,7 @@ class MomStoryFormView(FormView):
 class AskMamaView(CategoryDetailView):
     """
     This view surfaces the AskMAMA section of the site. It is subclassing
-    CategoryDetailView, 
+    CategoryDetailView,
     """
 
     template_name = "mama/askmama.html"
@@ -284,7 +284,7 @@ class AskMamaView(CategoryDetailView):
         return context
 
     def get_object(self, queryset=None):
-        """ 
+        """
         This is the Post that explains what the AskMAMA section is all about
         and that all the questions and answer comments will be hanging off, to
         enable use the likes and moderation functionality.
