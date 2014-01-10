@@ -68,6 +68,7 @@
         {{ form.mobile_number }}
         e.g. 0719876543
     </div>
+
     <div class="row">
         {{ form.relation_to_baby.label_tag }}
         {% if form.relation_to_baby.errors %}
@@ -79,6 +80,7 @@
         {% endif %}
         {{ form.relation_to_baby }}
     </div>
+
     <div class="row">
         {{ form.date_qualifier.label_tag }}
         {% if form.date_qualifier.errors %}
@@ -88,19 +90,26 @@
                 {% endfor %}
             </div>
         {% endif %}
-        {{ form.date_qualifier }}
+
+        <label for="id_date_qualifier_0">
+            <input id="id_date_qualifier_0" 
+                   value="due_date" 
+                   name="date_qualifier" 
+                   type="radio"
+                   {% if form.date_qualifier.value == 'due_date' %}checked="checked"{% endif %}> Due Date
+        </label>
     </div>
-    <div class="row shorter">
-        {% if form.delivery_date.errors %}
+    <div class="row shorter" style="margin-left: 25px;">
+        {% if form.due_date.errors %}
             <div class="errors">
-                {% for error in form.delivery_date.errors %}
+                {% for error in form.due_date.errors %}
                     <p>{{ error }}</p>
                 {% endfor %}
             </div>
         {% endif %}
-        {{ form.delivery_date }}
+        {{ form.due_date }}
     </div>
-    <div class="row">
+    <div class="row" style="margin-left: 25px;">
         {% if form.unknown_date.errors %}
             <div class="errors">
                 {% for error in form.unknown_date.errors %}
@@ -110,7 +119,29 @@
         {% endif %}
         {{ form.unknown_date }} {{ form.unknown_date.label }}
     </div>
+
     <div class="row">
+        <label for="id_date_qualifier_1">
+            <input id="id_date_qualifier_1" 
+                   value="birth_date" 
+                   name="date_qualifier" 
+                   type="radio"
+                   {% if form.date_qualifier.value == 'birth_date' %}checked="checked"{% endif %}> Birth Date
+        </label>
+    </div>
+    <div class="row shorter" style="margin-left: 25px;">
+        {% if form.delivery_date.errors %}
+            <div class="errors">
+                {% for error in form.delivery_date.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {{ form.delivery_date }}
+    </div>
+
+    <div class="row">
+        <br/>
         {% if form.tos.errors %}
             <div class="errors">
                 {% for error in form.tos.errors %}
