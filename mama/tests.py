@@ -8,6 +8,9 @@ from django.utils.crypto import salted_hmac
 from django.contrib.sites.models import Site
 from django.core.cache import cache
 from django.contrib import comments
+from django.test.client import Client
+from django.core.urlresolvers import reverse
+
 Comment = comments.get_model()
 
 from mama.models import UserProfile
@@ -17,11 +20,13 @@ from preferences import preferences
 from post.models import Post
 from category.models import Category
 
+
 def generate_security_hash(content_type, object_pk, timestamp):
     info = (content_type, str(object_pk), str(timestamp))
     key_salt = "django.contrib.forms.CommentSecurityForm"
     value = "-".join(info)
     return salted_hmac(key_salt, value).hexdigest()
+
 
 def params_for_comments(obj, comment):
     content_type = '%s.%s' % (obj._meta.app_label, obj._meta.module_name)
@@ -32,11 +37,39 @@ def params_for_comments(obj, comment):
         'object_pk': object_pk,
         'timestamp': timestamp,
         'security_hash': generate_security_hash(content_type, object_pk,
-            timestamp),
+                                                timestamp),
         'comment': comment
     }
 
+
 class ProfileTestCase(TestCase):
+    def setUp(self):
+        '''
+        These are required for Vlive
+        '''
+        #self.msisdn = '27123456789'
+        #self.client = Client(HTTP_X_UP_CALLING_LINE_ID=self.msisdn)
+        #self.client.login(remote_user=self.msisdn)
+
+    def test_mobi_register(self):
+        resp = self.client.get(reverse('registration_register'))
+        self.assertEquals(resp.status_code, 200)
+        self.assertContains(resp, 'Are you a..')
+
+        post_data = {
+            'username': 'test',
+            'password1': '1234',
+            'mobile_number': '27123456789',
+            'relation_to_baby':'mom_or_mom_to_be',
+            'date_qualifier':'due_date',
+            'delivery_date_month':0,
+            'delivery_date_day':0,
+            'delivery_date_year':0
+        }
+
+        resp = self.client.post(reverse('registration_register'), post_data)
+        self.assertContains(resp, 'Either provide a due date, or check')
+
     def test_is_prenatal(self):
         user = User.objects.create()
         profile = UserProfile.objects.create(user=user)
