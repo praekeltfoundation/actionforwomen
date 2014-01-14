@@ -159,7 +159,7 @@ class AskMamaQuestionAdmin(CommentAdmin):
     """ Add a filter to filter out 'This week's favourite stories' in CMS
     """
     list_display = ('comment_text', 'user', 'vote_score', 'submit_date',
-                    'classification', 'moderator_replied', 'is_removed')
+                    'moderator_reply', 'is_removed')
     list_filter = (WeeklyFilter, 'is_removed',)
     date_hierarchy = None
     ordering = None
