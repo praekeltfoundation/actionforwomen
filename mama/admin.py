@@ -173,12 +173,15 @@ class AskMamaQuestionAdmin(CommentAdmin):
             AskMama section.
         """
         latest_pinned = self.get_askmama_latest_pinned_post()
-        pct = ContentType.objects.get_for_model(latest_pinned.__class__)
+        if latest_pinned:
+            pct = ContentType.objects.get_for_model(latest_pinned.__class__)
 
-        # Filter the comments linked to the post
-        questions = AskMamaQuestion.objects.filter(
-            content_type=pct,
-            object_pk=latest_pinned.id)
+            # Filter the comments linked to the post
+            questions = AskMamaQuestion.objects.filter(
+                content_type=pct,
+                object_pk=latest_pinned.id)
+        else:
+            questions = AskMamaQuestion.objects.none()
 
         # leave out the moderator answers
         questions = questions.exclude(user__is_staff=True)
