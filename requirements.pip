@@ -5,7 +5,7 @@
 # django-tastypie pinned for django < 1.5, since some import locations change.
 django-tastypie < 0.10.0
 mimeparse
--e git://github.com/praekelt/django-moderator.git@0.0.4.1#egg=django_moderator-dev
+django-moderator
 -e .
 requests
 xmltodict
