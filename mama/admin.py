@@ -17,6 +17,9 @@ from poll.models import Poll
 from poll.admin import PollAdmin
 from jmboyourwords.admin import YourStoryEntryAdmin
 from jmboyourwords.models import YourStoryEntry
+from livechat.models import LiveChat
+from livechat.admin import LiveChatAdmin
+
 from category.models import Category
 from survey.models import ContentQuizToPost
 from mama.models import (
@@ -227,6 +230,10 @@ class AskMamaPreferencesAdmin(PreferencesAdmin):
     raw_id_fields = ('contact_email_recipients', )
 
 
+class MamaLiveChatAdmin(AdminModeratorMixin, LiveChatAdmin):
+    pass
+
+
 admin.site.register(SitePreferences, AskMamaPreferencesAdmin)
 admin.site.register(Banner, BannerAdmin)
 admin.site.register(DefaultAvatar, DefaultAvatarAdmin)
@@ -241,8 +248,10 @@ admin.site.register(Poll, MamaPollAdmin)
 
 try:
     admin.site.unregister(YourStoryEntry)
+    admin.site.unregister(LiveChat)
 except NotRegistered:
     pass
 admin.site.register(YourStoryEntry, MamaYourStoryEntryAdmin)
+admin.site.register(LiveChat, MamaLiveChatAdmin)
 
 admin.site.register(AskMamaQuestion, AskMamaQuestionAdmin)
