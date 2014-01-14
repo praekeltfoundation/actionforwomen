@@ -9,7 +9,7 @@ from django.contrib.contenttypes.models import ContentType
 
 from jmbo.admin import ModelBaseAdmin
 from preferences.admin import PreferencesAdmin
-from moderator.admin import CommentAdmin
+from moderator.admin import CommentAdmin, AdminModeratorMixin
 
 from secretballot.models import Vote
 from post.models import Post
@@ -28,7 +28,7 @@ from mama.models import (
 )
 
 
-class MamaModelbaseAdmin(ModelBaseAdmin):
+class MamaModelbaseAdmin(AdminModeratorMixin, ModelBaseAdmin):
     raw_id_fields = ('owner', )
 
 
