@@ -12,3 +12,4 @@ xmltodict
 mock
 nose
 django-nose
+coverage
