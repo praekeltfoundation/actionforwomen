@@ -348,7 +348,7 @@ class QuestionAnswerView(TemplateView):
         question_id = kwargs.get('question_id', None)
         question = Comment.objects.get(pk=question_id)
         context['question'] = question
-        context['answers'] = question.replied_to_comment_set.all()
+        context['answers'] = question.replied_to_comments_set.all()
         return context
 
 

@@ -3,7 +3,7 @@
 {% if weeks_ago == 0 %}
   {% if can_render_comment_form %}
       {% render_comment_form for lead_in_post %}
-      <script type="text/javascript" 
+      <script type="text/javascript"
               src="{{ STATIC_URL }}mama/js/askmama_change_question_label.js">
       </script>
   {% endif %}
@@ -16,17 +16,17 @@
         <div class="meta">
           <div class="stamp">
             {% if sort == 'pop' %}
-            <a href="{% url askmama_detail %}?wk=2&sort=date">Latest</a> | 
-            Popular | 
+            <a href="{% url askmama_detail %}?wk=2&sort=date">Latest</a> |
+            Popular |
             <a href="{% url askmama_detail %}?wk=2&sort=alph">Alphabetical</a>
             {% else %}
               {% if sort == 'date' %}
-                Latest | 
+                Latest |
                 <a href="{% url askmama_detail %}?wk=2&sort=pop">Popular</a> |
                 <a href="{% url askmama_detail %}?wk=2&sort=alph">Alphabetical</a>
               {% else %}
-                <a href="{% url askmama_detail %}?wk=2&sort=date">Latest</a> | 
-                <a href="{% url askmama_detail %}?wk=2&sort=pop">Popular</a> | 
+                <a href="{% url askmama_detail %}?wk=2&sort=date">Latest</a> |
+                <a href="{% url askmama_detail %}?wk=2&sort=pop">Popular</a> |
                 Alphabetical
               {% endif %}
             {% endif %}
@@ -48,9 +48,9 @@
       This Week's Favourite Questions
     {% else %}
       {% if weeks_ago == 1 %}
-        {{ week_start|date:"d M Y" }} 
+        {{ week_start|date:"d M Y" }}
       {% else %}
-        Questions older than {{ week_end|date:"d M Y" }} 
+        Questions older than {{ week_end|date:"d M Y" }}
       {% endif %}
     {% endif %}
   </div>
@@ -61,7 +61,7 @@
         <div class="item comment no-pic">
           <div class="meta">
             <div class="stamp">{% likes question %}</div>
-            {% if question.replied_to_comment_set.count > 0 %}
+            {% if question.replied_to_comments_set.count > 0 %}
             <a href="{% url askmama_answer_detail question.id %}">
               <div class="stamp">{{ question.comment|linebreaks }}</div>
             </a>
@@ -71,11 +71,11 @@
           </div>
         </div>
       {% empty %}
-        
+
         <div class="item comment no-pic">
           <div class="meta">
             <div class="stamp">
-              No questions have been asked. 
+              No questions have been asked.
               {% if weeks_ago == 0 %}
               Use the form below to submit the first question.
               {% endif %}
@@ -130,7 +130,7 @@
         <a href="{% url askmama_detail %}?wk=1">
           See last week's Q&amp;A &gt;
         </a>
-      </strong>    
+      </strong>
       </p>
     </div>
   </div>
@@ -143,7 +143,7 @@
         <a href="{% url askmama_detail %}">
           &lt; Back to AskMAMA
         </a>
-      </strong>    
+      </strong>
       </p>
     </div>
   </div>
