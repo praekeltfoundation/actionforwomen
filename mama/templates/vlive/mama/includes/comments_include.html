@@ -1,0 +1,49 @@
+{% load comments %}
+{% load likes_inclusion_tags %}
+{% load moderator_inclusion_tags %}
+{% load pml_inclusion_tags %}
+
+{% if can_comment %}
+    {% render_comment_form for object %}
+
+    {% header 'Comments' %}
+
+    {% for comment in comments.object_list %}
+      <MODULE type="data">
+        <CONTAINER type="data">
+          <TEXT>
+            <b>{{ comment.name }}</b><br/>
+            {{ comment.submit_date }} | {% likes comment %} {% report_comment_abuse comment %}<br/>
+            {{ comment.comment|linebreaks }}<br/>
+          </TEXT>
+        </CONTAINER>
+      </MODULE>
+    {% empty %}
+      <MODULE type="data">
+        <TEXT>
+          No comments have been made. Use the form above to submit the
+          first comment.
+        </TEXT>
+      </MODULE>
+    {% endfor %}
+
+    {% if comments.has_other_pages %}
+    <MODULE type="data">
+      {% if comments.has_previous %}
+      <LINK href="?cpg={{ comments.previous_page_number }}">
+      <TEXT>Prev</TEXT>
+      </LINK>
+      <TEXT>|</TEXT>
+      {% endif %}
+      <TEXT>
+        Page {{ comments.number }} of {{ comments.paginator.num_pages }}
+      </TEXT>
+      {% if comments.has_next %}
+      <TEXT>|</TEXT>
+      <LINK href="?cpg={{ comments.next_page_number }}">
+      <TEXT>Next</TEXT>
+      </LINK>
+      {% endif %}
+    </MODULE>
+    {% endif %}
+{% endif %}

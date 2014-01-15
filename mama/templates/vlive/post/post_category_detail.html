@@ -56,9 +56,15 @@
       {% endwith %}
     </CONTAINER>
   </MODULE>
+{% endcache %}
 
+{% include 'mama/includes/comments_include.html' %}
+
+{% cache 3600 baby_center_byline object.id %}
   {% babycenter_byline object %}
+{% endcache %}
 
+{% cache 3600 nav_links object.id %}
   {% with object.navigation_link_target_set.all as navigation_links %}
     {% if navigation_links %}
     <MODULE>
@@ -82,8 +88,6 @@
 {% endcache %}
 
 {% post_content_quizzes object %}
-
-{% object_comments object %}
 
 {% endblock %}
 

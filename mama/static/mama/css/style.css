@@ -185,10 +185,12 @@ table.poll-results tr.poll-result-6 td.bar > div { background-color: #ff8e00; }
 	#content .purple #menu .item-nav { background: #eadbe0; color: #bfbfbf; }
 	#content .purple #menu .item-nav a { color: #872e4d; }
 #content .dorange .h1 { background: #ef4b14; }
+    #content .dorange .h1 a { color: white; background: #ef4b14; }
 	#content .dorange #menu .item a { color: #ef4b14; }
 	#content .dorange #menu .item-nav { background: #fbd7ca; color: #bfbfbf; }
 	#content .dorange #menu .item-nav a { color: #ef4b14; }
 #content .yorange .h1 { background: #ff8e00; }
+    #content .yorange .h1 a { color: white; background: #ff8e00; }
 	#content .yorange .content-inner .item .meta .title a { color: #ff8400; }
 	#content .yorange #menu .item a { color: #ff8400; }
 	#content .yorange #menu .item-nav { background: #ffe0b7; color: #bfbfbf; }

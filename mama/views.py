@@ -8,8 +8,10 @@ from django.contrib import auth
 from django.contrib import messages
 from django.contrib.comments.views import comments
 from django.contrib.comments import get_model
+from django.contrib.contenttypes.models import ContentType
 from django.core.mail import EmailMessage, mail_managers
 from django.core.urlresolvers import reverse
+from django.core.paginator import Paginator
 from django.db.models import Q, F
 from django.http import HttpResponseRedirect, HttpResponseServerError
 from django.shortcuts import get_object_or_404, redirect, render_to_response
@@ -71,6 +73,34 @@ class CategoryDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(CategoryDetailView, self).get_context_data(**kwargs)
         context['category'] = self.category
+
+        # Get the comments linked to the post
+        post = kwargs['object']
+
+        # check if we can comment. we need to be authenticated, at least
+        can_comment, code = post.can_comment(self.request)
+        context.update({
+            'can_render_comment_form': can_comment,
+            'can_comment': can_comment
+        })
+        if can_comment:
+            pct = ContentType.objects.get_for_model(post.__class__)
+            comments = Comment.objects.filter(
+                content_type=pct,
+                object_pk=post.id)
+            comments = comments.exclude(is_removed=True)
+
+            # Paginate the comments
+            paginator = Paginator(comments, 5)
+            cpage = int(self.request.GET.get('cpg', u'1'))
+            comments_page = paginator.page(cpage)
+
+            # Add the comments to the context
+            context.update({
+                'comments': comments_page,
+                'cpg': cpage
+            })
+
         return context
 
     def get_object(self):
