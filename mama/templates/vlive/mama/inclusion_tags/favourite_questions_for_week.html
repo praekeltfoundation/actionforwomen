@@ -73,7 +73,7 @@
       <TEXT>
         <p>
         {% likes question %}<br/>
-        {% if question.replied_to_comment_set.count > 0 %}
+        {% if question.replied_to_comments_set.count > 0 %}
         <LINK href="{% url askmama_answer_detail question.id %}">
           <TEXT>{{ question.comment|linebreaks }}</TEXT>
         </LINK>
