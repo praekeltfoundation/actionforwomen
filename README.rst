@@ -2,6 +2,11 @@
 Mama
 ====
 
+|mama-ci|_
+
+.. |mama-ci| image:: https://magnum.travis-ci.com/praekelt/mama.png?token=hvdqE3zapc2LPyKs2zQC&branch=develop
+.. _mama-ci: https://magnum.travis-ci.com/praekelt/mama
+
 Getting Started
 ===============
 
