@@ -1,5 +1,7 @@
 import re
 import urlparse
+import random
+
 from datetime import datetime
 from dateutil import parser
 
@@ -41,6 +43,8 @@ from category.models import Category
 from poll.forms import PollVoteForm
 from poll.models import Poll
 from post.models import Post
+
+from likes.views import like as likes_view
 
 from jmboyourwords.models import YourStoryEntry, YourStoryCompetition
 
@@ -754,3 +758,13 @@ def server_error(request):
     return HttpResponseServerError(render_to_string('500.html', {
         'STATIC_URL': settings.STATIC_URL
     }))
+
+
+def like(request, content_type, id, vote):
+    likes_view(request, content_type, id, vote)
+
+    redirect_url = reverse('home')
+    if 'HTTP_REFERER' in request.META:
+        redirect_url = '%s?v=%s' % (request.META['HTTP_REFERER'],
+                                        random.randint(0, 10))
+    return redirect(redirect_url)

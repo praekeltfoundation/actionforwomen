@@ -6,17 +6,17 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import cache_page
 from django.views.generic import TemplateView
 from haystack.views import SearchView
-from mama.views import (CategoryDetailView, CategoryListView, 
-                        ContactView, 
+from mama.views import (CategoryDetailView, CategoryListView,
+                        ContactView,
                         ProfileView, VLiveEditProfile,
-                        AskMamaView, QuestionAnswerView, 
+                        AskMamaView, QuestionAnswerView,
                         MomStoriesListView,
                         MomStoryFormView,
-                        MyProfileView, MyProfileEdit, 
+                        MyProfileView, MyProfileEdit,
                         UpdateDueDateView,
                         MxitUpdateDueDateView,
                         PublicProfileView, UserCommentsView,
-                        GuidesView, GuidesTopicView, 
+                        GuidesView, GuidesTopicView,
                         MoreGuidesView, GuideDetailView)
 from mama.forms import PasswordResetForm
 import object_tools
@@ -221,7 +221,9 @@ urlpatterns = patterns('',
     (r'^object-tools/', include(object_tools.tools.urls)),
     (r'^ckeditor/', include('ckeditor.urls')),
     url(r'^google-credentials/', include('google_credentials.urls')),
-    (r'^likes/', include('likes.urls')),
+    url(r'^likes/like/(?P<content_type>[\w-]+)/(?P<id>\d+)/(?P<vote>-?\d+)$',
+        'mama.views.like',
+        name='like'),
     (r'^', include('jmbo.urls')),
 )
 
