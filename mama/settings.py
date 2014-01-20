@@ -288,6 +288,7 @@ ORIGIN = 'mobi'
 # Celery configuration options
 BROKER_URL = 'amqp://guest:guest@localhost:5672/'
 
+CELERY_IMPORTS = ('monitor.tasks', 'moderator.tasks')
 CELERY_RESULT_BACKEND = "database"
 CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 

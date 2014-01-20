@@ -1,10 +1,1 @@
-{% if previously_reported or can_report %}
-    |
-    {% if previously_reported %}
-      <TEXT>Abuse Reported</TEXT>
-    {% else %}
-      <LINK href="{% url like content_type content_obj.id -1 %}">
-      <TEXT>Report Abuse</TEXT>
-      </LINK>
-    {% endif %}
-{% endif %}
+ | <LINK href="{% url like content_type content_obj.id vote %}"><TEXT>Report Abuse</TEXT></LINK>

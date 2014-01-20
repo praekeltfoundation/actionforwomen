@@ -42,10 +42,9 @@ GOOGLE_ANALYTICS = {
     'google_analytics_id': 'MO-40632967-1',
 }
 
-CELERY_IMPORTS = ('google_analytics.tasks')
+CELERY_IMPORTS = ('google_analytics.tasks', 'monitor.tasks', 'moderator.tasks')
 
 GA_CLIENT_ID = '366062914538.apps.googleusercontent.com'
 GA_CLIENT_SECRET = 'P1wntBIm3hDNpuZZQvavzz3U'
 GA_SCOPE = 'https://www.googleapis.com/auth/analytics.readonly'
 GA_REDIRECT_URI = 'http://vlive.askmama.mobi/google-credentials/callback'
-
