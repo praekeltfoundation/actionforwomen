@@ -38,17 +38,33 @@
 {% endif %}
 
 <div class="{{ category.color }}">
+
+  {% if weeks_ago == 0 %}
+  <div class="text_banner">
+    <div class="banner_content">
+      <p>
+      <strong>
+        <a href="{% url askmama_detail %}?wk=1">
+          Read last week's top 10 &raquo;
+        </a>
+      </strong>
+      </p>
+    </div>
+  </div>
+  {% endif %}
+
   {% if weeks_ago == 1 %}
   <div class="h1" id="comments">
     <a href="{% url askmama_detail %}">AskMAMA</a> &gt; Last week's Q&amp;A
   </div>
   {% endif %}
+
   <div class="h1" id="comments">
     {% if weeks_ago == 0 %}
-      This Week's Favourite Questions
+      Top 10 Questions
     {% else %}
       {% if weeks_ago == 1 %}
-        {{ week_start|date:"d M Y" }}
+        Top 10 questions for {{ week_start|date:"d M Y" }}
       {% else %}
         Questions older than {{ week_end|date:"d M Y" }}
       {% endif %}
@@ -57,10 +73,18 @@
 
   <div class="content-inner">
     <div class="items">
+
       {% for question in questions.object_list %}
-        <div class="item comment no-pic">
+
+        {% comment %}
+        if we are on the current week's 1st page, show the top 10 questions
+        with a different coloured background.
+        {% endcomment %}
+        <div class="item comment no-pic"
+          {% if weeks_ago == 0 and questions.number == 1 and forloop.counter0 < 10 %}
+          style="background-color: #eadbe0;"
+          {% endif %} >
           <div class="meta">
-            <div class="stamp">{% likes question %}</div>
             {% if question.replied_to_comments_set.count > 0 %}
             <a href="{% url askmama_answer_detail question.id %}">
               <div class="stamp">{{ question.comment|linebreaks }}</div>
@@ -68,8 +92,34 @@
             {% else %}
               <div class="stamp">{{ question.comment|linebreaks }}</div>
             {% endif %}
+            <div class="stamp">{% likes question %}</div>
           </div>
         </div>
+
+        {% if weeks_ago == 0 and questions.number == 1 and forloop.counter == 10 %}
+          {% comment %}
+          If we are on the current week's first page, break the loop after the
+          top 10 questions to add a link to the question form, and a heading
+          above the rest of the questions.
+          {% endcomment %}
+          </div>
+            <div class="text_banner">
+              <div class="banner_content">
+                <p>
+                <strong>
+                  <a href="#?wk=0">
+                    Ask you question &raquo;
+                  </a>
+                </strong>
+                </p>
+              </div>
+            </div>
+            <div class="h1">
+              More Questions
+            </div>
+          <div class="items">
+        {% endif %}
+
       {% empty %}
 
         <div class="item comment no-pic">
@@ -77,11 +127,12 @@
             <div class="stamp">
               No questions have been asked.
               {% if weeks_ago == 0 %}
-              Use the form below to submit the first question.
+              Submit the first question.
               {% endif %}
             </div>
           </div>
         </div>
+
       {% endfor %}
     </div>
 
@@ -122,19 +173,6 @@
     {% endif %}
   {% endif %}
 
-  {% if weeks_ago == 0 %}
-  <div class="text_banner">
-    <div class="banner_content">
-      <p>
-      <strong>
-        <a href="{% url askmama_detail %}?wk=1">
-          See last week's Q&amp;A &gt;
-        </a>
-      </strong>
-      </p>
-    </div>
-  </div>
-  {% endif %}
   {% if weeks_ago > 0 %}
   <div class="text_banner">
     <div class="banner_content">
