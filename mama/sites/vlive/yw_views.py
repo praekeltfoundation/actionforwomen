@@ -31,7 +31,7 @@ class PMLYourStoryView(FormView):
         initial['next'] = reverse('moms_stories_object_list')
         user = self.request.user
         initial['name'] = user.username
-        if user.email:
+        if not user.is_anonymous and user.email:
             initial['email'] = user.email
         else:
             initial['email'] = 'unspecified@askmama.mobi'
