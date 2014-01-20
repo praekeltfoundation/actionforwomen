@@ -1,5 +1,10 @@
 {% extends "base.html" %}
-{% load cache jmbo_inclusion_tags mama_inclusion_tags jmbo_template_tags likes_inclusion_tags livechat_tags%}
+{% load cache %}
+{% load jmbo_inclusion_tags %}
+{% load mama_inclusion_tags %}
+{% load jmbo_template_tags %}
+{% load likes_inclusion_tags %}
+{% load livechat_tags%}
 
 {% block content %}
   <div class="{{ category.color }}">
@@ -27,9 +32,9 @@
         {% endif %}
         {{ object.content|safe }}
       </div>
+
       {% cache 3600 links object.id %}
         <div class="post-menu">
-          <div class="h1">Related Content</div>
           <div class="items">
             {% with object.link_target_set.all as links %}
               {% for link in links %}
@@ -41,7 +46,15 @@
             {% endwith %}
           </div>
         </div>
+      {% endcache %}
+
+      {% include 'mama/includes/comments_include.html' %}
+
+      {% cache 3600 baby_center_byline object.id %}
         {% babycenter_byline object %}
+      {% endcache %}
+
+      {% cache 3600 nav_links object.id %}
         {% with object.navigation_link_target_set.all as navigation_links %}
           {% if navigation_links %}
             <div class="post-menu">
@@ -56,10 +69,9 @@
           {% endif %}
         {% endwith %}
       {% endcache %}
+
     </div>
   </div>
-
-  {% object_comments object %}
 
 {% endblock %}
 
