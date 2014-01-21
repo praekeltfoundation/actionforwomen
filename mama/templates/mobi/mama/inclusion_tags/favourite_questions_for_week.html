@@ -70,7 +70,7 @@
 
   {% if weeks_ago == 1 %}
   <div class="h1" id="comments">
-    <a href="{% url askmama_detail %}">AskMAMA</a> &gt; Last week's Q&amp;A
+    <a href="{% url askmama_detail %}">Ask MAMA</a> &gt; Last week's Q&amp;A
   </div>
   {% endif %}
 
@@ -101,7 +101,7 @@
         {% endcomment %}
         <div class="item comment no-pic"
           {% if weeks_ago == 0 and questions.number == 1 and forloop.counter0 < 10 %}
-          style="background-color: #eadbe0;"
+          style="background-color: #fee;"
           {% endif %} >
           <div class="meta">
             {% if question.replied_to_comments_set.count > 0 %}
@@ -201,7 +201,7 @@
       <p>
       <strong>
         <a href="{% url askmama_detail %}">
-          &lt; Back to AskMAMA
+          &lt; Back to Ask MAMA
         </a>
       </strong>
       </p>
