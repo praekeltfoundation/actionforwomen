@@ -10,6 +10,7 @@ from mama.views import (CategoryDetailView, CategoryListView,
                         ContactView,
                         ProfileView, VLiveEditProfile,
                         AskMamaView, QuestionAnswerView,
+                        AskExpertQuestionView,
                         MomStoriesListView,
                         MomStoryFormView,
                         MyProfileView, MyProfileEdit,
@@ -115,6 +116,11 @@ urlpatterns = patterns('',
         QuestionAnswerView.as_view(),
         {},
         name='askmama_answer_detail'
+    ),
+    url(
+        r'^ask-mama/ask-expert-question/(?P<post_id>\d+)/$',
+        login_required(AskExpertQuestionView.as_view()),
+        name='ask_expert_question'
     ),
     url(
         r'^moms-stories/list/$',
