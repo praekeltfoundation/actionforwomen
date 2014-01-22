@@ -87,16 +87,22 @@ vote=-1 AND object_id=%s.%s AND content_type_id=%s)' % (
         }
     )
     
-    # apply the sort order (only for older questions). 'pop' is the default.
+    # apply the sort order. 'pop' is the default.
     if sort == 'pop':
         questions = questions.order_by('-vote_score', '-submit_date')
     elif sort == 'date':
         questions = questions.order_by('-submit_date')
     elif sort == 'alph':
         questions = questions.order_by('comment')
+    else:
+        questions = questions.order_by('-vote_score', '-submit_date')
+
+    # if we are viewing last week' and older sessions, only show the top 10
+    if weeks_ago > 0:
+        questions = questions[:10]
 
     # return the results paginated.
-    paginator = Paginator(questions, 50)
+    paginator = Paginator(questions, 15)
     comments_page = paginator.page(cpage)
 
     # check if we can comment. we need to be authenticated, at least

@@ -338,6 +338,20 @@ class AskMamaView(CategoryDetailView):
             return None
 
 
+class AskExpertQuestionView(TemplateView):
+    """ Displays a form to capture a question in the weekly 'Ask an Expert'
+        section.
+
+        Uses the Django comments framework for questions.
+    """
+    template_name = 'mama/askmama_ask_your_question.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(AskExpertQuestionView, self).get_context_data(**kwargs)
+        context['next'] = reverse('askmama_detail')
+        return context
+
+
 class QuestionAnswerView(TemplateView):
     """ This view displays a question and its answer in the AskMAMA section.
     """
