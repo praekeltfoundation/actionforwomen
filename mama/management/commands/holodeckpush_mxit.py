@@ -9,6 +9,15 @@ from mama.models import UserProfile
 GA_PROFILE_ID = 81239767
 init_date = datetime(2014, 2, 1, 0, 0, 0)
 
+HOLODECK_API_KEYS = {
+    'users_weekly': '0ed63f7d41b247cea1353708a3a56c48',
+    'pageviews_weekly': 'dd75794cc25548b280d45ad8f6f8455c',
+    'visitor_types': '42a1d1d2bfb5451f9f5868dda014e66c',
+    'user_phase': 'ec0411c2bb7e4374bfd64fb4d430ce08',
+    'users_cumulative': 'aba5dc3365b74c118e89132e73c15cb7',
+    'pageviews_cumulative': 'f465c0825d0647a88d5a6ca6ebdb8f93'
+}
+
 
 class Command(BaseCommand):
     help = 'Pushes various metrics for Mxit to Holodeck dashboard.'
@@ -40,7 +49,7 @@ class Command(BaseCommand):
                     date_joined__range=(range_start, range_end),
                     userprofile__delivery_date__isnull=False).count()),
             ),
-            api_key='0ed63f7d41b247cea1353708a3a56c48',
+            api_key=HOLODECK_API_KEYS['users_weekly'],
             timestamp=datetime_obj,
         )
 
@@ -58,7 +67,7 @@ class Command(BaseCommand):
             samples=(
                 ("Pageviews", results['totalsForAllResults']['ga:pageviews']),
             ),
-            api_key='dd75794cc25548b280d45ad8f6f8455c',
+            api_key=HOLODECK_API_KEYS['pageviews_weekly'],
             timestamp=datetime_obj,
         )
 
@@ -76,7 +85,7 @@ class Command(BaseCommand):
         if 'rows' in results:
             client.send(
                 samples=[(row[0], int(row[1])) for row in results['rows']],
-                api_key='42a1d1d2bfb5451f9f5868dda014e66c',
+                api_key=HOLODECK_API_KEYS['visitor_types'],
                 timestamp=datetime_obj,
             )
 
@@ -89,7 +98,7 @@ class Command(BaseCommand):
                 ("Postnatal", mxit_userprofile.filter(
                     delivery_date__lt=datetime_obj).count()),
             ),
-            api_key='ec0411c2bb7e4374bfd64fb4d430ce08',
+            api_key=HOLODECK_API_KEYS['user_phase'],
             timestamp=datetime_obj,
         )
 
@@ -114,7 +123,7 @@ class Command(BaseCommand):
                     date_joined__lte=range_end,
                     userprofile__delivery_date__isnull=False).count()),
             ),
-            api_key='aba5dc3365b74c118e89132e73c15cb7',
+            api_key=HOLODECK_API_KEYS['users_cumulative'],
             timestamp=datetime_obj,
         )
 
@@ -132,6 +141,6 @@ class Command(BaseCommand):
             samples=(
                 ("Pageviews", results['totalsForAllResults']['ga:pageviews']),
             ),
-            api_key='f465c0825d0647a88d5a6ca6ebdb8f93',
+            api_key=HOLODECK_API_KEYS['pageviews_cumulative'],
             timestamp=datetime_obj,
         )
