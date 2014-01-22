@@ -44,7 +44,7 @@ class Command(BaseCommand):
                     date_joined__range=(range_start, range_end),
                     userprofile__delivery_date__isnull=False).count()),
             ),
-            api_key='',
+            api_key='0ed63f7d41b247cea1353708a3a56c48',
             timestamp=datetime_obj,
         )
 
@@ -62,7 +62,7 @@ class Command(BaseCommand):
             samples=(
                 ("Pageviews", results['totalsForAllResults']['ga:pageviews']),
             ),
-            api_key='',
+            api_key='dd75794cc25548b280d45ad8f6f8455c',
             timestamp=datetime_obj,
         )
 
@@ -80,7 +80,7 @@ class Command(BaseCommand):
         if 'rows' in results:
             client.send(
                 samples=[(row[0], int(row[1])) for row in results['rows']],
-                api_key='',
+                api_key='42a1d1d2bfb5451f9f5868dda014e66c',
                 timestamp=datetime_obj,
             )
 
@@ -93,7 +93,7 @@ class Command(BaseCommand):
                 ("Postnatal", mxit_userprofile.filter(
                     delivery_date__lt=datetime_obj).count()),
             ),
-            api_key='',
+            api_key='ec0411c2bb7e4374bfd64fb4d430ce08',
             timestamp=datetime_obj,
         )
 
@@ -118,7 +118,7 @@ class Command(BaseCommand):
                     date_joined__lte=range_end,
                     userprofile__delivery_date__isnull=False).count()),
             ),
-            api_key='',
+            api_key='aba5dc3365b74c118e89132e73c15cb7',
             timestamp=datetime_obj,
         )
 
@@ -136,6 +136,6 @@ class Command(BaseCommand):
             samples=(
                 ("Pageviews", results['totalsForAllResults']['ga:pageviews']),
             ),
-            api_key='',
+            api_key='f465c0825d0647a88d5a6ca6ebdb8f93',
             timestamp=datetime_obj,
         )
