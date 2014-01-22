@@ -33,7 +33,7 @@ GOOGLE_ANALYTICS = {
 
 CELERY_IMPORTS = ('google_analytics.tasks', 'monitor.tasks', 'moderator.tasks')
 
-GA_CLIENT_ID = 'xxx.apps.googleusercontent.com'
-GA_CLIENT_SECRET = ''
+GA_CLIENT_ID = '643337966908-5bchse2iie7e0i6m15f5n9ttqquc13ov.apps.googleusercontent.com'
+GA_CLIENT_SECRET = '42wRH_2YjBNdDNpYbFOGvmjy'
 GA_SCOPE = 'https://www.googleapis.com/auth/analytics.readonly'
 GA_REDIRECT_URI = 'http://mxit.askmama.mobi/google-credentials/callback'
