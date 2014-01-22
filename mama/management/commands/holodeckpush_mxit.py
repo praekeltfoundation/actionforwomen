@@ -14,10 +14,6 @@ class Command(BaseCommand):
     help = 'Pushes various metrics for Mxit to Holodeck dashboard.'
 
     def handle(self, *args, **options):
-        #for i in range (0,20):
-        #    self.push(datetime.now() - timedelta(days=i*7))
-        #    self.push_cumulative(datetime.now() - timedelta(days=i*7))
-
         self.push(datetime.now())
         self.push_cumulative(datetime.now())
         print "Done!"
