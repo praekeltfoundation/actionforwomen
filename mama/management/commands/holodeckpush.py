@@ -35,6 +35,9 @@ class Command(BaseCommand):
         vlive_comments = Comment.objects.filter(
             user__userprofile__origin='vlive')
 
+        mxit_comments = Comment.objects.filter(
+            user__userprofile__origin='mxit')
+
         mobi_users = User.objects.filter(Q(userprofile__origin='mobi') |
                                          Q(userprofile__origin__isnull=True))
 
@@ -44,6 +47,8 @@ class Command(BaseCommand):
                 ("Mobi", mobi_comments.filter(
                     submit_date__range=(range_start, range_end)).count()),
                 ("Vlive", vlive_comments.filter(
+                    submit_date__range=(range_start, range_end)).count()),
+                ("Mxit", mxit_comments.filter(
                     submit_date__range=(range_start, range_end)).count()),
             ),
             api_key='5bf6a7f19c58454b89ec640bb5799884',
@@ -57,6 +62,9 @@ class Command(BaseCommand):
                     submit_date__range=(range_start_cumulative,
                                         range_end)).count()),
                 ("Vlive", vlive_comments.filter(
+                    submit_date__range=(range_start_cumulative,
+                                        range_end)).count()),
+                ("Mxit", mxit_comments.filter(
                     submit_date__range=(range_start_cumulative,
                                         range_end)).count()),
             ),
