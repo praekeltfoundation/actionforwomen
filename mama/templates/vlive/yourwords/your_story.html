@@ -6,6 +6,8 @@
 
     {% header competition.title 'orange' %}
 
+    {% text_module template=competition.content|safe %}
+
     <MODULE>
     <CONTAINER type="form">
         <FORM method="GET" 
@@ -21,10 +23,6 @@
     </CONTAINER>
     </MODULE>
 
-    <MODULE>
-    <CONTAINER type="data">
-    <TEXT>{{ competition.terms_and_conditions }}</TEXT>
-    </CONTAINER>
-    </MODULE>
+    {% text_module template=competition.terms_and_conditions|safe %}
 
 {% endblock %}

@@ -5,10 +5,12 @@
 
 {% if comment_count or can_render_comment_form %}
   {% if object.comments_enabled %}
-    {% header text="Comments" %}
-    {% render_comment_list for object %}
     {% if can_render_comment_form %}
-        {% render_comment_form for object %}
+      {% render_comment_form for object %}
     {% endif %}
+    {% if comment_count %}
+      {% header text="Comments" %}
+    {% endif %}
+    {% render_comment_list for object %}
   {% endif %}
 {% endif %}
