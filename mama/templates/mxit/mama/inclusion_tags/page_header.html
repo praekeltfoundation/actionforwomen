@@ -5,11 +5,7 @@
     <div class="nav">
         <a href="{% url category_object_list 'articles' %}">Articles</a> | 
         <a href="{% url moms_stories_object_list %}">Stories</a> |
-        {% if live_chat %}
-        <a href="{% url livechat:show_livechat live_chat.current_live_chat.slug %}">AskMAMA</a> |
-        {% else %}
-        <a href="{% url askmama_detail %}">AskMAMA</a> |
-        {% endif %}
+        <a href="{% url askmama_detail %}">Ask MAMA</a> |
         <a href="{% url guides_list %}">Guides</a>
     </div>
 </div>
