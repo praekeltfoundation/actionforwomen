@@ -24,7 +24,7 @@ import mama
 
 
 from mama.constants import (
-    RELATION_TO_BABY_CHOICES, 
+    RELATION_TO_BABY_CHOICES,
     DATE_QUALIFIER_CHOICES
 )
 
@@ -94,17 +94,22 @@ class PasswordResetForm(PasswordResetForm):
             )
         )
 
+        phone_number = self.profile.mobile_number
+
+        if phone_number.startswith('0') and len(phone_number) == 10:
+            phone_number = '27' + phone_number[1:]
+
         # Send the message using Ambient's gateway.
         sms = ambient.AmbientSMS(
             settings.AMBIENT_API_KEY,
             settings.AMBIENT_GATEWAY_PASSWORD
         )
-        sms.sendmsg(message, [self.profile.mobile_number, ])
+        sms.sendmsg(message, [phone_number, ])
 
 
 class RegistrationForm(RegistrationFormTermsOfService):
     mobile_number = forms.CharField(
-        max_length=64, 
+        max_length=64,
         required=True,
         label="Your mobile number"
     )
@@ -365,8 +370,8 @@ class ProfileForm(pml_forms.PMLForm):
     )
     tos = pml_forms.PMLCheckBoxField(
         choices=(
-            ( 
-                "accept", 
+            (
+                "accept",
                 mark_safe("""I accept the <LINK href="/terms/"><TEXT>terms and conditions</TEXT></LINK> of use.""")
             ),
         ))
