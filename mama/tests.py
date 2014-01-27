@@ -13,6 +13,7 @@ from django.core.urlresolvers import reverse
 
 Comment = comments.get_model()
 
+from mama import utils
 from mama.models import UserProfile
 from mama.middleware import TrackOriginMiddleware
 from mama.models import SitePreferences
@@ -82,11 +83,11 @@ class ProfileTestCase(TestCase):
         post_data.update({
             'unknown_date': True,
         })
-        resp = self.client.post(reverse('registration_register'), 
+        resp = self.client.post(reverse('registration_register'),
                                 post_data,
                                 follow=True)
-        self.assertRedirects(resp, 
-                             reverse('registration_done'), 
+        self.assertRedirects(resp,
+                             reverse('registration_done'),
                              status_code=302,
                              target_status_code=200)
         self.assertContains(resp, 'Thank you for registering')
@@ -109,11 +110,11 @@ class ProfileTestCase(TestCase):
             'due_date_month': due_date.month,
             'due_date_year': due_date.year
         }
-        resp = self.client.post(reverse('update_due_date'), 
-                                post_data, 
+        resp = self.client.post(reverse('update_due_date'),
+                                post_data,
                                 follow=True)
-        self.assertRedirects(resp, 
-                             reverse('home'), 
+        self.assertRedirects(resp,
+                             reverse('home'),
                              status_code=302,
                              target_status_code=200)
         self.assertEquals(resp.status_code, 200)
@@ -138,11 +139,11 @@ class ProfileTestCase(TestCase):
             'due_date_year': due_date.year,
             'tos': True
         }
-        resp = self.client.post(reverse('registration_register'), 
+        resp = self.client.post(reverse('registration_register'),
                                 post_data,
                                 follow=True)
-        self.assertRedirects(resp, 
-                             reverse('registration_done'), 
+        self.assertRedirects(resp,
+                             reverse('registration_done'),
                              status_code=302,
                              target_status_code=200)
         self.assertContains(resp, 'Thank you for registering')
@@ -170,11 +171,11 @@ class ProfileTestCase(TestCase):
             'delivery_date_year': birth_date.year,
             'tos': True
         }
-        resp = self.client.post(reverse('registration_register'), 
+        resp = self.client.post(reverse('registration_register'),
                                 post_data,
                                 follow=True)
-        self.assertRedirects(resp, 
-                             reverse('registration_done'), 
+        self.assertRedirects(resp,
+                             reverse('registration_done'),
                              status_code=302,
                              target_status_code=200)
         self.assertContains(resp, 'Thank you for registering')
@@ -404,3 +405,12 @@ class GeneralPrefrencesTestCase(TestCase):
 
         resp = self.client.get(article_url)
         self.assertContains(resp, 'word ****** which is silenced')
+
+
+class MobileNumberInternationlisationTestCase(TestCase):
+    def test_mobile_number_internationalisation(self):
+        num = utils.mobile_number_to_international('27123456789')
+        self.assertEqual(num, '27123456789')
+
+        num = utils.mobile_number_to_international('0123456789')
+        self.assertEqual(num, '27123456789')
