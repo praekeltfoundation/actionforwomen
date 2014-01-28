@@ -8,9 +8,12 @@
             {% csrf_token %}
 
             {% for field in form %}
-            {{ field }}<br />
+                {% if not field.is_hidden %}
+                    {{ field.label_tag }}<br />
+                {% endif %}
+                {{ field }}
             {% endfor %}
-
+            <br />
             <div class="row">
                 <input type="submit" name="submit" value="Continue" class="btn" />
             </div>
