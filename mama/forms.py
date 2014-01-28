@@ -22,7 +22,7 @@ from jmboyourwords.models import YourStoryEntry
 from userprofile import utils
 import mama
 
-from mama.utils import send_sms
+from mama.tasks import send_sms
 from mama.constants import (
     RELATION_TO_BABY_CHOICES,
     DATE_QUALIFIER_CHOICES
@@ -94,7 +94,7 @@ class PasswordResetForm(PasswordResetForm):
             )
         )
 
-        send_sms(self.profile.mobile_number, message)
+        send_sms.delay(self.profile.mobile_number, message)
 
 
 class RegistrationForm(RegistrationFormTermsOfService):
