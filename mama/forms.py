@@ -22,7 +22,7 @@ from jmboyourwords.models import YourStoryEntry
 from userprofile import utils
 import mama
 
-from mama.utils import mobile_number_to_international
+from mama.utils import send_sms
 from mama.constants import (
     RELATION_TO_BABY_CHOICES,
     DATE_QUALIFIER_CHOICES
@@ -94,16 +94,7 @@ class PasswordResetForm(PasswordResetForm):
             )
         )
 
-        mobile_number = mobile_number_to_international(
-            self.profile.mobile_number
-        )
-
-        # Send the message using Ambient's gateway.
-        sms = ambient.AmbientSMS(
-            settings.AMBIENT_API_KEY,
-            settings.AMBIENT_GATEWAY_PASSWORD
-        )
-        sms.sendmsg(message, [mobile_number, ])
+        send_sms(self.profile.mobile_number, message)
 
 
 class RegistrationForm(RegistrationFormTermsOfService):
