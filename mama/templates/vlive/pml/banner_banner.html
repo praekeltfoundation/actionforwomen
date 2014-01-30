@@ -13,7 +13,7 @@
     <PARTNER-BODY>
         <VZV-DEFAULT>
             {% block body %}
-                {% cache 600 banner-detail %}
+                {% cache 600 banner-detail banner_type %}
                 <MODULE backgroundColor="false" border="module">
                 {% if banner %}
                 <CONTAINER type="table">
