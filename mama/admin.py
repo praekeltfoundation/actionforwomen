@@ -63,7 +63,12 @@ class MamaPollAdmin(PollAdmin):
 
 
 class BannerAdmin(MamaModelbaseAdmin):
-
+    list_filter = (
+        'state',
+        'created',
+        'sites',
+        'banner_type'
+    )
     list_display = (
         'title', 'description', 'thumbnail', 'schedule', '_actions')
 

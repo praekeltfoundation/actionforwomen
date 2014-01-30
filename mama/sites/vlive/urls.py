@@ -20,5 +20,9 @@ urlpatterns = patterns('',
         include('mama.sites.vlive.survey_urls', namespace='survey')),
     (r'^yourwords/',
         include('mama.sites.vlive.yw_urls')),
-    (r'^carousel\.xml$', BannerView.as_view()),
+    url(
+        r'^vlivebanner/(?P<banner_type>[\w]+)/$',
+        BannerView.as_view(),
+        name='banner'
+    ),
 ) + urlpatterns

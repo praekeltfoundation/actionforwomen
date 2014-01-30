@@ -707,26 +707,31 @@ class VLiveEditProfile(FormView):
 
 
 class BannerView(TemplateView):
-    template_name = "pml/carousel.xml"
+    template_name = "pml/banner.html"
 
     def get_context_data(self, **kwargs):
         context = super(BannerView, self).get_context_data(**kwargs)
         now = datetime.now().time()
 
+        banner_type = kwargs.get('banner_type', Banner.TYPE_BANNER)
+        self.template_name = "pml/banner_%s.html" % banner_type
+
         banners = Banner.permitted.filter(
-                    # in between on & off
-                    Q(time_on__lte=now, time_off__gte=now) |
-                    # roll over night, after on, before 24:00
-                    Q(time_on__lte=now, time_off__lte=F('time_on')) |
-                    # roll over night, before off, after 24:00
-                    Q(time_off__gte=now, time_off__lte=F('time_on')) |
-                    # either time on or time of not specified.
-                    Q(time_on__isnull=True) | Q(time_off__isnull=True)
-                ).order_by('?')
+            # in between on & off
+            Q(time_on__lte=now, time_off__gte=now) |
+            # roll over night, after on, before 24:00
+            Q(time_on__lte=now, time_off__lte=F('time_on')) |
+            # roll over night, before off, after 24:00
+            Q(time_off__gte=now, time_off__lte=F('time_on')) |
+            # either time on or time of not specified.
+            Q(time_on__isnull=True) | Q(time_off__isnull=True),
+            banner_type=banner_type
+        ).order_by('?')
 
         context.update({
             'banner': banners[0] if banners.exists() else None,
             'ROOT_URL': settings.ROOT_URL,
+            'banner_type': banner_type
         })
         return context
 
