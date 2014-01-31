@@ -111,7 +111,7 @@
             {% else %}
               <div class="stamp">{{ question.comment|linebreaks }}</div>
             {% endif %}
-            <div class="stamp">{% likes question %}</div>
+            <div class="stamp">{% likes question template='likes/inclusion_tags/votes.html' %}</div>
           </div>
         </div>
 

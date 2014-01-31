@@ -127,7 +127,7 @@
           {{ question.comment|linebreaks }}
         {% endif %}
         <br/>
-        {% likes question %}
+        {% likes question template='likes/inclusion_tags/votes.html' %}
         </p>
       </TEXT>
     </CONTAINER>
