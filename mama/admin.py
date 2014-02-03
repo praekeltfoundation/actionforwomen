@@ -9,7 +9,11 @@ from django.contrib.contenttypes.models import ContentType
 
 from jmbo.admin import ModelBaseAdmin
 from preferences.admin import PreferencesAdmin
-from moderator.admin import CommentAdmin, AdminModeratorMixin
+from moderator.admin import (
+    CommentAdmin, AdminModeratorMixin, HamCommentAdmin, ReportedCommentAdmin,
+    SpamCommentAdmin, UnsureCommentAdmin)
+from moderator.models import (
+    HamComment, ReportedComment, SpamComment, UnsureComment)
 
 from secretballot.models import Vote
 from post.models import Post
@@ -239,6 +243,27 @@ class MamaLiveChatAdmin(AdminModeratorMixin, LiveChatAdmin):
     pass
 
 
+class MamaCommentAdmin(CommentAdmin):
+    def get_user_display_name(self, obj):
+        return obj.name
+
+
+class MamaHamCommentAdmin(MamaCommentAdmin, HamCommentAdmin):
+    pass
+
+
+class MamaReportedCommentAdmin(MamaCommentAdmin, ReportedCommentAdmin):
+    pass
+
+
+class MamaSpamCommentAdmin(MamaCommentAdmin, SpamCommentAdmin):
+    pass
+
+
+class MamaUnsureCommentAdmin(MamaCommentAdmin, UnsureCommentAdmin):
+    pass
+
+
 admin.site.register(SitePreferences, AskMamaPreferencesAdmin)
 admin.site.register(Banner, BannerAdmin)
 admin.site.register(DefaultAvatar, DefaultAvatarAdmin)
@@ -250,6 +275,17 @@ except NotRegistered:
     pass
 admin.site.register(Post, PostAdmin)
 admin.site.register(Poll, MamaPollAdmin)
+
+admin.site.unregister(Comment)
+admin.site.unregister(HamComment)
+admin.site.unregister(ReportedComment)
+admin.site.unregister(SpamComment)
+admin.site.unregister(UnsureComment)
+admin.site.register(Comment, MamaCommentAdmin)
+admin.site.register(HamComment, MamaHamCommentAdmin)
+admin.site.register(ReportedComment, MamaReportedCommentAdmin)
+admin.site.register(SpamComment, MamaSpamCommentAdmin)
+admin.site.register(UnsureComment, MamaUnsureCommentAdmin)
 
 try:
     admin.site.unregister(YourStoryEntry)
