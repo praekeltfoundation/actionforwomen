@@ -23,11 +23,11 @@ Used for Mom's Stories
 
 {% block content %}
 
-    {% block above_listing %}
     {% comment %}
+    {% block above_listing %}
     {% your_story_competition %}
-    {% endcomment %}
     {% endblock %}
+    {% endcomment %}
 
     {% if object_list %}
     <div class="{{ category.color }}">
@@ -44,8 +44,10 @@ Used for Mom's Stories
 
     {% pagination page_obj %}
 
+    {% comment %}
     {% block below_listing %}
     {% your_story_competition %}
     {% endblock %}
+    {% endcomment %}
 
 {% endblock %}
