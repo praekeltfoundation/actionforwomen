@@ -202,7 +202,9 @@ def stories_listing(context, category_slug):
         result['object_list'] = result['object_list'][:3]
     else:
         result['object_list'] = []
-    result.update(your_story_competition(result))
+    competition = your_story_competition({})
+    if competition:
+        result.update(competition)
     return result
 
 

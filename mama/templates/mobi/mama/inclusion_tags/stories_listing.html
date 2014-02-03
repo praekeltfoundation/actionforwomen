@@ -10,10 +10,12 @@
                 {% endfor %}
             </div>
             <div class="more-links">
+              {% if your_story_competition %}
               <br/>
               <a href="{% url your_story your_story_competition.pk %}">
                 Tell Your Story and Win! &gt;
               </a>
+              {% endif %}
               <br/>
               <a href="{{ category.get_absolute_url }}">
                 More Stories &gt;

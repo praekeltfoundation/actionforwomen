@@ -11,10 +11,12 @@
   <CONTAINER type="data">
     <TEXT>
       <p>
+        {% if your_story_competition %}
         <br/>
         <LINK href="{% url your_story your_story_competition.pk %}">
         <TEXT>Tell Your Story and Win! &gt;</TEXT>
         </LINK>
+        {% endif %}
         <br/>
         <LINK href="{{ category.get_absolute_url }}">
         <TEXT>More Stories &gt;</TEXT>
