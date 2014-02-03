@@ -105,7 +105,7 @@
           style="background-color: #fee;"
           {% endif %} >
           <div class="meta">
-            <div class="stamp">{% likes question %}</div>
+            <div class="stamp">{% likes question template='likes/inclusion_tags/votes.html' %}</div>
             {% if question.replied_to_comments_set.count > 0 %}
             <a href="{% url askmama_answer_detail question.id %}">
               <div class="stamp">{{ question.comment|linebreaks }}</div>
