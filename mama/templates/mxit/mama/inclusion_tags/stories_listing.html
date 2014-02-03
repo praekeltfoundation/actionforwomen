@@ -10,10 +10,12 @@
                 {% endfor %}
             </div>
             <div class="more-links">
+              {% comment %}
               <br/>
               <a href="{% url moms_stories_object_list %}">
                 Tell Your Story and Win! &gt;
               </a>
+              {% endcomment %}
               <br/>
               <a href="{{ category.get_absolute_url }}">
                 More Stories &gt;
