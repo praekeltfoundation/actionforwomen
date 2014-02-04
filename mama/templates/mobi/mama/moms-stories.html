@@ -18,6 +18,7 @@ Used for Mom's Stories
         <div class="h1">Mom's Stories</div>
         <div class="item">&nbsp;</div>
     </div>
+    {% comment %}
     <div class="item">
         <form id="frmSearch" method="get" action="{% url haystack_search %}">
             <div class="row">
@@ -29,14 +30,17 @@ Used for Mom's Stories
             <div class="clear"></div>
         </form>
     </div>
+    {% endcomment %}
 </div>
 {% endblock %}
 
 {% block content %}
 
+    {% comment %}
     {% block above_listing %}
     {% your_story_competition %}
     {% endblock %}
+    {% endcomment %}
 
     {% if object_list %}
     <div class="{{ category.color }}">
@@ -59,11 +63,15 @@ Used for Mom's Stories
     </div>
     {% endif %}
 
+    {% comment %}
     {% block below_listing %}
     {% your_story_competition %}
     {% endblock %}
+    {% endcomment %}
 
+    {% comment %}
     {% block footer_search_form %}
     {% endblock %}
+    {% endcomment %}
 
 {% endblock %}
