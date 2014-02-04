@@ -7,6 +7,7 @@ from django.views.decorators.cache import cache_page
 from django.views.generic import TemplateView
 from haystack.views import SearchView
 from mama.views import (CategoryDetailView, CategoryListView,
+                        StoryCommentsView,
                         ContactView,
                         ProfileView, VLiveEditProfile,
                         AskMamaView, QuestionAnswerView,
@@ -163,6 +164,12 @@ urlpatterns = patterns('',
         CategoryDetailView.as_view(),
         {},
         name='category_object_detail'
+    ),
+    url(
+        r'^content/(?P<category_slug>[\w-]+)/(?P<slug>[\w-]+)/comments/$',
+        StoryCommentsView.as_view(),
+        {},
+        name='story_comments_list'
     ),
     url(r'^search/', cache_page(SearchView(results_per_page=5), 60 * 60), name='haystack_search'),
     url(
