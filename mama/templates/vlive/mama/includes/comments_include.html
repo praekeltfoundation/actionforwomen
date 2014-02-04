@@ -4,12 +4,12 @@
 {% load pml_inclusion_tags %}
 
 {% if can_comment %}
-    {% render_comment_form for object %}
 
     {% header 'Comments' %}
 
-    {% for comment in comments.object_list %}
-      <MODULE type="data">
+    {% for comment in comments %}
+
+      <MODULE>
         <CONTAINER type="data">
           <TEXT>
             <b>{{ comment.name }}</b><br/>
@@ -18,32 +18,28 @@
           </TEXT>
         </CONTAINER>
       </MODULE>
+
     {% empty %}
-      <MODULE type="data">
-        <TEXT>
-          No comments have been made. Use the form above to submit the
-          first comment.
-        </TEXT>
+
+      <MODULE>
+        <CONTAINER type="data">
+          <TEXT>
+            No comments yet.
+          </TEXT>
+        </CONTAINER>
       </MODULE>
+
     {% endfor %}
 
-    {% if comments.has_other_pages %}
-    <MODULE type="data">
-      {% if comments.has_previous %}
-      <LINK href="?cpg={{ comments.previous_page_number }}">
-      <TEXT>Prev</TEXT>
+    {% if more_comments %}
+    <MODULE>
+      <CONTAINER type="data">
+      <LINK href="{% url story_comments_list category.slug object.slug %}">
+      <TEXT>More Comments &amp;gt;</TEXT>
       </LINK>
-      <TEXT>|</TEXT>
-      {% endif %}
-      <TEXT>
-        Page {{ comments.number }} of {{ comments.paginator.num_pages }}
-      </TEXT>
-      {% if comments.has_next %}
-      <TEXT>|</TEXT>
-      <LINK href="?cpg={{ comments.next_page_number }}">
-      <TEXT>Next</TEXT>
-      </LINK>
-      {% endif %}
+      </CONTAINER>
     </MODULE>
     {% endif %}
+
+    {% render_comment_form for object %}
 {% endif %}

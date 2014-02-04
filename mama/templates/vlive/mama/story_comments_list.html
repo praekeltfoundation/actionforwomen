@@ -1,0 +1,35 @@
+{% extends 'pml/base.xml' %}
+
+{% load pml_inclusion_tags %}
+{% load mama_inclusion_tags %}
+{% load likes_inclusion_tags %}
+{% load moderator_inclusion_tags %}
+
+{% block body %}
+{{ block.super }}
+
+{% header "More Comments for {{ post.title}}" 'darkred' %}
+
+{% for comment in comments %}
+  <MODULE>
+    <CONTAINER type="data">
+      <TEXT>
+        <b>{{ comment.name }}</b><br/>
+        {{ comment.submit_date }} | {% likes comment %} {% report_comment_abuse comment %}<br/>
+        {{ comment.comment|linebreaks }}<br/>
+      </TEXT>
+    </CONTAINER>
+  </MODULE>
+{% endfor %}
+
+{% pagination page_obj %}
+
+<MODULE backgroundColor="true" palette="MiDarkred">
+  <CONTAINER type="data">
+  <LINK href="{% url category_object_detail category.slug post.slug %}">
+    <TEXT>&amp;lt; Back to {{ post.title }}</TEXT>
+    </LINK>
+  </CONTAINER>
+</MODULE>
+
+{% endblock %}

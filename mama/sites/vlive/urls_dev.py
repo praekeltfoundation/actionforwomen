@@ -5,7 +5,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^$', include('mama.sites.vlive.urls')),
+    url(r'^mama/', include('mama.sites.vlive.urls')),
 )
 
 if settings.DEBUG:
