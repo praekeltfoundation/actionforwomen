@@ -14,16 +14,20 @@ Used for Mom's Stories
 {% include "mama/inclusion_tags/registration_banner.html" %}
 {% endblock %}
 
+{% comment %}
 {% block above_content %}
   {% header text='Search' color=color %}
   {% include 'mama/inclusion_tags/search_form.html' %}
 {% endblock %}
+{% endcomment %}
 
 {% block body %}
 
+  {% comment %}
   {% block above_listing %}
   {% your_story_competition %}
   {% endblock %}
+  {% endcomment %}
 
   {% if object_list %}
     {% for object in post_list %}
@@ -34,19 +38,15 @@ Used for Mom's Stories
   {% pagination page_obj %}
 
   {% comment %}
-  {% if object_list %}
-  <div class="item back-to-top-link">
-      <a href="#listing-top">Back to top ></a>
-  </div>
-  {% endif %}
-  {% endcomment %}
-
   {% block below_listing %}
   {% your_story_competition %}
   {% endblock %}
+  {% endcomment %}
 
+  {% comment %}
   {% block footer_search_form %}
   {% endblock %}
+  {% endcomment %}
 
 {% endblock %}
 
