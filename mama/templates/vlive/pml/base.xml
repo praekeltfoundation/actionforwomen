@@ -25,6 +25,14 @@
             {% block above_content %}
             {% endblock %}
 
+            {% block messages %}
+            {% if messages %}
+                {% for message in messages %}
+                {% text_module template=message|safe %}
+                {% endfor %}
+            {% endif %}
+            {% endblock %}
+
             {% block body %}
             {% endblock %}
 

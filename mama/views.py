@@ -328,6 +328,10 @@ class MomStoryFormView(FormView):
             email = form.cleaned_data['email'],
             text = form.cleaned_data['text'],
             terms = True)
+        messages.success(
+            self.request,
+            "Thank you for sending us your story!"
+        )
         return HttpResponseRedirect(self.get_success_url())
 
 
