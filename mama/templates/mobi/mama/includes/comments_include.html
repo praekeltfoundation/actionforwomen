@@ -11,7 +11,11 @@
           <div class="item comment no-pic">
               <div class="meta">
                   <div class="title">{{ comment.name }}</div>
-                  <div class="stamp">{{ comment.submit_date }} | {% likes comment %} {% report_comment_abuse comment %}</div>
+                  <div class="stamp">{{ comment.submit_date }}
+                    {% if not comment.user.is_staff %}
+                      | {% likes comment %} {% report_comment_abuse comment %}
+                    {% endif %}
+                    </div>
                   <div class="stamp">{{ comment.comment|linebreaks }}</div>
               </div>
           </div>
