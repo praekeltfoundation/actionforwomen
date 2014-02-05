@@ -93,16 +93,17 @@ class CategoryDetailView(DetailView):
                 content_type=pct,
                 object_pk=post.id)
             comments = comments.exclude(is_removed=True)
-
-            # Paginate the comments
-            paginator = Paginator(comments, 5)
-            cpage = int(self.request.GET.get('cpg', u'1'))
-            comments_page = paginator.page(cpage)
+            comments = comments.order_by('-submit_date')
+            if comments.count() > 5:
+                more_comments = True
+            else:
+                more_comments = False
+            comments = comments[:5]
 
             # Add the comments to the context
             context.update({
-                'comments': comments_page,
-                'cpg': cpage
+                'comments': comments,
+                'more_comments': more_comments
             })
 
         return context
@@ -111,6 +112,37 @@ class CategoryDetailView(DetailView):
         post = Post.permitted.get(slug=self.kwargs['slug'])
         self.category = post.primary_category
         return post
+
+
+class StoryCommentsView(ListView):
+    template_name = 'mama/story_comments_list.html'
+    paginate_by = 50
+    heading_prefix = ""
+
+    def get_context_data(self, **kwargs):
+        context = super(StoryCommentsView, self).get_context_data(**kwargs)
+        context['post'] = self.kwargs['post']
+        context['category'] = self.kwargs['category']
+        return context
+
+    def get_queryset(self):
+        # keep the post and category objects for later
+        post = Post.permitted.get(slug=self.kwargs['slug'])
+        self.kwargs['post'] = post
+        category = Category.objects.get(
+            slug__iexact=self.kwargs['category_slug'])
+        self.kwargs['category'] = category
+
+        # get everything but the first 5 comments
+        pct = ContentType.objects.get_for_model(post.__class__)
+        comments = Comment.objects.filter(
+            content_type=pct,
+            object_pk=post.id)
+        comments = comments.exclude(is_removed=True)
+        comments = comments.order_by('-submit_date')
+        comments = comments[5:]
+
+        return comments
 
 
 class CategoryListView(ListView):
