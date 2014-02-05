@@ -24,6 +24,25 @@
         {% block above_content %}
         {% endblock %}
 
+        {% block messages %}
+        {% if messages %}
+            <div class="content-inner">
+                <div class="items">
+                    <div class="item comment no-pic" style="background-color: #fee">
+                        <div class="meta">
+                            <div class="stamp">
+                                <br/>
+                                {% for message in messages %}
+                                <p><strong>{{ message }}</strong></p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        {% endblock %}
+
         {% block content %}
         {% endblock %}
 

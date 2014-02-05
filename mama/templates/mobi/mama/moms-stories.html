@@ -16,12 +16,16 @@ Used for Mom's Stories
 <div>
     <div class="{{ category.color }}">
         <div class="h1">Mom's Stories</div>
-        <div class="item">&nbsp;</div>
     </div>
 </div>
 {% endblock %}
 
 {% block content %}
+    <div class="content-inner">
+        <div class="items">
+            <div class="item comment no-pic">&nbsp;</div>
+        </div>
+    </div>
 
     {% if object_list %}
     <div class="{{ category.color }}">
