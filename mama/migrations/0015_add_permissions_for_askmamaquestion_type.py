@@ -5,12 +5,12 @@ from south.v2 import DataMigration
 from django.db import models
 
 class Migration(DataMigration):
+    """
+    This migration fixed permissions for the 'askmamaquestion' proxy model
+    content type defined in the mama admin.py module.
+    """
 
     def forwards(self, orm):
-        "Write your forwards methods here."
-        # Note: Don't use "from appname.models import ModelName". 
-        # Use orm.ModelName to refer to models in this application,
-        # and orm['appname.ModelName'] for models in other applications.
         Permissions = orm['auth.Permission']
         ContentType = orm['contenttypes.ContentType']
         ct, created = ContentType.objects.get_or_create(
@@ -39,7 +39,6 @@ class Migration(DataMigration):
             code_name='export_askmamaquestion')
 
     def backwards(self, orm):
-        "Write your backwards methods here."
         Permissions = orm['auth.Permission']
         ContentType = orm['contenttypes.ContentType']
         Permission.objects.filter(
@@ -229,5 +228,5 @@ class Migration(DataMigration):
         }
     }
 
-    complete_apps = ['mama']
+    complete_apps = ['contenttypes', 'auth', 'mama']
     symmetrical = True
