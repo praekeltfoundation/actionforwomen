@@ -2,7 +2,7 @@
 {% if comments_open %}
 <form action="{% url post_comment %}" method="post">
     {% csrf_token %}
-    <label>{% trans "Add your comment" %}</label>
+    <label>{% trans "Type your comment and send it." %}</label>
     {% for field in form %}
     {% if field.is_hidden %}
     {{ field }}
