@@ -29,7 +29,6 @@
       </div>
       {% cache 3600 links object.id %}
         <div class="post-menu">
-          <h1>Related Content</h1>
           <div class="items">
             {% with object.link_target_set.all as links %}
               {% for link in links %}
@@ -41,7 +40,15 @@
             {% endwith %}
           </div>
         </div>
+      {% endcache %}
+
+      {% include 'mama/includes/comments_include.html' %}
+
+      {% cache 3600 baby_center_byline object.id %}
         {% babycenter_byline object %}
+      {% endcache %}
+
+      {% cache 3600 nav_links object.id %}
         {% with object.navigation_link_target_set.all as navigation_links %}
           {% if navigation_links %}
             <div class="post-menu">
@@ -58,8 +65,6 @@
       {% endcache %}
     </div>
   </div>
-
-  {% object_comments object %}
 
 {% endblock %}
 

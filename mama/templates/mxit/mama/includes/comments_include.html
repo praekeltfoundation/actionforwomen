@@ -1,0 +1,50 @@
+{% load comments %}
+{% load likes_inclusion_tags %}
+{% load moderator_inclusion_tags %}
+
+{% if can_comment %}
+    <div class="h1" id="comments">Comments</div>
+
+    {% if request.GET.commentaction == 'add' %}
+    {% if can_render_comment_form %}
+        {% render_comment_form for object %}
+    {% endif %}
+    {% else %}
+    <div class="items">
+      {% for comment in comments %}
+          <div class="item comment no-pic">
+              <div class="meta">
+                  <div class="title">{{ comment.name }}</div>
+                  <div class="stamp">{{ comment.submit_date }}
+                    {% if not comment.user.is_staff %}
+                      | {% likes comment %} {% report_comment_abuse comment %}
+                    {% endif %}
+                    </div>
+                  <div class="stamp">{{ comment.comment|linebreaks }}</div>
+              </div>
+          </div>
+      {% empty %}
+          <div class="item comment no-pic">
+              <div class="meta">
+                  <div class="stamp">
+                      No comments yet.
+                  </div>
+              </div>
+          </div>
+      {% endfor %}
+    </div>
+
+    {% if more_comments  %}
+    <div class="post-menu">
+        <div class="items">
+            <div class="item-nav">
+                <a href="{% url story_comments_list category.slug object.slug %}">
+                    More Comments &raquo;
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    <a href="{{ request.path }}?commentaction=add">Add Your Comment &raquo;</a>
+    {% endif %}
+{% endif %}
