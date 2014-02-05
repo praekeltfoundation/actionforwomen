@@ -11,7 +11,7 @@ class Migration(DataMigration):
     """
 
     def forwards(self, orm):
-        Permissions = orm['auth.Permission']
+        Permission = orm['auth.Permission']
         ContentType = orm['contenttypes.ContentType']
         ct, created = ContentType.objects.get_or_create(
             name='ask mama question',
@@ -20,37 +20,37 @@ class Migration(DataMigration):
         perm, created = Permission.objects.get_or_create(
             name=u'Can add ask mama question',
             content_type=ct,
-            code_name='add_askmamaquestion')
+            codename='add_askmamaquestion')
         perm, created = Permission.objects.get_or_create(
             name=u'Can change ask mama question',
             content_type=ct,
-            code_name='change_askmamaquestion')
+            codename='change_askmamaquestion')
         perm, created = Permission.objects.get_or_create(
             name=u'Can delete ask mama question',
             content_type=ct,
-            code_name='delete_askmamaquestion')
+            codename='delete_askmamaquestion')
         perm, created = Permission.objects.get_or_create(
             name=u'Can moderate ask mama question',
             content_type=ct,
-            code_name='moderate_askmamaquestion')
+            codename='moderate_askmamaquestion')
         perm, created = Permission.objects.get_or_create(
             name=u'Can export ask mama question',
             content_type=ct,
-            code_name='export_askmamaquestion')
+            codename='export_askmamaquestion')
 
     def backwards(self, orm):
-        Permissions = orm['auth.Permission']
+        Permission = orm['auth.Permission']
         ContentType = orm['contenttypes.ContentType']
         Permission.objects.filter(
-            code_name='export_askmamaquestion').delete()
+            codename='export_askmamaquestion').delete()
         Permission.objects.filter(
-            code_name='moderate_askmamaquestion').delete()
+            codename='moderate_askmamaquestion').delete()
         Permission.objects.filter(
-            code_name='delete_askmamaquestion').delete()
+            codename='delete_askmamaquestion').delete()
         Permission.objects.filter(
-            code_name='change_askmamaquestion').delete()
+            codename='change_askmamaquestion').delete()
         Permission.objects.filter(
-            code_name='add_askmamaquestion').delete()
+            codename='add_askmamaquestion').delete()
         ContentType.objects.filter(
             model='askmamaquestion',
             app_label='mama').delete()
