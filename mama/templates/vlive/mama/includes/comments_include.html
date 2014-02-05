@@ -13,7 +13,11 @@
         <CONTAINER type="data">
           <TEXT>
             <b>{{ comment.name }}</b><br/>
-            {{ comment.submit_date }} | {% likes comment %} {% report_comment_abuse comment %}<br/>
+            {{ comment.submit_date }}
+            {% if not comment.user.is_staff %}
+              | {% likes comment %} {% report_comment_abuse comment %}
+            {% endif %}
+            <br/>
             {{ comment.comment|linebreaks }}<br/>
           </TEXT>
         </CONTAINER>
