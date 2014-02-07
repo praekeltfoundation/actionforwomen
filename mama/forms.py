@@ -186,7 +186,10 @@ class RegistrationForm(RegistrationFormTermsOfService):
         validation to work continue as normal.
         """
         cleaned_data = super(RegistrationForm, self).clean()
-        delivery_date = cleaned_data['delivery_date']
+        try:
+            delivery_date = cleaned_data['delivery_date']
+        except KeyError:
+            delivery_date = None
         try:
             due_date = cleaned_data['due_date']
         except KeyError:
@@ -205,7 +208,10 @@ class RegistrationForm(RegistrationFormTermsOfService):
         if date_qualifier == 'birth_date' and delivery_date is None:
             msg = 'You need to provide a birth date'
             self._errors['delivery_date'] = self.error_class([msg])
-            del cleaned_data['delivery_date']
+            try:
+                del cleaned_data['delivery_date']
+            except KeyError:
+                pass
         elif date_qualifier == 'due_date' and due_date is None \
                 and not unknown_date:
             msg = "Either provide a due date, or check the \
