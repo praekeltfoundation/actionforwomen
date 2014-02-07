@@ -119,7 +119,8 @@ class RegistrationForm(RegistrationFormTermsOfService):
     delivery_date = forms.DateField(
         required=False,
         label="",
-        widget=SelectDateWidget()
+        widget=SelectDateWidget(
+            years=range(date.today().year-20, date.today().year+1))
     )
     due_date = forms.DateField(
         required=False,
@@ -133,7 +134,7 @@ class RegistrationForm(RegistrationFormTermsOfService):
 
     def __init__(self, *args, **kwargs):
         super(RegistrationForm, self).__init__(*args, **kwargs)
-
+        # set up the form
         del self.fields['email']
         del self.fields['password2']
         self.fields.keyOrder = [
