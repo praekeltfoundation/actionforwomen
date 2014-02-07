@@ -120,7 +120,7 @@ class RegistrationForm(RegistrationFormTermsOfService):
         required=False,
         label="",
         widget=SelectDateWidget(
-            years=range(date.today().year-20, date.today().year+1))
+            years=range(date.today().year-10, date.today().year+1))
     )
     due_date = forms.DateField(
         required=False,
