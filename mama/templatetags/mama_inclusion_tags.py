@@ -113,7 +113,6 @@ def random_guide_banner(context):
 @register.inclusion_tag('mama/inclusion_tags/page_header.html', takes_context=True)
 def pml_page_header(context):
     context = copy(context)
-    request = context['request']
 
     help_post = Post.permitted.filter(slug='mama-help')
 
@@ -128,7 +127,7 @@ def pml_page_header(context):
     })
     links.append({
         'title': 'Articles',
-        'url': reverse('category_object_list', 
+        'url': reverse('category_object_list',
                        kwargs={'category_slug': 'articles'})
     })
     links.append({
