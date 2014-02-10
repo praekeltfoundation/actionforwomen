@@ -33,6 +33,7 @@ from mama.models import (
     DefaultAvatar,
 )
 
+
 class MamaModelbaseAdmin(AdminModeratorMixin, ModelBaseAdmin):
     raw_id_fields = ('owner', )
 
@@ -217,7 +218,6 @@ class AskMamaQuestionAdmin(CommentAdmin):
             }
         )
         questions = questions.order_by('-vote_score', '-submit_date')
-
         return questions
 
     def get_askmama_latest_pinned_post(self):
@@ -262,6 +262,7 @@ class MamaSpamCommentAdmin(MamaCommentAdmin, SpamCommentAdmin):
 
 class MamaUnsureCommentAdmin(MamaCommentAdmin, UnsureCommentAdmin):
     pass
+
 admin.site.register(SitePreferences, AskMamaPreferencesAdmin)
 admin.site.register(Banner, BannerAdmin)
 admin.site.register(DefaultAvatar, DefaultAvatarAdmin)
