@@ -4,7 +4,7 @@
 {% if form.errors %}
 <CONTAINER type="data">
     <TEXT>
-        <strong>Please correct the following errors:</strong></br/>
+        <strong>Please correct the following errors:</strong><br/>
         {{ form.comment.label_tag }}
         {% for error in form.errors %}
             <p>{{ error }}{{ error.message }}</p>
