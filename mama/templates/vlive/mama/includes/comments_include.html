@@ -38,9 +38,11 @@
     {% if more_comments %}
     <MODULE>
       <CONTAINER type="data">
-      <LINK href="{% url story_comments_list category.slug object.slug %}">
-      <TEXT>More Comments &amp;gt;</TEXT>
-      </LINK>
+        <TEXT>
+          <LINK href="{% url story_comments_list category.slug object.slug %}">
+          <TEXT>More Comments &amp;gt;</TEXT>
+          </LINK>
+        </TEXT>
       </CONTAINER>
     </MODULE>
     {% endif %}
