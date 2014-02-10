@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>About MAMA</h1>
+    <div class="content-inner">
+        <div class="post">
+            {{ preferences.SitePreferences.about|safe }}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% load cache mama_inclusion_tags livechat_tags survey_inclusion_tags %}
+
+{% block following_header %}
+{% include "mama/inclusion_tags/registration_banner.html" %}
+{% live_chat_banner %}
+<div id="banner"><img src="{{ STATIC_URL }}mama/img/banner_vlive.jpg" /></div>
+{% random_guide_banner %}
+{% endblock %}
+
+{% block content %}
+    {% ages_and_stages %}
+    {% cache 3600 home %}
+        {% stories_listing "moms-stories" %}
+        {% post_listing "articles" %}
+        {% include "mama/inclusion_tags/askmama_banner.html" %}
+    {% endcache %}
+    {% show_content_quizzes %}
+    {% poll_listing %}
+    {% show_survey %}
+{% endblock %}

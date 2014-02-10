@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load cache jmbo_inclusion_tags mama_inclusion_tags jmbo_template_tags likes_inclusion_tags livechat_tags%}
+
+{% block content %}
+  <div class="{{ category.color }}">
+    <div class="{{ category.color }}">
+      <h1>
+        <a href="{% url guides_list %}">Guides</a> &gt;
+        <a href="{% url more_guides_list %}">{{ category.title }}</a>
+      </h1>
+    </div>
+    <h1>{{ object.title }}</h1>
+
+    <div class="content-inner">
+      {% cache 3600 links object.id %}
+        <div class="items">
+          {% with object.link_target_set.all as links %}
+            {% for link in links %}
+              {% if link.target.is_permitted %}
+              <div class="item">
+                {% if link.target.image %}
+                <a class="intro-pic" 
+                   href="{% url topic_detail link.target.primary_category.slug link.target.slug %}">
+                   <img src="{{ link.target.get_thumb_url }}" />
+                </a>
+                {% endif %}
+                <div class="meta">
+                  <div class="title">
+                  <a href="{% url topic_detail link.target.primary_category.slug link.target.slug %}">
+                    {{ link.target.title }}
+                  </a>
+                  </div>
+                  <div class="stamp">
+                    {{ link.target.description }}
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+            {% endfor %}
+          {% endwith %}
+        </div>
+      {% endcache %}
+    </div>
+  </div>
+
+    <div class="text_banner">
+      <div class="banner_content">
+        <p>
+        <strong>
+          <a href="{% url guides_list %}">
+            &lt; Back to Guides
+          </a>
+        </strong>    
+        </p>
+      </div>
+    </div>
+
+{% endblock %}
+
+{% block footer_search_form %}
+{% endblock %}

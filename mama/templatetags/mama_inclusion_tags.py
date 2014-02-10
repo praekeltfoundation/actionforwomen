@@ -14,6 +14,9 @@ from livechat.models import LiveChat
 
 from mama.forms import DueDateForm
 
+from mama.templatetags.moms_stories_inclusion_tags \
+    import your_story_competition
+
 
 register = template.Library()
 
@@ -194,7 +197,14 @@ def post_listing(context, category_slug):
         takes_context=True)
 def stories_listing(context, category_slug):
     result = _get_content_object_list(context, category_slug)
-    result['object_list'] = result['object_list'][:3]
+    # Trim to 3 objects, or provide empty list if it doesn't have one.
+    if 'object_list' in result:
+        result['object_list'] = result['object_list'][:3]
+    else:
+        result['object_list'] = []
+    competition = your_story_competition({})
+    if competition:
+        result.update(competition)
     return result
 
 

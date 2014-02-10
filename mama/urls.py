@@ -6,15 +6,19 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import cache_page
 from django.views.generic import TemplateView
 from haystack.views import SearchView
-from mama.views import (CategoryDetailView, CategoryListView, 
-                        ContactView, 
+from mama.views import (CategoryDetailView, CategoryListView,
+                        StoryCommentsView,
+                        ContactView,
                         ProfileView, VLiveEditProfile,
-                        AskMamaView, QuestionAnswerView, 
+                        AskMamaView, QuestionAnswerView,
+                        AskExpertQuestionView,
                         MomStoriesListView,
-                        MyProfileView, MyProfileEdit, 
+                        MomStoryFormView,
+                        MyProfileView, MyProfileEdit,
                         UpdateDueDateView,
+                        MxitUpdateDueDateView,
                         PublicProfileView, UserCommentsView,
-                        GuidesView, GuidesTopicView, 
+                        GuidesView, GuidesTopicView,
                         MoreGuidesView, GuideDetailView)
 from mama.forms import PasswordResetForm
 import object_tools
@@ -115,6 +119,11 @@ urlpatterns = patterns('',
         name='askmama_answer_detail'
     ),
     url(
+        r'^ask-mama/ask-expert-question/(?P<post_id>\d+)/$',
+        login_required(AskExpertQuestionView.as_view()),
+        name='ask_expert_question'
+    ),
+    url(
         r'^moms-stories/list/$',
         MomStoriesListView.as_view(),
         {},
@@ -155,6 +164,12 @@ urlpatterns = patterns('',
         CategoryDetailView.as_view(),
         {},
         name='category_object_detail'
+    ),
+    url(
+        r'^content/(?P<category_slug>[\w-]+)/(?P<slug>[\w-]+)/comments/$',
+        StoryCommentsView.as_view(),
+        {},
+        name='story_comments_list'
     ),
     url(r'^search/', cache_page(SearchView(results_per_page=5), 60 * 60), name='haystack_search'),
     url(
@@ -201,14 +216,27 @@ urlpatterns = patterns('',
         name='update_due_date'
     ),
 
+    url(
+        r'^profile/mxitduedate/$',
+        MxitUpdateDueDateView.as_view(),
+        name='mxit_update_due_date'
+    ),
+
+    url(
+        r'^yourwords/(?P<competition_id>\d+)/$',
+        MomStoryFormView.as_view(),
+        name='your_story'
+    ),
+
     (r'^survey/', include('survey.urls', namespace='survey')),
     (r'^livechat/', include('livechat.urls', namespace='livechat')),
     (r'^admin/', include(admin.site.urls)),
     (r'^object-tools/', include(object_tools.tools.urls)),
     (r'^ckeditor/', include('ckeditor.urls')),
     url(r'^google-credentials/', include('google_credentials.urls')),
-    (r'^likes/', include('likes.urls')),
-    (r'^yourwords/', include('jmboyourwords.urls')),
+    url(r'^likes/like/(?P<content_type>[\w-]+)/(?P<id>\d+)/(?P<vote>-?\d+)$',
+        'mama.views.like',
+        name='like'),
     (r'^', include('jmbo.urls')),
 )
 

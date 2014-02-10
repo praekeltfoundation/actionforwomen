@@ -1,19 +1,19 @@
 {% if likes_enabled %}
   <TEXT>
     {{ content_obj.vote_total }}
-    Vote{{ content_obj.vote_total|pluralize }}
+    Like{{ content_obj.vote_total|pluralize }}
     {% if weeks_ago %}
       {% if weeks_ago == 0 %}
         {% if can_vote %}
             <LINK href="{% url like content_type content_obj.id 1 %}">
-            <TEXT>| Vote</TEXT>
+            <TEXT>| Like</TEXT>
             </LINK>
         {% endif %}
       {% endif %}
     {% else %}
       {% if can_vote %}
           <LINK href="{% url like content_type content_obj.id 1 %}">
-          <TEXT>| Vote</TEXT>
+          <TEXT>| Like</TEXT>
           </LINK>
       {% endif %}
     {% endif %}

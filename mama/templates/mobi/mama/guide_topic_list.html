@@ -3,11 +3,9 @@
 
 {% block content %}
   <div class="{{ category.color }}">
-    <div class="{{ category.color }}">
-      <div class="h1">
-        <a href="{% url guides_list %}">Guides</a> &gt;
-        <a href="{% url more_guides_list %}">{{ category.title }}</a>
-      </div>
+    <div class="h1">
+      <a href="{% url guides_list %}">Guides</a> &gt;
+      <a href="{% url more_guides_list %}">{{ category.title }}</a>
     </div>
     <div class="h1">{{ object.title }}</div>
 

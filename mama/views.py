@@ -1,5 +1,7 @@
 import re
 import urlparse
+import random
+
 from datetime import datetime
 from dateutil import parser
 
@@ -8,8 +10,10 @@ from django.contrib import auth
 from django.contrib import messages
 from django.contrib.comments.views import comments
 from django.contrib.comments import get_model
+from django.contrib.contenttypes.models import ContentType
 from django.core.mail import EmailMessage, mail_managers
 from django.core.urlresolvers import reverse
+from django.core.paginator import Paginator
 from django.db.models import Q, F
 from django.http import HttpResponseRedirect, HttpResponseServerError
 from django.shortcuts import get_object_or_404, redirect, render_to_response
@@ -27,9 +31,11 @@ from django.views.generic.list import ListView
 from mama.forms import (
     ContactForm,
     DueDateForm,
+    MxitDueDateForm,
     ProfileForm,
     VLiveProfileEditForm,
-    EditProfileForm
+    EditProfileForm,
+    MomsStoryEntryForm
 )
 from mama.view_modifiers import PopularViewModifier
 from mama.models import Banner, DefaultAvatar
@@ -39,6 +45,10 @@ from category.models import Category
 from poll.forms import PollVoteForm
 from poll.models import Poll
 from post.models import Post
+
+from likes.views import like as likes_view
+
+from jmboyourwords.models import YourStoryEntry, YourStoryCompetition
 
 from mama.constants import (
     RELATION_PARENT_CHOICES,
@@ -67,12 +77,72 @@ class CategoryDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(CategoryDetailView, self).get_context_data(**kwargs)
         context['category'] = self.category
+
+        # Get the comments linked to the post
+        post = kwargs['object']
+
+        # check if we can comment. we need to be authenticated, at least
+        can_comment, code = post.can_comment(self.request)
+        context.update({
+            'can_render_comment_form': can_comment,
+            'can_comment': can_comment
+        })
+        if can_comment:
+            pct = ContentType.objects.get_for_model(post.__class__)
+            comments = Comment.objects.filter(
+                content_type=pct,
+                object_pk=post.id)
+            comments = comments.exclude(is_removed=True)
+            comments = comments.order_by('-submit_date')
+            if comments.count() > 5:
+                more_comments = True
+            else:
+                more_comments = False
+            comments = comments[:5]
+
+            # Add the comments to the context
+            context.update({
+                'comments': comments,
+                'more_comments': more_comments
+            })
+
         return context
 
     def get_object(self):
         post = Post.permitted.get(slug=self.kwargs['slug'])
         self.category = post.primary_category
         return post
+
+
+class StoryCommentsView(ListView):
+    template_name = 'mama/story_comments_list.html'
+    paginate_by = 50
+    heading_prefix = ""
+
+    def get_context_data(self, **kwargs):
+        context = super(StoryCommentsView, self).get_context_data(**kwargs)
+        context['post'] = self.kwargs['post']
+        context['category'] = self.kwargs['category']
+        return context
+
+    def get_queryset(self):
+        # keep the post and category objects for later
+        post = Post.permitted.get(slug=self.kwargs['slug'])
+        self.kwargs['post'] = post
+        category = Category.objects.get(
+            slug__iexact=self.kwargs['category_slug'])
+        self.kwargs['category'] = category
+
+        # get everything but the first 5 comments
+        pct = ContentType.objects.get_for_model(post.__class__)
+        comments = Comment.objects.filter(
+            content_type=pct,
+            object_pk=post.id)
+        comments = comments.exclude(is_removed=True)
+        comments = comments.order_by('-submit_date')
+        comments = comments[5:]
+
+        return comments
 
 
 class CategoryListView(ListView):
@@ -230,6 +300,41 @@ class MomStoriesListView(CategoryListView):
         return view_modifier.modify(queryset)
 
 
+class MomStoryFormView(FormView):
+    """ View to render the Mom's Story Entry form without a terms and
+        conditions checkbox, but with the terms and conditions text displayed.
+    """
+    form_class = MomsStoryEntryForm
+    template_name = 'yourwords/your_story.html'
+
+    def get_success_url(self):
+        return reverse('moms_stories_object_list')
+
+    def get_context_data(self, **kwargs):
+        # Add the competition to the context
+        competition = get_object_or_404(YourStoryCompetition,
+                                        pk=int(self.kwargs['competition_id']))
+        kwargs.update({'competition': competition})
+        return kwargs
+
+    def form_valid(self, form):
+        # save the story entry and redirect to the success url
+        competition = get_object_or_404(YourStoryCompetition,
+                                        pk=int(self.kwargs['competition_id']))
+        YourStoryEntry.objects.create(
+            your_story_competition = competition,
+            user = self.request.user,
+            name = form.cleaned_data['name'],
+            email = form.cleaned_data['email'],
+            text = form.cleaned_data['text'],
+            terms = True)
+        messages.success(
+            self.request,
+            "Thank you for sending us your story!"
+        )
+        return HttpResponseRedirect(self.get_success_url())
+
+
 class AskMamaView(CategoryDetailView):
     """
     This view surfaces the AskMAMA section of the site. It is subclassing
@@ -269,6 +374,20 @@ class AskMamaView(CategoryDetailView):
             return None
 
 
+class AskExpertQuestionView(TemplateView):
+    """ Displays a form to capture a question in the weekly 'Ask an Expert'
+        section.
+
+        Uses the Django comments framework for questions.
+    """
+    template_name = 'mama/askmama_ask_your_question.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(AskExpertQuestionView, self).get_context_data(**kwargs)
+        context['next'] = reverse('askmama_detail')
+        return context
+
+
 class QuestionAnswerView(TemplateView):
     """ This view displays a question and its answer in the AskMAMA section.
     """
@@ -283,7 +402,7 @@ class QuestionAnswerView(TemplateView):
         question_id = kwargs.get('question_id', None)
         question = Comment.objects.get(pk=question_id)
         context['question'] = question
-        context['answers'] = question.replied_to_comment_set.all()
+        context['answers'] = question.replied_to_comments_set.all()
         return context
 
 
@@ -295,7 +414,12 @@ class ContactView(FormView):
         recipients = [recipient.email for recipient in \
                 preferences.SitePreferences.contact_email_recipients.all()]
         mobile_number = form.cleaned_data['mobile_number']
-        message = "Mobile Number: \n%s\n\nMessage: \n%s" % (mobile_number, form.cleaned_data['message'])
+
+        # For mxit we use the mxit user name, not the mobile number
+        if self.request.user.profile.origin == 'mxit':
+            message = "Mxit username: \n%s\n\nMessage: \n%s" % (self.request.user.username, form.cleaned_data['message'])
+        else:
+            message = "Mobile Number: \n%s\n\nMessage: \n%s" % (mobile_number, form.cleaned_data['message'])
 
         if not recipients:
             mail_managers(
@@ -496,6 +620,23 @@ class UpdateDueDateView(FormView):
         return super(UpdateDueDateView, self).form_valid(form)
 
 
+class MxitUpdateDueDateView(FormView):
+    form_class = MxitDueDateForm
+    template_name = 'mama/update_due_date.html'
+
+    def get_success_url(self):
+        return reverse('home')
+
+    def form_valid(self, form):
+        user = self.request.user
+        profile = user.profile
+        profile.delivery_date = form.cleaned_data['due_date']
+        profile.date_qualifier = 'due_date'
+        profile.unknown_date = False
+        profile.save()
+        return super(MxitUpdateDueDateView, self).form_valid(form)
+
+
 class ProfileView(FormView):
     """
     This seems to be the registration form view specifically for VLive
@@ -671,7 +812,12 @@ def post_comment(request, next=None, using=None):
             data['name'] = profile.alias
 
     data["email"] = 'commentor@askmama.mobi'
-    data["url"] = request.META['HTTP_REFERER']
+    data["url"] = request.META.get('HTTP_REFERER', None)
+
+    # For mxit, we add a next field to the comment form
+    if not data["url"] and data.get("next", None):
+        data["url"] = data["next"]
+
     request.POST = data
 
     # Reject comments if commenting is closed
@@ -697,3 +843,13 @@ def server_error(request):
     return HttpResponseServerError(render_to_string('500.html', {
         'STATIC_URL': settings.STATIC_URL
     }))
+
+
+def like(request, content_type, id, vote):
+    likes_view(request, content_type, id, vote)
+
+    redirect_url = reverse('home')
+    if 'HTTP_REFERER' in request.META:
+        redirect_url = '%s?v=%s' % (request.META['HTTP_REFERER'],
+                                        random.randint(0, 10))
+    return redirect(redirect_url)

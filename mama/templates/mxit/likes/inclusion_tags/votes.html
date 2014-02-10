@@ -1,0 +1,15 @@
+{% if likes_enabled %}
+    {{ content_obj.vote_total }}
+    Vote{{ content_obj.vote_total|pluralize }}
+    {% if weeks_ago %}
+      {% if weeks_ago == 0 %}
+        {% if can_vote %}
+            | <a href="{% url like content_type content_obj.id 1 %}">Vote</a>
+        {% endif %}
+      {% endif %}
+    {% else %}
+      {% if can_vote %}
+          | <a href="{% url like content_type content_obj.id 1 %}">Vote</a>
+      {% endif %}
+    {% endif %}
+{% endif %}
