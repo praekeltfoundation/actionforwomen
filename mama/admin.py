@@ -74,7 +74,8 @@ class BannerAdmin(MamaModelbaseAdmin):
         'banner_type'
     )
     list_display = (
-        'title', 'description', 'thumbnail', 'schedule', '_actions')
+        'title', 'description', 'thumbnail', 'schedule', '_actions',
+        'publish_on', 'retract_on', 'created')
 
     def thumbnail(self, obj, *args, **kwargs):
         return '<img src="%s" />' % (obj.image.url,)
