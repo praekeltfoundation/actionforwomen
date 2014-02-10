@@ -830,7 +830,7 @@ def post_comment(request, next=None, using=None):
 
     # Set the host header to the same as refering host, thus preventing PML
     # tunnel tripping up django.http.utils.is_safe_url.
-    request.META['HTTP_HOST'] = urlparse.urlparse(data['url'])[1]
+    # request.META['HTTP_HOST'] = urlparse.urlparse(data['url'])[1]
 
     return comments.post_comment(
         request,
