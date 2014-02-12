@@ -217,7 +217,10 @@ class RegistrationForm(RegistrationFormTermsOfService):
             msg = "Either provide a due date, or check the \
                   'Unknown' check box below the due date."
             self._errors['due_date'] = self.error_class([msg])
-            del cleaned_data['due_date']
+            try:
+                del cleaned_data['due_date']
+            except KeyError:
+                pass
 
         # When registering, check if the due date is selected and provided, and
         # there are no errors, and then assign its value to the delivery date.
