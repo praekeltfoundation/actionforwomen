@@ -246,6 +246,8 @@ class MamaLiveChatAdmin(AdminModeratorMixin, LiveChatAdmin):
 
 class MamaCommentAdmin(CommentAdmin):
     def get_user_display_name(self, obj):
+        if obj.name.lower().startswith('anon'):
+            return obj.user.username
         return obj.name
 
 
