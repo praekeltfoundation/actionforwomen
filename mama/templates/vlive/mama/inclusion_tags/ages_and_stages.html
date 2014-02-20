@@ -6,11 +6,17 @@
   {% for object in object_list %}
       {% render_object object "block" %}
   {% endfor %}
-  {% if profile.is_prenatal %}
-    <LINK href="{{ category.get_absolute_url }}">More about your pregnancy stage</LINK>
-  {% else %}
-    <LINK href="{{ category.get_absolute_url }}">More about your baby's age</LINK>
-  {% endif %}
+  <MODDULE>
+    <CONTAINER type="data">
+      <TEXT>
+      {% if profile.is_prenatal %}
+        <LINK href="{{ category.get_absolute_url }}"><TEXT>More about your pregnancy stage</TEXT></LINK>
+      {% else %}
+        <LINK href="{{ category.get_absolute_url }}"><TEXT>More about your baby's age</TEXT></LINK>
+      {% endif %}
+      </TEXT>
+    </CONTAINER>
+  </MODULE>
 {% else %}
   {% header text='Register' color='orange' %}
   {% banner image_url="{{ STATIC_URL }}mama/img/banner_vlive.jpg?3" %}
