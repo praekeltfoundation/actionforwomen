@@ -16,6 +16,7 @@ from mama.views import (CategoryDetailView, CategoryListView,
                         MomStoryFormView,
                         MyProfileView, MyProfileEdit,
                         UpdateDueDateView,
+                        VLiveUpdateDueDateView,
                         MxitUpdateDueDateView,
                         PublicProfileView, UserCommentsView,
                         GuidesView, GuidesTopicView,
@@ -215,7 +216,11 @@ urlpatterns = patterns('',
         UpdateDueDateView.as_view(),
         name='update_due_date'
     ),
-
+    url(
+        r'^profile/vliveduedate/$',
+        VLiveUpdateDueDateView.as_view(),
+        name='vlive_update_due_date'
+    ),
     url(
         r'^profile/mxitduedate/$',
         MxitUpdateDueDateView.as_view(),

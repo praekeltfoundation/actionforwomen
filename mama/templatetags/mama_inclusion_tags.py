@@ -12,7 +12,7 @@ from poll.models import Poll
 from post.models import Post
 from livechat.models import LiveChat
 
-from mama.forms import DueDateForm
+from mama.forms import DueDateForm, VLiveDueDateForm
 
 from mama.templatetags.moms_stories_inclusion_tags \
     import your_story_competition
@@ -71,6 +71,15 @@ def ages_and_stages(context):
             'stages_object_list': object_list,
         })
 
+    return context
+
+
+@register.inclusion_tag('mama/inclusion_tags/ages_and_stages.html',
+                        takes_context=True)
+def vlive_ages_and_stages(context):
+    context = ages_and_stages(context)
+    if context.has_key('due_form'):
+        context['due_form'] = VLiveDueDateForm()
     return context
 
 
