@@ -1,11 +1,27 @@
 from datetime import datetime
+from mxit.client import Mxit
+
 from django.conf import settings
 from django.core.management.base import BaseCommand
-from mama.models import UserProfile
-from mama.utils import send_message
 from django.db.models import Q
-from category.models import Category
+
+# This is insane voodoo, but without it the next import Post line does not work.
+# TODO: Figure out the insanity when I am less pressed for time.
+# Note: This might have to do with the fact that I (Johan) had to:
+# pip install -U celery
+# to get anything to work on my dev box.
+# There is a chance that this could be related to:
+# http://stackoverflow.com/questions/3711869/python-import-problem-with-django-management-commands
+
+try:
+    from models import Post
+except:
+    pass
+
 from post.models import Post
+from category.models import Category
+
+from mama.models import UserProfile
 
 
 class Command(BaseCommand):
@@ -13,6 +29,10 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         mxit_profiles = UserProfile.objects.filter(origin='mxit')
+        client = Mxit(settings.MXIT_CLIENT_ID,
+                      settings.MXIT_CLIENT_SECRET,
+                      settings.MXIT_MOBI_PORTAL_URL)
+
         for profile in mxit_profiles:
             username = profile.user.username
 
@@ -54,12 +74,9 @@ class Command(BaseCommand):
 
             print '%s: %s' % (username, msg)
             try:
-                send_message(settings.MXIT_CLIENT_ID,
-                             settings.MXIT_CLIENT_SECRET,
-                             "http://juizi.dyndns.org:8000/",
-                             settings.MXIT_APP_ID,
-                             [username],
-                             msg)
+                client.messaging.send_message(settings.MXIT_APP_ID,
+                                              [username],
+                                              msg)
                 print 'Success!'
             except Exception as e:
                 print 'Could not send:'
