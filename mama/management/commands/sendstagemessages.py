@@ -70,7 +70,7 @@ class Command(BaseCommand):
 
             msg = ''
             for ob in object_list:
-                msg += str(ob.content)
+                msg += str(ob.description) + '\n'
 
             print '%s: %s' % (username, msg)
             try:
