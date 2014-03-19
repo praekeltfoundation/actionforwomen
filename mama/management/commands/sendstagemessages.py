@@ -29,6 +29,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         mxit_profiles = UserProfile.objects.filter(origin='mxit')
+        total = mxit_profiles.count()
+        sent = 0
         client = Mxit(settings.MXIT_CLIENT_ID,
                       settings.MXIT_CLIENT_SECRET,
                       settings.MXIT_MOBI_PORTAL_URL)
@@ -37,9 +39,9 @@ class Command(BaseCommand):
             username = profile.user.username
 
             # Cannot send message if no due date
-            if (profile.date_qualifier in (
-                    'unspecified', 'due_date'
-                    ) and profile.delivery_date is None) or profile.unknown_date:
+            if (profile.date_qualifier in ('unspecified', 'due_date')
+                    and profile.delivery_date is None)\
+                    or profile.unknown_date:
                 print '%s: No due date, so no message' % username
                 continue
 
@@ -47,7 +49,9 @@ class Command(BaseCommand):
             if delivery_date:
                 now = datetime.now().date()
                 pre_post = 'pre' if profile.is_prenatal() else 'post'
-                week = 42 - ((delivery_date - now).days / 7) if profile.is_prenatal() else (now - delivery_date).days / 7
+                week = 42 - ((delivery_date - now).days / 7)\
+                        if profile.is_prenatal()\
+                        else (now - delivery_date).days / 7
             else:
                 # Defaults in case user does not have delivery date.
                 pre_post = 'pre'
@@ -55,17 +59,21 @@ class Command(BaseCommand):
 
             # Get the category corresponding to the correct week
             try:
-                week_category = Category.objects.get(slug="%snatal-week-%s" % (pre_post, week))
+                week_category = Category.objects.get(slug="%snatal-week-%s" %
+                        (pre_post, week))
             except Category.DoesNotExist:
-                print '%s: No category %snatal-week-%s, so no message' % (username, pre_post, week)
+                print '%s: No category %snatal-week-%s, so no message' %\
+                        (username, pre_post, week)
                 continue
 
             # Get the articles for the week category
-            object_list = Post.permitted.filter(Q(primary_category=week_category) |
-                                                Q(categories=week_category)).distinct()
+            object_list = Post.permitted.filter(
+                    Q(primary_category=week_category) |
+                    Q(categories=week_category)).distinct()
 
             if not object_list:
-                print '%s: No posts for %snatal-week-%s, so no message' % (username, pre_post, week)
+                print '%s: No posts for %snatal-week-%s, so no message' %\
+                        (username, pre_post, week)
                 continue
 
             msg = ''
@@ -78,7 +86,10 @@ class Command(BaseCommand):
                                               [username],
                                               msg)
                 print 'Success!'
+                sent += 1
             except Exception as e:
                 print 'Could not send:'
                 print e
+        print "%s messages successfully sent of %s possible total" %\
+                (sent, total)
         print "Done!"
