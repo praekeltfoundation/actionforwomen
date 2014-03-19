@@ -38,3 +38,7 @@ INTERNAL_IPS = ("http://127.0.0.1")
 
 # EMAIL backend for testing, prints outbound email in the console
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+MXIT_APP_ID = 'juizi_mama'
+MXIT_CLIENT_ID = 'bbd4ee68270545ceace97b34b17bd184'
+MXIT_CLIENT_SECRET = '0e1fbe6da4a340fa8c99f3bf4acd624e'
