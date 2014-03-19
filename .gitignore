@@ -14,3 +14,6 @@ tmp/
 *_hjb.py
 .vagrant
 tags
+/src/
+/static/
+dev.sh
