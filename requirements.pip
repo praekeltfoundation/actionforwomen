@@ -13,4 +13,4 @@ mock
 nose
 django-nose
 coverage
-https://github.com/Mxit/python-mxit/tarball/master#egg=python-mxit-0.0.1
+mxit == 0.3.2
