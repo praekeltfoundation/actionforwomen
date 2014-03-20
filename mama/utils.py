@@ -1,4 +1,3 @@
-from mxit.middleware import RemoteUserMiddleware
 from mxit.client import Mxit
 
 
