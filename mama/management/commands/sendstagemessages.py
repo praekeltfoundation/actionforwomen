@@ -1,7 +1,5 @@
 from datetime import datetime
-from mxit.client import Mxit
 
-from django.conf import settings
 from django.core.management.base import BaseCommand
 from django.db.models import Q
 
@@ -22,6 +20,7 @@ from post.models import Post
 from category.models import Category
 
 from mama.models import UserProfile
+from mama.tasks import send_mxit_message
 
 
 class Command(BaseCommand):
@@ -31,9 +30,6 @@ class Command(BaseCommand):
         mxit_profiles = UserProfile.objects.filter(origin='mxit')
         total = mxit_profiles.count()
         sent = 0
-        client = Mxit(settings.MXIT_CLIENT_ID,
-                      settings.MXIT_CLIENT_SECRET,
-                      settings.MXIT_MOBI_PORTAL_URL)
 
         for profile in mxit_profiles:
             username = profile.user.username
@@ -81,15 +77,8 @@ class Command(BaseCommand):
                 msg += str(ob.description) + '\n'
 
             print '%s: %s' % (username, msg)
-            try:
-                client.messaging.send_message(settings.MXIT_APP_ID,
-                                              [username],
-                                              msg)
-                print 'Success!'
-                sent += 1
-            except Exception as e:
-                print 'Could not send:'
-                print e
+            send_mxit_message.delay(username, msg)
+            sent += 1
         print "%s messages successfully sent of %s possible total" %\
                 (sent, total)
         print "Done!"
