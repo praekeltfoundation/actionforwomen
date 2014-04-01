@@ -16,17 +16,17 @@ try:
 except:
     pass
 
-from post.models import Post
-from category.models import Category
-
-from mama.models import UserProfile
-from mama.tasks import send_mxit_message
-
 
 class Command(BaseCommand):
     help = 'Sends out mxit user stage based messages.'
 
     def handle(self, *args, **options):
+        from post.models import Post
+        from category.models import Category
+
+        from mama.models import UserProfile
+        from mama.tasks import send_mxit_message
+
         mxit_profiles = UserProfile.objects.filter(origin='mxit')
         total = mxit_profiles.count()
         sent = 0
