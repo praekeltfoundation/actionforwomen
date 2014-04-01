@@ -77,7 +77,7 @@ class Command(BaseCommand):
                 msg += str(ob.description) + '\n'
 
             print '%s: %s' % (username, msg)
-            send_mxit_message.delay(username, msg)
+            send_mxit_message(username, msg)
             sent += 1
         print "%s messages successfully sent of %s possible total" %\
                 (sent, total)
