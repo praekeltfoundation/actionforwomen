@@ -40,6 +40,7 @@ setup(
         'jmbo-post',
         'kombu==2.4.7',
         'celery==3.0.11',
+        'django-celery==3.0.17',
         'photon',
         'psycopg2',
         'python-ambient',
