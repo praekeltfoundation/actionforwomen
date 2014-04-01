@@ -74,7 +74,7 @@ class Command(BaseCommand):
 
             msg = ''
             for ob in object_list:
-                msg += str(ob.description) + '\n'
+                msg += str(ob.content) + '\n'
 
             print '%s: %s' % (username, msg)
             send_mxit_message(username, msg)
