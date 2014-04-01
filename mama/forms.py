@@ -533,7 +533,8 @@ class MxitDueDateForm(forms.Form):
         except (KeyError, ValueError):
             msg = "The due date was entered incorrectly. Please enter the due date in the format yyyy-mm-dd"
             self.errors['due_date'] = self.error_class([msg])
-            del cleaned_data['due_date']
+            if 'due_date' in cleaned_data:
+                del cleaned_data['due_date']
         return cleaned_data
 
 
