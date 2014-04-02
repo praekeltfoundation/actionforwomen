@@ -12,7 +12,10 @@ from poll.models import Poll
 from post.models import Post
 from livechat.models import LiveChat
 
-from mama.forms import DueDateForm
+from mama.forms import DueDateForm, VLiveDueDateForm
+
+from mama.templatetags.moms_stories_inclusion_tags \
+    import your_story_competition
 
 
 register = template.Library()
@@ -71,6 +74,15 @@ def ages_and_stages(context):
     return context
 
 
+@register.inclusion_tag('mama/inclusion_tags/ages_and_stages.html',
+                        takes_context=True)
+def vlive_ages_and_stages(context):
+    context = ages_and_stages(context)
+    if context.has_key('due_form'):
+        context['due_form'] = VLiveDueDateForm()
+    return context
+
+
 @register.inclusion_tag('mama/inclusion_tags/page_header.html', takes_context=True)
 def page_header(context):
     context = copy(context)
@@ -110,7 +122,6 @@ def random_guide_banner(context):
 @register.inclusion_tag('mama/inclusion_tags/page_header.html', takes_context=True)
 def pml_page_header(context):
     context = copy(context)
-    request = context['request']
 
     help_post = Post.permitted.filter(slug='mama-help')
 
@@ -125,7 +136,7 @@ def pml_page_header(context):
     })
     links.append({
         'title': 'Articles',
-        'url': reverse('category_object_list', 
+        'url': reverse('category_object_list',
                        kwargs={'category_slug': 'articles'})
     })
     links.append({
@@ -199,6 +210,9 @@ def stories_listing(context, category_slug):
         result['object_list'] = result['object_list'][:3]
     else:
         result['object_list'] = []
+    competition = your_story_competition({})
+    if competition:
+        result.update(competition)
     return result
 
 

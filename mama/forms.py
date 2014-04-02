@@ -18,12 +18,13 @@ from django.utils.safestring import mark_safe
 
 from pml import forms as pml_forms
 from registration.forms import RegistrationFormTermsOfService
+from jmboyourwords.models import YourStoryEntry
 from userprofile import utils
 import mama
 
-
+from mama.tasks import send_sms
 from mama.constants import (
-    RELATION_TO_BABY_CHOICES, 
+    RELATION_TO_BABY_CHOICES,
     DATE_QUALIFIER_CHOICES
 )
 
@@ -93,17 +94,12 @@ class PasswordResetForm(PasswordResetForm):
             )
         )
 
-        # Send the message using Ambient's gateway.
-        sms = ambient.AmbientSMS(
-            settings.AMBIENT_API_KEY,
-            settings.AMBIENT_GATEWAY_PASSWORD
-        )
-        sms.sendmsg(message, [self.profile.mobile_number, ])
+        send_sms.delay(self.profile.mobile_number, message)
 
 
 class RegistrationForm(RegistrationFormTermsOfService):
     mobile_number = forms.CharField(
-        max_length=64, 
+        max_length=64,
         required=True,
         label="Your mobile number"
     )
@@ -123,6 +119,12 @@ class RegistrationForm(RegistrationFormTermsOfService):
     delivery_date = forms.DateField(
         required=False,
         label="",
+        widget=SelectDateWidget(
+            years=range(date.today().year-10, date.today().year+1))
+    )
+    due_date = forms.DateField(
+        required=False,
+        label="",
         widget=SelectDateWidget()
     )
     unknown_date = forms.BooleanField(
@@ -132,7 +134,7 @@ class RegistrationForm(RegistrationFormTermsOfService):
 
     def __init__(self, *args, **kwargs):
         super(RegistrationForm, self).__init__(*args, **kwargs)
-
+        # set up the form
         del self.fields['email']
         del self.fields['password2']
         self.fields.keyOrder = [
@@ -143,6 +145,7 @@ class RegistrationForm(RegistrationFormTermsOfService):
             'date_qualifier',
             'delivery_date',
             'unknown_date',
+            'due_date',
             'tos',
         ]
         self.fields['username'].label = "Choose a username"
@@ -171,10 +174,33 @@ class RegistrationForm(RegistrationFormTermsOfService):
         date as the date type.
         Check that the due date is provided or the unknown check box is checked
         if due date is selected as the date type.
+
+        Note, for the registration form, we have both a delivery date and due
+        date field on the form. If the validation passes, we assign the due
+        date to the delivery date, to be stored in the profile with the
+        correctly selected date qualifier.
+
+        For the edit profile form, we only have a delivery_date field on the
+        form, so if there is no due date in the cleaned_data dict, we assign
+        the delivery date value to the due date as well, for the rest of the
+        validation to work continue as normal.
         """
         cleaned_data = super(RegistrationForm, self).clean()
-        delivery_date = cleaned_data['delivery_date']
-        date_qualifier = cleaned_data['date_qualifier']
+        try:
+            delivery_date = cleaned_data['delivery_date']
+        except KeyError:
+            delivery_date = None
+        try:
+            due_date = cleaned_data['due_date']
+        except KeyError:
+            # The profile edit form will throw this error, so we just ensure
+            # that we assign the delivery date to the due date, so that the
+            # rest of the validation works as normal
+            due_date = cleaned_data['delivery_date']
+        try:
+            date_qualifier = cleaned_data['date_qualifier']
+        except KeyError:
+            date_qualifier = 'unspecified'
         try:
             unknown_date = cleaned_data['unknown_date']
         except KeyError:
@@ -182,13 +208,26 @@ class RegistrationForm(RegistrationFormTermsOfService):
         if date_qualifier == 'birth_date' and delivery_date is None:
             msg = 'You need to provide a birth date'
             self._errors['delivery_date'] = self.error_class([msg])
-            del cleaned_data['delivery_date']
-        elif date_qualifier == 'due_date' and delivery_date is None \
+            try:
+                del cleaned_data['delivery_date']
+            except KeyError:
+                pass
+        elif date_qualifier == 'due_date' and due_date is None \
                 and not unknown_date:
             msg = "Either provide a due date, or check the \
-                  'Unknown' check box below the date."
-            self._errors['delivery_date'] = self.error_class([msg])
-            del cleaned_data['delivery_date']
+                  'Unknown' check box below the due date."
+            self._errors['due_date'] = self.error_class([msg])
+            try:
+                del cleaned_data['due_date']
+            except KeyError:
+                pass
+
+        # When registering, check if the due date is selected and provided, and
+        # there are no errors, and then assign its value to the delivery date.
+        if date_qualifier == 'due_date' and due_date is not None \
+                and not self._errors:
+            cleaned_data['delivery_date'] = due_date
+
         return cleaned_data
 
 
@@ -213,6 +252,7 @@ class EditProfileForm(RegistrationForm):
     def __init__(self, *args, **kwargs):
         super(EditProfileForm, self).__init__(*args, **kwargs)
         self.fields['date_qualifier'].widget = forms.HiddenInput()
+        del self.fields['due_date']
         self.fields.keyOrder = [
             'username',
             'mobile_number',
@@ -227,6 +267,17 @@ class EditProfileForm(RegistrationForm):
         self.fields['username'].label = "Username"
         self.fields['mobile_number'].label = "Mobile Number"
         self.fields['relation_to_baby'].label = 'I am'
+
+        # sort out some form display logic
+        initial = kwargs['initial']
+        if initial['date_qualifier'] == 'due_date' and \
+                initial['delivery_date'] is not None:
+            self.fields['unknown_date'].widget = forms.HiddenInput()
+            self.fields['unknown_date'].label = ''
+            if initial['delivery_date'] > date.today():
+                self.fields['baby_has_been_born'].widget = forms.HiddenInput()
+                self.fields['baby_has_been_born'].label = ''
+
 
     def clean_mobile_number(self):
         mobile_number = self.cleaned_data['mobile_number']
@@ -319,8 +370,8 @@ class ProfileForm(pml_forms.PMLForm):
     )
     tos = pml_forms.PMLCheckBoxField(
         choices=(
-            ( 
-                "accept", 
+            (
+                "accept",
                 mark_safe("""I accept the <LINK href="/terms/"><TEXT>terms and conditions</TEXT></LINK> of use.""")
             ),
         ))
@@ -446,6 +497,25 @@ class VLiveProfileEditForm(pml_forms.PMLForm):
         return cleaned_data
 
 
+class VLiveDueDateForm(forms.Form):
+    due_date = pml_forms.PMLTextField(
+        label="What is your due date? (yyyy-mm-dd)",
+        required=False
+    )
+
+    def clean_due_date(self):
+        """
+        Check that the due date is provided and correct.
+        """
+        try:
+            due_date = self.cleaned_data['due_date']
+            due_date = parser.parse(due_date)
+        except (KeyError, ValueError):
+            raise forms.ValidationError(
+                    "The due date was entered incorrectly.")
+        return due_date
+
+
 class MxitDueDateForm(forms.Form):
     due_date = forms.CharField(
         required = True,
@@ -463,5 +533,15 @@ class MxitDueDateForm(forms.Form):
         except (KeyError, ValueError):
             msg = "The due date was entered incorrectly. Please enter the due date in the format yyyy-mm-dd"
             self.errors['due_date'] = self.error_class([msg])
-            del cleaned_data['due_date']
+            if 'due_date' in cleaned_data:
+                del cleaned_data['due_date']
         return cleaned_data
+
+
+class MomsStoryEntryForm(forms.ModelForm):
+    class Meta:
+        model = YourStoryEntry
+        exclude = ('user', 'your_story_competition', 'terms')
+
+    def clean_terms(self):
+        return True

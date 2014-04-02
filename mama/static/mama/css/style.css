@@ -19,6 +19,7 @@ a { color: #ff6b15; text-decoration: none; }
 /* BANNER and DIVIDER */
 #divider, #banner { padding: 0; margin: 0;  }
 #divider img { width: 100%; display: block; }
+.top_10_questions img,
 #banner img { width: 100%; height: auto; margin: 0 auto; display: block; }
 .text_banner {
     padding: 0; margin: 0; width: 100%; height: auto; display: block; 
@@ -185,10 +186,12 @@ table.poll-results tr.poll-result-6 td.bar > div { background-color: #ff8e00; }
 	#content .purple #menu .item-nav { background: #eadbe0; color: #bfbfbf; }
 	#content .purple #menu .item-nav a { color: #872e4d; }
 #content .dorange .h1 { background: #ef4b14; }
+    #content .dorange .h1 a { color: white; background: #ef4b14; }
 	#content .dorange #menu .item a { color: #ef4b14; }
 	#content .dorange #menu .item-nav { background: #fbd7ca; color: #bfbfbf; }
 	#content .dorange #menu .item-nav a { color: #ef4b14; }
 #content .yorange .h1 { background: #ff8e00; }
+    #content .yorange .h1 a { color: white; background: #ff8e00; }
 	#content .yorange .content-inner .item .meta .title a { color: #ff8400; }
 	#content .yorange #menu .item a { color: #ff8400; }
 	#content .yorange #menu .item-nav { background: #ffe0b7; color: #bfbfbf; }

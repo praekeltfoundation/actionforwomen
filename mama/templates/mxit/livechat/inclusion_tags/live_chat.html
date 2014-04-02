@@ -35,7 +35,7 @@
                   {{ comment.name }}
                   {% endif %}
                 </div>
-                <div class="stamp">{{ comment.submit_date }} | {% likes comment %} {% report_comment_abuse comment %}</div>
+                <div class="stamp">{{ comment.submit_date }} | {% likes comment template='likes/inclusion_tags/votes.html' %} {% report_comment_abuse comment %}</div>
                 <div class="stamp">{{ comment.comment|linebreaks }}</div>
               </div>
 
@@ -57,6 +57,8 @@
             </div>
         {% endfor %}
 
+        <br/>
+        <br/>
         <div class="pagination">
           {% if chat_comments.has_previous %}
               <span><a href="?p={{chat_comments.previous_page_number}}&amp;answered={{answered}}&amp;popular={{popular}}">Previous</a></span> |

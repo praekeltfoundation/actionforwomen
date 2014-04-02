@@ -46,7 +46,7 @@
     {% endif %}
 
     {% if date_type != 'unspecified' %}
-    {{ date_description }}: 
+    {{ date_description }}:
     {% else %}
         {% if delivery_date > now %}
             Due Date:
@@ -73,9 +73,6 @@
     <b>
       <LINK href="{% url edit_vlive_profile %}">
       <TEXT>Edit My Profile &gt;</TEXT>
-      </LINK><br/>
-      <LINK href="{% url password_reset %}">
-      <TEXT>Reset My Password &gt;</TEXT>
       </LINK>
     </b>
   </TEXT>

@@ -1,11 +1,26 @@
-{% load comments likes_inclusion_tags moderator_inclusion_tags %}
+{% load comments %}
+{% load likes_inclusion_tags %}
+{% load moderator_inclusion_tags %}
 
 {% if weeks_ago == 0 %}
   {% if can_render_comment_form %}
-      {% render_comment_form for lead_in_post %}
-      <script type="text/javascript" 
-              src="{{ STATIC_URL }}mama/js/askmama_change_question_label.js">
-      </script>
+    <div class="text_banner">
+      <div class="banner_content">
+        <p>
+        <strong>
+          <a href="{% url ask_expert_question lead_in_post.id %}">
+            Ask your question &raquo;
+          </a>
+        </strong>
+        </p>
+      </div>
+    </div>
+  {% endif %}
+  {% if questions.number == 1 %}
+    {# display the top 10 questions banner only the first page of this week. #}
+    <div class="top_10_questions">
+      <img src="{{ STATIC_URL }}mama/img/top_10_questions.jpg" />
+    </div>
   {% endif %}
 {% endif %}
 
@@ -16,17 +31,17 @@
         <div class="meta">
           <div class="stamp">
             {% if sort == 'pop' %}
-            <a href="{% url askmama_detail %}?wk=2&sort=date">Latest</a> | 
-            Popular | 
+            <a href="{% url askmama_detail %}?wk=2&sort=date">Latest</a> |
+            Popular |
             <a href="{% url askmama_detail %}?wk=2&sort=alph">Alphabetical</a>
             {% else %}
               {% if sort == 'date' %}
-                Latest | 
+                Latest |
                 <a href="{% url askmama_detail %}?wk=2&sort=pop">Popular</a> |
                 <a href="{% url askmama_detail %}?wk=2&sort=alph">Alphabetical</a>
               {% else %}
-                <a href="{% url askmama_detail %}?wk=2&sort=date">Latest</a> | 
-                <a href="{% url askmama_detail %}?wk=2&sort=pop">Popular</a> | 
+                <a href="{% url askmama_detail %}?wk=2&sort=date">Latest</a> |
+                <a href="{% url askmama_detail %}?wk=2&sort=pop">Popular</a> |
                 Alphabetical
               {% endif %}
             {% endif %}
@@ -38,44 +53,60 @@
 {% endif %}
 
 <div class="{{ category.color }}">
-  {% if weeks_ago == 1 %}
-  <div class="h1" id="comments">
-    <a href="{% url askmama_detail %}">AskMAMA</a> &gt; Last week's Q&amp;A
-  </div>
-  {% endif %}
-  <div class="h1" id="comments">
-    {% if weeks_ago == 0 %}
-      This Week's Favourite Questions
-    {% else %}
-      {% if weeks_ago == 1 %}
-        {{ week_start|date:"d M Y" }} 
-      {% else %}
-        Questions older than {{ week_end|date:"d M Y" }} 
-      {% endif %}
-    {% endif %}
-  </div>
 
-  {% if weeks_ago == 0 %}
+  {% if weeks_ago == 0 and questions.number == 1 %}
   <div class="text_banner">
     <div class="banner_content">
       <p>
       <strong>
         <a href="{% url askmama_detail %}?wk=1">
-          See last week's Q&amp;A &gt;
+          Read last week's top 10 &raquo;
         </a>
-      </strong>    
+      </strong>
       </p>
     </div>
   </div>
   {% endif %}
 
+  {% if weeks_ago == 1 %}
+  <div class="h1" id="comments">
+    <a href="{% url askmama_detail %}">Ask MAMA</a> &gt; Last week's Q&amp;A
+  </div>
+  {% endif %}
+
+  <div class="h1" id="comments">
+    {% if weeks_ago == 0 %}
+      {% if questions.number == 1 %}
+      Top 10 Questions
+      {% else %}
+      More Questions
+      {% endif %}
+    {% else %}
+      {% if weeks_ago == 1 %}
+        Top 10 questions for {{ week_start|date:"d M Y" }}
+      {% else %}
+        Questions older than {{ week_end|date:"d M Y" }}
+      {% endif %}
+    {% endif %}
+  </div>
+
   <div class="content-inner">
     <div class="items">
+
       {% for question in questions.object_list %}
-        <div class="item comment no-pic">
+
+        {% comment %}
+        if we are on the current week's 1st page, show the top 10 questions
+        with a different coloured background.
+        {% endcomment %}
+        ---
+        <div class="item comment no-pic"
+          {% if weeks_ago == 0 and questions.number == 1 and forloop.counter0 < 10 %}
+          style="background-color: #fee;"
+          {% endif %} >
           <div class="meta">
-            <div class="stamp">{% likes question %}</div>
-            {% if question.replied_to_comment_set.count > 0 %}
+            <div class="stamp">{% likes question template='likes/inclusion_tags/votes.html' %}</div>
+            {% if question.replied_to_comments_set.count > 0 %}
             <a href="{% url askmama_answer_detail question.id %}">
               <div class="stamp">{{ question.comment|linebreaks }}</div>
             </a>
@@ -84,19 +115,56 @@
             {% endif %}
           </div>
         </div>
-        <br/>
+
+        {% if weeks_ago == 0 and questions.number == 1 and forloop.counter == 10 %}
+          {% comment %}
+          If we are on the current week's first page, break the loop after the
+          top 10 questions to add a link to the question form, and a heading
+          above the rest of the questions.
+          {% endcomment %}
+
+          </div>
+            {% if can_render_comment_form %}
+            <div class="text_banner">
+              <div class="banner_content">
+                <p>
+                <strong>
+                  <a href="{% url ask_expert_question lead_in_post.id %}">
+                    Ask your question &raquo;
+                  </a>
+                </strong>
+                </p>
+              </div>
+            </div>
+            {% endif %}
+            <div class="h1">
+              More Questions
+            </div>
+            <div class="items">
+              <div class="item comment no-pic">
+                <div class="meta">
+                  <div class="stamp" style="color: #b22a2d;">
+                    Vote for these questions to move them up to the top 10
+                    list.
+                    <br/>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          <div class="items">
+        {% endif %}
+
       {% empty %}
-        
+
         <div class="item comment no-pic">
           <div class="meta">
             <div class="stamp">
-              No questions have been asked. 
-              {% if weeks_ago == 0 %}
-              Use the form below to submit the first question.
-              {% endif %}
+              No questions have been asked yet.
             </div>
           </div>
         </div>
+
       {% endfor %}
     </div>
 
@@ -137,28 +205,15 @@
     {% endif %}
   {% endif %}
 
-  {% if weeks_ago < 2 %}
-  <div class="text_banner">
-    <div class="banner_content">
-      <p>
-      <strong>
-        <a href="{% url askmama_detail %}?wk=2&sort=pop">
-          See older questions &gt;
-        </a>
-      </strong>    
-      </p>
-    </div>
-  </div>
-  {% endif %}
   {% if weeks_ago > 0 %}
   <div class="text_banner">
     <div class="banner_content">
       <p>
       <strong>
         <a href="{% url askmama_detail %}">
-          &lt; Back to AskMAMA
+          &lt; Back to Ask MAMA
         </a>
-      </strong>    
+      </strong>
       </p>
     </div>
   </div>

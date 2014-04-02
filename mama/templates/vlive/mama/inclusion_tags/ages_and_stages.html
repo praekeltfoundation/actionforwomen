@@ -1,18 +1,55 @@
-{% load jmbo_inclusion_tags pml_inclusion_tags %}
+{% load jmbo_inclusion_tags %}
+{% load pml_inclusion_tags %}
 
-{% if profile.delivery_date %}
-  {% header text=category.title color='orange' %}
-  {% banner image_url="{{ STATIC_URL }}mama/img/banner_vlive.jpg?3" %}
-  {% for object in object_list %}
-      {% render_object object "block" %}
-  {% endfor %}
-  {% if profile.is_prenatal %}
-    <LINK href="{{ category.get_absolute_url }}">More about your pregnancy stage</LINK>
-  {% else %}
-    <LINK href="{{ category.get_absolute_url }}">More about your baby's age</LINK>
-  {% endif %}
-{% else %}
-  {% header text='Register' color='orange' %}
-  {% banner image_url="{{ STATIC_URL }}mama/img/banner_vlive.jpg?3" %}
-  {% thumbnail_include image_url='{{ STATIC_URL }}mama/img/preg_23.png' template='mama/pml_includes/ages_and_stages_cta.html' %}
+{% if request.user.is_authenticated %}
+    {% if no_due_date %}
+
+        {% header text="Your Baby" color="orange" %}
+
+        <MODULE>
+            <CONTAINER type="data">
+                <TEXT>
+                You haven't entered a due date yet. Please enter one so we
+                can provide you with stage based information unique to your
+                baby.
+                </TEXT>
+            </CONTAINER>
+
+            <CONTAINER type="form">
+                <FORM method="GET" href="{% url vlive_update_due_date %}" submit_text="Save">
+                    <FIELD name="csrfmiddlewaretoken" value="{{ csrf_token }}" type="hidden"/>
+                    {% for field in due_form %}
+                        {{ field }}<br />
+                    {% endfor %}
+                </FORM>
+            </CONTAINER>
+        </MODULE>
+
+    {% else %}
+
+        {% if stages_object_list %}
+            {% if profile.is_prenatal %}
+                {% header text="Your Pregnancy" %}
+            {% else %}
+                {% header text="Your Baby" %}
+            {% endif %}
+
+            {% for object in stages_object_list %}
+              {% render_object object "block" %}
+            {% endfor %}
+
+            <MODULE>
+                <CONTAINER type="data">
+                    <LINK href="{{ category.get_absolute_url }}">
+                    {% if profile.is_prenatal %}
+                        <TEXT>Your Pregnancy</TEXT>
+                    {% else %}
+                        <TEXT>Your Baby</TEXT>
+                    {% endif %}
+                    </LINK>
+                </CONTAINER>
+            </MODULE>
+        {% endif %}
+
+    {% endif %}
 {% endif %}

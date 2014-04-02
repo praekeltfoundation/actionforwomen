@@ -107,7 +107,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
+    'apptemplates.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -130,6 +130,7 @@ TEMPLATE_DIRS = (
 
 INSTALLED_APPS = (
     'object_tools',
+    'moderator',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.comments',
@@ -149,7 +150,6 @@ INSTALLED_APPS = (
     'google_credentials',
     'haystack',
     'likes',
-    'moderator',
     'photologue',
     'poll',
     'publisher',
@@ -237,8 +237,9 @@ HAYSTACK_WHOOSH_PATH = os.path.join(PATH, 'whoosh.index')
 
 EMAIL_SUBJECT_PREFIX = '[MAMA] '
 
-AMBIENT_API_KEY = ''
-AMBIENT_GATEWAY_PASSWORD = ''
+VUMI_ACCOUNT_KEY = ''
+VUMI_ACCESS_TOKEN = ''
+VUMI_SMS_CONVERSATION_KEY = ''
 
 LIVECHAT_PRIMARY_CATEGORY = 'ask-mama'
 LIVECHAT_CATEGORIES = ('live-chat',)
@@ -288,6 +289,7 @@ ORIGIN = 'mobi'
 # Celery configuration options
 BROKER_URL = 'amqp://guest:guest@localhost:5672/'
 
+CELERY_IMPORTS = ('monitor.tasks', 'moderator.tasks')
 CELERY_RESULT_BACKEND = "database"
 CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 

@@ -19,6 +19,11 @@
                 <b>Comment</b><br />
             </TEXT>
             <FIELD name="{{ form.comment.html_name }}" type="text" />
+            {% if next %}
+            <FIELD name="next" value="{{ next }}" type="hidden"/>
+            {% else %}
+            <FIELD name="next" value="{{ request.path }}" type="hidden"/>
+            {% endif %}
             <br />
             <br />
         </FORM>

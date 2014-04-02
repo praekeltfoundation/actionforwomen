@@ -13,10 +13,11 @@ from jmbo.models import ModelBase
 from preferences.models import Preferences
 from userprofile.models import AbstractProfileBase
 from photologue.models import ImageModel
+from jmboyourwords.models import YourStoryCompetition
 from mama.forms import RegistrationForm
 
 from mama.constants import (
-    RELATION_TO_BABY_CHOICES, 
+    RELATION_TO_BABY_CHOICES,
     FULL_DATE_QUALIFIER_CHOICES
 )
 
@@ -222,12 +223,12 @@ class UserProfile(AbstractProfileBase):
     )
     about_me = models.TextField(blank=True, null=True)
     baby_name = models.CharField(max_length=100, blank=True, null=True)
-    avatar = models.ImageField('avatar', max_length=100, 
-                               upload_to='users/profile', 
+    avatar = models.ImageField('avatar', max_length=100,
+                               upload_to='users/profile',
                                blank=True, null=True)
 
     def relation_description(self):
-        """ 
+        """
         Returns the relationship of the registrant to the baby, taking into
         account the relationship selected, and date type selected.
         """
@@ -263,6 +264,18 @@ class UserProfile(AbstractProfileBase):
 
 
 class Banner(ModelBase):
+    TYPE_BANNER = 'banner'
+    TYPE_THUMBNAIL = 'thumbnail'
+    BANNER_TYPE_CHOICES = (
+        (TYPE_BANNER, 'Banner'),
+        (TYPE_THUMBNAIL, 'Thumbnail'),
+    )
+    banner_type = models.CharField(
+        max_length=10,
+        choices=BANNER_TYPE_CHOICES,
+        help_text='Type of vlive module.',
+        default=TYPE_BANNER,
+    )
     url = models.CharField(
         max_length=256,
         help_text="Root relative URL to which the banner will redirect."

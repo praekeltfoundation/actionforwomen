@@ -1,5 +1,7 @@
 import re
 import urlparse
+import random
+
 from datetime import datetime
 from dateutil import parser
 
@@ -8,8 +10,10 @@ from django.contrib import auth
 from django.contrib import messages
 from django.contrib.comments.views import comments
 from django.contrib.comments import get_model
+from django.contrib.contenttypes.models import ContentType
 from django.core.mail import EmailMessage, mail_managers
 from django.core.urlresolvers import reverse
+from django.core.paginator import Paginator
 from django.db.models import Q, F
 from django.http import HttpResponseRedirect, HttpResponseServerError
 from django.shortcuts import get_object_or_404, redirect, render_to_response
@@ -27,10 +31,12 @@ from django.views.generic.list import ListView
 from mama.forms import (
     ContactForm,
     DueDateForm,
+    VLiveDueDateForm,
     MxitDueDateForm,
     ProfileForm,
     VLiveProfileEditForm,
-    EditProfileForm
+    EditProfileForm,
+    MomsStoryEntryForm
 )
 from mama.view_modifiers import PopularViewModifier
 from mama.models import Banner, DefaultAvatar
@@ -41,9 +47,13 @@ from poll.forms import PollVoteForm
 from poll.models import Poll
 from post.models import Post
 
+from likes.views import like as likes_view
+
+from jmboyourwords.models import YourStoryEntry, YourStoryCompetition
+
 from mama.constants import (
-    RELATION_PARENT_CHOICES, 
-    RELATION_PARENT_TO_BE_CHOICES 
+    RELATION_PARENT_CHOICES,
+    RELATION_PARENT_TO_BE_CHOICES
 )
 
 from preferences import preferences
@@ -68,12 +78,72 @@ class CategoryDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(CategoryDetailView, self).get_context_data(**kwargs)
         context['category'] = self.category
+
+        # Get the comments linked to the post
+        post = kwargs['object']
+
+        # check if we can comment. we need to be authenticated, at least
+        can_comment, code = post.can_comment(self.request)
+        context.update({
+            'can_render_comment_form': can_comment,
+            'can_comment': can_comment
+        })
+        if can_comment:
+            pct = ContentType.objects.get_for_model(post.__class__)
+            comments = Comment.objects.filter(
+                content_type=pct,
+                object_pk=post.id)
+            comments = comments.exclude(is_removed=True)
+            comments = comments.order_by('-submit_date')
+            if comments.count() > 5:
+                more_comments = True
+            else:
+                more_comments = False
+            comments = comments[:5]
+
+            # Add the comments to the context
+            context.update({
+                'comments': comments,
+                'more_comments': more_comments
+            })
+
         return context
 
     def get_object(self):
         post = Post.permitted.get(slug=self.kwargs['slug'])
         self.category = post.primary_category
         return post
+
+
+class StoryCommentsView(ListView):
+    template_name = 'mama/story_comments_list.html'
+    paginate_by = 50
+    heading_prefix = ""
+
+    def get_context_data(self, **kwargs):
+        context = super(StoryCommentsView, self).get_context_data(**kwargs)
+        context['post'] = self.kwargs['post']
+        context['category'] = self.kwargs['category']
+        return context
+
+    def get_queryset(self):
+        # keep the post and category objects for later
+        post = Post.permitted.get(slug=self.kwargs['slug'])
+        self.kwargs['post'] = post
+        category = Category.objects.get(
+            slug__iexact=self.kwargs['category_slug'])
+        self.kwargs['category'] = category
+
+        # get everything but the first 5 comments
+        pct = ContentType.objects.get_for_model(post.__class__)
+        comments = Comment.objects.filter(
+            content_type=pct,
+            object_pk=post.id)
+        comments = comments.exclude(is_removed=True)
+        comments = comments.order_by('-submit_date')
+        comments = comments[5:]
+
+        return comments
 
 
 class CategoryListView(ListView):
@@ -94,7 +164,7 @@ class CategoryListView(ListView):
                 slug__iexact=self.kwargs['category_slug'])
         queryset = Post.permitted.filter(
             Q(primary_category=self.category) | Q(categories=self.category)
-        ).exclude(categories__slug='featured').distinct()
+        ).distinct()
         view_modifier = PopularViewModifier(self.request)
         active_modifiers = view_modifier.get_active_items()
         if active_modifiers:
@@ -123,7 +193,7 @@ class GuidesView(TemplateView):
         # Get the stage guides featured articles
         if featured and mama_a2z:
             qs = Post.permitted.filter(
-                primary_category=mama_a2z, 
+                primary_category=mama_a2z,
                 categories=featured)
             stages_leaders = [{
                 'title': item.title,
@@ -134,7 +204,7 @@ class GuidesView(TemplateView):
         # Get the life guides featured articles
         if featured and life_guides:
             qs = Post.permitted.filter(
-                primary_category=life_guides, 
+                primary_category=life_guides,
                 categories=featured)
             life_guide_leaders = [{
                 'title': item.title,
@@ -156,7 +226,7 @@ class GuidesTopicView(DetailView):
     """ List the guide topices in a specific 'category'
     """
     template_name = 'mama/guide_topic_list.html'
-    
+
     def get_object(self):
         post = Post.permitted.get(slug=self.kwargs['slug'])
         self.category = post.primary_category
@@ -189,7 +259,7 @@ class MoreGuidesView(CategoryListView):
         queryset = Post.permitted.filter(
             Q(primary_category__slug__in=('life-guides', 'mama-a-to-z',)) | \
             Q(categories__slug__in=('life-guides', 'mama-a-to-z',))
-        ).exclude(categories__slug__in=('featured',)).distinct()
+        ).distinct()
 
         sort = self.request.GET.get('sort','pop')
         if sort == 'pop':
@@ -223,7 +293,7 @@ class MomStoriesListView(CategoryListView):
         queryset = Post.permitted.filter(
             Q(primary_category=self.category) | \
             Q(categories=self.category)
-        ).exclude(categories__slug__in=('featured',)).distinct()
+        ).distinct()
         view_modifier = PopularViewModifier(self.request)
         active_modifiers = view_modifier.get_active_items()
         if active_modifiers:
@@ -231,10 +301,45 @@ class MomStoriesListView(CategoryListView):
         return view_modifier.modify(queryset)
 
 
+class MomStoryFormView(FormView):
+    """ View to render the Mom's Story Entry form without a terms and
+        conditions checkbox, but with the terms and conditions text displayed.
+    """
+    form_class = MomsStoryEntryForm
+    template_name = 'yourwords/your_story.html'
+
+    def get_success_url(self):
+        return reverse('moms_stories_object_list')
+
+    def get_context_data(self, **kwargs):
+        # Add the competition to the context
+        competition = get_object_or_404(YourStoryCompetition,
+                                        pk=int(self.kwargs['competition_id']))
+        kwargs.update({'competition': competition})
+        return kwargs
+
+    def form_valid(self, form):
+        # save the story entry and redirect to the success url
+        competition = get_object_or_404(YourStoryCompetition,
+                                        pk=int(self.kwargs['competition_id']))
+        YourStoryEntry.objects.create(
+            your_story_competition = competition,
+            user = self.request.user,
+            name = form.cleaned_data['name'],
+            email = form.cleaned_data['email'],
+            text = form.cleaned_data['text'],
+            terms = True)
+        messages.success(
+            self.request,
+            "Thank you for sending us your story!"
+        )
+        return HttpResponseRedirect(self.get_success_url())
+
+
 class AskMamaView(CategoryDetailView):
     """
     This view surfaces the AskMAMA section of the site. It is subclassing
-    CategoryDetailView, 
+    CategoryDetailView,
     """
 
     template_name = "mama/askmama.html"
@@ -250,7 +355,7 @@ class AskMamaView(CategoryDetailView):
         return context
 
     def get_object(self, queryset=None):
-        """ 
+        """
         This is the Post that explains what the AskMAMA section is all about
         and that all the questions and answer comments will be hanging off, to
         enable use the likes and moderation functionality.
@@ -270,6 +375,20 @@ class AskMamaView(CategoryDetailView):
             return None
 
 
+class AskExpertQuestionView(TemplateView):
+    """ Displays a form to capture a question in the weekly 'Ask an Expert'
+        section.
+
+        Uses the Django comments framework for questions.
+    """
+    template_name = 'mama/askmama_ask_your_question.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(AskExpertQuestionView, self).get_context_data(**kwargs)
+        context['next'] = reverse('askmama_detail')
+        return context
+
+
 class QuestionAnswerView(TemplateView):
     """ This view displays a question and its answer in the AskMAMA section.
     """
@@ -284,7 +403,7 @@ class QuestionAnswerView(TemplateView):
         question_id = kwargs.get('question_id', None)
         question = Comment.objects.get(pk=question_id)
         context['question'] = question
-        context['answers'] = question.replied_to_comment_set.all()
+        context['answers'] = question.replied_to_comments_set.all()
         return context
 
 
@@ -502,6 +621,10 @@ class UpdateDueDateView(FormView):
         return super(UpdateDueDateView, self).form_valid(form)
 
 
+class VLiveUpdateDueDateView(UpdateDueDateView):
+    form_class = VLiveDueDateForm
+
+
 class MxitUpdateDueDateView(FormView):
     form_class = MxitDueDateForm
     template_name = 'mama/update_due_date.html'
@@ -625,26 +748,31 @@ class VLiveEditProfile(FormView):
 
 
 class BannerView(TemplateView):
-    template_name = "pml/carousel.xml"
+    template_name = "pml/banner.html"
 
     def get_context_data(self, **kwargs):
         context = super(BannerView, self).get_context_data(**kwargs)
         now = datetime.now().time()
 
+        banner_type = kwargs.get('banner_type', Banner.TYPE_BANNER)
+        self.template_name = "pml/banner_%s.html" % banner_type
+
         banners = Banner.permitted.filter(
-                    # in between on & off
-                    Q(time_on__lte=now, time_off__gte=now) |
-                    # roll over night, after on, before 24:00
-                    Q(time_on__lte=now, time_off__lte=F('time_on')) |
-                    # roll over night, before off, after 24:00
-                    Q(time_off__gte=now, time_off__lte=F('time_on')) |
-                    # either time on or time of not specified.
-                    Q(time_on__isnull=True) | Q(time_off__isnull=True)
-                ).order_by('?')
+            # in between on & off
+            Q(time_on__lte=now, time_off__gte=now) |
+            # roll over night, after on, before 24:00
+            Q(time_on__lte=now, time_off__lte=F('time_on')) |
+            # roll over night, before off, after 24:00
+            Q(time_off__gte=now, time_off__lte=F('time_on')) |
+            # either time on or time of not specified.
+            Q(time_on__isnull=True) | Q(time_off__isnull=True),
+            banner_type=banner_type
+        ).order_by('?')
 
         context.update({
             'banner': banners[0] if banners.exists() else None,
             'ROOT_URL': settings.ROOT_URL,
+            'banner_type': banner_type
         })
         return context
 
@@ -707,7 +835,7 @@ def post_comment(request, next=None, using=None):
 
     # Set the host header to the same as refering host, thus preventing PML
     # tunnel tripping up django.http.utils.is_safe_url.
-    request.META['HTTP_HOST'] = urlparse.urlparse(data['url'])[1]
+    # request.META['HTTP_HOST'] = urlparse.urlparse(data['url'])[1]
 
     return comments.post_comment(
         request,
@@ -720,3 +848,13 @@ def server_error(request):
     return HttpResponseServerError(render_to_string('500.html', {
         'STATIC_URL': settings.STATIC_URL
     }))
+
+
+def like(request, content_type, id, vote):
+    likes_view(request, content_type, id, vote)
+
+    redirect_url = reverse('home')
+    if 'HTTP_REFERER' in request.META:
+        redirect_url = '%s?v=%s' % (request.META['HTTP_REFERER'],
+                                        random.randint(0, 10))
+    return redirect(redirect_url)

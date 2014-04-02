@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
 
 from mama.sites.vlive.yw_forms import PMLYourStoryForm
-from jmboyourwords.models import YourStoryCompetition, YourStoryEntry
+from jmboyourwords.models import YourStoryEntry, YourStoryCompetition
 
 
 class PMLYourStoryView(FormView):
@@ -31,7 +31,7 @@ class PMLYourStoryView(FormView):
         initial['next'] = reverse('moms_stories_object_list')
         user = self.request.user
         initial['name'] = user.username
-        if user.email:
+        if not user.is_anonymous and user.email:
             initial['email'] = user.email
         else:
             initial['email'] = 'unspecified@askmama.mobi'
@@ -51,7 +51,7 @@ class PMLYourStoryView(FormView):
             name = form.cleaned_data['name'],
             email = form.cleaned_data['email'],
             text = form.cleaned_data['text'],
-            terms = form.cleaned_data['terms'] != ''
+            terms = True
         )
         return super(PMLYourStoryView, self).form_valid(form)
 

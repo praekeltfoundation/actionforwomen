@@ -39,7 +39,7 @@
           {% endif %}
 
           {{ comment.submit_date }} |
-          {% likes comment %} {% report_comment_abuse comment %}<br/>
+          {% likes comment template='likes/inclusion_tags/votes.html' %} {% report_comment_abuse comment %}<br/>
           {{ comment.comment|linebreaks }}<br/>
         </TEXT>
 

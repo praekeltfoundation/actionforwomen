@@ -8,8 +8,12 @@ from django.utils.crypto import salted_hmac
 from django.contrib.sites.models import Site
 from django.core.cache import cache
 from django.contrib import comments
+from django.test.client import Client
+from django.core.urlresolvers import reverse
+
 Comment = comments.get_model()
 
+from mama import utils
 from mama.models import UserProfile
 from mama.middleware import TrackOriginMiddleware
 from mama.models import SitePreferences
@@ -17,11 +21,13 @@ from preferences import preferences
 from post.models import Post
 from category.models import Category
 
+
 def generate_security_hash(content_type, object_pk, timestamp):
     info = (content_type, str(object_pk), str(timestamp))
     key_salt = "django.contrib.forms.CommentSecurityForm"
     value = "-".join(info)
     return salted_hmac(key_salt, value).hexdigest()
+
 
 def params_for_comments(obj, comment):
     content_type = '%s.%s' % (obj._meta.app_label, obj._meta.module_name)
@@ -32,11 +38,155 @@ def params_for_comments(obj, comment):
         'object_pk': object_pk,
         'timestamp': timestamp,
         'security_hash': generate_security_hash(content_type, object_pk,
-            timestamp),
+                                                timestamp),
         'comment': comment
     }
 
+
 class ProfileTestCase(TestCase):
+    def setUp(self):
+        '''
+        These are required for Vlive
+        '''
+        #self.msisdn = '27123456789'
+        #self.client = Client(HTTP_X_UP_CALLING_LINE_ID=self.msisdn)
+        #self.client.login(remote_user=self.msisdn)
+
+    def test_mobi_register_with_due_date(self):
+        # make sure the client is logged out
+        self.client.logout()
+
+        # browse to the registration url
+        resp = self.client.get(reverse('registration_register'))
+        self.assertEquals(resp.status_code, 200)
+        self.assertContains(resp, 'Are you a..')
+
+        # Test Empty and Unknown Due Date registration
+
+        # 1. Test empty due date
+        post_data = {
+            'username': 'test_due',
+            'password1': '1234',
+            'mobile_number': '0712341111',
+            'relation_to_baby':'mom_or_mom_to_be',
+            'date_qualifier':'due_date',
+            'due_date_month':0,
+            'due_date_day':0,
+            'due_date_year':0,
+            'tos': True
+        }
+
+        resp = self.client.post(reverse('registration_register'), post_data)
+        self.assertContains(resp, 'Either provide a due date, or check')
+
+        # 2. Test unknown due date
+        post_data.update({
+            'unknown_date': True,
+        })
+        resp = self.client.post(reverse('registration_register'),
+                                post_data,
+                                follow=True)
+        self.assertRedirects(resp,
+                             reverse('registration_done'),
+                             status_code=302,
+                             target_status_code=200)
+        self.assertContains(resp, 'Thank you for registering')
+
+        # 2a. Go to the profile page to check the data
+        resp = self.client.get(reverse('view_my_profile'))
+        self.assertContains(resp, '0712341111')
+        self.assertContains(resp, 'Due Date')
+        self.assertContains(resp, 'Unknown')
+
+        # 2b. Check the home page for a due date form
+        resp = self.client.get(reverse('home'))
+        self.assertEquals(resp.status_code, 200)
+        self.assertContains(resp, 'entered a due date yet. Please enter one')
+
+        # 2c. Fill in the due date and check for stage based info
+        due_date = date.today() + timedelta(weeks=2)
+        post_data = {
+            'due_date_day': due_date.day,
+            'due_date_month': due_date.month,
+            'due_date_year': due_date.year
+        }
+        resp = self.client.post(reverse('update_due_date'),
+                                post_data,
+                                follow=True)
+        self.assertRedirects(resp,
+                             reverse('home'),
+                             status_code=302,
+                             target_status_code=200)
+        self.assertEquals(resp.status_code, 200)
+        # check for the date on the profile page
+        resp = self.client.get(reverse('view_my_profile'))
+        self.assertContains(resp, '0712341111')
+        self.assertContains(resp, 'Due Date')
+        self.assertContains(resp, due_date.strftime('%d %b %Y'))
+
+        self.client.logout()
+
+
+        # Test known due date registration
+        post_data = {
+            'username': 'test_due_known',
+            'password1': '1234',
+            'mobile_number': '0712341112',
+            'relation_to_baby':'mom_or_mom_to_be',
+            'date_qualifier':'due_date',
+            'due_date_month': due_date.month,
+            'due_date_day': due_date.day,
+            'due_date_year': due_date.year,
+            'tos': True
+        }
+        resp = self.client.post(reverse('registration_register'),
+                                post_data,
+                                follow=True)
+        self.assertRedirects(resp,
+                             reverse('registration_done'),
+                             status_code=302,
+                             target_status_code=200)
+        self.assertContains(resp, 'Thank you for registering')
+        # check for the date on the profile page
+        resp = self.client.get(reverse('view_my_profile'))
+        self.assertContains(resp, '0712341112')
+        self.assertContains(resp, 'Due Date')
+        self.assertContains(resp, due_date.strftime('%d %b %Y'))
+
+        self.client.logout()
+
+    def test_mobi_register_with_birth_date(self):
+        # Test birth date registration
+        self.client.logout()
+        birth_date = date.today() - timedelta(weeks=6)
+
+        post_data = {
+            'username': 'test_birth',
+            'password1': '1234',
+            'mobile_number': '0712341113',
+            'relation_to_baby':'mom_or_mom_to_be',
+            'date_qualifier':'birth_date',
+            'delivery_date_month': birth_date.month,
+            'delivery_date_day': birth_date.day,
+            'delivery_date_year': birth_date.year,
+            'tos': True
+        }
+        resp = self.client.post(reverse('registration_register'),
+                                post_data,
+                                follow=True)
+        self.assertRedirects(resp,
+                             reverse('registration_done'),
+                             status_code=302,
+                             target_status_code=200)
+        self.assertContains(resp, 'Thank you for registering')
+        # check for the date on the profile page
+        resp = self.client.get(reverse('view_my_profile'))
+        self.assertContains(resp, '0712341113')
+        self.assertContains(resp, 'Birth Date')
+        self.assertContains(resp, birth_date.strftime('%d %b %Y'))
+
+        self.client.logout()
+
     def test_is_prenatal(self):
         user = User.objects.create()
         profile = UserProfile.objects.create(user=user)
@@ -255,3 +405,12 @@ class GeneralPrefrencesTestCase(TestCase):
 
         resp = self.client.get(article_url)
         self.assertContains(resp, 'word ****** which is silenced')
+
+
+class MobileNumberInternationlisationTestCase(TestCase):
+    def test_mobile_number_internationalisation(self):
+        num = utils.mobile_number_to_international('27123456789')
+        self.assertEqual(num, '27123456789')
+
+        num = utils.mobile_number_to_international('0123456789')
+        self.assertEqual(num, '27123456789')
