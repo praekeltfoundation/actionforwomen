@@ -3,6 +3,8 @@ from datetime import datetime
 from django.core.management.base import BaseCommand
 from django.db.models import Q
 
+from BeautifulSoup import BeautifulSoup
+
 # This is insane voodoo, but without it the next import Post line does not work.
 # TODO: Figure out the insanity when I am less pressed for time.
 # Note: This might have to do with the fact that I (Johan) had to:
@@ -74,7 +76,20 @@ class Command(BaseCommand):
 
             msg = ''
             for ob in object_list:
+
+                # Add A New Line after each Post's content
                 msg += str(ob.content) + '\n'
+
+                #PARSE HTML INTO PLAIN TEXT
+                soup = BeautifulSoup(msg)
+
+                msg = '\n'.join([e.replace("\r", "") for e in soup.recursiveChildGenerator() if isinstance(e, unicode)])
+
+                lines = msg.split("\n")
+
+                msg = "\n\n".join([line.strip() for line in lines if line.strip()])
+
+                msg += "\n\n"
 
             print '%s: %s' % (username, msg)
             send_mxit_message(username, msg)
