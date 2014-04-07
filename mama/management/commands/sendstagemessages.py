@@ -74,25 +74,24 @@ class Command(BaseCommand):
                         (username, pre_post, week)
                 continue
 
-            msg = ''
+            whole_msg = ''
             for ob in object_list:
 
-                # Add A New Line after each Post's content
-                msg += str(ob.content) + '\n'
-
                 #PARSE HTML INTO PLAIN TEXT
-                soup = BeautifulSoup(msg)
+                soup = BeautifulSoup(str(ob.content))
 
                 msg = '\n'.join([e.replace("\r", "") for e in soup.recursiveChildGenerator() if isinstance(e, unicode)])
+                whole_msg += msg
+                whole_msg += '\n'
 
-                lines = msg.split("\n")
+            lines = whole_msg.split("\n")
 
-                msg = "\n\n".join([line.strip() for line in lines if line.strip()])
+            whole_msg = "\n\n".join([line.strip() for line in lines if line.strip()])
 
-                msg += "\n\n"
+            whole_msg += "\n\n"
 
-            print '%s: %s' % (username, msg)
-            send_mxit_message(username, msg)
+            print '%s: %s' % (username, whole_msg)
+            send_mxit_message(username, whole_msg)
             sent += 1
         print "%s messages successfully sent of %s possible total" %\
                 (sent, total)
