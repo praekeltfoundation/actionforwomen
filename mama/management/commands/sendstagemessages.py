@@ -3,7 +3,7 @@ from datetime import datetime
 from django.core.management.base import BaseCommand
 from django.db.models import Q
 
-from BeautifulSoup import BeautifulSoup
+from mama.utils import format_html_string
 
 # This is insane voodoo, but without it the next import Post line does not work.
 # TODO: Figure out the insanity when I am less pressed for time.
@@ -76,12 +76,7 @@ class Command(BaseCommand):
 
             whole_msg = ''
             for ob in object_list:
-
-                #PARSE HTML INTO PLAIN TEXT
-                soup = BeautifulSoup(str(ob.content))
-
-                msg = '\n'.join([e.replace("\r", "") for e in soup.recursiveChildGenerator() if isinstance(e, unicode)])
-                whole_msg += msg
+                whole_msg += format_html_string(str(ob.content))
                 whole_msg += '\n'
 
             lines = whole_msg.split("\n")
