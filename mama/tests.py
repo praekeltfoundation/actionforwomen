@@ -11,6 +11,10 @@ from django.contrib import comments
 from django.test.client import Client
 from django.core.urlresolvers import reverse
 
+from django.core.management import call_command
+from StringIO import StringIO
+import sys
+
 Comment = comments.get_model()
 
 from mama import utils
@@ -414,3 +418,55 @@ class MobileNumberInternationlisationTestCase(TestCase):
 
         num = utils.mobile_number_to_international('0123456789')
         self.assertEqual(num, '27123456789')
+
+
+class SendStageMessagesTestCase(TestCase):
+
+    def setUp(self):
+
+        self.mock_html = u'''<p>This is a paragraph<br />
+Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text</p>
+<p>This is paragraph 2<br />
+<br />
+Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text<br />
+Some More text Some More text Some More text Some More text Some More text Some More text Some More text</p>
+<div>
+<p>Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text</p>
+<p>Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text<br />
+<br />
+Some More text Some More text Some More text Some More text Some More text Some More text</p>
+</div>
+'''
+
+    def test_send_stage_based_messages(self):
+
+        """Test 'sendstagemessages' command"""
+
+        sys_output = sys.stdout
+        sys.stdout = output = StringIO()
+
+        call_command('sendstagemessages')
+
+        sys.stdout = sys_output
+
+        output.seek(0)  # Start reading from the beginning
+
+        #Make sure it reaches the end of file
+        self.assertIn('Done!', output.read())
+        output.seek(0)
+        # Make sure that we get a response
+        self.assertIsNotNone(output.read())
+
+    def test_string_formatting(self):
+        clean_string = utils.format_html_string(self.mock_html)
+
+        # Assert that we get a proper value back and that it has
+        # been parsed (assert!=)
+        self.assertTrue(clean_string)
+        self.assertNotEqual(self.mock_html, clean_string)
+        self.assertNotIn('\r', clean_string)
+
+        clean_string = utils.format_html_string(u'')
+
+        # Assert that we don't get unexpected input when we pass in False values
+        self.assertFalse(clean_string)
