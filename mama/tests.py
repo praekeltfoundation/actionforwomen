@@ -424,19 +424,36 @@ class SendStageMessagesTestCase(TestCase):
 
     def setUp(self):
 
-        self.mock_html = u'''<p>This is a paragraph<br />
-Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text</p>
-<p>This is paragraph 2<br />
-<br />
-Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text<br />
-Some More text Some More text Some More text Some More text Some More text Some More text Some More text</p>
+        self.mock_html = u'''
+        <p>This is a paragraph<br />
+    Some More text Some More text</p>
+    <p>This is paragraph 2<br />
+    <br />
+Some More text Some <b>More text</b> Some More text<br />
+Some More text Some <i>More</i> text Some More text</p>
 <div>
-<p>Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text</p>
-<p>Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text Some More text<br />
+<p>Some More text Some More text</p>
+<p>Some More text Some More text Some More text<br />
 <br />
-Some More text Some More text Some More text Some More text Some More text Some More text</p>
-</div>
+    Some More text Some More text Some More text</p>
+    </div>
 '''
+
+        self.mock_clean = u'''This is a paragraph
+
+Some More text Some More text
+
+This is paragraph 2
+
+Some More text Some More text Some More text
+
+Some More text Some More text Some More text
+
+Some More text Some More text
+
+Some More text Some More text Some More text
+
+Some More text Some More text Some More text'''
 
     def test_send_stage_based_messages(self):
 
@@ -465,6 +482,7 @@ Some More text Some More text Some More text Some More text Some More text Some 
         self.assertTrue(clean_string)
         self.assertNotEqual(self.mock_html, clean_string)
         self.assertNotIn('\r', clean_string)
+        self.assertEqual(self.mock_clean, clean_string)
 
         clean_string = utils.format_html_string(u'')
 
