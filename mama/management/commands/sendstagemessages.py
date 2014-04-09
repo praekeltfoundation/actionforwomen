@@ -79,12 +79,6 @@ class Command(BaseCommand):
                 whole_msg += format_html_string(str(ob.content))
                 whole_msg += '\n'
 
-            lines = whole_msg.split("\n")
-
-            whole_msg = "\n\n".join([line.strip() for line in lines if line.strip()])
-
-            whole_msg += "\n\n"
-
             print '%s: %s' % (username, whole_msg)
             send_mxit_message(username, whole_msg)
             sent += 1
