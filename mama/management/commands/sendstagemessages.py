@@ -3,6 +3,8 @@ from datetime import datetime
 from django.core.management.base import BaseCommand
 from django.db.models import Q
 
+from mama.utils import format_html_string
+
 # This is insane voodoo, but without it the next import Post line does not work.
 # TODO: Figure out the insanity when I am less pressed for time.
 # Note: This might have to do with the fact that I (Johan) had to:
@@ -72,12 +74,13 @@ class Command(BaseCommand):
                         (username, pre_post, week)
                 continue
 
-            msg = ''
+            whole_msg = ''
             for ob in object_list:
-                msg += str(ob.content) + '\n'
+                whole_msg += format_html_string(str(ob.content))
+                whole_msg += '\n'
 
-            print '%s: %s' % (username, msg)
-            send_mxit_message(username, msg)
+            print '%s: %s' % (username, whole_msg)
+            send_mxit_message(username, whole_msg)
             sent += 1
         print "%s messages successfully sent of %s possible total" %\
                 (sent, total)
