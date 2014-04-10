@@ -178,17 +178,34 @@ COMMENTS_APP = 'mama.commenting'
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(message)s'
+        },
+    },
     'handlers': {
         'mail_admins': {
             'level': 'ERROR',
             'class': 'django.utils.log.AdminEmailHandler'
-        }
+        },
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'filename': os.path.join(PATH, 'logs/mama.messages.log'),
+            'formatter': 'verbose',
+            'when': 'W0'  # rotate log every Monday
+        },
     },
     'loggers': {
         'django.request': {
             'handlers': ['mail_admins'],
             'level': 'ERROR',
             'propagate': True,
+        },
+        'mxit_inbox_logger': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': False,
         },
     }
 }

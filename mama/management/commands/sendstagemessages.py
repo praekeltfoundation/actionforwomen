@@ -1,9 +1,4 @@
-from datetime import datetime
-
 from django.core.management.base import BaseCommand
-from django.db.models import Q
-
-from mama.utils import format_html_string
 
 # This is insane voodoo, but without it the next import Post line does not work.
 # TODO: Figure out the insanity when I am less pressed for time.
@@ -23,11 +18,17 @@ class Command(BaseCommand):
     help = 'Sends out mxit user stage based messages.'
 
     def handle(self, *args, **options):
+        from datetime import datetime
+        from django.db.models import Q
+
         from post.models import Post
         from category.models import Category
 
         from mama.models import UserProfile
         from mama.tasks import send_mxit_message
+        from mama.utils import format_html_string
+        import logging
+        logger = logging.getLogger('mxit_inbox_logger')
 
         mxit_profiles = UserProfile.objects.filter(origin='mxit')
         total = mxit_profiles.count()
@@ -80,6 +81,7 @@ class Command(BaseCommand):
                 whole_msg += '\n'
 
             print '%s: %s' % (username, whole_msg)
+            logger.info('%s: %s' % (username, whole_msg[:50]))
             send_mxit_message(username, whole_msg)
             sent += 1
         print "%s messages successfully sent of %s possible total" %\
