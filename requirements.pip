@@ -13,3 +13,4 @@ mock
 nose
 django-nose
 coverage
+mxit == 0.3.2

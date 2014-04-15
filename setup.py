@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='mama',
-    version='0.3.8',
+    version='0.3.9',
     description='Mama Django project.',
     long_description=open('README.rst', 'r').read() + open('AUTHORS.rst', 'r').read() + open('CHANGELOG.rst', 'r').read(),
     author='Praekelt Foundation',
@@ -40,6 +40,7 @@ setup(
         'jmbo-post',
         'kombu==2.4.7',
         'celery==3.0.11',
+        'django-celery==3.0.17',
         'photon',
         'psycopg2',
         'python-ambient',

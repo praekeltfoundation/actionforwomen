@@ -497,6 +497,25 @@ class VLiveProfileEditForm(pml_forms.PMLForm):
         return cleaned_data
 
 
+class VLiveDueDateForm(forms.Form):
+    due_date = pml_forms.PMLTextField(
+        label="What is your due date? (yyyy-mm-dd)",
+        required=False
+    )
+
+    def clean_due_date(self):
+        """
+        Check that the due date is provided and correct.
+        """
+        try:
+            due_date = self.cleaned_data['due_date']
+            due_date = parser.parse(due_date)
+        except (KeyError, ValueError):
+            raise forms.ValidationError(
+                    "The due date was entered incorrectly.")
+        return due_date
+
+
 class MxitDueDateForm(forms.Form):
     due_date = forms.CharField(
         required = True,
@@ -514,7 +533,8 @@ class MxitDueDateForm(forms.Form):
         except (KeyError, ValueError):
             msg = "The due date was entered incorrectly. Please enter the due date in the format yyyy-mm-dd"
             self.errors['due_date'] = self.error_class([msg])
-            del cleaned_data['due_date']
+            if 'due_date' in cleaned_data:
+                del cleaned_data['due_date']
         return cleaned_data
 
 

@@ -137,7 +137,8 @@ class WeeklyFilter(admin.filters.SimpleListFilter):
             weeks_ago = int(self.value())
         except TypeError:
             # there is no filter value
-            return queryset
+            # default to showing this weeks
+            weeks_ago = 0
 
         # Find the dates for the current week, starting last Friday and ending
         # next Thursday
