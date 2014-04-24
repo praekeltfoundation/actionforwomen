@@ -15,7 +15,7 @@
     <LABEL>
     <LINK href="{% url guides_list %}">
     <TEXT>Guides</TEXT>
-    </LINK> &gt; 
+    </LINK> &gt;
     <LINK href="{% url more_guides_list %}">
     <TEXT>{{ category.title }}</TEXT>
     </LINK>
@@ -29,10 +29,10 @@
 <CONTAINER type="data">
   {% if object.comments_enabled %}
   <TEXT>
-    {% humanize_time_diff object.created "Ago" %} 
-    - 
-    {{ object.comment_count }} Comments 
-    - 
+    {% humanize_time_diff object.created "Ago" %}
+    -
+    {{ object.comment_count }} Comments
+    -
     {% likes object %}
   </TEXT>
   {% endif %}
@@ -65,7 +65,7 @@
 </MODULE>
 {% endcache %}
 
-{% include 'mama/includes/comments_include.html' %}
+{% include 'mama/includes/comments_include_no_likes.html' %}
 
 {% cache 3600 baby_center_byline object.id %}
 {% babycenter_byline object %}
