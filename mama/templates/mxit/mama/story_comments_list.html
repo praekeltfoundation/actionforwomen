@@ -18,7 +18,7 @@
                   <div class="item comment no-pic">
                       <div class="meta">
                           <div class="title">{{ comment.name }}</div>
-                          <div class="stamp">{{ comment.submit_date }} | {% likes comment %} {% report_comment_abuse comment %}</div>
+                          <div class="stamp">{{ comment.submit_date }} | {% report_comment_abuse comment %}</div>
                           <div class="stamp">{{ comment.comment|linebreaks }}</div>
                       </div>
                   </div>
@@ -32,7 +32,7 @@
         <div class="items">
             <div class="item-nav">
                 <a href="{% url category_object_detail category.slug post.slug %}">
-                    &laquo; Back to {{ post.title }} 
+                    &laquo; Back to {{ post.title }}
                 </a>
             </div>
         </div>

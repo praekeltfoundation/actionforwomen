@@ -19,7 +19,7 @@
         {% if object.comments_enabled %}
           <div class="stats">
             <div class="stamp">
-              {% humanize_time_diff object.created "Ago" %} // <a href="#comments">{{ object.comment_count }} Comments</a> // {% likes object %}
+              {% humanize_time_diff object.created "Ago" %} // <a href="#comments">{{ object.comment_count }} Comments</a>
             </div>
           </div>
         {% endif %}
@@ -48,7 +48,7 @@
         </div>
       {% endcache %}
 
-      {% include 'mama/includes/comments_include.html' %}
+      {% include 'mama/includes/comments_include_no_likes.html' %}
 
       {% cache 3600 baby_center_byline object.id %}
         {% babycenter_byline object %}
