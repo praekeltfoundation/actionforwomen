@@ -16,7 +16,7 @@
                 <div class="title">
                     {% if object.comments_enabled %}
                         <div class="stamp">
-                            {% humanize_time_diff object.created "Ago" %} // {{ object.comment_count }} Comments // {% likes object %}
+                            {% humanize_time_diff object.created "Ago" %} // {{ object.comment_count }} Comments
                         </div>
                     {% endif %}
                 </div>
