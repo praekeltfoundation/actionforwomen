@@ -34,7 +34,7 @@ setup(
         'django-registration==0.8',
         'django-ckeditor',
         'gunicorn',
-        'django-photologue==2.7.praekelt',
+        'django-photologue==2.7',
         'jmbo==0.5.5',
         'jmbo-poll>=0.0.9',
         'jmbo-post',
