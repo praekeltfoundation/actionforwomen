@@ -13,6 +13,14 @@
 </div>
 {% endif %}
 
+<div class="row">
+    <div class="post">
+        Update your profile page if you want to change your username or
+        phone number, or reset your password. You can also tell us more
+        about yourself and your baby.
+    </div>
+</div>
+
 <form method="post" id="frmProfileEdit" action="">
 {% csrf_token %}
 
@@ -67,8 +75,8 @@
         <div style="float: left">
             <label for="id_avatar">Choose an avatar:</label>
             {% for avatar in form.default_avatars %}
-            <input type="radio" 
-                   name="default_avatar_id" 
+            <input type="radio"
+                   name="default_avatar_id"
                    value="{{ avatar.id }}" />
             <img src="{{ avatar.image.url }}" width="32" height="32" />
             {% endfor %}
