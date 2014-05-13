@@ -15,7 +15,7 @@
     <CONTAINER type="data">
       <TEXT>
         <b>{{ comment.name }}</b><br/>
-        {{ comment.submit_date }} | {% likes comment %} {% report_comment_abuse comment %}<br/>
+        {{ comment.submit_date }} | {% report_comment_abuse comment %}<br/>
         {{ comment.comment|linebreaks }}<br/>
       </TEXT>
     </CONTAINER>

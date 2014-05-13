@@ -19,7 +19,7 @@
     <TEXT>
       <b>{{ object.title }}</b><br/>
       {% if object.comments_enabled %}
-        {% humanize_time_diff object.created "Ago" %} - {{ object.comment_count }} Comments - {% likes object %}
+        {% humanize_time_diff object.created "Ago" %} - {{ object.comment_count }} Comments
       {% endif %}
     </TEXT>
   </CONTAINER>
@@ -58,7 +58,7 @@
   </MODULE>
 {% endcache %}
 
-{% include 'mama/includes/comments_include.html' %}
+{% include 'mama/includes/comments_include_no_likes.html' %}
 
 {% cache 3600 baby_center_byline object.id %}
   {% babycenter_byline object %}
@@ -72,7 +72,7 @@
         {% for navigation_link in navigation_links %}
             <LINK href="{{ navigation_link.target.get_absolute_category_url }}">
             <TEXT>
-              &lt; Back to 
+              &lt; Back to
               {% if navigation_link.title %}
               {{ navigation_link.title }}
               {% else %}

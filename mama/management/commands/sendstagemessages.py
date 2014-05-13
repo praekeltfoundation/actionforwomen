@@ -1,7 +1,4 @@
-from datetime import datetime
-
 from django.core.management.base import BaseCommand
-from django.db.models import Q
 
 # This is insane voodoo, but without it the next import Post line does not work.
 # TODO: Figure out the insanity when I am less pressed for time.
@@ -21,16 +18,21 @@ class Command(BaseCommand):
     help = 'Sends out mxit user stage based messages.'
 
     def handle(self, *args, **options):
+        from datetime import datetime
+        from django.db.models import Q
+
         from post.models import Post
         from category.models import Category
 
         from mama.models import UserProfile
         from mama.tasks import send_mxit_message
+        from mama.utils import format_html_string
+        import logging
+        logger = logging.getLogger('mxit_inbox_logger')
 
         mxit_profiles = UserProfile.objects.filter(origin='mxit')
         total = mxit_profiles.count()
         sent = 0
-
         for profile in mxit_profiles:
             username = profile.user.username
 
@@ -72,12 +74,34 @@ class Command(BaseCommand):
                         (username, pre_post, week)
                 continue
 
-            msg = ''
+            whole_msg = ''
             for ob in object_list:
-                msg += str(ob.content) + '\n'
+                whole_msg += format_html_string(str(ob.content))
+                whole_msg += '\n'
 
-            print '%s: %s' % (username, msg)
-            send_mxit_message(username, msg)
+            # Using Mxit placeholder styling, don't remove surrounding dollar signs!!!
+            back_home_links_pre = (
+                "$Visit MAMA for real stories by real moms$",
+                "$Visit MAMA to chat with other moms$",
+                "$Visit MAMA for more pregnancy or baby info$",
+                "$Visit MAMA for info on HIV+ pregnancy$",)
+
+            back_home_links_post = (
+                "$Visit MAMA for more pregnancy or baby info$",
+                "$Visit MAMA and keep your baby HIV-free$",
+                "$Visit MAMA for real stories by real moms$",
+                "$Visit MAMA to chat with other moms$")
+
+            counter = week % 4
+
+            if pre_post == 'post':
+                whole_msg += '\n%s' % back_home_links_post[counter]
+            else:
+                whole_msg += '\n%s' % back_home_links_pre[counter]
+
+            print '%s: %s' % (username, whole_msg)
+            logger.info('%s: %s' % (username, whole_msg[:50]))
+            send_mxit_message(username, whole_msg)
             sent += 1
         print "%s messages successfully sent of %s possible total" %\
                 (sent, total)
