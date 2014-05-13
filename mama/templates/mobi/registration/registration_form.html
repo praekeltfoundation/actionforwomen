@@ -12,7 +12,7 @@
         <div class="item no-pic">
             <div class="meta">
                 <div class="stamp">
-                If you register with us, you can get up to date information on your
+                If you join MAMA, you can get up to date information on your
                 baby's growth and development each week. You also get to submit
                 questions to our experts and stand a chance to win airtime.
                 </div>
@@ -92,9 +92,9 @@
         {% endif %}
 
         <label for="id_date_qualifier_0">
-            <input id="id_date_qualifier_0" 
-                   value="due_date" 
-                   name="date_qualifier" 
+            <input id="id_date_qualifier_0"
+                   value="due_date"
+                   name="date_qualifier"
                    type="radio"
                    {% if form.date_qualifier.value == 'due_date' %}checked="checked"{% endif %}> Due Date
         </label>
@@ -122,9 +122,9 @@
 
     <div class="row">
         <label for="id_date_qualifier_1">
-            <input id="id_date_qualifier_1" 
-                   value="birth_date" 
-                   name="date_qualifier" 
+            <input id="id_date_qualifier_1"
+                   value="birth_date"
+                   name="date_qualifier"
                    type="radio"
                    {% if form.date_qualifier.value == 'birth_date' %}checked="checked"{% endif %}> Birth Date
         </label>

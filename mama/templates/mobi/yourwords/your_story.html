@@ -13,10 +13,10 @@
 
     {% if user.is_anonymous %}
     <div class="your-story-blurb">
-    You must be Signed In to submit your story.
+    You must join MAMA or Sign in to submit your story for this competition.
     <br/>
     <a href="{% url login %}">Sign In &gt;</a><br/>
-    <a href="{% url registration_register %}">Register &gt;</a>
+    <a href="{% url registration_register %}">Join &gt;</a>
     </div>
     {% else %}
     <div class="your-story-blurb">

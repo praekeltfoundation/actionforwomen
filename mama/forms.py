@@ -352,7 +352,7 @@ class ProfileForm(pml_forms.PMLForm):
     )
     relation_to_baby = pml_forms.PMLRadioField(
         choices=RELATION_TO_BABY_CHOICES,
-        label='Are you a...',
+        label='Are you...',
         initial='mom_or_mom_to_be'
     )
     date_qualifier = pml_forms.PMLRadioField(
