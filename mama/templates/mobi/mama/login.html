@@ -4,7 +4,7 @@
 <div class="h1">Login</div>
 <div class="content-inner">
     <div class="post">
-        <p>Login here if you’ve already joined MAMA and want to ask an expert a question or read your unique pregnancy or baby info. </p>
+        <p>Login here if you've already joined MAMA and want to ask an expert a question or read your unique pregnancy or baby info. </p>
     </div>
 </div>
 {% if request.user.is_authenticated %}
@@ -54,7 +54,7 @@
     </div>
     <div class="clear"></div>
 </form>
-<p class="notice"><a href="{% url password_reset %}">Forgot your password?</a> Not registered? <a href="{% url registration_register %}">Sign up here.</a></p>
+<p class="notice"><a href="{% url password_reset %}">Forgot your password?</a> Haven't joined MAMA yet? <a href="{% url registration_register %}">Sign up here.</a></p>
 {% endif %}
 {% endblock %}
 
