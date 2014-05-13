@@ -33,7 +33,6 @@ class Command(BaseCommand):
         mxit_profiles = UserProfile.objects.filter(origin='mxit')
         total = mxit_profiles.count()
         sent = 0
-        counter = 0
         for profile in mxit_profiles:
             username = profile.user.username
 
@@ -88,20 +87,17 @@ class Command(BaseCommand):
                 "$Visit MAMA for info on HIV+ pregnancy$",)
 
             back_home_links_post = (
-                "$Visit MAMA for real stories by real moms$",
-                "$Visit MAMA to chat with other moms$",
                 "$Visit MAMA for more pregnancy or baby info$",
-                "$Visit MAMA and keep your baby HIV-free$",)
+                "$Visit MAMA and keep your baby HIV-free$",
+                "$Visit MAMA for real stories by real moms$",
+                "$Visit MAMA to chat with other moms$")
+
+            counter = week % 4
 
             if pre_post == 'post':
                 whole_msg += '\n%s' % back_home_links_post[counter]
             else:
                 whole_msg += '\n%s' % back_home_links_pre[counter]
-
-            counter += 1
-
-            if counter >= 4:
-                counter = 0
 
             print '%s: %s' % (username, whole_msg)
             logger.info('%s: %s' % (username, whole_msg[:50]))
