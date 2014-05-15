@@ -1,16 +1,16 @@
 {% load pml_inclusion_tags %}
 
 {% if user.is_anonymous %}
-  {% header text="Register" color='orange' %}
+  {% header text="Join" color='orange' %}
   <MODULE>
   <CONTAINER type="data">
     <TEXT>
       <p>
       <LINK href="{% url registration_register %}">
-      <TEXT>Register for MAMA</TEXT>
+      <TEXT>Join MAMA</TEXT>
       </LINK>
       <br />
-      Get weekly updates unique to your baby!
+      Pregnant? Expecting a baby in the family? Then sign-up to get essential info each week of your pregnancy stage and baby's first year. You can also ask our experts your questions and enter other competitions.
       </p>
     </TEXT>
   </CONTAINER>
