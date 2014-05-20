@@ -113,8 +113,8 @@ class RegistrationForm(RegistrationFormTermsOfService):
         widget=forms.RadioSelect(),
         initial='due_date',
         choices=DATE_QUALIFIER_CHOICES,
-        label="Please enter your baby's birth day or due date or select \
-            unknown if you are not sure of the due date"
+        label=("Please enter your baby's birthday or due date. Click 'Unknown'"
+               " if you are not sure when your baby is due to be born.")
     )
     delivery_date = forms.DateField(
         required=False,
@@ -358,7 +358,8 @@ class ProfileForm(pml_forms.PMLForm):
     date_qualifier = pml_forms.PMLRadioField(
         initial='due_date',
         choices=DATE_QUALIFIER_CHOICES,
-        label="Please enter your baby's birth day or due date or select unknown if you are not sure of the due date"
+        label=("Please enter your baby's birthday or due date. Click 'Unknown'"
+               " if you are not sure when your baby is due to be born.")
     )
     delivery_date = pml_forms.PMLTextField(
         label="What is your due date or baby's birthday? (yyyy-mm-dd)",
