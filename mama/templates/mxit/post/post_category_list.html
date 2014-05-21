@@ -4,7 +4,7 @@
 Used for Articles and Guides
 {% endcomment %}
 
-{% load jmbo_inclusion_tags mama_inclusion_tags %}
+{% load jmbo_inclusion_tags mama_inclusion_tags mama_template_tags%}
 
 {% block following_header %}
 {{ block.super }}
@@ -12,7 +12,7 @@ Used for Articles and Guides
 {% endblock %}
 
 {% block above_content %}
-        <h1>{{ full_heading }}</h1>
+        {% mxit_title_bar foreground_color='#FFFFFF' background_color='#FF8E00' text=full_heading %}
 {% endblock %}
 
 {% block content %}
