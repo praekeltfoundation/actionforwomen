@@ -1,6 +1,7 @@
 {% load comments %}
 {% load likes_inclusion_tags %}
 {% load moderator_inclusion_tags %}
+{% load mama_template_tags %}
 
 {% if weeks_ago == 0 %}
   {% if can_render_comment_form %}
@@ -74,22 +75,20 @@
   </div>
   {% endif %}
 
-  <div class="h1" id="comments">
     {% if weeks_ago == 0 %}
       {% if questions.number == 1 %}
-      Top 10 Questions
+        {% mxit_title_bar foreground_color='#FFFFFF' background_color='#B22A2D' text='Top 10 Questions' %}
       {% else %}
-      More Questions
+        {% mxit_title_bar foreground_color='#FFFFFF' background_color='#B22A2D' text='More Questions' %}
       {% endif %}
     {% else %}
+    {% comment %}
       {% if weeks_ago == 1 %}
-        Top 10 questions for {{ week_start|date:"d M Y" }}
+        {% mxit_title_bar foreground_color='#FFFFFF' background_color='#B22A2D' text="Top 10 questions for {{ week_start|date:'d M Y' }}" %}
       {% else %}
-        Questions older than {{ week_end|date:"d M Y" }}
+        {% mxit_title_bar foreground_color='#FFFFFF' background_color='#B22A2D' text="Questions older than {{ week_end|date:'d M Y' }} " %}
       {% endif %}
-    {% endif %}
-  </div>
-
+    {% endcomment %}
   <div class="content-inner">
     <div class="items">
 
@@ -137,9 +136,7 @@
               </div>
             </div>
             {% endif %}
-            <div class="h1">
-              More Questions
-            </div>
+            {% mxit_title_bar foreground_color='#FFFFFF' background_color='#B22A2D' text="More Questions" %}
             <div class="items">
               <div class="item comment no-pic">
                 <div class="meta">
