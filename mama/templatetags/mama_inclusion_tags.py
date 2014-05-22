@@ -164,7 +164,7 @@ def pml_page_header(context):
 
 
 @register.inclusion_tag('mama/inclusion_tags/topic_listing.html', takes_context=True)
-def topic_listing(context, category_slug, more):
+def topic_listing(context, category_slug, more, limit=0):
     context = copy(context)
     try:
         category = Category.objects.get(slug__exact=category_slug)
@@ -174,6 +174,8 @@ def topic_listing(context, category_slug, more):
         Q(primary_category=category) |
         Q(categories=category)
     ).filter(categories__slug='featured').distinct()
+    if limit:
+        object_list = object_list[:limit]
     context.update({
         'category': category,
         'object_list': object_list,
