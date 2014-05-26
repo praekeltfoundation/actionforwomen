@@ -11,7 +11,7 @@ setup(
     url='http://github.com/praekelt/mama',
     packages=find_packages(),
     dependency_links=[
-        'http://github.com/praekelt/django-photologue/tarball/2.7.praekelt#egg=django-photologue-2.7.praekelt'
+        'http://github.com/praekelt/django-photologue/tarball/2.10.praekelt#egg=django-photologue-2.10.praekelt',
     ],
     install_requires=[
         'django==1.4.5',
@@ -34,7 +34,7 @@ setup(
         'django-registration==0.8',
         'django-ckeditor',
         'gunicorn',
-        'django-photologue>2.6.praekelt',
+        'django-photologue==2.10.praekelt',
         'jmbo==0.5.5',
         'jmbo-poll>=0.0.9',
         'jmbo-post',
