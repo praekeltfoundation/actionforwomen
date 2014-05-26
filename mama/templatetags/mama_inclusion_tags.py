@@ -201,8 +201,8 @@ def post_listing(context, category_slug):
     return result
 
 
-@register.inclusion_tag('mama/inclusion_tags/stories_listing.html',
-        takes_context=True)
+@register.inclusion_tag(
+    'mama/inclusion_tags/stories_listing.html', takes_context=True)
 def stories_listing(context, category_slug):
     result = _get_content_object_list(context, category_slug)
     # Trim to 3 objects, or provide empty list if it doesn't have one.
@@ -222,13 +222,13 @@ def _get_content_object_list(ctx_dict, category_slug):
         category = Category.objects.get(slug__exact=category_slug)
     except Category.DoesNotExist:
         return ctx_dict
-    object_list = Post.permitted.filter(Q(primary_category=category) | \
-            Q(categories=category))
-    object_list = object_list.filter(categories__slug='featured').distinct()
+    object_list = Post.permitted.filter(
+        Q(primary_category=category) | Q(categories=category),
+        categories__slug='featured').distinct()
 
     ctx_dict.update({
         'category': category,
-        'object_list': object_list,
+        'object_list': object_list.order_by('-publish_on'),
     })
     return ctx_dict
 

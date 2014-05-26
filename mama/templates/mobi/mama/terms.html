@@ -5,6 +5,7 @@
     <div class="content-inner">
         <div class="post">
             {{ preferences.SitePreferences.terms|safe }}
+            <p><a href="{% url registration_register %}">Back to sign up page</a></p>
         </div>
     </div>
 {% endblock %}

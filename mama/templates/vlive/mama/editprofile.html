@@ -4,15 +4,17 @@
 
 {% block body %}
 
+    {% text_module template='Update your profile page if you want to change your alias. You can also add more info about yourself and baby.' %}
+
     {% header text="Edit Profile" color="grey" %}
 
     <MODULE>
     <CONTAINER type="form">
-        <FORM method="GET" 
-              href="{% url edit_vlive_profile %}" 
+        <FORM method="GET"
+              href="{% url edit_vlive_profile %}"
               submit_text="Save">
-            <FIELD name="csrfmiddlewaretoken" 
-                   value="{{ csrf_token }}" 
+            <FIELD name="csrfmiddlewaretoken"
+                   value="{{ csrf_token }}"
                    type="hidden" />
             {% for field in form %}
             {{ field }}<br />

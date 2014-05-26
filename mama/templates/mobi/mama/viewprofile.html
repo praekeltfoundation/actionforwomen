@@ -5,10 +5,13 @@
 <div class="h1">My Profile</div>
 <div class="content-inner">
   <div class="post">
+    <div class="title">
+        My Profile
+    </div>
     {% if avatar %}
         <img src="{{ avatar }}" width="44" height="44" />
     {% endif %}
-    <div class="stamp"> 
+    <div class="stamp">
       {{ username }}<br/>
       {% if mobile_number %}
       Mobile No: {{ mobile_number }}</br>
@@ -22,7 +25,7 @@
     <div class="title">
         About Me
     </div>
-    <div class="stamp"> 
+    <div class="stamp">
       {{ about_me|safe }}
     </div>
   </div>
@@ -34,13 +37,13 @@
         About My Baby
     </div>
     {% if baby_name %}
-    <div class="stamp"> 
+    <div class="stamp">
         Name: {{ baby_name }}
     </div>
     {% endif %}
-    <div class="stamp"> 
+    <div class="stamp">
         {% if date_type != 'unspecified' %}
-        {{ date_description }}: 
+        {{ date_description }}:
         {% else %}
             {% if delivery_date > now %}
                 Due Date:
