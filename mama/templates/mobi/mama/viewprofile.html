@@ -5,9 +5,9 @@
 <div class="h1">My Profile</div>
 <div class="content-inner">
   <div class="post">
-    <p>If you want to change your profile details, click on <a href="{% url edit_my_profile %}">Edit My Profile</a>.</p>
-  </div>
-  <div class="post">
+    <div class="title">
+        My Profile
+    </div>
     {% if avatar %}
         <img src="{{ avatar }}" width="44" height="44" />
     {% endif %}

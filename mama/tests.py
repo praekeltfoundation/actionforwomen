@@ -94,7 +94,7 @@ class ProfileTestCase(TestCase):
                              reverse('registration_done'),
                              status_code=302,
                              target_status_code=200)
-        self.assertContains(resp, 'Thank you for registering')
+        self.assertContains(resp, 'Thank you for joining MAMA')
 
         # 2a. Go to the profile page to check the data
         resp = self.client.get(reverse('view_my_profile'))
@@ -150,7 +150,7 @@ class ProfileTestCase(TestCase):
                              reverse('registration_done'),
                              status_code=302,
                              target_status_code=200)
-        self.assertContains(resp, 'Thank you for registering')
+        self.assertContains(resp, 'Thank you for joining MAMA')
         # check for the date on the profile page
         resp = self.client.get(reverse('view_my_profile'))
         self.assertContains(resp, '0712341112')
@@ -182,7 +182,7 @@ class ProfileTestCase(TestCase):
                              reverse('registration_done'),
                              status_code=302,
                              target_status_code=200)
-        self.assertContains(resp, 'Thank you for registering')
+        self.assertContains(resp, 'Thank you for joining MAMA')
         # check for the date on the profile page
         resp = self.client.get(reverse('view_my_profile'))
         self.assertContains(resp, '0712341113')
