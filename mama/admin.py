@@ -64,9 +64,13 @@ class PostAdmin(MamaModelbaseAdmin):
     ]
     list_display = (
         'title', 'primary_category', 'publish_on', 'retract_on',
-        '_get_absolute_url', 'owner', 'created', '_actions'
+        '_get_absolute_url', 'is_featured', 'created', '_actions'
     )
     ordering = ('-publish_on', '-created')
+
+    def is_featured(self, obj, *args, **kwargs):
+        return obj.categories.filter(slug='featured').exists()
+    is_featured.boolean = True
 
 
 class MamaPostAdmin(PostAdmin):
