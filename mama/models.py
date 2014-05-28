@@ -15,11 +15,41 @@ from userprofile.models import AbstractProfileBase
 from photologue.models import ImageModel
 from jmboyourwords.models import YourStoryCompetition
 from mama.forms import RegistrationForm
+from post.models import Post
+from category.models import Category
 
 from mama.constants import (
     RELATION_TO_BABY_CHOICES,
     FULL_DATE_QUALIFIER_CHOICES
 )
+
+
+class MomsStoryPost(Post):
+    primary_category_slug = 'moms-stories'
+
+    class Meta:
+        app_label = 'post'
+        proxy = True
+
+    def save(self, *args, **kwargs):
+        if not self.primary_category:
+            self.primary_category = Category.objects.get(
+                slug=self.primary_category_slug)
+        super(MomsStoryPost, self).save(*args, **kwargs)
+
+
+class ArticlePost(Post):
+    primary_category_slug = 'articles'
+
+    class Meta:
+        app_label = 'post'
+        proxy = True
+
+    def save(self, *args, **kwargs):
+        if not self.primary_category:
+            self.primary_category = Category.objects.get(
+                slug=self.primary_category_slug)
+        super(ArticlePost, self).save(*args, **kwargs)
 
 
 class Link(models.Model):
