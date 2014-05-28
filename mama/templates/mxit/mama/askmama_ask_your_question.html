@@ -1,14 +1,13 @@
 {% extends 'base.html' %}
 
 {% load comments %}
+{% load mama_template_tags %}
 
 {% block content %}
 
 <div class="content-inner">
     <div class="items maroon">
-        <div class="h1">
-            Ask our Expert
-        </div>
+        {% mxit_title_bar foreground_color='#FFFFFF' background_color='#B22A2D' text='Ask our Expert' %}
         <div class="item no-pic">
             <div class="meta">
                 <div class="stamp">

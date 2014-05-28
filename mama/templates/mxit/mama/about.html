@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
+{% load mama_template_tags %}
 
 {% block content %}
-    <h1>About MAMA</h1>
+    {% mxit_title_bar foreground_color='#FFFFFF' background_color='#FF6A15' text='About MAMA' %}
     <div class="content-inner">
         <div class="post">
             {{ preferences.SitePreferences.about|safe }}

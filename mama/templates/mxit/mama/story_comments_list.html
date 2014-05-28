@@ -3,14 +3,14 @@
 {% load mama_inclusion_tags %}
 {% load likes_inclusion_tags %}
 {% load moderator_inclusion_tags %}
+{% load mama_template_tags %}
 
 {% block content %}
 {{ block.super }}
 
 <div class="{{ category.color }}">
     <div class="content-inner">
-
-    <div class="h1"> More comments for {{ post.title }} </div>
+    {% mxit_title_bar foreground_color='#FFFFFF' background_color='#872E4D' text='More comments for {{ post.title }}' %}
 
     {% if object_list %}
             <div class="items">

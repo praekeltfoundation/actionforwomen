@@ -1,8 +1,9 @@
 {% load comments %}
 {% load moderator_inclusion_tags %}
+{% load mama_template_tags %}
 
 {% if can_comment %}
-    <div class="h1" id="comments">Comments</div>
+    {% mxit_title_bar foreground_color='#FFFFFF' background_color='#872E4D' text='Comments' %}
 
     {% if request.GET.commentaction == 'add' %}
     {% if can_render_comment_form %}
