@@ -32,6 +32,8 @@ from mama.models import (
     SitePreferences,
     Banner,
     DefaultAvatar,
+    ArticlePost,
+    MomsStoryPost
 )
 
 
@@ -60,6 +62,18 @@ class PostAdmin(MamaModelbaseAdmin):
         NavigationLinkInline,
         ContentQuizInline
     ]
+    list_display = (
+        'title', 'primary_category', 'publish_on', 'retract_on',
+        '_get_absolute_url', 'owner', 'created', '_actions'
+    )
+    ordering = ('-publish_on', '-created')
+
+
+class MamaPostAdmin(PostAdmin):
+    def queryset(self, request):
+        qs = super(MamaPostAdmin, self).queryset(request)
+        return qs.filter(
+            primary_category__slug=self.model.primary_category_slug)
 
 
 class MamaPollAdmin(PollAdmin):
@@ -278,6 +292,8 @@ try:
 except NotRegistered:
     pass
 admin.site.register(Post, PostAdmin)
+admin.site.register(ArticlePost, MamaPostAdmin)
+admin.site.register(MomsStoryPost, MamaPostAdmin)
 admin.site.register(Poll, MamaPollAdmin)
 
 admin.site.unregister(Comment)
