@@ -10,8 +10,6 @@
 
 {% block content %}
     <div class="{{ category.color }}">
-        <h1>{{ category.title }}</h1>
-        {% comment %}
         {% with color=category.color %}
             {% if color == 'yorange' %}
                 {% mxit_title_bar foreground_color='#FFFFFF' background_color='#FF6A15' text=category.title %}
@@ -26,7 +24,6 @@
                 {% mxit_title_bar foreground_color='#000000' background_color='#FFFFFF' text=category.title %}
             {% endif %}
         {% endwith %}
-        {% endcomment %}
         <div class="content-inner">
             <div class="post">
                 <h2>{{ object.title }}</h2>

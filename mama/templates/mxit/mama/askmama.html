@@ -24,7 +24,7 @@ Used for the AskMAMA section
                 {% if weeks_ago == 0 %}
                 <div class="items {{category.color}}">
                     <div class="item no-pic">
-                        {% comment %}{% mxit_title_bar foreground_color='#FFFFFF' background_color='#B22A2D' text='{{lead_in_post.title}}' %} {% endcomment %}
+                        {% mxit_title_bar foreground_color='#FFFFFF' background_color='#B22A2D' text={{ lead_in_post.title }} %}
                     </div>
                 </div>
                 {% live_chat_banner %}

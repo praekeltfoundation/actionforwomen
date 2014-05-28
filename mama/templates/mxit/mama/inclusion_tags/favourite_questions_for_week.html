@@ -82,13 +82,11 @@
         {% mxit_title_bar foreground_color='#FFFFFF' background_color='#B22A2D' text='More Questions' %}
       {% endif %}
     {% else %}
-    {% comment %}
       {% if weeks_ago == 1 %}
         {% mxit_title_bar foreground_color='#FFFFFF' background_color='#B22A2D' text="Top 10 questions for {{ week_start|date:'d M Y' }}" %}
       {% else %}
         {% mxit_title_bar foreground_color='#FFFFFF' background_color='#B22A2D' text="Questions older than {{ week_end|date:'d M Y' }} " %}
       {% endif %}
-    {% endcomment %}
   <div class="content-inner">
     <div class="items">
 
