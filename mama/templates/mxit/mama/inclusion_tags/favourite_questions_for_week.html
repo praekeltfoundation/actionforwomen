@@ -17,12 +17,6 @@
       </div>
     </div>
   {% endif %}
-  {% if questions.number == 1 %}
-    {# display the top 10 questions banner only the first page of this week. #}
-    <div class="top_10_questions">
-      <img src="{{ STATIC_URL }}mama/img/top_10_questions.jpg" />
-    </div>
-  {% endif %}
 {% endif %}
 
 {% if weeks_ago > 1 %}
@@ -55,20 +49,6 @@
 
 <div class="{{ category.color }}">
 
-  {% if weeks_ago == 0 and questions.number == 1 %}
-  <div class="text_banner">
-    <div class="banner_content">
-      <p>
-      <strong>
-        <a href="{% url askmama_detail %}?wk=1">
-          Read last week's top 10 &raquo;
-        </a>
-      </strong>
-      </p>
-    </div>
-  </div>
-  {% endif %}
-
   {% if weeks_ago == 1 %}
   <div class="h1" id="comments">
     <a href="{% url askmama_detail %}">Ask MAMA</a> &gt; Last week's Q&amp;A
@@ -87,6 +67,23 @@
       {% else %}
         {% mxit_title_bar foreground_color='#FFFFFF' background_color='#B22A2D' text="Questions older than {{ week_end|date:'d M Y' }} " %}
       {% endif %}
+    {% endif %}
+  </div>
+
+  {% if weeks_ago == 0 and questions.number == 1 %}
+  <div class="text_banner">
+    <div class="banner_content">
+      <p>
+      <strong>
+        <a href="{% url askmama_detail %}?wk=1">
+          Read last week's top 10 &raquo;
+        </a>
+      </strong>
+      </p>
+    </div>
+  </div>
+  {% endif %}
+
   <div class="content-inner">
     <div class="items">
 
