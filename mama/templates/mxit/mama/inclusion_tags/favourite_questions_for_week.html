@@ -63,9 +63,15 @@
       {% endif %}
     {% else %}
       {% if weeks_ago == 1 %}
-        {% mxit_title_bar foreground_color='#FFFFFF' background_color='#B22A2D' text="Top 10 questions for {{ week_start|date:'d M Y' }}" %}
+        {% with for_week=week_start|date:'d M Y' %}
+        {% mxit_combine 'Top 10 questions for ' for_week as title_msg %}
+        {% mxit_title_bar foreground_color='#FFFFFF' background_color='#B22A2D' text=title_msg %}
+        {% endwith %}
       {% else %}
-        {% mxit_title_bar foreground_color='#FFFFFF' background_color='#B22A2D' text="Questions older than {{ week_end|date:'d M Y' }} " %}
+        {% with for_week=week_end|date:'d M Y' %}
+        {% mxit_combine 'Questions older than ' for_week as title_msg %}
+        {% mxit_title_bar foreground_color='#FFFFFF' background_color='#B22A2D' text=title_msg %}
+        {% endwith %}
       {% endif %}
     {% endif %}
   </div>
