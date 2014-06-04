@@ -271,10 +271,6 @@ class HiddenModelAdmin(admin.ModelAdmin):
         return {}
 
 
-class ModelBaseAdmin(MamaModelbaseAdmin, HiddenModelAdmin):
-    pass
-
-
 class AskMamaPreferencesAdmin(PreferencesAdmin):
     raw_id_fields = ('contact_email_recipients', )
 
@@ -309,7 +305,7 @@ class MamaUnsureCommentAdmin(MamaCommentAdmin, UnsureCommentAdmin):
 admin.site.register(SitePreferences, AskMamaPreferencesAdmin)
 admin.site.register(Banner, BannerAdmin)
 admin.site.register(DefaultAvatar, DefaultAvatarAdmin)
-admin.site.register(ModelBase,ModelBaseAdmin)
+admin.site.register(ModelBase,HiddenModelAdmin)
 try:
     admin.site.unregister(Post)
     admin.site.unregister(Poll)
@@ -341,9 +337,6 @@ admin.site.register(LiveChat, MamaLiveChatAdmin)
 
 admin.site.register(AskMamaQuestion, AskMamaQuestionAdmin)
 
-for model in [
-        Relation,
-    ]:
-    admin.site.unregister(model)
-    admin.site.register(model, HiddenModelAdmin)
+admin.site.unregister(Relation)
+admin.site.register(Relation, HiddenModelAdmin)
 
