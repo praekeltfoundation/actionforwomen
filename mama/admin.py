@@ -64,13 +64,21 @@ class PostAdmin(MamaModelbaseAdmin):
     ]
     list_display = (
         'title', 'primary_category', 'publish_on', 'retract_on',
-        '_get_absolute_url', 'is_featured', 'created', '_actions'
+        '_get_absolute_url', 'is_featured', 'created', '_actions','_view_comments'
     )
     ordering = ('-publish_on', '-created')
 
     def is_featured(self, obj, *args, **kwargs):
         return obj.categories.filter(slug='featured').exists()
     is_featured.boolean = True
+
+
+    def _view_comments(self, article):
+        return '<a href="/admin/post/%s/%s/moderate/">View (%s)</a>' % (article._meta.module_name,
+            article.pk, article.comment_count)
+
+    _view_comments.short_description = 'Comments'
+    _view_comments.allow_tags = True
 
 
 class MamaPostAdmin(PostAdmin):
