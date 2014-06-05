@@ -7,7 +7,15 @@
     {% if can_vote_on_poll and not request.GET.results %}
         <form action="{% url poll_vote object.slug %}" method="POST" id="poll-widget-form-{{ object.id }}">
             {% csrf_token %}
-            {{ form.as_div }}
+
+            <div class="field">
+                <select name="{{ form.poll_option.name }}">
+                    {% for choice in form.poll_option %}
+                        <option id="id_{{ choice.name }}_{{ forloop.counter0 }}" value="{{ choice.choice_value }}">{{ choice.choice_label }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
             <div class="row">
                 <input type="submit" value="{% trans "Vote" %}" class="btn" />
             </div>

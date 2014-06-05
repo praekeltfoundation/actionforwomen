@@ -1,7 +1,9 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+{% load mama_template_tags %}
 
 {% block content %}
-<h1>My Profile</h1>
+
+{% mxit_title_bar foreground_color='#FFFFFF' background_color='#FF6A15' text='My Profile' %}
 {% if form.errors or form.non_field_errors %}
 <div class="errors">
     <p>Oops, please make sure of the following:</p>
@@ -22,8 +24,7 @@
 
 <form method="post" id="frmProfileEdit" action="">
 {% csrf_token %}
-
-    <h1>About Me</h1>
+    {% mxit_title_bar foreground_color='#FFFFFF' background_color='#FF6A15' text='About Me' %}
     <div class="row">
         {{ form.username.label_tag }}
         {% if form.username.errors %}
@@ -96,8 +97,7 @@
     <div class="row">
       <br/>
     </div>
-
-    <h1>About My Baby</h1>
+    {% mxit_title_bar foreground_color='#FFFFFF' background_color='#FF6A15' text='About My Baby' %}
     <div class="row">
         {{ form.baby_name.label_tag }}
         {% if form.baby_name.errors %}

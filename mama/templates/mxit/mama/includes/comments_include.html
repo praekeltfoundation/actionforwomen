@@ -1,9 +1,9 @@
 {% load comments %}
 {% load likes_inclusion_tags %}
-{% load moderator_inclusion_tags %}
+{% load moderator_inclusion_tags mama_template_tags %}
 
 {% if can_comment %}
-    <div class="h1" id="comments">Comments</div>
+    {% mxit_title_bar foreground_color='#FFFFFF' background_color='#B22A2D' text='Comments' %}
 
     {% if request.GET.commentaction == 'add' %}
     {% if can_render_comment_form %}
@@ -23,6 +23,7 @@
                   <div class="stamp">{{ comment.comment|linebreaks }}</div>
               </div>
           </div>
+          <span>---</span>
       {% empty %}
           <div class="item comment no-pic">
               <div class="meta">
