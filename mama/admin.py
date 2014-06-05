@@ -305,7 +305,7 @@ class MamaUnsureCommentAdmin(MamaCommentAdmin, UnsureCommentAdmin):
 admin.site.register(SitePreferences, AskMamaPreferencesAdmin)
 admin.site.register(Banner, BannerAdmin)
 admin.site.register(DefaultAvatar, DefaultAvatarAdmin)
-admin.site.register(ModelBase,HiddenModelAdmin)
+admin.site.register(ModelBase, HiddenModelAdmin)
 try:
     admin.site.unregister(Post)
     admin.site.unregister(Poll)
