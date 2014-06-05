@@ -184,6 +184,7 @@
 
   {% if questions.has_other_pages %}
   <CONTAINER type="data">
+    <TEXT>
     {% if questions.has_previous %}
     <LINK href="?page={{ questions.previous_page_number }}&amp;wk={{ weeks_ago }}&amp;sort={{ sort }}"><TEXT>&#171; Prev</TEXT></LINK>
     {% else %}
@@ -197,6 +198,7 @@
     {% else %}
     Next &#187;
     {% endif %}
+    </TEXT>
   </CONTAINER>
   {% endif %}
 
