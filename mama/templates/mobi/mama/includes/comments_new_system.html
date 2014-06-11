@@ -1,0 +1,43 @@
+{% load comments %}
+{% load moderator_inclusion_tags %}
+
+{% if user.profile.banned %}
+     <div class="post">
+     {% if user.profile.ban_duration == 1 %}
+         <b>You are banned from commenting for the rest of the day because a comment you made was reported by the
+         community. You will be able to comment again tomorrow</b><br><br/>
+
+         Don't know why your comment was reported? <a href="mama/includes/comment_terms.html">Read the rules here</a>
+
+     {% else %}
+
+     <b>You are banned from commenting for {{ user.profile.ban_duration }} days because a comment you made was reported by a
+        MAMA Moderator</b><br><br/>
+
+         Don't know why your comment was reported? <a href="mama/includes/comment_terms.html">Read the rules here</a>
+
+     {% endif %}
+ </div>
+        {% else %}
+
+            {% if user.profile.accepted_commenting_terms %}
+                {% render_comment_form for object %}
+                <div class="post">
+                Don't know the commenting rules? <a href="{% url comment-terms %}">Read them here</a>
+                </div>
+
+            {% else %}
+                <div class="post">
+                <b>Want to comment? You will need to accept our new commenting rules first.</b><br><br/>
+                <b>Commenting Rules</b><br/>
+                The MAMA community likes comments that show you’re as serious about yourself and your family’s future as we are.  But there are comments that we don’t like: swear words, dirty words, sexy-talk, pick-ups, come-ons, rudeness, abusiveness, racism, sexism, forcing your religious beliefs on others and posting your phone number or email address in the comments stream.<br><br/>
+                <b>MAMA operates on a zero tolerance basis when it comes to inappropriate use of our site. This means:</b><br/>
+                1. Moderators will remove the comments we don’t like. If your comment is removed by a moderator you will be banned from commenting on MAMA for 3 days.<br/>
+                2. Any MAMA user (yourself included) can remove comments that are offensive by clicking ‘Report’. If your comment is reported by another community member [1] you will be banned from commenting on MAMA for 1 day.<br><br/>
+                Help keep MAMA clean by abiding by the rules and reporting any inappropriate behaviour.<br/>
+                <br><br/>
+                <a href="{% url agree_comment %}" type="submit" class="btn">Accept</a>
+                <br><br/>
+                </div>
+            {% endif %}
+    {% endif %}

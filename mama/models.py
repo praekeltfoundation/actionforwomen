@@ -226,6 +226,24 @@ class UserProfile(AbstractProfileBase):
         default=False,
         blank=True,
     )
+
+    last_banned_date = models.DateField(
+        help_text='The Date on which the user was banned',
+        blank=True,
+        null=True,
+    )
+
+    ban_duration = models.IntegerField(
+        help_text='The length of time in days the user will be banned',
+        blank=True,
+        null=True,
+    )
+
+    accepted_commenting_terms = models.BooleanField(
+        help_text='If a user has accepted the new commenting terms',
+        default=False,
+        blank=True,
+    )
     decline_surveys = models.BooleanField(
         help_text='Whether or not user declined to paricipate in surveys.',
         default=False,

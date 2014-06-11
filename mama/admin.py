@@ -14,6 +14,7 @@ from moderator.admin import (
     SpamCommentAdmin, UnsureCommentAdmin)
 from moderator.models import (
     HamComment, ReportedComment, SpamComment, UnsureComment)
+from moderator import utils
 
 from secretballot.models import Vote
 from post.models import Post
@@ -268,6 +269,24 @@ class MamaCommentAdmin(CommentAdmin):
         if obj.name.lower().startswith('anon'):
             return obj.user.username
         return obj.name
+
+    def mark_spam(self, modeladmin, request, queryset):
+        for comment in queryset:
+            utils.classify_comment(comment, cls='spam')
+
+            comment.is_removed = True
+            comment.save()
+            profile = comment.user.profile
+            profile.last_banned_date = datetime.today()
+            profile.banned = True
+            profile.ban_duration = 3
+            profile.save()
+
+        self.message_user(
+            request,
+            "%s comment(s) successfully marked as spam." % queryset.count()
+        )
+    mark_spam.short_description = "Mark selected comments as spam"
 
 
 class MamaHamCommentAdmin(MamaCommentAdmin, HamCommentAdmin):

@@ -24,3 +24,13 @@ def format_html_string(html_string):
     lines = clean_string.split("\n")
     clean_string = "\n\n".join([line.strip() for line in lines if line.strip()])
     return clean_string
+
+
+def unban_user(user):
+    from mama.models import UserProfile
+    profile = UserProfile.objects.get_or_create(profile=user)
+    profile.banned = False
+    profile.ban_duration = 0
+    profile.save()
+
+    return profile
