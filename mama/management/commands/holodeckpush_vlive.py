@@ -33,7 +33,10 @@ class Command(BaseCommand):
         client = Client(server='http://holodeck.praekelt.com')
         ga_service = utils.get_service()
 
-        vlive_users = User.objects.filter(userprofile__origin='vlive')
+        vlive_users = User.objects.extra(
+            where=['last_login - date_joined>%s'],
+            params=[timedelta(seconds=60)]
+        ).filter(userprofile__origin='vlive')
 
         print "Pushing Vlive Weekly Users"
         client.send(
@@ -107,7 +110,10 @@ class Command(BaseCommand):
 
         range_end = datetime_obj
         range_start_cumulative = datetime(2013, 1, 1)
-        vlive_users = User.objects.filter(userprofile__origin='vlive')
+        vlive_users = User.objects.extra(
+            where=['last_login - date_joined>%s'],
+            params=[timedelta(seconds=60)]
+        ).filter(userprofile__origin='vlive')
 
         print "Pushing Mobi Users Cumulative"
         client.send(
