@@ -37,7 +37,7 @@ CACHES['default']['KEY_PREFIX'] = 'mama_vlive'
 
 PML_IGNORE_PATH = ['/djga/', '/google-credentials/', ]
 GOOGLE_ANALYTICS_IGNORE_PATH = ['/health/', ]
-REMOTE_USER_IGNORE_PATH = ['/vlivebanner/', ]
+REMOTE_USER_IGNORE_PATH = ['/vlivebanner/', '/favicon.ico']
 
 GOOGLE_ANALYTICS = {
     'google_analytics_id': 'MO-40632967-1',
