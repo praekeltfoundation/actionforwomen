@@ -24,7 +24,7 @@ def prod(ssh_user=None):
 
     env.hosts = ['%s@prd-mama.za.prk-host.net' % ssh_user]
     env.is_prod = True
-
+    env.sudo_user = 'ubuntu'
 
 
 def restart():
