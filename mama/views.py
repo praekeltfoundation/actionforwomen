@@ -862,8 +862,6 @@ def like(request, content_type, id, vote):
 def report_comment(request, content_type, id, vote):
     comment = Comment.objects.get(id=id)
 
-    likes_view(request, content_type, id, vote)
-
     comment.is_removed = True
     comment.save()
     user = comment.user
@@ -874,18 +872,18 @@ def report_comment(request, content_type, id, vote):
         profile.ban_duration = 1
         profile.save()
 
-    redirect_url = reverse('home')
-    if 'HTTP_REFERER' in request.META:
-        redirect_url = '%s?v=%s' % (request.META['HTTP_REFERER'],
-                                        random.randint(0, 10))
-    return redirect(redirect_url)
+
+    return redirect('home')
 
 
 def agree_comment(request):
     profile = request.user.profile
     profile.accepted_commenting_terms = True
     profile.save()
-    return redirect('home')
+    redirect_url = reverse('home')
+    if 'HTTP_REFERER' in request.META:
+        redirect_url = '%s?v=%s' % (request.META['HTTP_REFERER'],None)
+    return redirect(redirect_url)
 
 
 class ConfirmReportView(TemplateView):

@@ -296,9 +296,17 @@ class GeneralPrefrencesTestCase(TestCase):
         resp = self.client.get(article_url)
         self.assertNotContains(resp, 'Comments are closed.')
 
+        #Create and login user
+        user = User.objects.create_user('foo', 'foo@foo.com', 'foo')
+        profile = UserProfile.objects.create(user=user)
+        profile.accepted_commenting_terms = True
+        profile.save()
+        c = Client()
+        c.login(username='foo',password='foo')
+
         #Comment should be submitted successfully
         params = params_for_comments(self.post, 'sample comment')
-        resp = self.client.post(reverse('post_comment'), params)
+        resp = c.post(reverse('post_comment'), params)
         self.assertEqual(Comment.objects.all().count(), 1)
 
         #ensure commenting closed
@@ -311,7 +319,7 @@ class GeneralPrefrencesTestCase(TestCase):
         cache.clear()
 
         #Comments should be closed
-        resp = self.client.get(reverse('category_object_detail',
+        resp = c.get(reverse('category_object_detail',
             kwargs={'category_slug': 'articles', 'slug': self.post.slug}))
         self.assertContains(resp, 'Comments are currently closed.')
 
