@@ -33,6 +33,9 @@ def send_mxit_message(username, msg):
 
     app_id = settings.MXIT_APP_ID
     client.messaging.send_message(app_id, [username], msg)
+    
+    
+@task
 def unban_users():
     from mama.models import UserProfile
     banned_users = UserProfile.objects.filter(banned=True)
