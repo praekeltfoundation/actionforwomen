@@ -10,7 +10,6 @@ from django.core.cache import cache
 from django.contrib import comments
 from django.test.client import Client
 from django.core.urlresolvers import reverse
-
 from django.core.management import call_command
 from StringIO import StringIO
 import sys
@@ -25,7 +24,6 @@ from preferences import preferences
 from post.models import Post
 from category.models import Category
 
-
 def generate_security_hash(content_type, object_pk, timestamp):
     info = (content_type, str(object_pk), str(timestamp))
     key_salt = "django.contrib.forms.CommentSecurityForm"
@@ -36,6 +34,7 @@ def generate_security_hash(content_type, object_pk, timestamp):
 def params_for_comments(obj, comment):
     content_type = '%s.%s' % (obj._meta.app_label, obj._meta.module_name)
     object_pk = obj.pk
+
     timestamp = "1" * 40
     return {
         'content_type': content_type,
@@ -389,13 +388,38 @@ class GeneralPrefrencesTestCase(TestCase):
         self.assertNotContains(resp, 'You are banned from commenting')
 
         #ban user
-        profile.banned = True
-        profile.save()
+        utils.ban_user(user)
 
         #check user cannot comment
         resp = c.get(reverse('category_object_detail',
             kwargs={'category_slug': 'articles', 'slug': self.post.slug}))
         self.assertContains(resp, 'You are banned from commenting')
+
+
+    def test_unban_user(self):
+        #Create banned and login user
+        user = User.objects.create_user('foo', 'foo@foo.com', 'foo')
+        profile = UserProfile.objects.create(user=user)
+        profile.accepted_commenting_terms = True
+        profile.banned = True
+        profile.last_banned_date = date.today() - timedelta(days=1)
+        profile.ban_duration = 1
+        profile.save()
+        c = Client()
+        c.login(username='foo',password='foo')
+
+        #check user cannot comment
+        resp = c.get(reverse('category_object_detail',
+            kwargs={'category_slug': 'articles', 'slug': self.post.slug}))
+        self.assertContains(resp, 'You are banned from commenting')
+
+        #unban user
+        utils.unban_user(user)
+
+        #check user can comment
+        resp = c.get(reverse('category_object_detail',
+            kwargs={'category_slug': 'articles', 'slug': self.post.slug}))
+        self.assertNotContains(resp, 'You are banned from commenting')
 
     def test_banned_words(self):
         article_url = reverse('category_object_detail',

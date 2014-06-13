@@ -866,11 +866,8 @@ def report_comment(request, content_type, id, vote):
     comment.save()
     user = comment.user
     if user is not None:
-        profile = user.profile
-        profile.banned = True
-        profile.last_banned_date = datetime.today()
-        profile.ban_duration = 1
-        profile.save()
+        from mama.utils import ban_user
+        ban_user(user)
 
 
     return redirect('home')
