@@ -26,7 +26,7 @@
                 </div>
         {% else %}
             {% if user.profile.accepted_commenting_terms %}
-                {% render_comment_form for object %}
+                <a href="{{ request.path }}?commentaction=add">Add Your Comment &raquo;</a>
                 <div class="post">
                 Don't know the commenting rules? <a href="{% url comment-terms %}">Read them here</a>
                 </div>

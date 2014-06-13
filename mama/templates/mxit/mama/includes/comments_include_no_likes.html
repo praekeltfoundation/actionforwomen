@@ -8,19 +8,27 @@
     {% if request.GET.commentaction == 'add' %}
     {% if can_render_comment_form %}
         {% render_comment_form for object %}
+        Don't know the commenting rules? <a href="{% url comment-terms %}">Read them here</a>
     {% endif %}
     {% else %}
     <div class="items">
       {% for comment in comments %}
           <div class="item comment no-pic">
-              <div class="meta">
+              <<div class="meta">
                   <div class="title">{{ comment.name }}</div>
                   <div class="stamp">{{ comment.submit_date }}
                     {% if not comment.user.is_staff %}
-                      | {% report_comment_abuse comment %}
+                        {% if not comment.is_removed %}
+                            | | <a href="{% url confirm_comment comment.content_type comment.id %}">Report</a>
+                        {% endif %}
                     {% endif %}
-                    </div>
+                  </div>
+                  {% if comment.is_removed %}
+                  <div class="stamp">This comment has been reported by the community and the user has been banned<br><br/>
+                    Don't know the commenting rules? <a href="{% url comment-terms %}">Read them here</a></div>
+                  {% else %}
                   <div class="stamp">{{ comment.comment|linebreaks }}</div>
+                  {% endif %}
               </div>
           </div>
           <span>---</span>
@@ -46,6 +54,7 @@
         </div>
     </div>
     {% endif %}
-    <a href="{{ request.path }}?commentaction=add">Add Your Comment &raquo;</a>
+    {% include 'mama/includes/comments_new_system.html' %}
+
     {% endif %}
 {% endif %}

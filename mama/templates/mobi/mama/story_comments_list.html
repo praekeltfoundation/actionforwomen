@@ -18,19 +18,19 @@
                   <div class="item comment no-pic">
                       <div class="meta">
                          <div class="title">{{ comment.name }}</div>
-                  <div class="stamp">{{ comment.submit_date }}
-                    {% if not comment.user.is_staff %}
+                            <div class="stamp">{{ comment.submit_date }}
+                        {% if not comment.user.is_staff %}
                         {% if not comment.is_removed %}
                             | {% report_comment_abuse comment %}
                         {% endif %}
-                    {% endif %}
-                  </div>
-                  {% if comment.is_removed %}
-                  <div class="stamp">This comment has been reported by the community and the user has been banned<br><br/>
-                    Don't know the commenting rules? <a href="{% url comment-terms %}">Read them here</a></div>
-                  {% else %}
-                  <div class="stamp">{{ comment.comment|linebreaks }}</div>
-                  {% endif %}
+                        {% endif %}
+                            </div>
+                        {% if comment.is_removed %}
+                        <div class="stamp">This comment has been reported by the community and the user has been banned<br><br/>
+                        Don't know the commenting rules? <a href="{% url comment-terms %}">Read them here</a></div>
+                        {% else %}
+                        <div class="stamp">{{ comment.comment|linebreaks }}</div>
+                        {% endif %}
                       </div>
                   </div>
               {% endfor %}
