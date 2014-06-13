@@ -7,14 +7,14 @@
          <b>You are banned from commenting for the rest of the day because a comment you made was reported by the
          community. You will be able to comment again tomorrow</b><br><br/>
 
-         Don't know why your comment was reported? <a href="mama/includes/comment_terms.html">Read the rules here</a>
+         Don't know why your comment was reported? <a href="{% url comment-terms %}">Read them here</a>
 
      {% else %}
 
      <b>You are banned from commenting for {{ user.profile.ban_duration }} days because a comment you made was reported by a
         MAMA Moderator</b><br><br/>
 
-         Don't know why your comment was reported? <a href="mama/includes/comment_terms.html">Read the rules here</a>
+         Don't know why your comment was reported? <a href="{% url comment-terms %}">Read them here</a>
 
      {% endif %}
  </div>
