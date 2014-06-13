@@ -309,6 +309,7 @@ class GeneralPrefrencesTestCase(TestCase):
         resp = c.post(reverse('post_comment'), params)
         self.assertEqual(Comment.objects.all().count(), 1)
 
+
         #ensure commenting closed
         pref = SitePreferences.objects.get(pk=preferences.SitePreferences.pk)
         pref.commenting_time_on = time(23, 59, 59)
@@ -329,6 +330,72 @@ class GeneralPrefrencesTestCase(TestCase):
         self.assertEqual(resp.status_code, 400)
 
         self.assertEqual(Comment.objects.all().count(), 1)
+
+    def test_accept_new_terms(self):
+        #Create and login user
+        user = User.objects.create_user('foo', 'foo@foo.com', 'foo')
+        profile = UserProfile.objects.create(user=user)
+        profile.save()
+        c = Client()
+        c.login(username='foo',password='foo')
+
+        #ensure user is prompted to accept terms
+        resp = c.get(reverse('category_object_detail',
+            kwargs={'category_slug': 'articles', 'slug': self.post.slug}))
+        self.assertContains(resp, 'Want to comment? You will need to accept our new commenting rules first.')
+
+        #agree to terms
+        c.post(reverse('agree_comment'))
+        resp = c.get(reverse('category_object_detail',
+            kwargs={'category_slug': 'articles', 'slug': self.post.slug}))
+
+        #Check agree terms message is gone
+        self.assertNotContains(resp,'Want to comment? You will need to accept our new commenting rules first.')
+
+    def test_report_user(self):
+        #post unsafe comment
+        params = params_for_comments(self.post, 'sample unsafe comment')
+        self.client.post(reverse('post_comment'), params)
+
+        #Create and login user
+        user = User.objects.create_user('foo', 'foo@foo.com', 'foo')
+        profile = UserProfile.objects.create(user=user)
+        profile.save()
+        c = Client()
+        c.login(username='foo',password='foo')
+
+        #report user
+        c.get(reverse('confirm_comment',kwargs={'content_type':'Post','id':1}))
+        c.post(reverse('report_comment',kwargs={'content_type':'Post','id':1,'vote':-1}))
+
+        #check comment banned
+        resp = c.get(reverse('category_object_detail',
+            kwargs={'category_slug': 'articles', 'slug': self.post.slug}))
+        self.assertContains(resp,'This comment has been reported by the community and the user has been banned')
+
+    def test_banned_user_comment(self):
+        #Create and login user
+        user = User.objects.create_user('foo', 'foo@foo.com', 'foo')
+        profile = UserProfile.objects.create(user=user)
+        profile.accepted_commenting_terms = True
+        profile.save()
+        c = Client()
+        c.login(username='foo',password='foo')
+
+        #check user can comment
+        resp = c.get(reverse('category_object_detail',
+            kwargs={'category_slug': 'articles', 'slug': self.post.slug}))
+        self.assertNotContains(resp, 'Want to comment? You will need to accept our new commenting rules first.')
+        self.assertNotContains(resp, 'You are banned from commenting')
+
+        #ban user
+        profile.banned = True
+        profile.save()
+
+        #check user cannot comment
+        resp = c.get(reverse('category_object_detail',
+            kwargs={'category_slug': 'articles', 'slug': self.post.slug}))
+        self.assertContains(resp, 'You are banned from commenting')
 
     def test_banned_words(self):
         article_url = reverse('category_object_detail',
