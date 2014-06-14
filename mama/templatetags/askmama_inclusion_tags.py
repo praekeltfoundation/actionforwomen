@@ -36,8 +36,18 @@ def favourite_questions_for_week(context, post,
     can_vote, end_thursday, start_friday = askmama_can_vote(weeks_ago, datetime.now())
 
 
+    # Subtract the amount of weeks in the past.
+    if weeks_ago > 0:
+        start_friday = start_friday + relativedelta(weeks=-weeks_ago)
+        end_thursday = end_thursday + relativedelta(weeks=-weeks_ago)
 
-    questions = Comment.objects.all()
+    if weeks_ago < 2:
+        # Filter the questions between the date range
+        questions = Comment.objects.filter(submit_date__range=(start_friday, 
+                                                               end_thursday,))
+    else:
+        # Filter all the older questions.
+        questions = Comment.objects.filter(submit_date__lt=(end_thursday)) 
 
 
 
@@ -49,7 +59,7 @@ def favourite_questions_for_week(context, post,
     questions = questions.exclude(is_removed=True)
 
     # leave out the moderator answers
-    #questions = questions.exclude(user__is_staff=True)
+    questions = questions.exclude(user__is_staff=True)
 
     # Work out the vote count for the questions, to sort by the most liked
     # questions, i.e. questions with the most votes. (This is taken from the
