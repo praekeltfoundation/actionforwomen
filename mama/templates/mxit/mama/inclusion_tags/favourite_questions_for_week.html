@@ -5,7 +5,7 @@
 
 {% if weeks_ago == 0 %}
   {% if can_render_comment_form %}
-      {% if can_vote %}
+      {% if askmama_can_vote %}
     <div class="text_banner">
       <div class="banner_content">
         <p>
@@ -107,7 +107,7 @@
           style="background-color: #fee;"
           {% endif %} >
           <div class="meta">
-          {% if can_vote %}
+          {% if askmama_can_vote %}
             <div class="stamp">{% likes question template='likes/inclusion_tags/votes.html' %}</div>
           {% endif %}
             {% if question.replied_to_comments_set.count > 0 %}
@@ -128,7 +128,7 @@
           {% endcomment %}
 
           </div>
-            {% if can_render_comment_form and can_vote %}
+            {% if can_render_comment_form and askmama_can_vote %}
             <div class="text_banner">
               <div class="banner_content">
                 <p>
@@ -146,7 +146,7 @@
               <div class="item comment no-pic">
                 <div class="meta">
                   <div class="stamp" style="color: #b22a2d;">
-                     {% if can_vote %}
+                     {% if askmama_can_vote %}
                     Vote for these questions to move them up to the top 10
                     list.
                     {% else %}

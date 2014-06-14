@@ -4,7 +4,7 @@
 {% load pml_inclusion_tags %}
 
 {% if weeks_ago == 0 %}
-  {% if can_render_comment_form and can_vote %}
+  {% if can_render_comment_form and askmama_can_vote %}
   <MODULE>
     <CONTAINER type="data">
       <TEXT>
@@ -126,7 +126,7 @@
         {% else %}
           {{ question.comment|linebreaks }}
         {% endif %}
-        {% if can_vote %}
+        {% if askmama_can_vote %}
         {% likes question template='likes/inclusion_tags/votes.html' %}
         {% endif %}
         </p>
@@ -141,7 +141,7 @@
       {% endcomment %}
 
       </MODULE>
-      {% if can_render_comment_form and can_vote %}
+      {% if can_render_comment_form and askmama_can_vote %}
         <MODULE>
           <CONTAINER type="data">
             <TEXT>
@@ -161,7 +161,7 @@
         <CONTAINER type="data">
           <TEXT>
             <p>
-               {% if can_vote %}
+               {% if askmama_can_vote %}
                     Vote for these questions to move them up to the top 10
                     list.
                     {% else %}
