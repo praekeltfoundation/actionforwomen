@@ -24,3 +24,15 @@ def format_html_string(html_string):
     lines = clean_string.split("\n")
     clean_string = "\n\n".join([line.strip() for line in lines if line.strip()])
     return clean_string
+
+
+def disable_vote_comment(post):
+    from mama.models import Comment
+    post.comments_enabled = False
+    post.save()
+    comments = Comment.objects.filter(object_pk=post.id)
+    for comment in comments:
+        comment.likes_enabled = False
+        comment.save()
+
+    return post
