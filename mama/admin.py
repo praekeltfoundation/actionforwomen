@@ -6,7 +6,7 @@ from django.contrib import admin
 from django.contrib.comments.models import Comment
 from django.contrib.admin.sites import NotRegistered
 from django.contrib.contenttypes.models import ContentType
-
+from jmbo.models import ModelBase,Relation
 from jmbo.admin import ModelBaseAdmin
 from preferences.admin import PreferencesAdmin
 from moderator.admin import (
@@ -43,6 +43,8 @@ class MamaModelbaseAdmin(AdminModeratorMixin, ModelBaseAdmin):
 class LinkInline(admin.TabularInline):
     model = Link
     fk_name = 'source'
+    extra = 1
+    raw_id_fields = ('target', )
 
 
 class NavigationLinkInline(admin.TabularInline):
@@ -254,6 +256,20 @@ class AskMamaQuestionAdmin(CommentAdmin):
             return None
 
 
+class HiddenModelAdmin(admin.ModelAdmin):
+    """
+    As of writing Django has difficulty associating admin permissions to
+    Proxy models (see 11154). This class can be used to soft-hide(popup adds
+    etc will still work) models on admin home via code instead of relying on
+    admin permissions.
+    """
+    def get_model_perms(self, request):
+        """
+        Return empty perms dict thus hiding the model from admin index.
+        """
+        return {}
+
+
 class AskMamaPreferencesAdmin(PreferencesAdmin):
     raw_id_fields = ('contact_email_recipients', )
 
@@ -287,7 +303,7 @@ class MamaUnsureCommentAdmin(MamaCommentAdmin, UnsureCommentAdmin):
 admin.site.register(SitePreferences, AskMamaPreferencesAdmin)
 admin.site.register(Banner, BannerAdmin)
 admin.site.register(DefaultAvatar, DefaultAvatarAdmin)
-
+admin.site.register(ModelBase, HiddenModelAdmin)
 try:
     admin.site.unregister(Post)
     admin.site.unregister(Poll)
@@ -317,3 +333,7 @@ admin.site.register(YourStoryEntry, MamaYourStoryEntryAdmin)
 admin.site.register(LiveChat, MamaLiveChatAdmin)
 
 admin.site.register(AskMamaQuestion, AskMamaQuestionAdmin)
+
+admin.site.unregister(Relation)
+admin.site.register(Relation, HiddenModelAdmin)
+
