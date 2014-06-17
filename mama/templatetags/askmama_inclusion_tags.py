@@ -41,6 +41,10 @@ def favourite_questions_for_week(context, post,
                                        hour=0, minute=0,
                                        second=0, microsecond=0, 
                                        microseconds=-1)
+    start_tuesday = NOW + relativedelta(weekday=TU(-1),
+                                       hour=0, minute=0,
+                                       second=0, microsecond=0)
+
     if end_thursday < start_friday:
         end_thursday += relativedelta(weeks=1)
 
@@ -56,6 +60,11 @@ def favourite_questions_for_week(context, post,
     else:
         # Filter all the older questions.
         questions = Comment.objects.filter(submit_date__lt=(end_thursday)) 
+
+    if start_tuesday < NOW < end_thursday:
+        can_vote = False
+    else:
+        can_vote = True
 
     # Filter the comments linked to the post
     pct = ContentType.objects.get_for_model(post.__class__)
@@ -118,5 +127,6 @@ vote=-1 AND object_id=%s.%s AND content_type_id=%s)' % (
     context['weeks_ago'] = weeks_ago
     context['week_start'] = start_friday
     context['week_end'] = end_thursday
+    context['can_vote'] = can_vote
 
     return context
