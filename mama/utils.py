@@ -34,11 +34,11 @@ def unban_user(user):
     return profile
 
 
-def ban_user(user):
+def ban_user(user,duration):
     profile = user.profile
     profile.banned = True
     profile.last_banned_date = datetime.now()
-    profile.ban_duration = 1
+    profile.ban_duration = duration
     profile.save()
 
     return profile

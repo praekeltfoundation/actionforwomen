@@ -388,7 +388,7 @@ class GeneralPrefrencesTestCase(TestCase):
         self.assertNotContains(resp, 'You are banned from commenting')
 
         #ban user
-        utils.ban_user(user)
+        utils.ban_user(user, 1)
 
         #check user cannot comment
         resp = c.get(reverse('category_object_detail',

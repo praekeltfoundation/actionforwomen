@@ -24,7 +24,7 @@ from jmboyourwords.admin import YourStoryEntryAdmin
 from jmboyourwords.models import YourStoryEntry
 from livechat.models import LiveChat
 from livechat.admin import LiveChatAdmin
-
+from mama.utils import ban_user
 from category.models import Category
 from survey.models import ContentQuizToPost
 from mama.models import (
@@ -273,14 +273,7 @@ class MamaCommentAdmin(CommentAdmin):
     def mark_spam(self, modeladmin, request, queryset):
         for comment in queryset:
             utils.classify_comment(comment, cls='spam')
-
-            comment.is_removed = True
-            comment.save()
-            profile = comment.user.profile
-            profile.last_banned_date = datetime.today()
-            profile.banned = True
-            profile.ban_duration = 3
-            profile.save()
+            ban_user(comment.user, 3)
 
         self.message_user(
             request,

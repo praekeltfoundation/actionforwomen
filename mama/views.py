@@ -863,14 +863,11 @@ def like(request, content_type, id, vote):
 def report_comment(request, content_type, id, vote):
     comment = Comment.objects.get(id=id)
 
-    comment.is_removed = True
-    comment.save()
+    classify_comment(comment, 'spam')
     user = comment.user
 
     if user is not None:
-        ban_user(user)
-        classify_comment(comment,'reported')
-
+        ban_user(user, 1)
 
     return redirect('home')
 
