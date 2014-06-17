@@ -27,7 +27,8 @@ from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormView
 from django.views.generic.list import ListView
-
+from mama.utils import ban_user
+from moderator.utils import classify_comment
 from mama.forms import (
     ContactForm,
     DueDateForm,
@@ -865,9 +866,10 @@ def report_comment(request, content_type, id, vote):
     comment.is_removed = True
     comment.save()
     user = comment.user
+
     if user is not None:
-        from mama.utils import ban_user
         ban_user(user)
+        classify_comment(comment,'reported')
 
 
     return redirect('home')
