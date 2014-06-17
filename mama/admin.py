@@ -69,7 +69,8 @@ class PostAdmin(MamaModelbaseAdmin):
     ]
     list_display = (
         'title', 'primary_category', 'publish_on', 'retract_on',
-        '_get_absolute_url', 'is_featured', 'created', '_actions','_view_comments'
+        '_get_absolute_url', 'is_featured', 'created', '_actions',
+        '_view_comments'
     )
     ordering = ('-publish_on', '-created')
 
@@ -78,7 +79,8 @@ class PostAdmin(MamaModelbaseAdmin):
     is_featured.boolean = True
 
     def _view_comments(self, article):
-        return '<a href="/admin/post/%s/%s/moderate/">View (%s)</a>' % (article._meta.module_name,
+        return '<a href="/admin/post/%s/%s/moderate/">View (%s)</a>' % (
+            article._meta.module_name,
             article.pk, article.comment_count)
 
     _view_comments.short_description = 'Comments'
@@ -86,6 +88,7 @@ class PostAdmin(MamaModelbaseAdmin):
 
 
 class MamaPostAdmin(PostAdmin):
+
     def queryset(self, request):
         qs = super(MamaPostAdmin, self).queryset(request)
         return qs.filter(
@@ -140,6 +143,7 @@ class MamaYourStoryEntryAdmin(YourStoryEntryAdmin):
 
 
 class AskMamaQuestion(Comment):
+
     class Meta:
         proxy = True
         verbose_name = "Question for MAMA"
@@ -148,6 +152,7 @@ class AskMamaQuestion(Comment):
 
 
 class WeeklyFilter(admin.filters.SimpleListFilter):
+
     """
     Filter to allow filtering the mama questions by this week, last week, etc.
     """
@@ -200,6 +205,7 @@ class WeeklyFilter(admin.filters.SimpleListFilter):
 
 
 class AskMamaQuestionAdmin(CommentAdmin):
+
     """ Add a filter to filter out 'This week's favourite stories' in CMS
     """
     list_display = ('comment_text', 'user', 'vote_score', 'submit_date',
@@ -268,17 +274,21 @@ class AskMamaQuestionAdmin(CommentAdmin):
 
 
 class HiddenModelAdmin(admin.ModelAdmin):
+
     """
     As of writing Django has difficulty associating admin permissions to
     Proxy models (see 11154). This class can be used to soft-hide(popup adds
     etc will still work) models on admin home via code instead of relying on
     admin permissions.
     """
+
     def get_model_perms(self, request):
         """
         Return empty perms dict thus hiding the model from admin index.
         """
         return {}
+
+
 class AskMamaPreferencesAdmin(PreferencesAdmin):
     raw_id_fields = ('contact_email_recipients', )
 
@@ -288,10 +298,12 @@ class MamaLiveChatAdmin(AdminModeratorMixin, LiveChatAdmin):
 
 
 class MamaCommentAdmin(CommentAdmin):
+
     def get_user_display_name(self, obj):
         if obj.name.lower().startswith('anon'):
             return obj.user.username
         return obj.name
+
     def mark_spam(self, modeladmin, request, queryset):
         for comment in queryset:
             utils.classify_comment(comment, cls='spam')
