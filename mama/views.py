@@ -863,7 +863,7 @@ def like(request, content_type, id, vote):
 def report_comment(request, content_type, id, vote):
     comment = Comment.objects.get(id=id)
 
-    classify_comment(comment, 'spam')
+    classify_comment(comment, 'reported')
     user = comment.user
 
     if user is not None:
