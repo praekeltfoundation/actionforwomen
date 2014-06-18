@@ -1,5 +1,5 @@
 from BeautifulSoup import BeautifulSoup, Tag
-
+from datetime import datetime
 
 def mobile_number_to_international(mobile_number):
     if mobile_number.startswith('0') and len(mobile_number) == 10:
@@ -24,3 +24,21 @@ def format_html_string(html_string):
     lines = clean_string.split("\n")
     clean_string = "\n\n".join([line.strip() for line in lines if line.strip()])
     return clean_string
+
+
+def unban_user(user):
+    profile = user.profile
+    profile.banned = False
+    profile.save()
+
+    return profile
+
+
+def ban_user(user,duration):
+    profile = user.profile
+    profile.banned = True
+    profile.last_banned_date = datetime.now()
+    profile.ban_duration = duration
+    profile.save()
+
+    return profile

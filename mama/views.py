@@ -27,7 +27,8 @@ from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormView
 from django.views.generic.list import ListView
-
+from mama.utils import ban_user
+from moderator.utils import classify_comment
 from mama.forms import (
     ContactForm,
     DueDateForm,
@@ -139,7 +140,6 @@ class StoryCommentsView(ListView):
         comments = Comment.objects.filter(
             content_type=pct,
             object_pk=post.id)
-        comments = comments.exclude(is_removed=True)
         comments = comments.order_by('-submit_date')
         comments = comments[5:]
 
@@ -858,3 +858,39 @@ def like(request, content_type, id, vote):
         redirect_url = '%s?v=%s' % (request.META['HTTP_REFERER'],
                                         random.randint(0, 10))
     return redirect(redirect_url)
+
+
+def report_comment(request, content_type, id, vote):
+    comment = Comment.objects.get(id=id)
+
+    classify_comment(comment, 'reported')
+    user = comment.user
+
+    if user is not None:
+        ban_user(user, 1)
+
+    return redirect('home')
+
+
+def agree_comment(request):
+    profile = request.user.profile
+    profile.accepted_commenting_terms = True
+    profile.save()
+    redirect_url = reverse('home')
+    if 'HTTP_REFERER' in request.META:
+        redirect_url = '%s?v=%s' % (request.META['HTTP_REFERER'],None)
+    return redirect(redirect_url)
+
+
+class ConfirmReportView(TemplateView):
+    template_name = "moderator/inclusion_tags/confirm_report_comment.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(ConfirmReportView, self).get_context_data(**kwargs)
+        cid = kwargs['id']
+        comment = Comment.objects.get(id=cid)
+        context.update({
+                'comment': comment
+            })
+
+        return context

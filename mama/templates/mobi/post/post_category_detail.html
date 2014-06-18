@@ -41,7 +41,7 @@
             </div>
             {% endcache %}
 
-            {% include 'mama/includes/comments_include_no_likes.html' %}
+            {% mama_object_comments object %}
 
             {% cache 3600 baby_center_byline object.id %}
                 {% babycenter_byline object %}
