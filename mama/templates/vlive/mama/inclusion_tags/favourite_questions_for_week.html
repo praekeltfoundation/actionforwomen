@@ -4,7 +4,7 @@
 {% load pml_inclusion_tags %}
 
 {% if weeks_ago == 0 %}
-  {% if can_render_comment_form %}
+  {% if can_render_comment_form and can_vote %}
   <MODULE>
     <CONTAINER type="data">
       <TEXT>
@@ -126,7 +126,9 @@
         {% else %}
           {{ question.comment|linebreaks }}
         {% endif %}
+        {% if can_vote %}
         {% likes question template='likes/inclusion_tags/votes.html' %}
+        {% endif %}
         </p>
       </TEXT>
     </CONTAINER>
@@ -139,7 +141,7 @@
       {% endcomment %}
 
       </MODULE>
-      {% if can_render_comment_form %}
+      {% if can_render_comment_form and can_vote %}
         <MODULE>
           <CONTAINER type="data">
             <TEXT>
@@ -159,7 +161,12 @@
         <CONTAINER type="data">
           <TEXT>
             <p>
-              Vote for these questions to move them up to the top 10 list.
+               {% if can_vote %}
+                    Vote for these questions to move them up to the top 10
+                    list.
+                    {% else %}
+                          Voting for questions has closed for this week
+                    {% endif %}
               <br/>
             </p>
           </TEXT>
