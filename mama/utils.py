@@ -1,5 +1,6 @@
 from BeautifulSoup import BeautifulSoup, Tag
 from datetime import datetime
+from dateutil.relativedelta import *
 
 def mobile_number_to_international(mobile_number):
     if mobile_number.startswith('0') and len(mobile_number) == 10:
@@ -42,3 +43,32 @@ def ban_user(user,duration):
     profile.save()
 
     return profile
+
+
+def askmama_can_vote(weeks_ago, now):
+    start_friday = now + relativedelta(weekday=FR(-1),
+                                       hour=0, minute=0,
+                                       second=0, microsecond=0)
+    end_thursday = now + relativedelta(weekday=TH(+1),
+                                       hour=0, minute=0,
+                                       second=0, microsecond=0,
+                                       microseconds=-1)
+
+    if end_thursday < start_friday:
+        end_thursday += relativedelta(weeks=1)
+
+
+    start_tuesday = end_thursday + relativedelta(weekday=TU(-1),
+                                       hour=0, minute=0,
+                                       second=0, microsecond=0)
+
+    if weeks_ago > 0:
+        end_thursday = end_thursday + relativedelta(weeks=-weeks_ago)
+
+
+    if start_tuesday < now < end_thursday:
+        can_vote = False
+    else:
+        can_vote = True
+
+    return can_vote, end_thursday, start_friday
