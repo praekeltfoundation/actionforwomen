@@ -22,7 +22,7 @@
                             <div class="stamp">{{ comment.submit_date }}
                         {% if not comment.user.is_staff %}
                         {% if not comment.is_removed %}
-                            | {% report_comment_abuse comment %}
+                            | | <a href="{% url confirm_comment comment.content_type comment.id %}">Report</a>
                         {% endif %}
                         {% endif %}
                             </div>
