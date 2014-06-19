@@ -33,16 +33,13 @@ def send_mxit_message(username, msg):
 
     app_id = settings.MXIT_APP_ID
     client.messaging.send_message(app_id, [username], msg)
-    
-    
-@task
+
+
 def unban_users():
-    from mama.models import UserProfile
-    banned_users = UserProfile.objects.filter(banned=True)
+    from django.contrib.auth.models import User
+    banned_users = User.objects.filter(userprofile__banned=True)
 
     for user in banned_users:
-        if user.last_banned_date >= date.today() - timedelta(days=user.ban_duration):
+        ref_date = date.today() - timedelta(days=user.profile.ban_duration)
+        if user.profile.last_banned_date >= ref_date:
             unban_user(user)
-
-
-
