@@ -518,14 +518,14 @@ class GeneralPrefrencesTestCase(TestCase):
                                        hour=0, minute=0,
                                        second=0, microsecond=0))
 
-        self.assertTrue(can_vote)
+        self.assertTrue(can_vote[0])
 
         #Simulate a wednesday and test false
         can_vote = utils.askmama_can_vote(0, now=datetime.now() + relativedelta(weekday=WE(-1),
                                        hour=0, minute=0,
                                        second=0, microsecond=0))
-
-        self.assertFalse(can_vote)
+        
+        self.assertFalse(can_vote[0])
 
 
 class MobileNumberInternationlisationTestCase(TestCase):
