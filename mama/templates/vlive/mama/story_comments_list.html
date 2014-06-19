@@ -16,7 +16,7 @@
       <TEXT>
         <b>{{ comment.name }}</b><br/>
             {{ comment.submit_date }}
-            {% if not comment.user.is_staff %}
+            {% if not comment.user.is_staff and comment.user != request.user %}
                         {% if not comment.is_removed %}
                             | | <LINK href="{% url confirm_comment comment.content_type comment.id %}"><TEXT>Report</TEXT></LINK>
                         {% endif %}
