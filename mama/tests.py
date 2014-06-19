@@ -15,7 +15,8 @@ from StringIO import StringIO
 import sys
 
 Comment = comments.get_model()
-
+from datetime import datetime
+from dateutil.relativedelta import *
 from mama import utils
 from mama.models import UserProfile
 from mama.middleware import TrackOriginMiddleware
@@ -508,6 +509,23 @@ class GeneralPrefrencesTestCase(TestCase):
 
         resp = self.client.get(article_url)
         self.assertContains(resp, 'word ****** which is silenced')
+
+
+    def test_times(self):
+
+        #Simulate a monday and test true
+        can_vote = utils.askmama_can_vote(0, now=datetime.now() + relativedelta(weekday=MO(-1),
+                                       hour=0, minute=0,
+                                       second=0, microsecond=0))
+
+        self.assertEquals(can_vote, True)
+
+        #Simulate a wednesday and test false
+        can_vote = utils.askmama_can_vote(0, now=datetime.now() + relativedelta(weekday=WE(-1),
+                                       hour=0, minute=0,
+                                       second=0, microsecond=0))
+
+        self.assertEquals(can_vote, False)
 
 
 class MobileNumberInternationlisationTestCase(TestCase):

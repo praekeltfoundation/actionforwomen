@@ -41,12 +41,13 @@ def favourite_questions_for_week(context, post,
                                        hour=0, minute=0,
                                        second=0, microsecond=0, 
                                        microseconds=-1)
-    start_tuesday = NOW + relativedelta(weekday=TU(-1),
-                                       hour=0, minute=0,
-                                       second=0, microsecond=0)
 
     if end_thursday < start_friday:
         end_thursday += relativedelta(weeks=1)
+
+    start_tuesday = end_thursday + relativedelta(weekday=TU(-1),
+                                       hour=0, minute=0,
+                                       second=0, microsecond=0)
 
     # Subtract the amount of weeks in the past.
     if weeks_ago > 0:
