@@ -112,6 +112,6 @@ vote=-1 AND object_id=%s.%s AND content_type_id=%s)' % (
     context['weeks_ago'] = weeks_ago
     context['week_start'] = start_friday
     context['week_end'] = end_thursday
-    context['can_vote'] = can_vote
+    context['askmama_can_vote'] = can_vote
 
     return context
