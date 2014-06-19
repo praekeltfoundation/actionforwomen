@@ -71,4 +71,4 @@ def askmama_can_vote(weeks_ago, now):
     else:
         can_vote = True
 
-    return can_vote
+    return can_vote, end_thursday, start_friday

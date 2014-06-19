@@ -1,7 +1,7 @@
 from copy import copy
 from datetime import datetime
 from dateutil.relativedelta import *
-
+from mama.utils import askmama_can_vote
 from django.contrib import comments
 from django.contrib.contenttypes.models import ContentType
 from django import template
@@ -33,21 +33,8 @@ def favourite_questions_for_week(context, post,
 
     # Find the dates for the current week, starting last Friday and ending
     # next Thursday
-    NOW = datetime.now()
-    start_friday = NOW + relativedelta(weekday=FR(-1),
-                                       hour=0, minute=0,
-                                       second=0, microsecond=0)
-    end_thursday = NOW + relativedelta(weekday=TH(+1),
-                                       hour=0, minute=0,
-                                       second=0, microsecond=0, 
-                                       microseconds=-1)
+    can_vote, end_thursday, start_friday = askmama_can_vote(weeks_ago, datetime.now())
 
-    if end_thursday < start_friday:
-        end_thursday += relativedelta(weeks=1)
-
-    start_tuesday = end_thursday + relativedelta(weekday=TU(-1),
-                                       hour=0, minute=0,
-                                       second=0, microsecond=0)
 
     # Subtract the amount of weeks in the past.
     if weeks_ago > 0:
@@ -62,10 +49,7 @@ def favourite_questions_for_week(context, post,
         # Filter all the older questions.
         questions = Comment.objects.filter(submit_date__lt=(end_thursday)) 
 
-    if start_tuesday < NOW < end_thursday:
-        can_vote = False
-    else:
-        can_vote = True
+
 
     # Filter the comments linked to the post
     pct = ContentType.objects.get_for_model(post.__class__)
