@@ -18,6 +18,7 @@ Comment = comments.get_model()
 from datetime import datetime
 from dateutil.relativedelta import *
 from mama import utils
+from mama import tasks
 from mama.models import UserProfile
 from mama.middleware import TrackOriginMiddleware
 from mama.models import SitePreferences
@@ -415,7 +416,7 @@ class GeneralPrefrencesTestCase(TestCase):
         self.assertContains(resp, 'You are banned from commenting')
 
         #unban user
-        utils.unban_user(user)
+        tasks.unban_users()
 
         #check user can comment
         resp = c.get(reverse('category_object_detail',
