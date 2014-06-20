@@ -131,10 +131,6 @@ def pml_page_header(context):
         'url': reverse('home'),
     })
     links.append({
-        'title': 'My Profile',
-        'url': reverse('view_my_profile')
-    })
-    links.append({
         'title': 'Articles',
         'url': reverse('category_object_list',
                        kwargs={'category_slug': 'articles'})
@@ -158,6 +154,10 @@ def pml_page_header(context):
     links.append({
         'title': "Guides",
         'url': reverse('guides_list')
+    })
+    links.append({
+        'title': 'My Profile',
+        'url': reverse('view_my_profile')
     })
     context['links'] = links
     return context
