@@ -17,7 +17,7 @@ register = template.Library()
 @register.inclusion_tag(
     'mama/inclusion_tags/favourite_questions_for_week.html',
     takes_context=True)
-def favourite_questions_for_week(context, post, 
+def favourite_questions_for_week(context, post,
                                  weeks_ago=0, cpage=1, sort='pop'):
     """
     This template tag displays the questions for a given week on the AskMAMA
@@ -43,11 +43,11 @@ def favourite_questions_for_week(context, post,
 
     if weeks_ago < 2:
         # Filter the questions between the date range
-        questions = Comment.objects.filter(submit_date__range=(start_friday, 
+        questions = Comment.objects.filter(submit_date__range=(start_friday,
                                                                end_thursday,))
     else:
         # Filter all the older questions.
-        questions = Comment.objects.filter(submit_date__lt=(end_thursday)) 
+        questions = Comment.objects.filter(submit_date__lt=(end_thursday))
 
 
 
@@ -66,21 +66,17 @@ def favourite_questions_for_week(context, post,
     # MostLikedItem view modifier item in jmbo)
     questions = questions.extra(
         select={
-            'vote_score': '(SELECT COUNT(*) from %s WHERE vote=1 AND \
-object_id=%s.%s AND content_type_id=%s) - (SELECT COUNT(*) from %s WHERE \
-vote=-1 AND object_id=%s.%s AND content_type_id=%s)' % (
+            'vote_score':
+            '(SELECT COUNT(*) from %s WHERE vote=1 AND '
+            'object_id=%s.%s AND content_type_id=%s)' % (
                 Vote._meta.db_table,
                 Comment._meta.db_table,
                 Comment._meta.pk.attname,
                 ContentType.objects.get_for_model(Comment).id,
-                Vote._meta.db_table,
-                Comment._meta.db_table,
-                Comment._meta.pk.attname,
-                ContentType.objects.get_for_model(Comment).id
             )
         }
     )
-    
+
     # apply the sort order. 'pop' is the default.
     if sort == 'pop':
         questions = questions.order_by('-vote_score', '-submit_date')
