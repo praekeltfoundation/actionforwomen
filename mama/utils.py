@@ -35,14 +35,15 @@ def unban_user(user):
     return profile
 
 
-def ban_user(user,duration):
-    profile = user.profile
-    profile.banned = True
-    profile.last_banned_date = datetime.now()
-    profile.ban_duration = duration
-    profile.save()
+def ban_user(user, duration):
+    if user.profile:
+        profile = user.profile
+        profile.banned = True
+        profile.last_banned_date = datetime.now()
+        profile.ban_duration = duration
+        profile.save()
 
-    return profile
+        return profile
 
 
 def askmama_can_vote(weeks_ago, now):

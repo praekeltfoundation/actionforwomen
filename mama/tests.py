@@ -18,6 +18,7 @@ Comment = comments.get_model()
 from datetime import datetime
 from dateutil.relativedelta import *
 from mama import utils
+from mama import tasks
 from mama.models import UserProfile
 from mama.middleware import TrackOriginMiddleware
 from mama.models import SitePreferences
@@ -415,12 +416,35 @@ class GeneralPrefrencesTestCase(TestCase):
         self.assertContains(resp, 'You are banned from commenting')
 
         #unban user
-        utils.unban_user(user)
+        tasks.unban_users()
 
         #check user can comment
         resp = c.get(reverse('category_object_detail',
             kwargs={'category_slug': 'articles', 'slug': self.post.slug}))
         self.assertNotContains(resp, 'You are banned from commenting')
+
+
+    def test_unban_user_date(self):
+        #Create banned and login user
+        user = User.objects.create_user('foo', 'foo@foo.com', 'foo')
+        profile = UserProfile.objects.create(user=user)
+        profile.accepted_commenting_terms = True
+        profile.banned = True
+        profile.last_banned_date = date.today() - timedelta(days=1)
+        profile.ban_duration = 3
+        profile.save()
+        c = Client()
+        c.login(username='foo',password='foo')
+
+        #Test ban unban date is after current date
+        unban_date = user.profile.last_banned_date + timedelta(days=user.profile.ban_duration)
+        self.assertGreaterEqual(unban_date,date.today())
+
+        #Test unban date is less than 4 days from current date
+        self.assertLessEqual(unban_date,date.today() + timedelta(days=4))
+
+
+
 
     def test_banned_words(self):
         article_url = reverse('category_object_detail',
@@ -524,7 +548,7 @@ class GeneralPrefrencesTestCase(TestCase):
         can_vote = utils.askmama_can_vote(0, now=datetime.now() + relativedelta(weekday=WE(-1),
                                        hour=0, minute=0,
                                        second=0, microsecond=0))
-        
+
         self.assertFalse(can_vote[0])
 
 
