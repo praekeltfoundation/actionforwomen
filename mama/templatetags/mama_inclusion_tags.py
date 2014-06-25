@@ -365,7 +365,8 @@ def mama_object_comments(context, obj):
         comments = Comment.objects.filter(
             content_type=ctype,
             object_pk=obj.pk,
-            is_public=True
+            is_public=True,
+            user__is_staff=False,
         ).order_by('-submit_date')
 
         page = request.GET.get('page')

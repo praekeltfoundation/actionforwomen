@@ -25,6 +25,15 @@
                   {% endif %}
               </div>
           </div>
+          {% for commentreply in comment.replied_to_comments_set.all %}
+              <div class="item comment no-pic">
+              <div class="meta">
+                  <div class="title">{{ commentreply.user.first_name }}</div>
+                  <div class="stamp">{{ commentreply.submit_date }}</div>
+                  <div class="stamp">{{ commentreply.comment|linebreaks }}</div>
+              </div>
+          </div>
+          {% endfor %}
       {% empty %}
           <div class="item comment no-pic">
               <div class="meta">
