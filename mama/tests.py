@@ -514,36 +514,36 @@ class GeneralPrefrencesTestCase(TestCase):
     def test_times(self):
 
         #Simulate a monday and test true
-        can_vote = utils.askmama_can_vote(0, now=datetime.now() + relativedelta(weekday=MO(-1),
+        can_vote, end_thursday, start_friday = utils.askmama_can_vote(0, now=datetime.now() + relativedelta(weekday=MO(-1),
                                        hour=0, minute=0,
                                        second=0, microsecond=0))
 
-        self.assertTrue(can_vote[0])
-        self.assertGreater(can_vote[1],can_vote[2])
+        self.assertTrue(can_vote)
+        self.assertGreater(end_thursday, start_friday)
 
         #Simulate a wednesday and test false
-        can_vote = utils.askmama_can_vote(0, now=datetime.now() + relativedelta(weekday=WE(-1),
+        can_vote, end_thursday, start_friday = utils.askmama_can_vote(0, now=datetime.now() + relativedelta(weekday=WE(-1),
                                        hour=0, minute=0,
                                        second=0, microsecond=0))
 
-        self.assertFalse(can_vote[0])
-        self.assertGreater(can_vote[1],can_vote[2])
+        self.assertFalse(can_vote)
+        self.assertGreater(end_thursday, start_friday)
 
         #Simulate a monday and test true a week ago
-        can_vote = utils.askmama_can_vote(1, now=datetime.now() + relativedelta(weekday=MO(-1),
+        can_vote, end_thursday, start_friday = utils.askmama_can_vote(1, now=datetime.now() + relativedelta(weekday=MO(-1),
                                        hour=0, minute=0,
                                        second=0, microsecond=0))
 
-        self.assertTrue(can_vote[0])
-        self.assertGreater(can_vote[1],can_vote[2])
+        self.assertTrue(can_vote)
+        self.assertGreater(end_thursday, start_friday)
 
         #Simulate a wednesday and test false a week ago
-        can_vote = utils.askmama_can_vote(1, now=datetime.now() + relativedelta(weekday=WE(-1),
+        can_vote, end_thursday, start_friday = utils.askmama_can_vote(1, now=datetime.now() + relativedelta(weekday=WE(-1),
                                        hour=0, minute=0,
                                        second=0, microsecond=0))
 
-        self.assertFalse(can_vote[0])
-        self.assertGreater(can_vote[1],can_vote[2])
+        self.assertFalse(can_vote)
+        self.assertGreater(end_thursday, start_friday)
 
 
 class MobileNumberInternationlisationTestCase(TestCase):
