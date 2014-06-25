@@ -295,6 +295,152 @@ class GeneralPrefrencesTestCase(TestCase):
         self.assertTrue(
             preferences.SitePreferences.comments_open(time(8, 59, 59)))
 
+    def test_banned_words(self):
+        article_url = reverse(
+            'category_object_detail',
+            kwargs={'category_slug': 'articles', 'slug': self.post.slug})
+
+        self.client = Client(HTTP_REFERER='http://localhost%s' % article_url)
+        pref = SitePreferences.objects.get(pk=preferences.SitePreferences.pk)
+        pref.comment_banned_patterns = 'crap\ndoodle'
+        pref.save()
+
+        params = params_for_comments(self.post, 'sample comment')
+        resp = self.client.post(reverse('post_comment'), params)
+        self.assertEqual(resp.status_code, 302)
+
+        params = params_for_comments(self.post, 'some comment with crap')
+        resp = self.client.post(reverse('post_comment'), params)
+        self.assertContains(resp, 'inappropriate content')
+
+    def test_silenced_words(self):
+        article_url = reverse(
+            'category_object_detail',
+            kwargs={'category_slug': 'articles', 'slug': self.post.slug})
+
+        self.client = Client(HTTP_REFERER='http://localhost%s' % article_url)
+        pref = SitePreferences.objects.get(pk=preferences.SitePreferences.pk)
+        pref.comment_silenced_patterns = 'doodle'
+        pref.save()
+
+        params = params_for_comments(self.post, 'sample comment')
+        resp = self.client.post(reverse('post_comment'), params)
+        self.assertEqual(resp.status_code, 302)
+
+        params = params_for_comments(self.post, 'some doodle with crap')
+        resp = self.client.post(reverse('post_comment'), params)
+        self.assertEqual(resp.status_code, 302)
+
+        resp = self.client.get(article_url)
+        self.assertContains(resp, 'some ****** with crap')
+
+    def test_invalid_banned_words(self):
+        article_url = reverse(
+            'category_object_detail',
+            kwargs={'category_slug': 'articles', 'slug': self.post.slug})
+
+        self.client = Client(HTTP_REFERER='http://localhost%s' % article_url)
+        pref = SitePreferences.objects.get(pk=preferences.SitePreferences.pk)
+        pref.comment_banned_patterns = 'crap\ndoodle\n'  # contains blank line
+        pref.save()
+
+        params = params_for_comments(self.post, 'sample comment')
+        resp = self.client.post(reverse('post_comment'), params)
+        self.assertEqual(resp.status_code, 302)
+
+    def test_invalid_silenced_words(self):
+        article_url = reverse(
+            'category_object_detail',
+            kwargs={'category_slug': 'articles', 'slug': self.post.slug})
+
+        self.client = Client(HTTP_REFERER='http://localhost%s' % article_url)
+        pref = SitePreferences.objects.get(pk=preferences.SitePreferences.pk)
+        pref.comment_silenced_patterns = 'crap\ndoodle\n'
+        pref.save()
+
+        params = params_for_comments(self.post, 'sample comment')
+        resp = self.client.post(reverse('post_comment'), params)
+        self.assertEqual(resp.status_code, 302)
+
+    def test_regex_patterns(self):
+        article_url = reverse(
+            'category_object_detail',
+            kwargs={'category_slug': 'articles', 'slug': self.post.slug})
+
+        self.client = Client(HTTP_REFERER='http://localhost%s' % article_url)
+        pref = SitePreferences.objects.get(pk=preferences.SitePreferences.pk)
+        pref.comment_banned_patterns = 'crap\ndoodle\nf**k'
+        pref.comment_silenced_patterns = 'monkey'
+        pref.save()
+
+        params = params_for_comments(self.post, 'some comment with f**k word')
+        resp = self.client.post(reverse('post_comment'), params)
+        self.assertContains(resp, 'inappropriate content')
+
+        params = params_for_comments(
+            self.post, 'some comment with CRAP in caps')
+        resp = self.client.post(reverse('post_comment'), params)
+        self.assertContains(resp, 'inappropriate content')
+
+        params = params_for_comments(
+            self.post, 'word MONKEY which is silenced')
+        resp = self.client.post(reverse('post_comment'), params)
+        self.assertEqual(resp.status_code, 302)
+
+        resp = self.client.get(article_url)
+        self.assertContains(resp, 'word ****** which is silenced')
+
+
+class AskMamaTestCase(TestCase):
+
+    def test_times(self):
+
+        # Simulate a monday and test true
+        can_vote, end_thursday, start_friday = utils.askmama_can_vote(
+            0, now=datetime.now() + relativedelta(weekday=MO(-1),
+                                                  hour=0, minute=0,
+                                                  second=0, microsecond=0))
+
+        self.assertTrue(can_vote)
+        self.assertGreater(end_thursday, start_friday)
+
+        # Simulate a wednesday and test false
+        can_vote, end_thursday, start_friday = utils.askmama_can_vote(
+            0, now=datetime.now() + relativedelta(weekday=WE(-1),
+                                                  hour=0, minute=0,
+                                                  second=0, microsecond=0))
+        self.assertFalse(can_vote)
+        self.assertGreater(end_thursday, start_friday)
+
+        # Simulate a monday and test true a week ago
+        can_vote, end_thursday, start_friday = utils.askmama_can_vote(
+            1, now=datetime.now() + relativedelta(weekday=MO(-1),
+                                                  hour=0, minute=0,
+                                                  second=0, microsecond=0))
+
+        self.assertTrue(can_vote)
+        self.assertGreater(end_thursday, start_friday)
+
+        # Simulate a wednesday and test false a week ago
+        can_vote, end_thursday, start_friday = utils.askmama_can_vote(
+            1, now=datetime.now() + relativedelta(weekday=WE(-1),
+                                                  hour=0, minute=0,
+                                                  second=0, microsecond=0))
+
+        self.assertFalse(can_vote)
+        self.assertGreater(end_thursday, start_friday)
+
+
+class CommentingRulesTestCase(TestCase):
+
+    def setUp(self):
+        site = Site.objects.get_current()
+        category = Category.objects.create(title='articles', slug='articles')
+        self.post = Post.objects.create(title='Test', state='published')
+        self.post.primary_category = category
+        self.post.sites.add(site)
+        self.post.save()
+
     def test_comment_views(self):
         # Page detail should show detail page with comment form
         article_url = reverse(
@@ -472,138 +618,6 @@ class GeneralPrefrencesTestCase(TestCase):
 
         # Test unban date is less than 4 days from current date
         self.assertLessEqual(unban_date, date.today() + timedelta(days=4))
-
-    def test_banned_words(self):
-        article_url = reverse(
-            'category_object_detail',
-            kwargs={'category_slug': 'articles', 'slug': self.post.slug})
-
-        self.client = Client(HTTP_REFERER='http://localhost%s' % article_url)
-        pref = SitePreferences.objects.get(pk=preferences.SitePreferences.pk)
-        pref.comment_banned_patterns = 'crap\ndoodle'
-        pref.save()
-
-        params = params_for_comments(self.post, 'sample comment')
-        resp = self.client.post(reverse('post_comment'), params)
-        self.assertEqual(resp.status_code, 302)
-
-        params = params_for_comments(self.post, 'some comment with crap')
-        resp = self.client.post(reverse('post_comment'), params)
-        self.assertContains(resp, 'inappropriate content')
-
-    def test_silenced_words(self):
-        article_url = reverse(
-            'category_object_detail',
-            kwargs={'category_slug': 'articles', 'slug': self.post.slug})
-
-        self.client = Client(HTTP_REFERER='http://localhost%s' % article_url)
-        pref = SitePreferences.objects.get(pk=preferences.SitePreferences.pk)
-        pref.comment_silenced_patterns = 'doodle'
-        pref.save()
-
-        params = params_for_comments(self.post, 'sample comment')
-        resp = self.client.post(reverse('post_comment'), params)
-        self.assertEqual(resp.status_code, 302)
-
-        params = params_for_comments(self.post, 'some doodle with crap')
-        resp = self.client.post(reverse('post_comment'), params)
-        self.assertEqual(resp.status_code, 302)
-
-        resp = self.client.get(article_url)
-        self.assertContains(resp, 'some ****** with crap')
-
-    def test_invalid_banned_words(self):
-        article_url = reverse(
-            'category_object_detail',
-            kwargs={'category_slug': 'articles', 'slug': self.post.slug})
-
-        self.client = Client(HTTP_REFERER='http://localhost%s' % article_url)
-        pref = SitePreferences.objects.get(pk=preferences.SitePreferences.pk)
-        pref.comment_banned_patterns = 'crap\ndoodle\n'  # contains blank line
-        pref.save()
-
-        params = params_for_comments(self.post, 'sample comment')
-        resp = self.client.post(reverse('post_comment'), params)
-        self.assertEqual(resp.status_code, 302)
-
-    def test_invalid_silenced_words(self):
-        article_url = reverse(
-            'category_object_detail',
-            kwargs={'category_slug': 'articles', 'slug': self.post.slug})
-
-        self.client = Client(HTTP_REFERER='http://localhost%s' % article_url)
-        pref = SitePreferences.objects.get(pk=preferences.SitePreferences.pk)
-        pref.comment_silenced_patterns = 'crap\ndoodle\n'
-        pref.save()
-
-        params = params_for_comments(self.post, 'sample comment')
-        resp = self.client.post(reverse('post_comment'), params)
-        self.assertEqual(resp.status_code, 302)
-
-    def test_regex_patterns(self):
-        article_url = reverse(
-            'category_object_detail',
-            kwargs={'category_slug': 'articles', 'slug': self.post.slug})
-
-        self.client = Client(HTTP_REFERER='http://localhost%s' % article_url)
-        pref = SitePreferences.objects.get(pk=preferences.SitePreferences.pk)
-        pref.comment_banned_patterns = 'crap\ndoodle\nf**k'
-        pref.comment_silenced_patterns = 'monkey'
-        pref.save()
-
-        params = params_for_comments(self.post, 'some comment with f**k word')
-        resp = self.client.post(reverse('post_comment'), params)
-        self.assertContains(resp, 'inappropriate content')
-
-        params = params_for_comments(
-            self.post, 'some comment with CRAP in caps')
-        resp = self.client.post(reverse('post_comment'), params)
-        self.assertContains(resp, 'inappropriate content')
-
-        params = params_for_comments(
-            self.post, 'word MONKEY which is silenced')
-        resp = self.client.post(reverse('post_comment'), params)
-        self.assertEqual(resp.status_code, 302)
-
-        resp = self.client.get(article_url)
-        self.assertContains(resp, 'word ****** which is silenced')
-
-    def test_times(self):
-
-        # Simulate a monday and test true
-        can_vote, end_thursday, start_friday = utils.askmama_can_vote(
-            0, now=datetime.now() + relativedelta(weekday=MO(-1),
-                                                  hour=0, minute=0,
-                                                  second=0, microsecond=0))
-
-        self.assertTrue(can_vote)
-        self.assertGreater(end_thursday, start_friday)
-
-        # Simulate a wednesday and test false
-        can_vote, end_thursday, start_friday = utils.askmama_can_vote(
-            0, now=datetime.now() + relativedelta(weekday=WE(-1),
-                                                  hour=0, minute=0,
-                                                  second=0, microsecond=0))
-        self.assertFalse(can_vote)
-        self.assertGreater(end_thursday, start_friday)
-
-        # Simulate a monday and test true a week ago
-        can_vote, end_thursday, start_friday = utils.askmama_can_vote(
-            1, now=datetime.now() + relativedelta(weekday=MO(-1),
-                                                  hour=0, minute=0,
-                                                  second=0, microsecond=0))
-
-        self.assertTrue(can_vote)
-        self.assertGreater(end_thursday, start_friday)
-
-        # Simulate a wednesday and test false a week ago
-        can_vote, end_thursday, start_friday = utils.askmama_can_vote(
-            1, now=datetime.now() + relativedelta(weekday=WE(-1),
-                                                  hour=0, minute=0,
-                                                  second=0, microsecond=0))
-
-        self.assertFalse(can_vote)
-        self.assertGreater(end_thursday, start_friday)
 
 
 class MobileNumberInternationlisationTestCase(TestCase):
