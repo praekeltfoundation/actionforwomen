@@ -59,15 +59,17 @@ def askmama_can_vote(weeks_ago, now):
         end_thursday += relativedelta(weeks=1)
 
 
+    if weeks_ago > 0:
+        end_thursday = end_thursday + relativedelta(weeks=-weeks_ago)
+        start_friday = start_friday + relativedelta(weeks=-weeks_ago)
+
     start_tuesday = end_thursday + relativedelta(weekday=TU(-1),
                                        hour=0, minute=0,
                                        second=0, microsecond=0)
 
-    if weeks_ago > 0:
-        end_thursday = end_thursday + relativedelta(weeks=-weeks_ago)
 
 
-    if start_tuesday < now < end_thursday:
+    if start_tuesday < now + relativedelta(weeks=-weeks_ago) < end_thursday:
         can_vote = False
     else:
         can_vote = True
