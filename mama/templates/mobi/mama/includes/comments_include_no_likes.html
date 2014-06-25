@@ -29,8 +29,7 @@
               <div class="item comment no-pic">
               <div class="meta">
                   <div class="title">{{ commentreply.user.first_name }}</div>
-                  <div class="stamp">{{ commentreply.submit_date }}</div>
-                  <div class="stamp">{{ commentreply.comment|linebreaks }}</div>
+                  <div class="stamp">{{ commentreply.comment_text|linebreaks }}</div>
               </div>
           </div>
           {% endfor %}
