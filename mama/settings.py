@@ -277,6 +277,7 @@ MODERATOR = {
     'HAM_CUTOFF': 0.3,
     'SPAM_CUTOFF': 0.7,
     'ABUSE_CUTOFF': 3,
+    'REPLY_BEFORE_COMMENT': True,
 }
 
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
