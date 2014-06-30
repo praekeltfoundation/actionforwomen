@@ -131,10 +131,6 @@ def pml_page_header(context):
         'url': reverse('home'),
     })
     links.append({
-        'title': 'My Profile',
-        'url': reverse('view_my_profile')
-    })
-    links.append({
         'title': 'Articles',
         'url': reverse('category_object_list',
                        kwargs={'category_slug': 'articles'})
@@ -158,6 +154,10 @@ def pml_page_header(context):
     links.append({
         'title': "Guides",
         'url': reverse('guides_list')
+    })
+    links.append({
+        'title': 'My Profile',
+        'url': reverse('view_my_profile')
     })
     context['links'] = links
     return context
@@ -273,7 +273,6 @@ def babycenter_byline(obj):
         return {}
 
 
-
 @register.inclusion_tag('mama/inclusion_tags/vlive_object_comments.html', takes_context=True)
 def vlive_object_comments(context, obj):
     def can_comment(obj, request):
@@ -335,3 +334,69 @@ def vlive_object_comments(context, obj):
     })
 
     return context
+
+
+@register.inclusion_tag('mama/includes/comments_include_no_likes.html', takes_context=True)
+def mama_object_comments(context, obj):
+    def can_comment(obj, request):
+        """
+        Determine if user can comment.
+        We don't use ModelBase.can_comment since that unnecessarily traverses to base.
+        """
+        # can't comment if commenting is closed
+        if obj.comments_closed:
+            return False
+
+        # can't comment if commenting is disabled
+        if not obj.comments_enabled:
+            return False
+
+        # anonymous users can't comment if anonymous comments are disabled
+        if not request.user.is_authenticated() and not \
+                obj.anonymous_comments:
+            return False
+
+        return True
+
+    def get_paginated_comments(obj, request):
+        from django.contrib.comments.models import Comment
+        from django.contrib.contenttypes.models import ContentType
+        ctype = ContentType.objects.get_for_model(obj)
+        comments = Comment.objects.filter(
+            content_type=ctype,
+            object_pk=obj.pk,
+            is_public=True
+        ).order_by('-submit_date')
+
+        page = request.GET.get('page')
+
+        # if a specific page is requested, show many comments, paged
+        if page:
+            paginator = Paginator(comments, 5)
+            try:
+                page_comments = paginator.page(page)
+            except PageNotAnInteger:
+                # If page is not an integer, deliver first page.
+                page_comments = paginator.page(1)
+            except EmptyPage:
+                # If page is out of range (e.g. 9999), deliver last page of results.
+                page_comments = paginator.page(paginator.num_pages)
+
+            return page_comments
+        else:
+            #if no specific page has been requested, only show the first five comments
+            paginator = Paginator(comments, 5)
+            return paginator.page(1)
+
+    request = context['request']
+    comments = get_paginated_comments(obj, request)
+    context.update({
+        'object': obj,
+        'comments': comments,
+        'can_comment': can_comment(obj, request),
+    })
+    return context
+
+
+
+

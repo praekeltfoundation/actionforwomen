@@ -7,7 +7,7 @@ from django.views.decorators.cache import cache_page
 from django.views.generic import TemplateView
 from haystack.views import SearchView
 from mama.views import (CategoryDetailView, CategoryListView,
-                        StoryCommentsView,
+                        StoryCommentsView, ConfirmReportView,
                         ContactView,
                         ProfileView, VLiveEditProfile,
                         AskMamaView, QuestionAnswerView,
@@ -107,6 +107,11 @@ urlpatterns = patterns('',
         r'^terms/$',
         TemplateView.as_view(template_name="mama/terms.html"),
         name='terms'
+    ),
+    url(
+        r'^comment-terms/$',
+        TemplateView.as_view(template_name="mama/includes/comment_terms.html"),
+        name='comment-terms'
     ),
     url(
         r'^ask-mama/$', AskMamaView.as_view(),
@@ -216,6 +221,20 @@ urlpatterns = patterns('',
         UpdateDueDateView.as_view(),
         name='update_due_date'
     ),
+    url(
+        r'^comment-agree/$',
+        "mama.views.agree_comment",
+        name='agree_comment'
+    ),
+    url(
+        r'^report-comment/(?P<content_type>[\w-]+)/(?P<id>\d+)/(?P<vote>-?\d+)/$',
+        'mama.views.report_comment',
+        name='report_comment'),
+    url(
+        r'^confirm-comment-report/(?P<content_type>[\w-]+)/(?P<id>\d+)/$',
+        ConfirmReportView.as_view(),
+        name='confirm_comment'),
+
     url(
         r'^profile/vliveduedate/$',
         VLiveUpdateDueDateView.as_view(),

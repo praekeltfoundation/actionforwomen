@@ -1,4 +1,5 @@
 {% load comments %}
+{% load mama_inclusion_tags %}
 {% load moderator_inclusion_tags %}
 
 {% if can_comment %}
@@ -10,11 +11,18 @@
               <div class="meta">
                   <div class="title">{{ comment.name }}</div>
                   <div class="stamp">{{ comment.submit_date }}
-                    {% if not comment.user.is_staff %}
-                      | {% report_comment_abuse comment %}
+                    {% if not comment.user.is_staff and comment.user != request.user %}
+                        {% if not comment.is_removed %}
+                            | | <a href="{% url confirm_comment comment.content_type comment.id %}">Report</a>
+                        {% endif %}
                     {% endif %}
-                    </div>
+                  </div>
+                  {% if comment.is_removed %}
+                  <div class="stamp">This comment has been reported by the community and the user has been banned<br><br/>
+                    Don't know the commenting rules? <a href="{% url comment-terms %}">Read them here</a></div>
+                  {% else %}
                   <div class="stamp">{{ comment.comment|linebreaks }}</div>
+                  {% endif %}
               </div>
           </div>
       {% empty %}
@@ -40,5 +48,5 @@
     </div>
     {% endif %}
 
-    {% render_comment_form for object %}
+    {% include 'mama/includes/comments_new_system.html' %}
 {% endif %}

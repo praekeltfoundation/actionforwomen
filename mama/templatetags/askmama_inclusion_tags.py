@@ -1,7 +1,7 @@
 from copy import copy
 from datetime import datetime
 from dateutil.relativedelta import *
-
+from mama.utils import askmama_can_vote
 from django.contrib import comments
 from django.contrib.contenttypes.models import ContentType
 from django import template
@@ -17,7 +17,7 @@ register = template.Library()
 @register.inclusion_tag(
     'mama/inclusion_tags/favourite_questions_for_week.html',
     takes_context=True)
-def favourite_questions_for_week(context, post, 
+def favourite_questions_for_week(context, post,
                                  weeks_ago=0, cpage=1, sort='pop'):
     """
     This template tag displays the questions for a given week on the AskMAMA
@@ -33,16 +33,8 @@ def favourite_questions_for_week(context, post,
 
     # Find the dates for the current week, starting last Friday and ending
     # next Thursday
-    NOW = datetime.now()
-    start_friday = NOW + relativedelta(weekday=FR(-1),
-                                       hour=0, minute=0,
-                                       second=0, microsecond=0)
-    end_thursday = NOW + relativedelta(weekday=TH(+1),
-                                       hour=0, minute=0,
-                                       second=0, microsecond=0, 
-                                       microseconds=-1)
-    if end_thursday < start_friday:
-        end_thursday += relativedelta(weeks=1)
+    can_vote, end_thursday, start_friday = askmama_can_vote(weeks_ago, datetime.now())
+
 
     # Subtract the amount of weeks in the past.
     if weeks_ago > 0:
@@ -51,11 +43,13 @@ def favourite_questions_for_week(context, post,
 
     if weeks_ago < 2:
         # Filter the questions between the date range
-        questions = Comment.objects.filter(submit_date__range=(start_friday, 
+        questions = Comment.objects.filter(submit_date__range=(start_friday,
                                                                end_thursday,))
     else:
         # Filter all the older questions.
-        questions = Comment.objects.filter(submit_date__lt=(end_thursday)) 
+        questions = Comment.objects.filter(submit_date__lt=(end_thursday))
+
+
 
     # Filter the comments linked to the post
     pct = ContentType.objects.get_for_model(post.__class__)
@@ -72,21 +66,17 @@ def favourite_questions_for_week(context, post,
     # MostLikedItem view modifier item in jmbo)
     questions = questions.extra(
         select={
-            'vote_score': '(SELECT COUNT(*) from %s WHERE vote=1 AND \
-object_id=%s.%s AND content_type_id=%s) - (SELECT COUNT(*) from %s WHERE \
-vote=-1 AND object_id=%s.%s AND content_type_id=%s)' % (
+            'vote_score':
+            '(SELECT COUNT(*) from %s WHERE vote=1 AND '
+            'object_id=%s.%s AND content_type_id=%s)' % (
                 Vote._meta.db_table,
                 Comment._meta.db_table,
                 Comment._meta.pk.attname,
                 ContentType.objects.get_for_model(Comment).id,
-                Vote._meta.db_table,
-                Comment._meta.db_table,
-                Comment._meta.pk.attname,
-                ContentType.objects.get_for_model(Comment).id
             )
         }
     )
-    
+
     # apply the sort order. 'pop' is the default.
     if sort == 'pop':
         questions = questions.order_by('-vote_score', '-submit_date')
@@ -118,5 +108,6 @@ vote=-1 AND object_id=%s.%s AND content_type_id=%s)' % (
     context['weeks_ago'] = weeks_ago
     context['week_start'] = start_friday
     context['week_end'] = end_thursday
+    context['askmama_can_vote'] = can_vote
 
     return context
