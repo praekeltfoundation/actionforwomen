@@ -73,6 +73,7 @@ class PostAdmin(MamaModelbaseAdmin):
         '_view_comments'
     )
     ordering = ('-publish_on', '-created')
+    list_per_page = 10
 
     def is_featured(self, obj, *args, **kwargs):
         return obj.categories.filter(slug='featured').exists()
