@@ -2,10 +2,10 @@
 {% load moderator_inclusion_tags %}
 {% load pml_inclusion_tags %}
 
-{% if user.profile.banned %}
-     <MODULE>
-      <CONTAINER type="data">
-        <TEXT>
+ <MODULE>
+  <CONTAINER type="data">
+    <TEXT>
+    {% if user.profile.banned %}
      {% if user.profile.ban_duration == 1 %}
          <b>You are banned from commenting for the rest of the day because a comment you made was reported by the
          community. You will be able to comment again tomorrow</b><br><br/>
@@ -40,8 +40,8 @@
                 <LINK href="{% url agree_comment %}"><TEXT>Accept</TEXT></LINK>
                 <br><br/>
             {% endif %}
-         </TEXT>
-      </CONTAINER>
-    </MODULE>
         {% endif %}
+     </TEXT>
+  </CONTAINER>
+</MODULE>
 
