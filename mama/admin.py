@@ -333,11 +333,15 @@ class MamaUnsureCommentAdmin(MamaCommentAdmin, UnsureCommentAdmin):
     pass
 
 
+class ModelBaseHiddenAdmin(MamaModelbaseAdmin, HiddenModelAdmin):
+    pass
+
+
 admin.site.register(SitePreferences, AskMamaPreferencesAdmin)
 admin.site.register(Banner, BannerAdmin)
 admin.site.register(DefaultAvatar, DefaultAvatarAdmin)
 
-admin.site.register(ModelBase, HiddenModelAdmin)
+admin.site.register(ModelBase, ModelBaseHiddenAdmin)
 try:
     admin.site.unregister(Post)
     admin.site.unregister(Poll)
