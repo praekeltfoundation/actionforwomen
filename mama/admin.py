@@ -345,12 +345,16 @@ class BanAuditAdmin(admin.ModelAdmin):
     readonly_fields = ('user', 'banned_by', 'ban_duration')
     search_fields = ['user__username', 'banned_by__username']
     date_hierarchy = 'banned_on'
+    actions = None
 
     def _is_banned(self, obj, *args, **kwargs):
         return obj.user.profile.banned
     _is_banned.short_description = 'Banned'
     _is_banned.allow_tags = True
     _is_banned.boolean = True
+
+    def has_delete_permission(self, request, obj=None, *args, **kwargs):
+        return False
 
 
 admin.site.register(BanAudit, BanAuditAdmin)
