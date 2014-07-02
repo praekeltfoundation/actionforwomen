@@ -308,7 +308,7 @@ class MamaCommentAdmin(CommentAdmin):
     def mark_spam(self, modeladmin, request, queryset):
         for comment in queryset:
             utils.classify_comment(comment, cls='spam')
-            ban_user(comment.user, 3)
+            ban_user(comment.user, 3, request.user)
 
         self.message_user(
             request,

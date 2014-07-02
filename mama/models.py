@@ -311,6 +311,13 @@ class UserProfile(AbstractProfileBase):
         return date.today() > self.delivery_date
 
 
+class BanAudit(models.Model):
+    user = models.ForeignKey('auth.User', related_name='user_bans')
+    banned_by = models.ForeignKey('auth.User', related_name='user_bans_reported')
+    banned_on = models.DateTimeField(auto_now=True)
+    ban_duration = models.IntegerField()
+
+
 class Banner(ModelBase):
     TYPE_BANNER = 'banner'
     TYPE_THUMBNAIL = 'thumbnail'

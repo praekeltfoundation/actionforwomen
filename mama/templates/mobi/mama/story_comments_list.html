@@ -21,7 +21,7 @@
                             <div class="stamp">{{ comment.submit_date }}
                         {% if not comment.user.is_staff and comment.user != request.user %}
                         {% if not comment.is_removed %}
-                            | | <a href="{% url confirm_comment comment.content_type comment.id %}">Report</a>
+                            | | <a href="{% url confirm_comment comment.content_type comment.id %}?next={{request.path}}">Report</a>
                         {% endif %}
                         {% endif %}
                             </div>

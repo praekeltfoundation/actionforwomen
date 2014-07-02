@@ -17,7 +17,7 @@ from datetime import datetime
 from dateutil.relativedelta import *
 from mama import utils
 from mama import tasks
-from mama.models import UserProfile
+from mama.models import UserProfile, BanAudit
 from mama.middleware import TrackOriginMiddleware
 from mama.models import SitePreferences
 from preferences import preferences
@@ -440,6 +440,11 @@ class CommentingRulesTestCase(TestCase):
         self.post.primary_category = category
         self.post.sites.add(site)
         self.post.save()
+        self.control_user = User.objects.create_user(
+            'community_user', 'foo@foo.com', 'foo')
+        profile = self.control_user.profile
+        profile.accepted_commenting_terms = True
+        profile.save()
 
     def test_comment_views(self):
         # Page detail should show detail page with comment form
@@ -516,22 +521,19 @@ class CommentingRulesTestCase(TestCase):
             'commenting rules first.')
 
     def test_report_user(self):
+        # Create and login user
+        c = Client()
+        c.login(username=self.control_user, password='foo')
+
         # post unsafe comment
         params = params_for_comments(self.post, 'sample unsafe comment')
-        self.client.post(reverse('post_comment'), params)
-
-        # Create and login user
-        user = User.objects.create_user('foo', 'foo@foo.com', 'foo')
-        profile = UserProfile.objects.create(user=user)
-        profile.save()
-        c = Client()
-        c.login(username='foo', password='foo')
+        c.post(reverse('post_comment'), params)
 
         # report user
         c.get(reverse(
             'confirm_comment',
             kwargs={'content_type': 'Post', 'id': 1}))
-        c.post(reverse(
+        resp = c.post(reverse(
             'report_comment',
             kwargs={'content_type': 'Post', 'id': 1, 'vote': -1}))
 
@@ -543,6 +545,8 @@ class CommentingRulesTestCase(TestCase):
             resp,
             'This comment has been reported by the community and '
             'the user has been banned')
+        self.assertTrue(
+            BanAudit.objects.filter(banned_by=self.control_user).exists())
 
     def test_banned_user_comment(self):
         # Create and login user
@@ -564,13 +568,15 @@ class CommentingRulesTestCase(TestCase):
         self.assertNotContains(resp, 'You are banned from commenting')
 
         # ban user
-        utils.ban_user(user, 1)
+        utils.ban_user(user, 1, self.control_user)
 
         # check user cannot comment
         resp = c.get(reverse(
             'category_object_detail',
             kwargs={'category_slug': 'articles', 'slug': self.post.slug}))
         self.assertContains(resp, 'You are banned from commenting')
+        self.assertTrue(
+            BanAudit.objects.filter(banned_by=self.control_user).exists())
 
     def test_unban_user(self):
         # Create banned and login user
