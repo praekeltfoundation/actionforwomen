@@ -40,6 +40,7 @@ def unban_users():
     banned_users = User.objects.filter(userprofile__banned=True)
 
     for user in banned_users:
-        unban_date = user.profile.last_banned_date + timedelta(days=user.profile.ban_duration)
+        ban_duration = user.profile.ban_duration or 1
+        unban_date = user.profile.last_banned_date + timedelta(days=ban_duration)
         if unban_date <= date.today():
             unban_user(user)
