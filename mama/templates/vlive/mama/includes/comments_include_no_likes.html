@@ -20,7 +20,7 @@
             {% endif %}
             <br/>
             {% if comment.is_removed %}
-                  <p>This comment has been reported by the community and the user has been banned</p><br/><br/>
+                  <p>This comment has been reported by the community and the user has been banned</p>
                   <p>Don't know the commenting rules?</p> <LINK href="{% url comment-terms %}"><TEXT>Read them here</TEXT></LINK>
             {% else %}
             {{ comment.comment|linebreaks }}<br/>
