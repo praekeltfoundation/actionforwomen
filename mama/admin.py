@@ -36,7 +36,8 @@ from mama.models import (
     Banner,
     DefaultAvatar,
     ArticlePost,
-    MomsStoryPost
+    MomsStoryPost,
+    BanAudit
 )
 
 
@@ -337,6 +338,22 @@ class ModelBaseHiddenAdmin(MamaModelbaseAdmin, HiddenModelAdmin):
     pass
 
 
+class BanAuditAdmin(admin.ModelAdmin):
+    list_display = ('user', 'banned_by', 'banned_on', 'ban_duration', '_is_banned')
+    list_filter = ('banned_on', 'ban_duration')
+    raw_id_fields = ('user', 'banned_by')
+    readonly_fields = ('user', 'banned_by', 'ban_duration')
+    search_fields = ['user__username', 'banned_by__username']
+    date_hierarchy = 'banned_on'
+
+    def _is_banned(self, obj, *args, **kwargs):
+        return obj.user.profile.banned
+    _is_banned.short_description = 'Banned'
+    _is_banned.allow_tags = True
+    _is_banned.boolean = True
+
+
+admin.site.register(BanAudit, BanAuditAdmin)
 admin.site.register(SitePreferences, AskMamaPreferencesAdmin)
 admin.site.register(Banner, BannerAdmin)
 admin.site.register(DefaultAvatar, DefaultAvatarAdmin)
