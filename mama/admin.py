@@ -300,7 +300,7 @@ class MamaLiveChatAdmin(AdminModeratorMixin, LiveChatAdmin):
 
 
 class MamaCommentAdmin(CommentAdmin):
-    actions = CommentAdmin.actions + ['mark_spam_no_ban', ]
+    #actions = CommentAdmin.actions + ['mark_spam_no_ban', ]
 
     def get_user_display_name(self, obj):
         if obj.name.lower().startswith('anon'):
