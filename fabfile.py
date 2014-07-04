@@ -39,7 +39,9 @@ def push():
 
 def migrate():
     with cd(env.path):
-        sudo('ve/bin/python mama/manage.py syncdb --migrate --noinput',
+        sudo('ve/bin/python mama/manage.py syncdb --noinput',
+             user=env.sudo_user)
+        sudo('ve/bin/python mama/manage.py migrate --noinput',
              user=env.sudo_user)
 
 
