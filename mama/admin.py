@@ -36,7 +36,8 @@ from mama.models import (
     Banner,
     DefaultAvatar,
     ArticlePost,
-    MomsStoryPost
+    MomsStoryPost,
+    BanAudit
 )
 
 
@@ -73,6 +74,7 @@ class PostAdmin(MamaModelbaseAdmin):
         '_view_comments'
     )
     ordering = ('-publish_on', '-created')
+    list_per_page = 10
 
     def is_featured(self, obj, *args, **kwargs):
         return obj.categories.filter(slug='featured').exists()
@@ -298,6 +300,7 @@ class MamaLiveChatAdmin(AdminModeratorMixin, LiveChatAdmin):
 
 
 class MamaCommentAdmin(CommentAdmin):
+    #actions = CommentAdmin.actions + ['mark_spam_no_ban', ]
 
     def get_user_display_name(self, obj):
         if obj.name.lower().startswith('anon'):
@@ -307,13 +310,25 @@ class MamaCommentAdmin(CommentAdmin):
     def mark_spam(self, modeladmin, request, queryset):
         for comment in queryset:
             utils.classify_comment(comment, cls='spam')
-            ban_user(comment.user, 3)
+            ban_user(comment.user, 3, request.user)
 
         self.message_user(
             request,
-            "%s comment(s) successfully marked as spam." % queryset.count()
+            "%s comment(s) successfully marked as spam. +3 day ban" % queryset.count()
         )
-    mark_spam.short_description = "Mark selected comments as spam"
+    mark_spam.short_description = "Mark selected comments as spam (3 day ban)"
+
+    # TODO - requires updating the copy on the front-end to not say
+    # "User has been banned"
+    #def mark_spam_no_ban(self, modeladmin, request, queryset):
+    #    for comment in queryset:
+    #        utils.classify_comment(comment, cls='spam')
+    #
+    #    self.message_user(
+    #        request,
+    #        "%s comment(s) successfully marked as spam." % queryset.count()
+    #    )
+    #mark_spam_no_ban.short_description = "Mark selected comments as spam (no ban)"
 
 
 class MamaHamCommentAdmin(MamaCommentAdmin, HamCommentAdmin):
@@ -332,11 +347,35 @@ class MamaUnsureCommentAdmin(MamaCommentAdmin, UnsureCommentAdmin):
     pass
 
 
+class ModelBaseHiddenAdmin(MamaModelbaseAdmin, HiddenModelAdmin):
+    pass
+
+
+class BanAuditAdmin(admin.ModelAdmin):
+    list_display = ('user', 'banned_by', 'banned_on', 'ban_duration', '_is_banned')
+    list_filter = ('banned_on', 'ban_duration')
+    raw_id_fields = ('user', 'banned_by')
+    readonly_fields = ('user', 'banned_by', 'ban_duration')
+    search_fields = ['user__username', 'banned_by__username']
+    date_hierarchy = 'banned_on'
+    actions = None
+
+    def _is_banned(self, obj, *args, **kwargs):
+        return obj.user.profile.banned
+    _is_banned.short_description = 'Banned'
+    _is_banned.allow_tags = True
+    _is_banned.boolean = True
+
+    def has_delete_permission(self, request, obj=None, *args, **kwargs):
+        return False
+
+
+admin.site.register(BanAudit, BanAuditAdmin)
 admin.site.register(SitePreferences, AskMamaPreferencesAdmin)
 admin.site.register(Banner, BannerAdmin)
 admin.site.register(DefaultAvatar, DefaultAvatarAdmin)
 
-admin.site.register(ModelBase, HiddenModelAdmin)
+admin.site.register(ModelBase, ModelBaseHiddenAdmin)
 try:
     admin.site.unregister(Post)
     admin.site.unregister(Poll)

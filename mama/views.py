@@ -867,9 +867,9 @@ def report_comment(request, content_type, id, vote):
     user = comment.user
 
     if user is not None:
-        ban_user(user, 1)
+        ban_user(user, 1, request.user)
 
-    return redirect('home')
+    return redirect(request.GET.get('next', reverse('home')))
 
 
 def agree_comment(request):
@@ -878,7 +878,7 @@ def agree_comment(request):
     profile.save()
     redirect_url = reverse('home')
     if 'HTTP_REFERER' in request.META:
-        redirect_url = '%s?v=%s' % (request.META['HTTP_REFERER'],None)
+        redirect_url = '%s?v=%s' % (request.META['HTTP_REFERER'], None)
     return redirect(redirect_url)
 
 
@@ -890,7 +890,8 @@ class ConfirmReportView(TemplateView):
         cid = kwargs['id']
         comment = Comment.objects.get(id=cid)
         context.update({
-                'comment': comment
-            })
+            'comment': comment,
+            'next': self.request.GET.get('next', reverse('home'))
+        })
 
         return context

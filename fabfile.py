@@ -39,7 +39,9 @@ def push():
 
 def migrate():
     with cd(env.path):
-        sudo('ve/bin/python mama/manage.py syncdb --migrate --noinput',
+        sudo('ve/bin/python mama/manage.py syncdb --noinput',
+             user=env.sudo_user)
+        sudo('ve/bin/python mama/manage.py migrate --noinput',
              user=env.sudo_user)
 
 
@@ -62,6 +64,10 @@ def install_packages(force=False):
              '--upgrade' if force else '',), user=env.sudo_user)
 
 
+def restart_memcache():
+    sudo('sudo service memcached restart')
+
+
 def release():
     with cd(env.path):
         push()
@@ -81,3 +87,4 @@ def release():
         sudo('sudo supervisorctl restart '
              'mama_vlive.gunicorn:mama_vlive.gunicorn_%s' % str(i))
     sudo('sudo supervisorctl restart mama.celery')
+    restart_memcache()

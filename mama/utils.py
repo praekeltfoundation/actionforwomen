@@ -2,6 +2,7 @@ from BeautifulSoup import BeautifulSoup, Tag
 from datetime import datetime
 from dateutil.relativedelta import *
 
+
 def mobile_number_to_international(mobile_number):
     if mobile_number.startswith('0') and len(mobile_number) == 10:
             mobile_number = '27' + mobile_number[1:]
@@ -35,7 +36,8 @@ def unban_user(user):
     return profile
 
 
-def ban_user(user, duration):
+def ban_user(user, duration, reporter):
+    from mama.models import BanAudit
     if user.profile:
         profile = user.profile
         profile.banned = True
@@ -43,6 +45,9 @@ def ban_user(user, duration):
         profile.ban_duration = duration
         profile.save()
 
+        # audit user bann
+        BanAudit.objects.create(
+            user=user, banned_by=reporter, ban_duration=duration)
         return profile
 
 
@@ -59,15 +64,17 @@ def askmama_can_vote(weeks_ago, now):
         end_thursday += relativedelta(weeks=1)
 
 
+    if weeks_ago > 0:
+        end_thursday = end_thursday + relativedelta(weeks=-weeks_ago)
+        start_friday = start_friday + relativedelta(weeks=-weeks_ago)
+
     start_tuesday = end_thursday + relativedelta(weekday=TU(-1),
                                        hour=0, minute=0,
                                        second=0, microsecond=0)
 
-    if weeks_ago > 0:
-        end_thursday = end_thursday + relativedelta(weeks=-weeks_ago)
 
 
-    if start_tuesday < now < end_thursday:
+    if start_tuesday < now + relativedelta(weeks=-weeks_ago) < end_thursday:
         can_vote = False
     else:
         can_vote = True
