@@ -318,20 +318,26 @@ class GeneralPrefrencesTestCase(TestCase):
             'category_object_detail',
             kwargs={'category_slug': 'articles', 'slug': self.post.slug})
 
-        self.client = Client(HTTP_REFERER='http://localhost%s' % article_url)
+        user = User.objects.create_user('foo', 'foo@foo.com', 'foo')
+        profile = UserProfile.objects.create(user=user)
+        profile.accepted_commenting_terms = True
+        profile.save()
+        c = Client()
+        c.login(username='foo', password='foo')
+
         pref = SitePreferences.objects.get(pk=preferences.SitePreferences.pk)
         pref.comment_silenced_patterns = 'doodle'
         pref.save()
 
         params = params_for_comments(self.post, 'sample comment')
-        resp = self.client.post(reverse('post_comment'), params)
+        resp = c.post(reverse('post_comment'), params)
         self.assertEqual(resp.status_code, 302)
 
         params = params_for_comments(self.post, 'some doodle with crap')
-        resp = self.client.post(reverse('post_comment'), params)
+        resp = c.post(reverse('post_comment'), params)
         self.assertEqual(resp.status_code, 302)
 
-        resp = self.client.get(article_url)
+        resp = c.get(article_url)
         self.assertContains(resp, 'some ****** with crap')
 
     def test_invalid_banned_words(self):
@@ -367,27 +373,34 @@ class GeneralPrefrencesTestCase(TestCase):
             'category_object_detail',
             kwargs={'category_slug': 'articles', 'slug': self.post.slug})
 
-        self.client = Client(HTTP_REFERER='http://localhost%s' % article_url)
+        user = User.objects.create_user('foo', 'foo@foo.com', 'foo')
+        profile = UserProfile.objects.create(user=user)
+        profile.accepted_commenting_terms = True
+        profile.save()
+        c = Client()
+        c.login(username='foo', password='foo')
+
         pref = SitePreferences.objects.get(pk=preferences.SitePreferences.pk)
         pref.comment_banned_patterns = 'crap\ndoodle\nf**k'
         pref.comment_silenced_patterns = 'monkey'
         pref.save()
 
         params = params_for_comments(self.post, 'some comment with f**k word')
-        resp = self.client.post(reverse('post_comment'), params)
+        resp = c.post(reverse('post_comment'), params)
         self.assertContains(resp, 'inappropriate content')
 
         params = params_for_comments(
             self.post, 'some comment with CRAP in caps')
-        resp = self.client.post(reverse('post_comment'), params)
+        resp = c.post(reverse('post_comment'), params)
         self.assertContains(resp, 'inappropriate content')
 
         params = params_for_comments(
             self.post, 'word MONKEY which is silenced')
-        resp = self.client.post(reverse('post_comment'), params)
+        resp = c.post(reverse('post_comment'), params)
         self.assertEqual(resp.status_code, 302)
 
-        resp = self.client.get(article_url)
+        resp = c.get(article_url)
+
         self.assertContains(resp, 'word ****** which is silenced')
 
 
