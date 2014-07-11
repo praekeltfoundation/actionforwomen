@@ -11,14 +11,14 @@ GA_PROFILE_ID = 88472004
 init_date = datetime(2014, 7, 14)
 
 HOLODECK_API_KEYS = {
-    'users_weekly': '',
-    'pageviews_weekly': '',
-    'user_types': '',
-    'user_phase': '',
-    'users_cumulative': '',
-    'pageviews_cumulative': '',
-    'comments_weekly': '',
-    'comments_cumulative': ''
+    'users_weekly': '78f2376077544db4878e409c0b07adda',
+    'pageviews_weekly': '0a12d44a7f394e76b301461c3e77f9c4',
+    'user_types': 'a537416aa8064fe29c6495c474fb4b44',
+    'user_phase': '3e8d0fd9f8924379b9c6bfac9e58045f',
+    'users_cumulative': '58d0998073d74c7495bc8233fe7380cb',
+    'pageviews_cumulative': '6909a9c8c2974c69b0c929c258d02688',
+    'comments_weekly': '6909a9c8c2974c69b0c929c258d02688',
+    'comments_cumulative': '00ada2b9166e43afb27149dd89ce493d'
 }
 
 
