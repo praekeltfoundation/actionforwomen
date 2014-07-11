@@ -4,7 +4,7 @@
 {% load pml_inclusion_tags %}
 
 {% if weeks_ago == 0 %}
-  {% if can_render_comment_form %}
+  {% if can_render_comment_form and askmama_can_vote %}
   <MODULE>
     <CONTAINER type="data">
       <TEXT>
@@ -126,7 +126,9 @@
         {% else %}
           {{ question.comment|linebreaks }}
         {% endif %}
+        {% if askmama_can_vote %}
         {% likes question template='likes/inclusion_tags/votes.html' %}
+        {% endif %}
         </p>
       </TEXT>
     </CONTAINER>
@@ -139,7 +141,7 @@
       {% endcomment %}
 
       </MODULE>
-      {% if can_render_comment_form %}
+      {% if can_render_comment_form and askmama_can_vote %}
         <MODULE>
           <CONTAINER type="data">
             <TEXT>
@@ -159,7 +161,12 @@
         <CONTAINER type="data">
           <TEXT>
             <p>
-              Vote for these questions to move them up to the top 10 list.
+               {% if askmama_can_vote %}
+                    Vote for these questions to move them up to the top 10
+                    list.
+                    {% else %}
+                          Voting for questions has closed for this week
+                    {% endif %}
               <br/>
             </p>
           </TEXT>
@@ -184,6 +191,7 @@
 
   {% if questions.has_other_pages %}
   <CONTAINER type="data">
+    <TEXT>
     {% if questions.has_previous %}
     <LINK href="?page={{ questions.previous_page_number }}&amp;wk={{ weeks_ago }}&amp;sort={{ sort }}"><TEXT>&#171; Prev</TEXT></LINK>
     {% else %}
@@ -197,6 +205,7 @@
     {% else %}
     Next &#187;
     {% endif %}
+    </TEXT>
   </CONTAINER>
   {% endif %}
 

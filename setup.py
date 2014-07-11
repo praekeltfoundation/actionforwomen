@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='mama',
-    version='0.4.3',
+    version='0.5.0',
     description='Mama Django project.',
     long_description=open('README.rst', 'r').read() + open('AUTHORS.rst', 'r').read() + open('CHANGELOG.rst', 'r').read(),
     author='Praekelt Foundation',
@@ -10,9 +10,6 @@ setup(
     license='BSD',
     url='http://github.com/praekelt/mama',
     packages=find_packages(),
-    dependency_links=[
-        'http://github.com/praekelt/django-photologue/tarball/2.7.praekelt#egg=django-photologue-2.7.praekelt'
-    ],
     install_requires=[
         'django==1.4.5',
         'django-category==0.1',
@@ -34,13 +31,12 @@ setup(
         'django-registration==0.8',
         'django-ckeditor',
         'gunicorn',
-        'django-photologue>2.6.praekelt',
         'jmbo==0.5.5',
         'jmbo-poll>=0.0.9',
         'jmbo-post',
-        'kombu==2.4.7',
-        'celery==3.0.11',
-        'django-celery==3.0.17',
+        'celery==3.1.10',
+        'django-celery==3.1.10',
+        'kombu>3.0',
         'photon',
         'psycopg2',
         'python-ambient',

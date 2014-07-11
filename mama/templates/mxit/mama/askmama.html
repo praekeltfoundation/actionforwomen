@@ -7,6 +7,7 @@ Used for the AskMAMA section
 {% load mama_inclusion_tags %}
 {% load askmama_inclusion_tags %}
 {% load livechat_tags %}
+{% load mama_template_tags %}
 
 {% block following_header %}
 {{ block.super }}
@@ -23,9 +24,7 @@ Used for the AskMAMA section
                 {% if weeks_ago == 0 %}
                 <div class="items {{category.color}}">
                     <div class="item no-pic">
-                        <h1>
-                            {{ lead_in_post.title }}
-                        </h1>
+                        {% mxit_title_bar foreground_color='#FFFFFF' background_color='#B22A2D' text=lead_in_post.title %}
                     </div>
                 </div>
                 {% live_chat_banner %}

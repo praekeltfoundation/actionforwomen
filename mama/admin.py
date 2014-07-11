@@ -7,6 +7,7 @@ from django.contrib.comments.models import Comment
 from django.contrib.admin.sites import NotRegistered
 from django.contrib.contenttypes.models import ContentType
 
+from jmbo.models import ModelBase, Relation
 from jmbo.admin import ModelBaseAdmin
 from preferences.admin import PreferencesAdmin
 from moderator.admin import (
@@ -14,6 +15,7 @@ from moderator.admin import (
     SpamCommentAdmin, UnsureCommentAdmin)
 from moderator.models import (
     HamComment, ReportedComment, SpamComment, UnsureComment)
+from moderator import utils
 
 from secretballot.models import Vote
 from post.models import Post
@@ -24,6 +26,7 @@ from jmboyourwords.models import YourStoryEntry
 from livechat.models import LiveChat
 from livechat.admin import LiveChatAdmin
 
+from mama.utils import ban_user
 from category.models import Category
 from survey.models import ContentQuizToPost
 from mama.models import (
@@ -32,6 +35,9 @@ from mama.models import (
     SitePreferences,
     Banner,
     DefaultAvatar,
+    ArticlePost,
+    MomsStoryPost,
+    BanAudit
 )
 
 
@@ -42,6 +48,8 @@ class MamaModelbaseAdmin(AdminModeratorMixin, ModelBaseAdmin):
 class LinkInline(admin.TabularInline):
     model = Link
     fk_name = 'source'
+    extra = 1
+    raw_id_fields = ('target', )
 
 
 class NavigationLinkInline(admin.TabularInline):
@@ -60,6 +68,33 @@ class PostAdmin(MamaModelbaseAdmin):
         NavigationLinkInline,
         ContentQuizInline
     ]
+    list_display = (
+        'title', 'primary_category', 'publish_on', 'retract_on',
+        '_get_absolute_url', 'is_featured', 'created', '_actions',
+        '_view_comments'
+    )
+    ordering = ('-publish_on', '-created')
+    list_per_page = 10
+
+    def is_featured(self, obj, *args, **kwargs):
+        return obj.categories.filter(slug='featured').exists()
+    is_featured.boolean = True
+
+    def _view_comments(self, article):
+        return '<a href="/admin/post/%s/%s/moderate/">View (%s)</a>' % (
+            article._meta.module_name,
+            article.pk, article.comment_count)
+
+    _view_comments.short_description = 'Comments'
+    _view_comments.allow_tags = True
+
+
+class MamaPostAdmin(PostAdmin):
+
+    def queryset(self, request):
+        qs = super(MamaPostAdmin, self).queryset(request)
+        return qs.filter(
+            primary_category__slug=self.model.primary_category_slug)
 
 
 class MamaPollAdmin(PollAdmin):
@@ -110,6 +145,7 @@ class MamaYourStoryEntryAdmin(YourStoryEntryAdmin):
 
 
 class AskMamaQuestion(Comment):
+
     class Meta:
         proxy = True
         verbose_name = "Question for MAMA"
@@ -118,6 +154,7 @@ class AskMamaQuestion(Comment):
 
 
 class WeeklyFilter(admin.filters.SimpleListFilter):
+
     """
     Filter to allow filtering the mama questions by this week, last week, etc.
     """
@@ -170,6 +207,7 @@ class WeeklyFilter(admin.filters.SimpleListFilter):
 
 
 class AskMamaQuestionAdmin(CommentAdmin):
+
     """ Add a filter to filter out 'This week's favourite stories' in CMS
     """
     list_display = ('comment_text', 'user', 'vote_score', 'submit_date',
@@ -237,6 +275,22 @@ class AskMamaQuestionAdmin(CommentAdmin):
             return None
 
 
+class HiddenModelAdmin(admin.ModelAdmin):
+
+    """
+    As of writing Django has difficulty associating admin permissions to
+    Proxy models (see 11154). This class can be used to soft-hide(popup adds
+    etc will still work) models on admin home via code instead of relying on
+    admin permissions.
+    """
+
+    def get_model_perms(self, request):
+        """
+        Return empty perms dict thus hiding the model from admin index.
+        """
+        return {}
+
+
 class AskMamaPreferencesAdmin(PreferencesAdmin):
     raw_id_fields = ('contact_email_recipients', )
 
@@ -246,10 +300,35 @@ class MamaLiveChatAdmin(AdminModeratorMixin, LiveChatAdmin):
 
 
 class MamaCommentAdmin(CommentAdmin):
+    #actions = CommentAdmin.actions + ['mark_spam_no_ban', ]
+
     def get_user_display_name(self, obj):
         if obj.name.lower().startswith('anon'):
             return obj.user.username
         return obj.name
+
+    def mark_spam(self, modeladmin, request, queryset):
+        for comment in queryset:
+            utils.classify_comment(comment, cls='spam')
+            ban_user(comment.user, 3, request.user)
+
+        self.message_user(
+            request,
+            "%s comment(s) successfully marked as spam. +3 day ban" % queryset.count()
+        )
+    mark_spam.short_description = "Mark selected comments as spam (3 day ban)"
+
+    # TODO - requires updating the copy on the front-end to not say
+    # "User has been banned"
+    #def mark_spam_no_ban(self, modeladmin, request, queryset):
+    #    for comment in queryset:
+    #        utils.classify_comment(comment, cls='spam')
+    #
+    #    self.message_user(
+    #        request,
+    #        "%s comment(s) successfully marked as spam." % queryset.count()
+    #    )
+    #mark_spam_no_ban.short_description = "Mark selected comments as spam (no ban)"
 
 
 class MamaHamCommentAdmin(MamaCommentAdmin, HamCommentAdmin):
@@ -268,16 +347,43 @@ class MamaUnsureCommentAdmin(MamaCommentAdmin, UnsureCommentAdmin):
     pass
 
 
+class ModelBaseHiddenAdmin(MamaModelbaseAdmin, HiddenModelAdmin):
+    pass
+
+
+class BanAuditAdmin(admin.ModelAdmin):
+    list_display = ('user', 'banned_by', 'banned_on', 'ban_duration', '_is_banned')
+    list_filter = ('banned_on', 'ban_duration')
+    raw_id_fields = ('user', 'banned_by')
+    readonly_fields = ('user', 'banned_by', 'ban_duration')
+    search_fields = ['user__username', 'banned_by__username']
+    date_hierarchy = 'banned_on'
+    actions = None
+
+    def _is_banned(self, obj, *args, **kwargs):
+        return obj.user.profile.banned
+    _is_banned.short_description = 'Banned'
+    _is_banned.allow_tags = True
+    _is_banned.boolean = True
+
+    def has_delete_permission(self, request, obj=None, *args, **kwargs):
+        return False
+
+
+admin.site.register(BanAudit, BanAuditAdmin)
 admin.site.register(SitePreferences, AskMamaPreferencesAdmin)
 admin.site.register(Banner, BannerAdmin)
 admin.site.register(DefaultAvatar, DefaultAvatarAdmin)
 
+admin.site.register(ModelBase, ModelBaseHiddenAdmin)
 try:
     admin.site.unregister(Post)
     admin.site.unregister(Poll)
 except NotRegistered:
     pass
 admin.site.register(Post, PostAdmin)
+admin.site.register(ArticlePost, MamaPostAdmin)
+admin.site.register(MomsStoryPost, MamaPostAdmin)
 admin.site.register(Poll, MamaPollAdmin)
 
 admin.site.unregister(Comment)
@@ -300,3 +406,5 @@ admin.site.register(YourStoryEntry, MamaYourStoryEntryAdmin)
 admin.site.register(LiveChat, MamaLiveChatAdmin)
 
 admin.site.register(AskMamaQuestion, AskMamaQuestionAdmin)
+admin.site.unregister(Relation)
+admin.site.register(Relation, HiddenModelAdmin)

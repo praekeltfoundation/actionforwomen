@@ -17,9 +17,20 @@
               {% for comment in object_list %}
                   <div class="item comment no-pic">
                       <div class="meta">
-                          <div class="title">{{ comment.name }}</div>
-                          <div class="stamp">{{ comment.submit_date }} | {% report_comment_abuse comment %}</div>
-                          <div class="stamp">{{ comment.comment|linebreaks }}</div>
+                         <div class="title">{{ comment.name }}</div>
+                            <div class="stamp">{{ comment.submit_date }}
+                        {% if not comment.user.is_staff and comment.user != request.user and request.user.is_authenticated %}
+                        {% if not comment.is_removed %}
+                            | | <a href="{% url confirm_comment comment.content_type comment.id %}?next={{request.path}}">Report</a>
+                        {% endif %}
+                        {% endif %}
+                            </div>
+                        {% if comment.is_removed %}
+                        <div class="stamp">This comment has been reported by the community and the user has been banned<br><br/>
+                        Don't know the commenting rules? <a href="{% url comment-terms %}">Read them here</a></div>
+                        {% else %}
+                        <div class="stamp">{{ comment.comment|linebreaks }}</div>
+                        {% endif %}
                       </div>
                   </div>
               {% endfor %}

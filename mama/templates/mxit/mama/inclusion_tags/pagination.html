@@ -7,13 +7,13 @@
         {% else %}
             <span class="disabled prev">&lsaquo;&lsaquo; Prev</span>
         {% endif %}
-        {% for page_number in paginator.page_range %}
-            {% if page_number == page_obj.number %}
+        {% for page in pages %}
+            {% if page.number == page_obj.number %}
             <span class="current page">
-              | page {{ page_number }} of {{ paginator.num_pages }} |
+              | page {{ page.number }} of {{ paginator.num_pages }} |
             </span>
             {% else %}
-                <a href="{% smart_query_string 'page' page_number %}" class="page">{{ page_number }}</a>
+                <a href="{% smart_query_string 'page' page.number %}" class="page">{{ page.number }}</a>
             {% endif %}
         {% endfor %}
         {% if page_obj.has_next %}

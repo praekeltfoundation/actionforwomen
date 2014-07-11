@@ -15,11 +15,41 @@ from userprofile.models import AbstractProfileBase
 from photologue.models import ImageModel
 from jmboyourwords.models import YourStoryCompetition
 from mama.forms import RegistrationForm
+from post.models import Post
+from category.models import Category
 
 from mama.constants import (
     RELATION_TO_BABY_CHOICES,
     FULL_DATE_QUALIFIER_CHOICES
 )
+
+
+class MomsStoryPost(Post):
+    primary_category_slug = 'moms-stories'
+
+    class Meta:
+        app_label = 'post'
+        proxy = True
+
+    def save(self, *args, **kwargs):
+        if not self.primary_category:
+            self.primary_category = Category.objects.get(
+                slug=self.primary_category_slug)
+        super(MomsStoryPost, self).save(*args, **kwargs)
+
+
+class ArticlePost(Post):
+    primary_category_slug = 'articles'
+
+    class Meta:
+        app_label = 'post'
+        proxy = True
+
+    def save(self, *args, **kwargs):
+        if not self.primary_category:
+            self.primary_category = Category.objects.get(
+                slug=self.primary_category_slug)
+        super(ArticlePost, self).save(*args, **kwargs)
 
 
 class Link(models.Model):
@@ -196,6 +226,24 @@ class UserProfile(AbstractProfileBase):
         default=False,
         blank=True,
     )
+
+    last_banned_date = models.DateField(
+        help_text='The Date on which the user was banned',
+        blank=True,
+        null=True,
+    )
+
+    ban_duration = models.IntegerField(
+        help_text='The length of time in days the user will be banned',
+        blank=True,
+        null=True,
+    )
+
+    accepted_commenting_terms = models.BooleanField(
+        help_text='If a user has accepted the new commenting terms',
+        default=False,
+        blank=True,
+    )
     decline_surveys = models.BooleanField(
         help_text='Whether or not user declined to paricipate in surveys.',
         default=False,
@@ -261,6 +309,13 @@ class UserProfile(AbstractProfileBase):
         if not self.delivery_date:
             return False
         return date.today() > self.delivery_date
+
+
+class BanAudit(models.Model):
+    user = models.ForeignKey('auth.User', related_name='user_bans')
+    banned_by = models.ForeignKey('auth.User', related_name='user_bans_reported')
+    banned_on = models.DateTimeField(auto_now=True)
+    ban_duration = models.IntegerField()
 
 
 class Banner(ModelBase):

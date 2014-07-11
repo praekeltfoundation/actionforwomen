@@ -15,8 +15,19 @@
     <CONTAINER type="data">
       <TEXT>
         <b>{{ comment.name }}</b><br/>
-        {{ comment.submit_date }} | {% report_comment_abuse comment %}<br/>
-        {{ comment.comment|linebreaks }}<br/>
+            {{ comment.submit_date }}
+            {% if not comment.user.is_staff and comment.user != request.user %}
+                        {% if not comment.is_removed %}
+                            | | <LINK href="{% url confirm_comment comment.content_type comment.id %}?next={{request.path}}"><TEXT>Report</TEXT></LINK>
+                        {% endif %}
+            {% endif %}
+            <br/>
+            {% if comment.is_removed %}
+                  <p>This comment has been reported by the community and the user has been banned</p><br/>
+                  <p>Don't know the commenting rules?</p> <LINK href="{% url comment-terms %}"><TEXT>Read them here</TEXT></LINK>
+            {% else %}
+            {{ comment.comment|linebreaks }}<br/>
+            {% endif %}
       </TEXT>
     </CONTAINER>
   </MODULE>

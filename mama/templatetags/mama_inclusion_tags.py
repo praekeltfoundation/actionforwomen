@@ -131,10 +131,6 @@ def pml_page_header(context):
         'url': reverse('home'),
     })
     links.append({
-        'title': 'My Profile',
-        'url': reverse('view_my_profile')
-    })
-    links.append({
         'title': 'Articles',
         'url': reverse('category_object_list',
                        kwargs={'category_slug': 'articles'})
@@ -159,12 +155,16 @@ def pml_page_header(context):
         'title': "Guides",
         'url': reverse('guides_list')
     })
+    links.append({
+        'title': 'My Profile',
+        'url': reverse('view_my_profile')
+    })
     context['links'] = links
     return context
 
 
 @register.inclusion_tag('mama/inclusion_tags/topic_listing.html', takes_context=True)
-def topic_listing(context, category_slug, more):
+def topic_listing(context, category_slug, more, limit=0):
     context = copy(context)
     try:
         category = Category.objects.get(slug__exact=category_slug)
@@ -174,6 +174,8 @@ def topic_listing(context, category_slug, more):
         Q(primary_category=category) |
         Q(categories=category)
     ).filter(categories__slug='featured').distinct()
+    if limit:
+        object_list = object_list[:limit]
     context.update({
         'category': category,
         'object_list': object_list,
@@ -201,8 +203,8 @@ def post_listing(context, category_slug):
     return result
 
 
-@register.inclusion_tag('mama/inclusion_tags/stories_listing.html',
-        takes_context=True)
+@register.inclusion_tag(
+    'mama/inclusion_tags/stories_listing.html', takes_context=True)
 def stories_listing(context, category_slug):
     result = _get_content_object_list(context, category_slug)
     # Trim to 3 objects, or provide empty list if it doesn't have one.
@@ -222,13 +224,13 @@ def _get_content_object_list(ctx_dict, category_slug):
         category = Category.objects.get(slug__exact=category_slug)
     except Category.DoesNotExist:
         return ctx_dict
-    object_list = Post.permitted.filter(Q(primary_category=category) | \
-            Q(categories=category))
-    object_list = object_list.filter(categories__slug='featured').distinct()
+    object_list = Post.permitted.filter(
+        Q(primary_category=category) | Q(categories=category),
+        categories__slug='featured').distinct()
 
     ctx_dict.update({
         'category': category,
-        'object_list': object_list,
+        'object_list': object_list.order_by('-publish_on'),
     })
     return ctx_dict
 
@@ -269,7 +271,6 @@ def babycenter_byline(obj):
         return {'display': True}
     else:
         return {}
-
 
 
 @register.inclusion_tag('mama/inclusion_tags/vlive_object_comments.html', takes_context=True)
@@ -333,3 +334,69 @@ def vlive_object_comments(context, obj):
     })
 
     return context
+
+
+@register.inclusion_tag('mama/includes/comments_include_no_likes.html', takes_context=True)
+def mama_object_comments(context, obj):
+    def can_comment(obj, request):
+        """
+        Determine if user can comment.
+        We don't use ModelBase.can_comment since that unnecessarily traverses to base.
+        """
+        # can't comment if commenting is closed
+        if obj.comments_closed:
+            return False
+
+        # can't comment if commenting is disabled
+        if not obj.comments_enabled:
+            return False
+
+        # anonymous users can't comment if anonymous comments are disabled
+        if not request.user.is_authenticated() and not \
+                obj.anonymous_comments:
+            return False
+
+        return True
+
+    def get_paginated_comments(obj, request):
+        from django.contrib.comments.models import Comment
+        from django.contrib.contenttypes.models import ContentType
+        ctype = ContentType.objects.get_for_model(obj)
+        comments = Comment.objects.filter(
+            content_type=ctype,
+            object_pk=obj.pk,
+            is_public=True
+        ).order_by('-submit_date')
+
+        page = request.GET.get('page')
+
+        # if a specific page is requested, show many comments, paged
+        if page:
+            paginator = Paginator(comments, 5)
+            try:
+                page_comments = paginator.page(page)
+            except PageNotAnInteger:
+                # If page is not an integer, deliver first page.
+                page_comments = paginator.page(1)
+            except EmptyPage:
+                # If page is out of range (e.g. 9999), deliver last page of results.
+                page_comments = paginator.page(paginator.num_pages)
+
+            return page_comments
+        else:
+            #if no specific page has been requested, only show the first five comments
+            paginator = Paginator(comments, 5)
+            return paginator.page(1)
+
+    request = context['request']
+    comments = get_paginated_comments(obj, request)
+    context.update({
+        'object': obj,
+        'comments': comments,
+        'can_comment': can_comment(obj, request),
+    })
+    return context
+
+
+
+

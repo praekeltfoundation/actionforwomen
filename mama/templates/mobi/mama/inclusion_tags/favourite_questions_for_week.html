@@ -4,6 +4,7 @@
 
 {% if weeks_ago == 0 %}
   {% if can_render_comment_form %}
+     {% if askmama_can_vote %}
     <div class="text_banner">
       <div class="banner_content">
         <p>
@@ -15,6 +16,7 @@
         </p>
       </div>
     </div>
+     {% endif %}
   {% endif %}
   {% if questions.number == 1 %}
     {# display the top 10 questions banner only the first page of this week. #}
@@ -111,7 +113,9 @@
             {% else %}
               <div class="stamp">{{ question.comment|linebreaks }}</div>
             {% endif %}
+          {% if askmama_can_vote %}
             <div class="stamp">{% likes question template='likes/inclusion_tags/votes.html' %}</div>
+          {% endif %}
           </div>
         </div>
 
@@ -123,7 +127,8 @@
           {% endcomment %}
 
           </div>
-            {% if can_render_comment_form %}
+            {% if can_render_comment_form and askmama_can_vote %}
+
             <div class="text_banner">
               <div class="banner_content">
                 <p>
@@ -143,8 +148,13 @@
               <div class="item comment no-pic">
                 <div class="meta">
                   <div class="stamp" style="color: #b22a2d;">
+                    {% if askmama_can_vote %}
+
                     Vote for these questions to move them up to the top 10
                     list.
+                    {% else %}
+                          Voting for questions has closed for this week
+                    {% endif %}
                     <br/>
                   </div>
                 </div>

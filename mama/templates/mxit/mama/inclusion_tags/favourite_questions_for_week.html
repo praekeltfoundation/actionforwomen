@@ -1,9 +1,11 @@
 {% load comments %}
 {% load likes_inclusion_tags %}
 {% load moderator_inclusion_tags %}
+{% load mama_template_tags %}
 
 {% if weeks_ago == 0 %}
   {% if can_render_comment_form %}
+      {% if askmama_can_vote %}
     <div class="text_banner">
       <div class="banner_content">
         <p>
@@ -15,12 +17,7 @@
         </p>
       </div>
     </div>
-  {% endif %}
-  {% if questions.number == 1 %}
-    {# display the top 10 questions banner only the first page of this week. #}
-    <div class="top_10_questions">
-      <img src="{{ STATIC_URL }}mama/img/top_10_questions.jpg" />
-    </div>
+     {% endif %}
   {% endif %}
 {% endif %}
 
@@ -54,6 +51,33 @@
 
 <div class="{{ category.color }}">
 
+  {% if weeks_ago == 1 %}
+  <div class="h1" id="comments">
+    <a href="{% url askmama_detail %}">Ask MAMA</a> &gt; Last week's Q&amp;A
+  </div>
+  {% endif %}
+
+    {% if weeks_ago == 0 %}
+      {% if questions.number == 1 %}
+        {% mxit_title_bar foreground_color='#FFFFFF' background_color='#B22A2D' text='Top 10 Questions' %}
+      {% else %}
+        {% mxit_title_bar foreground_color='#FFFFFF' background_color='#B22A2D' text='More Questions' %}
+      {% endif %}
+    {% else %}
+      {% if weeks_ago == 1 %}
+        {% with for_week=week_start|date:'d M Y' %}
+        {% mxit_combine 'Top 10 questions for ' for_week as title_msg %}
+        {% mxit_title_bar foreground_color='#FFFFFF' background_color='#B22A2D' text=title_msg %}
+        {% endwith %}
+      {% else %}
+        {% with for_week=week_end|date:'d M Y' %}
+        {% mxit_combine 'Questions older than ' for_week as title_msg %}
+        {% mxit_title_bar foreground_color='#FFFFFF' background_color='#B22A2D' text=title_msg %}
+        {% endwith %}
+      {% endif %}
+    {% endif %}
+  </div>
+
   {% if weeks_ago == 0 and questions.number == 1 %}
   <div class="text_banner">
     <div class="banner_content">
@@ -67,28 +91,6 @@
     </div>
   </div>
   {% endif %}
-
-  {% if weeks_ago == 1 %}
-  <div class="h1" id="comments">
-    <a href="{% url askmama_detail %}">Ask MAMA</a> &gt; Last week's Q&amp;A
-  </div>
-  {% endif %}
-
-  <div class="h1" id="comments">
-    {% if weeks_ago == 0 %}
-      {% if questions.number == 1 %}
-      Top 10 Questions
-      {% else %}
-      More Questions
-      {% endif %}
-    {% else %}
-      {% if weeks_ago == 1 %}
-        Top 10 questions for {{ week_start|date:"d M Y" }}
-      {% else %}
-        Questions older than {{ week_end|date:"d M Y" }}
-      {% endif %}
-    {% endif %}
-  </div>
 
   <div class="content-inner">
     <div class="items">
@@ -105,7 +107,9 @@
           style="background-color: #fee;"
           {% endif %} >
           <div class="meta">
+          {% if askmama_can_vote %}
             <div class="stamp">{% likes question template='likes/inclusion_tags/votes.html' %}</div>
+          {% endif %}
             {% if question.replied_to_comments_set.count > 0 %}
             <a href="{% url askmama_answer_detail question.id %}">
               <div class="stamp">{{ question.comment|linebreaks }}</div>
@@ -124,7 +128,7 @@
           {% endcomment %}
 
           </div>
-            {% if can_render_comment_form %}
+            {% if can_render_comment_form and askmama_can_vote %}
             <div class="text_banner">
               <div class="banner_content">
                 <p>
@@ -137,15 +141,17 @@
               </div>
             </div>
             {% endif %}
-            <div class="h1">
-              More Questions
-            </div>
+            {% mxit_title_bar foreground_color='#FFFFFF' background_color='#B22A2D' text="More Questions" %}
             <div class="items">
               <div class="item comment no-pic">
                 <div class="meta">
                   <div class="stamp" style="color: #b22a2d;">
+                     {% if askmama_can_vote %}
                     Vote for these questions to move them up to the top 10
                     list.
+                    {% else %}
+                          Voting for questions has closed for this week
+                    {% endif %}
                     <br/>
                   </div>
                 </div>
