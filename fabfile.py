@@ -86,5 +86,8 @@ def release():
     for i in range(1, numprocs + 1):
         sudo('sudo supervisorctl restart '
              'mama_vlive.gunicorn:mama_vlive.gunicorn_%s' % str(i))
+    for i in range(1, numprocs + 1):
+        sudo('sudo supervisorctl restart '
+             'mama_unicore.gunicorn:mama_unicore.gunicorn_%s' % str(i))
     sudo('sudo supervisorctl restart mama.celery')
     restart_memcache()
