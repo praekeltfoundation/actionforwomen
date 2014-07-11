@@ -5,7 +5,7 @@ from south.v2 import SchemaMigration
 from django.db import models
 
 
-class Migration(SchemaMigration):
+class Migration(DataMigration):
 
     def forwards(self, orm):
         Site = orm['sites.Site']
