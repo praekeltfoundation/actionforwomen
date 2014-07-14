@@ -2,13 +2,15 @@ from datetime import datetime, timedelta
 
 from django.core.management.base import BaseCommand
 from django.contrib.comments.models import Comment
+from django.contrib.sites.models import Site
+from django.contrib.auth.models import User
 from google_credentials import utils
 from photon import Client
-from django.contrib.auth.models import User
 from mama.models import UserProfile
 
 GA_PROFILE_ID = 88472004
 init_date = datetime(2014, 7, 14)
+PROFILE_ORIGIN = 'unicore_zambia'
 
 HOLODECK_API_KEYS = {
     'users_weekly': '78f2376077544db4878e409c0b07adda',
@@ -23,7 +25,7 @@ HOLODECK_API_KEYS = {
 
 
 class Command(BaseCommand):
-    help = 'Pushes various metrics for Unicore to Holodeck dashboard.'
+    help = 'Pushes various metrics for Zambia Unicore to Holodeck dashboard.'
 
     def handle(self, *args, **options):
         self.push(datetime.now())
@@ -41,9 +43,9 @@ class Command(BaseCommand):
         client = Client(server='http://holodeck.praekelt.com')
         ga_service = utils.get_service()
 
-        unicore_users = User.objects.filter(userprofile__origin='unicore')
+        unicore_users = User.objects.filter(userprofile__origin=PROFILE_ORIGIN)
 
-        print "Pushing Unicore Weekly Users"
+        print "Pushing Zambia Weekly Users"
         query = ga_service.data().ga().get(
             ids='ga:%d' % GA_PROFILE_ID,
             start_date=str(range_start.date()),
@@ -63,7 +65,7 @@ class Command(BaseCommand):
             timestamp=datetime_obj,
         )
 
-        print "Pushing Unicore Weekly Pageviews"
+        print "Pushing Zambia Weekly Pageviews"
         query = ga_service.data().ga().get(
             ids='ga:%d' % GA_PROFILE_ID,
             start_date=str(range_start.date()),
@@ -81,7 +83,7 @@ class Command(BaseCommand):
             timestamp=datetime_obj,
         )
 
-        print "Pushing Unicore User Types"
+        print "Pushing Zambia User Types"
         query = ga_service.data().ga().get(
             ids='ga:%d' % GA_PROFILE_ID,
             start_date=str(range_start.date()),
@@ -99,8 +101,8 @@ class Command(BaseCommand):
                 timestamp=datetime_obj,
             )
 
-        print "Pushing Unicore User Phase"
-        unicore_userprofile = UserProfile.objects.filter(origin='unicore')
+        print "Pushing Zambia User Phase"
+        unicore_userprofile = UserProfile.objects.filter(origin=PROFILE_ORIGIN)
         client.send(
             samples=(
                 ("Prenatal", unicore_userprofile.filter(
@@ -112,13 +114,14 @@ class Command(BaseCommand):
             timestamp=datetime_obj,
         )
 
-        print "Pushing Weekly Comments"
+        print "Pushing Zambia Weekly Comments"
         unicore_comments = Comment.objects.filter(
-            user__userprofile__origin='unicore')
+            site=Site.objects.get_current(),
+            user__userprofile__origin=PROFILE_ORIGIN)
 
         client.send(
             samples=(
-                ("Unicore", unicore_comments.filter(
+                ("Mobi", unicore_comments.filter(
                     submit_date__range=(range_start, range_end)).count()),
             ),
             api_key=HOLODECK_API_KEYS['comments_weekly'],
@@ -135,9 +138,9 @@ class Command(BaseCommand):
 
         range_end = datetime_obj
         range_start_cumulative = init_date
-        unicore_users = User.objects.filter(userprofile__origin='unicore')
+        unicore_users = User.objects.filter(userprofile__origin=PROFILE_ORIGIN)
 
-        print "Pushing Unicore Users Cumulative"
+        print "Pushing Zambia Users Cumulative"
         query = ga_service.data().ga().get(
             ids='ga:%d' % GA_PROFILE_ID,
             start_date=str(range_start_cumulative.date()),
@@ -158,7 +161,7 @@ class Command(BaseCommand):
             timestamp=datetime_obj,
         )
 
-        print "Pushing Unicore Pageviews Cumulative"
+        print "Pushing Zambia Pageviews Cumulative"
         query = ga_service.data().ga().get(
             ids='ga:%d' % GA_PROFILE_ID,
             start_date=str(range_start_cumulative.date()),
@@ -176,13 +179,13 @@ class Command(BaseCommand):
             timestamp=datetime_obj,
         )
 
-        print "Pushing Comments Cumulative"
+        print "Pushing Zambia Comments Cumulative"
         unicore_comments = Comment.objects.filter(
-            user__userprofile__origin='unicore')
+            user__userprofile__origin=PROFILE_ORIGIN)
 
         client.send(
             samples=(
-                ("Unicore", unicore_comments.filter(
+                ("Mobi", unicore_comments.filter(
                     submit_date__range=(range_start_cumulative,
                                         range_end)).count()),
             ),
