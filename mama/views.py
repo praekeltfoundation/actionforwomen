@@ -860,6 +860,12 @@ def like(request, content_type, id, vote):
     return redirect(redirect_url)
 
 
+def get_user(request):
+    if not hasattr(request, '_cached_user'):
+        request._cached_user = auth.get_user(request)
+    return request._cached_user
+
+
 def report_comment(request, content_type, id, vote):
     comment = Comment.objects.get(id=id)
 
@@ -867,7 +873,7 @@ def report_comment(request, content_type, id, vote):
     user = comment.user
 
     if user is not None:
-        ban_user(user, 1, request.user)
+        ban_user(user, 1, get_user(request))
 
     return redirect(request.GET.get('next', reverse('home')))
 
