@@ -6,15 +6,15 @@
     <div class="items">
         <form id="frmDoSurvey" method="post" action="">
             {% csrf_token %}
-
-            {% for field in form %}
-                {% if not field.is_hidden %}
-                    {{ field.label_tag }}<br />
-                {% endif %}
-                {{ field }}
+            {{ form.question.label }}<br/><br/>
+            <select name="{{ form.question.name }}"
+            {% for choice in form.question.field.choices %}
+                <option name="{{ question.name }}" value="{{ choice.0 }}">{{ choice.1 }}</option>
             {% endfor %}
-            <br />
+
             <div class="row">
+                <input type="hidden" name="survey_id" value="{{ form.survey_id.value }}"><br/>
+                <input type="hidden" name="question_id" value="{{ form.question_id.value }}"><br/>
                 <input type="submit" name="submit" value="Continue" class="btn" />
             </div>
             <div class="clear"></div>

@@ -1,6 +1,7 @@
 from copy import copy
 from datetime import datetime
 
+from django.conf import settings
 from django import template
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
@@ -307,7 +308,8 @@ def vlive_object_comments(context, obj):
             content_type=ctype,
             object_pk=obj.pk,
             is_public=True,
-            is_removed=False
+            is_removed=False,
+            site__pk=settings.SITE_ID
         ).select_related('user').order_by('-submit_date'))
 
         paginator = Paginator(comments, 5)
@@ -367,6 +369,7 @@ def mama_object_comments(context, obj):
             object_pk=obj.pk,
             is_public=True,
             user__is_staff=False,
+            site__pk=settings.SITE_ID
         ).order_by('-submit_date')
 
         page = request.GET.get('page')
