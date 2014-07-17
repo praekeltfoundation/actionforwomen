@@ -36,12 +36,12 @@ class PMLYourStoryView(FormView):
             YourStoryCompetition,
             pk=int(form.cleaned_data['competition_id']))
         YourStoryEntry.objects.create(
-            your_story_competition = competition,
-            user = self.request.user,
-            name = form.cleaned_data['name'],
-            email = form.cleaned_data['email'],
-            text = form.cleaned_data['text'],
-            terms = True
+            your_story_competition=competition,
+            user=self.request.user,
+            name=form.cleaned_data['name'],
+            email=form.cleaned_data['email'],
+            text=form.cleaned_data['text'],
+            terms=True
         )
         return super(PMLYourStoryView, self).form_valid(form)
 
