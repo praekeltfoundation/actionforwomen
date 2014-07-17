@@ -28,6 +28,10 @@
             {% else %}
             {{ comment.comment|linebreaks }}<br/>
             {% endif %}
+            {% for commentreply in comment.replied_to_comments_set.all %}
+                    <b>{{ commentreply.user.first_name }}</b><br/>
+                    {{ commentreply.comment_text|linebreaks }}
+            {% endfor %}
       </TEXT>
     </CONTAINER>
   </MODULE>
