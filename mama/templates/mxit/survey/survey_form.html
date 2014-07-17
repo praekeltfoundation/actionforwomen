@@ -7,10 +7,11 @@
         <form id="frmDoSurvey" method="post" action="">
             {% csrf_token %}
             {{ form.question.label }}<br/><br/>
-            <select name="{{ form.question.name }}"
+            <select name="{{ form.question.name }}">
             {% for choice in form.question.field.choices %}
                 <option name="{{ question.name }}" value="{{ choice.0 }}">{{ choice.1 }}</option>
             {% endfor %}
+            </select>
 
             <div class="row">
                 <input type="hidden" name="survey_id" value="{{ form.survey_id.value }}"><br/>
