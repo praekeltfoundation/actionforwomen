@@ -19,11 +19,11 @@
             {% csrf_token %}
 
              {{ form.proceed_choice.label }}<br/><br/>
-            <select name="{{ form.proceed_choice.name }}"
-
+            <select name="{{ form.proceed_choice.name }}">
             {% for choice in form.proceed_choice.field.choices %}
                 <option name="{{ choice.name }}" value="{{ choice.0 }}">{{ choice.1 }}</option>
             {% endfor %}
+            </select>
 
             <div class="row">
                 <input type="hidden" name="survey_id" value="{{ survey_id }}"><br/>
