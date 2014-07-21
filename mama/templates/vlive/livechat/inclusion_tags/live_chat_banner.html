@@ -3,17 +3,30 @@
   <CONTAINER type="data">
     <TEXT>
       <b>
-        <LINK href="{{ live_chat_advert.url }}">
-          <TEXT>Live Chat:</TEXT>
-        </LINK>
-        {{ live_chat_advert.title }}
+
+        {% if live_chat_advert.cancelled %}
+          Apologies the Live Chat with {{ live_chat_advert.expert }} on {{ live_chat_advert.title }}
+          has been cancelled due to unforeseen circumstances.
+          {% else %}
+      {% if live_chat_advert.commenting_closed %}
+          Live Chat with {{ live_chat_advert.expert }}
+         on {{ live_chat_advert.title }} is now closed.<br/>
+          <LINK href="{{ live_chat_advert.url }}">Click here to view questions and answers...</LINK>
+          {% else %}
+        Join us for Live Chat with {{ live_chat_advert.expert }}
+        on {{ live_chat_advert.title }}
+
+        {% if not live_chat_advert.in_progress %}
+        at {{ live_chat_advert.datetime.time }} on {{ live_chat_advert.datetime.date }}<br/>
+          <LINK href="{{ live_chat_advert.url }}">Find out more</LINK>
+            {% else %}
+            on NOW!<br/>
+            <LINK href="{{ live_chat_advert.url }}">Click here to participate</LINK>
+        {% endif %}
+      {% endif %}
+      {% endif %}
       </b>
     </TEXT>
-    {% if live_chat_advert.description %}
-    <TEXT>
-      {{ live_chat_advert.description|linebreaks|safe }}
-    </TEXT>
-    {% endif %}
   </CONTAINER>
 </MODULE>
 {% endif %}
