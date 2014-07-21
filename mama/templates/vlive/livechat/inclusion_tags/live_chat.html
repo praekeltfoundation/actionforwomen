@@ -35,11 +35,11 @@
         <TEXT><b>Didn't get your question answered?</b><br/></TEXT>
           <LINK href="{% url askmama_detail %}">Visit askMAMA and ask there</LINK>
     {% else %}
-        {% if live_chat.can_render_comment_form %}
-        {% render_comment_form for live_chat.current_live_chat %}
-           {% else %}
+        {% if can_comment %}
+        {% render_comment_form for live_chat %}
+        {% else %}
                 <b>Comments will open when live chat begins</b>
-            {% endif %}
+        {% endif %}
     {% if live_chat.can_comment_code == 'auth_required' %}
     <MODULE>
       <CONTAINER type="data">
@@ -59,6 +59,7 @@
   {% if chat_comments %}
     <CONTAINER type="data">
       {% for comment in chat_comments.object_list %}
+
         <TEXT>
           {% if comment.user %}
             {% with comment.user.get_profile as profile %}
@@ -89,9 +90,9 @@
                   {{ comment.name }}
                   {% endif %} at {{ response.updated_at.time }}
                           {{ response.response }}
-                      </div>
+
                   {% endfor %}
-              </div>
+
               {% endif %}
       {% endfor %}
        </TEXT>
