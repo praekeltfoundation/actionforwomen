@@ -41,9 +41,7 @@ from mama.forms import (
 )
 from mama.view_modifiers import PopularViewModifier
 from mama.models import Banner, DefaultAvatar
-from livechat.utils import test_close_chat
 from category.models import Category
-
 from poll.forms import PollVoteForm
 from poll.models import Poll
 from post.models import Post
