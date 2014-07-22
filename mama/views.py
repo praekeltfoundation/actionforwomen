@@ -335,6 +335,28 @@ class MomStoryFormView(FormView):
         )
         return HttpResponseRedirect(self.get_success_url())
 
+class AskMamaArchiveView(DetailView):
+    template_name = "mama/askmama_archive.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(AskMamaArchiveView, self).get_context_data(**kwargs)
+        post = context['post']
+
+        comments = Comment.objects.filter(
+            object_pk=post.id)
+        comments = comments.order_by('-submit_date')
+        request = self.request
+        try:
+            paginator = Paginator(
+                comments,
+                per_page=10)
+            context['chat_comments'] = paginator.page(request.GET.get('p', 1))
+        except (KeyError, AttributeError):
+            pass
+        return context
+
+    def get_object(self):
+        return get_object_or_404(Post, slug='ask-mama')
 
 class AskMamaView(CategoryDetailView):
     """

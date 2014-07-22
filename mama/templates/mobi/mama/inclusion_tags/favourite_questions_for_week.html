@@ -2,79 +2,8 @@
 {% load likes_inclusion_tags %}
 {% load moderator_inclusion_tags %}
 
-{% if weeks_ago == 0 %}
-  {% if can_render_comment_form %}
-     {% if askmama_can_vote %}
-    <div class="text_banner">
-      <div class="banner_content">
-        <p>
-        <strong>
-          <a href="{% url ask_expert_question lead_in_post.id %}">
-            Ask your question &raquo;
-          </a>
-        </strong>
-        </p>
-      </div>
-    </div>
-     {% endif %}
-  {% endif %}
-  {% if questions.number == 1 %}
-    {# display the top 10 questions banner only the first page of this week. #}
-    <div class="top_10_questions">
-      <img src="{{ STATIC_URL }}mama/img/top_10_questions.jpg" />
-    </div>
-  {% endif %}
-{% endif %}
-
-{% if weeks_ago > 1 %}
-  <div class="content-inner">
-    <div class="items">
-      <div class="item comment no-pic">
-        <div class="meta">
-          <div class="stamp">
-            {% if sort == 'pop' %}
-            <a href="{% url askmama_detail %}?wk=2&sort=date">Latest</a> |
-            Popular |
-            <a href="{% url askmama_detail %}?wk=2&sort=alph">Alphabetical</a>
-            {% else %}
-              {% if sort == 'date' %}
-                Latest |
-                <a href="{% url askmama_detail %}?wk=2&sort=pop">Popular</a> |
-                <a href="{% url askmama_detail %}?wk=2&sort=alph">Alphabetical</a>
-              {% else %}
-                <a href="{% url askmama_detail %}?wk=2&sort=date">Latest</a> |
-                <a href="{% url askmama_detail %}?wk=2&sort=pop">Popular</a> |
-                Alphabetical
-              {% endif %}
-            {% endif %}
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-{% endif %}
 
 <div class="{{ category.color }}">
-
-  {% if weeks_ago == 0 and questions.number == 1 %}
-  <div class="text_banner">
-    <div class="banner_content">
-      <p>
-      <strong>
-        <a href="{% url askmama_detail %}?wk=1">
-          Read last week's top 10 &raquo;
-        </a>
-      </strong>
-      </p>
-    </div>
-  </div>
-  {% endif %}
-
-  {% if weeks_ago == 1 %}
-  <div class="h1" id="comments">
-    <a href="{% url askmama_detail %}">Ask MAMA</a> &gt; Last week's Q&amp;A
-  </div>
-  {% endif %}
 
   <div class="h1" id="comments">
     {% if weeks_ago == 0 %}
@@ -127,23 +56,6 @@
           {% endcomment %}
 
           </div>
-            {% if can_render_comment_form and askmama_can_vote %}
-
-            <div class="text_banner">
-              <div class="banner_content">
-                <p>
-                <strong>
-                  <a href="{% url ask_expert_question lead_in_post.id %}">
-                    Ask your question &raquo;
-                  </a>
-                </strong>
-                </p>
-              </div>
-            </div>
-            {% endif %}
-            <div class="h1">
-              More Questions
-            </div>
             <div class="items">
               <div class="item comment no-pic">
                 <div class="meta">
@@ -196,6 +108,27 @@
     {% endif %}
   </div>
 
+{% if weeks_ago == 0 %}
+  {% if can_render_comment_form %}
+     {% if askmama_can_vote %}
+         <div class="h1" style="background: #EA5A51">
+  Ask your question
+ </div>
+         <div class="post"><p>
+         The doctor can only answer questions about your health or your baby's. Your question
+         will be answered if it is voted into the TOP 10 by the MAMA community. If you can see
+        a question similar to your in the QUESTIONS NOT IN THE TOP 10 Section below,
+        then VOTE it into the TOP 10 rather than asking the same question again.<br/>
+        Need an urgent answer? Find information here.</p>
+         </div>
+          {% render_comment_form for lead_in_post %}
+<script type="text/javascript"
+        src="{{ STATIC_URL }}mama/js/askmama_change_question_label.js">
+</script>
+     {% endif %}
+  {% endif %}
+{% endif %}
+
   {% if weeks_ago == 0 %}
     {% if not can_render_comment_form %}
       {% if can_comment_code == 'auth_required' %}
@@ -214,17 +147,5 @@
     {% endif %}
   {% endif %}
 
-  {% if weeks_ago > 0 %}
-  <div class="text_banner">
-    <div class="banner_content">
-      <p>
-      <strong>
-        <a href="{% url askmama_detail %}">
-          &lt; Back to Ask MAMA
-        </a>
-      </strong>
-      </p>
-    </div>
-  </div>
-  {% endif %}
+
 </div>

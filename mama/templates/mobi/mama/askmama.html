@@ -7,6 +7,7 @@ Used for the AskMAMA section
 {% load mama_inclusion_tags %}
 {% load askmama_inclusion_tags %}
 {% load livechat_tags %}
+{% load comments %}
 
 {% block following_header %}
 {{ block.super }}
@@ -15,39 +16,29 @@ Used for the AskMAMA section
 
 {% block content %}
 
-    {{ block.super }}
-    {% show_last_live_chat %}
-    {% if lead_in_post %}
-        <div class="">
-            <div class="content-inner">
-                {% if weeks_ago == 0 %}
-                <div class="items {{category.color}}">
-                    <div class="item no-pic">
-                        <div class="h1">
-                            {{ lead_in_post.title }}
-                        </div>
-                    </div>
+    <div class="h1" style="background: #EA5A51">
+      {{ lead_in_post.title }}
+ </div>
+<div class="post"><p>
+    <strong>VOTE</strong> for the question you want answered from Friday to Tuesday morning. The doctor will answer the TOP 10
+    questions as voted by all MAMA users.<br/>
+    ASK your own question if nobody has asked it already.<br/>
+    READ the doctors answers in AskMAMA Archive.</p>
+</div>
+    <div class="content-inner">
+    <div class="items">
+            <div class="item comment no-pic">
+                <div class="meta">
+                    <div class="stamp">PLEASE NOTE: The answers provided by our experts are not a substitute for
+    medical advice. If you are concerned about your health or your baby’s health,
+    visit a clinic for a medical diagnosis.</div>
                 </div>
-                {% live_chat_banner %}
-                <div class="items {{category.color}}">
-                    <div class="item no-pic">
-                        <div class="meta">
-                            <div class="stamp">
-                                {{ lead_in_post.content|safe }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {% endif %}
-
-                {% favourite_questions_for_week lead_in_post weeks_ago cpage sort %}
             </div>
-        </div>
-    {% else %}
-        {% live_chat_banner %}
-    {% endif %}
 
-    {% block below_listing %}
-    {% endblock %}
+    </div>
+</div>
+
+    {% favourite_questions_for_week lead_in_post weeks_ago cpage sort %}
+
 
 {% endblock %}
