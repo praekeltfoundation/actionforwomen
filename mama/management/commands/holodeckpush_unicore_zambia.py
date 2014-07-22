@@ -19,7 +19,7 @@ HOLODECK_API_KEYS = {
     'user_phase': '3e8d0fd9f8924379b9c6bfac9e58045f',
     'users_cumulative': '58d0998073d74c7495bc8233fe7380cb',
     'pageviews_cumulative': '6909a9c8c2974c69b0c929c258d02688',
-    'comments_weekly': '6909a9c8c2974c69b0c929c258d02688',
+    'comments_weekly': 'cebc703a64eb4e88ae468f6ee4db77dc',
     'comments_cumulative': '00ada2b9166e43afb27149dd89ce493d'
 }
 
