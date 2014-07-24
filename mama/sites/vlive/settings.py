@@ -8,7 +8,6 @@ TEMPLATE_DIRS = (
 
 INSTALLED_APPS += (
     'djcelery',
-    'google_analytics',
     'pml',
 )
 

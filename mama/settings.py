@@ -166,6 +166,7 @@ INSTALLED_APPS = (
     'mama.commenting',
     'monitor',
     'djcelery',
+    'google_analytics',
 )
 
 COMMENTS_APP = 'mama.commenting'
