@@ -261,7 +261,8 @@ urlpatterns = patterns('',
     url(r'^likes/like/(?P<content_type>[\w-]+)/(?P<id>\d+)/(?P<vote>-?\d+)$',
         'mama.views.like',
         name='like'),
-    (r'^', include('jmbo.urls')),
+    url(r'^', include('jmbo.urls')),
+    url(r'^djga/', include('google_analytics.urls')),
 )
 
 handler500 = 'mama.views.server_error'

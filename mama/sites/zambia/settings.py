@@ -15,3 +15,7 @@ CACHES['default']['KEY_PREFIX'] = 'mama_unicore_zambia'
 
 ORIGIN = 'unicore_zambia'
 SITE_ID = 2
+
+GOOGLE_ANALYTICS = {
+    'google_analytics_id': 'UA-40632967-3',
+}
