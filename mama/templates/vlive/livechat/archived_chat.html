@@ -9,7 +9,7 @@
 {% load pml_inclusion_tags %}
 
 {% block body %}
-{% header='LIVE CHAT ARCHIVE' %}
+{% header 'LIVE CHAT ARCHIVE' %}
 <MODULE>
   <CONTAINER type="data">
     <TEXT>
@@ -28,7 +28,7 @@
           {% if comment.livechatresponse_set.exists %}
         <TEXT>
           {% if comment.user %}
-            {% with comment.user.get_profile as profile %}
+            {% with comment.user.profile as profile %}
               {% if profile.avatar %}
                 <IMAGE href="{{ profile.avatar.url }}" align="left" width="44" height="44" />
               {% endif %}
@@ -75,9 +75,9 @@
           Page {{ chat_comments.number }} of {{ chat_comments.paginator.num_pages }}
       </TEXT>
       {% if chat_comments.has_next %}
-          | <LINK href="?p={{chat_comments.next_page_number}}&amp;answered={{answered}}&amp;popular={{popular}}"><TEXT>Next</TEXT></LINK>
+          | <LINK href="?p={{chat_comments.next_page_number}}&amp;answered={{answered}}&amp;popular={{popular}}">Next</LINK>
       {% else %}
-          | <TEXT>Next</TEXT>
+          | Next
       {% endif %}
       </TEXT>
     </CONTAINER>
