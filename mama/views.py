@@ -343,7 +343,10 @@ class AskMamaArchiveView(DetailView):
         post = context['post']
 
         comments = Comment.objects.filter(
-            object_pk=post.id)
+            object_pk=post.id,
+            replied_to_comments_set__isnull=False,
+            ).distinct()
+
         comments = comments.order_by('-submit_date')
         request = self.request
         try:
