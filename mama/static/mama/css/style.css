@@ -210,3 +210,11 @@ table.poll-results tr.poll-result-6 td.bar > div { background-color: #ff8e00; }
 	#content .maroon #menu .item a { color: #b22a2d; }
 	#content .maroon #menu .item-nav { background: #eadbe0; color: #bfbfbf; }
 	#content .maroon #menu .item-nav a { color: #b22a2d; }
+#content .lightred .h1 { background: #EA5A51; }
+	#content .lightred .content-inner .item .meta .title a { color: #EA5A51; }
+	#content .lightred .content-inner .item-nav { background: #eadbe0; color: #bfbfbf; }
+	#content .lightred .content-inner .item-nav a { color: #EA5A51; }
+	#content .lightred .content-inner .more-links a { color: #EA5A51; }
+	#content .lightred #menu .item a { color: #EA5A51; }
+	#content .lightred #menu .item-nav { background: #eadbe0; color: #bfbfbf; }
+	#content .lightred #menu .item-nav a { color: #EA5A51; }

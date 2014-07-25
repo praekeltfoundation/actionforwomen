@@ -17,16 +17,19 @@ Used for the AskMAMA section
 {% block body %}
 
   {{ block.super }}
-  {% show_last_live_chat %}
   {% if lead_in_post %}
-    {% if weeks_ago == 0 %}
+
       {% header lead_in_post.title maroon %}
-      {% live_chat_banner %}
-      {% text_module template=lead_in_post.content|safe %}
-    {% endif %}
+      <TEXT>VOTE for the question you want answered from Friday to Tuesday morning. The doctor will answer the TOP 10
+    questions as voted by all MAMA users.<br/>
+    ASK your own question if nobody has asked it already.<br/>
+    READ the doctors answers in AskMAMA Archive.</TEXT>
+
+      <TEXT>PLEASE NOTE: The answers provided by our experts are not a substitute for
+    medical advice. If you are concerned about your health or your baby’s health,
+    visit a clinic for a medical diagnosis.</TEXT>
+
     {% favourite_questions_for_week lead_in_post weeks_ago cpage sort %}
-  {% else %}
-    {% live_chat_banner %}
   {% endif %}
 
   {% block below_listing %}

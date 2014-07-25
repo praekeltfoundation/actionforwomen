@@ -3,60 +3,10 @@
 {% load moderator_inclusion_tags %}
 {% load mama_template_tags %}
 
-{% if weeks_ago == 0 %}
-  {% if can_render_comment_form %}
-      {% if askmama_can_vote %}
-    <div class="text_banner">
-      <div class="banner_content">
-        <p>
-        <strong>
-          <a href="{% url ask_expert_question lead_in_post.id %}">
-            Ask your question &raquo;
-          </a>
-        </strong>
-        </p>
-      </div>
-    </div>
-     {% endif %}
-  {% endif %}
-{% endif %}
-
-{% if weeks_ago > 1 %}
-  <div class="content-inner">
-    <div class="items">
-      <div class="item comment no-pic">
-        <div class="meta">
-          <div class="stamp">
-            {% if sort == 'pop' %}
-            <a href="{% url askmama_detail %}?wk=2&sort=date">Latest</a> |
-            Popular |
-            <a href="{% url askmama_detail %}?wk=2&sort=alph">Alphabetical</a>
-            {% else %}
-              {% if sort == 'date' %}
-                Latest |
-                <a href="{% url askmama_detail %}?wk=2&sort=pop">Popular</a> |
-                <a href="{% url askmama_detail %}?wk=2&sort=alph">Alphabetical</a>
-              {% else %}
-                <a href="{% url askmama_detail %}?wk=2&sort=date">Latest</a> |
-                <a href="{% url askmama_detail %}?wk=2&sort=pop">Popular</a> |
-                Alphabetical
-              {% endif %}
-            {% endif %}
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-{% endif %}
 
 <div class="{{ category.color }}">
 
-  {% if weeks_ago == 1 %}
   <div class="h1" id="comments">
-    <a href="{% url askmama_detail %}">Ask MAMA</a> &gt; Last week's Q&amp;A
-  </div>
-  {% endif %}
-
     {% if weeks_ago == 0 %}
       {% if questions.number == 1 %}
         {% mxit_title_bar foreground_color='#FFFFFF' background_color='#B22A2D' text='Top 10 Questions' %}
@@ -78,20 +28,6 @@
     {% endif %}
   </div>
 
-  {% if weeks_ago == 0 and questions.number == 1 %}
-  <div class="text_banner">
-    <div class="banner_content">
-      <p>
-      <strong>
-        <a href="{% url askmama_detail %}?wk=1">
-          Read last week's top 10 &raquo;
-        </a>
-      </strong>
-      </p>
-    </div>
-  </div>
-  {% endif %}
-
   <div class="content-inner">
     <div class="items">
 
@@ -101,15 +37,11 @@
         if we are on the current week's 1st page, show the top 10 questions
         with a different coloured background.
         {% endcomment %}
-        ---
         <div class="item comment no-pic"
           {% if weeks_ago == 0 and questions.number == 1 and forloop.counter0 < 10 %}
           style="background-color: #fee;"
           {% endif %} >
           <div class="meta">
-          {% if askmama_can_vote %}
-            <div class="stamp">{% likes question template='likes/inclusion_tags/votes.html' %}</div>
-          {% endif %}
             {% if question.replied_to_comments_set.count > 0 %}
             <a href="{% url askmama_answer_detail question.id %}">
               <div class="stamp">{{ question.comment|linebreaks }}</div>
@@ -117,6 +49,9 @@
             {% else %}
               <div class="stamp">{{ question.comment|linebreaks }}</div>
             {% endif %}
+          {% if askmama_can_vote %}
+            <div class="stamp">{% likes question template='likes/inclusion_tags/votes.html' %}</div>
+          {% endif %}
           </div>
         </div>
 
@@ -128,25 +63,12 @@
           {% endcomment %}
 
           </div>
-            {% if can_render_comment_form and askmama_can_vote %}
-            <div class="text_banner">
-              <div class="banner_content">
-                <p>
-                <strong>
-                  <a href="{% url ask_expert_question lead_in_post.id %}">
-                    Ask your question &raquo;
-                  </a>
-                </strong>
-                </p>
-              </div>
-            </div>
-            {% endif %}
-            {% mxit_title_bar foreground_color='#FFFFFF' background_color='#B22A2D' text="More Questions" %}
             <div class="items">
               <div class="item comment no-pic">
                 <div class="meta">
                   <div class="stamp" style="color: #b22a2d;">
-                     {% if askmama_can_vote %}
+                    {% if askmama_can_vote %}
+
                     Vote for these questions to move them up to the top 10
                     list.
                     {% else %}
@@ -193,6 +115,27 @@
     {% endif %}
   </div>
 
+{% if weeks_ago == 0 %}
+  {% if can_render_comment_form %}
+     {% if askmama_can_vote %}
+         <div class="items lightred">
+    <div class="h1">
+  {% mxit_title_bar foreground_color='#FFFFFF' background_color='#B22A2D' text='Ask your question' %}
+ </div>
+</div>
+         <div class="post"><p>
+         The doctor can only answer questions about your health or your baby's. Your question
+         will be answered if it is voted into the TOP 10 by the MAMA community. If you can see
+        a question similar to yours in the QUESTIONS NOT IN THE TOP 10 Section below,
+        then VOTE it into the TOP 10 rather than asking the same question again.<br/>
+        Need an urgent answer? Find information here.</p>
+         </div>
+          {% render_comment_form for lead_in_post %}
+
+     {% endif %}
+  {% endif %}
+{% endif %}
+
   {% if weeks_ago == 0 %}
     {% if not can_render_comment_form %}
       {% if can_comment_code == 'auth_required' %}
@@ -211,17 +154,5 @@
     {% endif %}
   {% endif %}
 
-  {% if weeks_ago > 0 %}
-  <div class="text_banner">
-    <div class="banner_content">
-      <p>
-      <strong>
-        <a href="{% url askmama_detail %}">
-          &lt; Back to Ask MAMA
-        </a>
-      </strong>
-      </p>
-    </div>
-  </div>
-  {% endif %}
+
 </div>
