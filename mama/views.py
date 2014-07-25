@@ -41,9 +41,8 @@ from mama.forms import (
 )
 from mama.view_modifiers import PopularViewModifier
 from mama.models import Banner, DefaultAvatar
-
 from category.models import Category
-
+from livechat.models import LiveChat
 from poll.forms import PollVoteForm
 from poll.models import Poll
 from post.models import Post
@@ -847,6 +846,11 @@ def post_comment(request, next=None, using=None):
     # For mxit, we add a next field to the comment form
     if not data["url"] and data.get("next", None):
         data["url"] = data["next"]
+
+    if data['content_type'] == 'livechat.livechat':
+        chat_id = data['object_pk']
+        chat = LiveChat.objects.get(pk=chat_id)
+        chat.check_max_comments()
 
     request.POST = data
 
