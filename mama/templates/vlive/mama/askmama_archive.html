@@ -1,76 +1,84 @@
-{% extends 'pml/base.xml' %}
+{% extends "pml/base.xml" %}
 
-{% comment %}
-Used for the AskMAMA section
-{% endcomment %}
-
-{% load pml_inclusion_tags %}
+{% load jmbo_inclusion_tags %}
+{% load jmbo_template_tags %}
+{% load comments %}
+{% load moderator_inclusion_tags %}
+{% load livechat_tags %}
 {% load mama_inclusion_tags %}
-{% load askmama_inclusion_tags %}
+{% load pml_inclusion_tags %}
 
-{% block content %}
+{% block body %}
+{% header 'ASKMAMA ARCHIVE' %}
 
-
-        {% header 'ASKMAMA ARCHIVE' maroon %}
-
-    <div class="items">
-      {% if chat_comments %}
-        {% for comment in chat_comments.object_list %}
-            {% if comment.replied_to_comments_set.exists %}
-            <CONTAINER type="data">
+<MODULE>
+   {% if chat_comments %}
+    <CONTAINER type="data">
+      {% for comment in chat_comments.object_list %}
+          {% if comment.replied_to_comments_set.exists %}
         <TEXT>
+          {% if comment.user %}
+            {% with comment.user.profile as profile %}
+              {% if profile.avatar %}
+                <IMAGE href="{{ profile.avatar.url }}" align="left" width="44" height="44" />
+              {% endif %}
+            {% endwith %}
+          {% endif %}
 
-                {% if comment.user %}
-                  <b><a href="{% url public_profile comment.user.id %}">{{ comment.name }}</a></b>
+          {% if comment.user %}
+            <LINK href="{% url public_profile comment.user.id %}"><TEXT>{{ comment.name }}</TEXT></LINK>
                   {% else %}
                   {{ comment.name }}
                   {% endif %} asked at {{ comment.submit_date.time }}
-                <div class="stamp">{{ comment.comment|linebreaks }}</div>
-              </div>
+          {{ comment.comment|linebreaks }}<br/>
+        </TEXT>
 
-              <div class="item comment" style="background-color: rgb(244, 229, 234)">
-                  {% for response in comment.replied_to_comments_set.all %}
-                      <div class="meta">
-                              <b><a href="{% url public_profile response.user.id %}">
-                                  {{ response.user.username }}</a></b>
-                       replied to
+       
+        <TEXT>
+          {% for response in comment.replied_to_comments_set.all %}
+            <LINK href="{% url public_profile response.user.id %}">
+            <TEXT><color value="red"><b>{{ response.user.username }}</b></color></TEXT>
+            </LINK><br/>
+            replied to
                           {% if comment.user %}
                   <b><a href="{% url public_profile comment.user.id %}">{{ comment.name }}</a></b>
                   {% else %}
                   {{ comment.name }}
-                  {% endif %}
-                          <div class="stamp">{{ response.comment_text }}</div>
-                      </div>
+                  {% endif %} 
+                          {{ response.comment_text }}
+
                   {% endfor %}
-              </div>
-              {% endif %}
+                {% endif %}
 
-            </div>
-        {% endfor %}
+      {% endfor %}
+       </TEXT>
+    </CONTAINER>
 
-        <div class="pagination">
-          {% if chat_comments.has_previous %}
-              <span><a href="?p={{chat_comments.previous_page_number}}&amp;answered={{answered}}&amp;popular={{popular}}">Previous</a></span> |
-          {% else %}
-              <span>Previous</span> |
-          {% endif %}
-          <span class="current">
-              Page {{ chat_comments.number }} of {{ chat_comments.paginator.num_pages }}
-          </span>
-          {% if chat_comments.has_next %}
-              | <span><a href="?p={{chat_comments.next_page_number}}&amp;answered={{answered}}&amp;popular={{popular}}">Next</a></span>
-          {% else %}
-              | <span>Next</span>
-          {% endif %}
-        </div>
+    <CONTAINER type="data">
+      <TEXT>
+      {% if chat_comments.has_previous %}
+        <LINK href="?p={{chat_comments.previous_page_number}}&amp;answered={{answered}}&amp;popular={{popular}}"><TEXT>Previous</TEXT></LINK> |
       {% else %}
-        <div class="post">
-          No questions yet. Go ahead and ask a question.
-        </div>
+          Previous|
       {% endif %}
-    </div>
+      <TEXT>
+          Page {{ chat_comments.number }} of {{ chat_comments.paginator.num_pages }}
+      </TEXT>
+      {% if chat_comments.has_next %}
+          | <LINK href="?p={{chat_comments.next_page_number}}&amp;answered={{answered}}&amp;popular={{popular}}">Next</LINK>
+      {% else %}
+          | Next
+      {% endif %}
+      </TEXT>
+    </CONTAINER>
 
-
-</div>
+  {% else %}
+    <CONTAINER type="data">
+      <TEXT>
+        No questions yet. Go ahead and ask a question.
+      </TEXT>
+    </CONTAINER>
+  {% endif %}
+</MODULE>
 {% endblock %}
 
