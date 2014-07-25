@@ -69,7 +69,7 @@
       {% if chat_comments.has_previous %}
         <LINK href="?p={{chat_comments.previous_page_number}}&amp;answered={{answered}}&amp;popular={{popular}}"><TEXT>Previous</TEXT></LINK> |
       {% else %}
-          <TEXT>Previous</TEXT> |
+          Previous|
       {% endif %}
       <TEXT>
           Page {{ chat_comments.number }} of {{ chat_comments.paginator.num_pages }}
