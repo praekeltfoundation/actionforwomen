@@ -1,0 +1,36 @@
+{% extends 'pml/base.xml' %}
+
+
+{% load pml_inclusion_tags %}
+{% load mama_inclusion_tags %}
+{% load askmama_inclusion_tags %}
+{% load livechat_tags %}
+
+{% block content %}
+{% include "mama/inclusion_tags/urgent_question_banner.html" %}
+
+{% header 'ASK MAMA' maroon %}
+<CONTAINER type="data">
+    <TEXT>Do you have a medical question about your pregnancy or
+        baby that you'd like our expert to answer this week?</TEXT>
+    </CONTAINER>
+    <LINK href="{% url askmama_detail %}">
+      <img src="{{ STATIC_URL }}mama/img/top_10_questions.jpg"
+           style="border: none;" />
+    </LINK>
+
+<CONTAINER type="data">
+    <LINK href="{% url askmama_detail %}">
+      <img src="{{ STATIC_URL }}mama/img/banner_vlive.jpg"
+           style="border: none;" />
+    </LINK>
+
+</CONTAINER>
+    <CONTAINER type="data">
+    <LINK href="{% url askmama_archive %}"><TEXT>AskMAMA Archive</TEXT></LINK>><br/>
+    <TEXT>Read all previous AskMAMA questions and answers here. Your question may already have been answered.</TEXT>
+</CONTAINER>
+    {% live_chat_banner %}
+    {% show_last_live_chat %}
+
+{% endblock %}

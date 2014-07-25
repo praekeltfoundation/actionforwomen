@@ -1,0 +1,76 @@
+{% extends 'pml/base.xml' %}
+
+{% comment %}
+Used for the AskMAMA section
+{% endcomment %}
+
+{% load pml_inclusion_tags %}
+{% load mama_inclusion_tags %}
+{% load askmama_inclusion_tags %}
+
+{% block content %}
+
+
+        {% header 'ASKMAMA ARCHIVE' maroon %}
+
+    <div class="items">
+      {% if chat_comments %}
+        {% for comment in chat_comments.object_list %}
+            {% if comment.replied_to_comments_set.exists %}
+            <CONTAINER type="data">
+        <TEXT>
+
+                {% if comment.user %}
+                  <b><a href="{% url public_profile comment.user.id %}">{{ comment.name }}</a></b>
+                  {% else %}
+                  {{ comment.name }}
+                  {% endif %} asked at {{ comment.submit_date.time }}
+                <div class="stamp">{{ comment.comment|linebreaks }}</div>
+              </div>
+
+              <div class="item comment" style="background-color: rgb(244, 229, 234)">
+                  {% for response in comment.replied_to_comments_set.all %}
+                      <div class="meta">
+                              <b><a href="{% url public_profile response.user.id %}">
+                                  {{ response.user.username }}</a></b>
+                       replied to
+                          {% if comment.user %}
+                  <b><a href="{% url public_profile comment.user.id %}">{{ comment.name }}</a></b>
+                  {% else %}
+                  {{ comment.name }}
+                  {% endif %}
+                          <div class="stamp">{{ response.comment_text }}</div>
+                      </div>
+                  {% endfor %}
+              </div>
+              {% endif %}
+
+            </div>
+        {% endfor %}
+
+        <div class="pagination">
+          {% if chat_comments.has_previous %}
+              <span><a href="?p={{chat_comments.previous_page_number}}&amp;answered={{answered}}&amp;popular={{popular}}">Previous</a></span> |
+          {% else %}
+              <span>Previous</span> |
+          {% endif %}
+          <span class="current">
+              Page {{ chat_comments.number }} of {{ chat_comments.paginator.num_pages }}
+          </span>
+          {% if chat_comments.has_next %}
+              | <span><a href="?p={{chat_comments.next_page_number}}&amp;answered={{answered}}&amp;popular={{popular}}">Next</a></span>
+          {% else %}
+              | <span>Next</span>
+          {% endif %}
+        </div>
+      {% else %}
+        <div class="post">
+          No questions yet. Go ahead and ask a question.
+        </div>
+      {% endif %}
+    </div>
+
+
+</div>
+{% endblock %}
+
