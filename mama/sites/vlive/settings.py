@@ -8,7 +8,6 @@ TEMPLATE_DIRS = (
 
 INSTALLED_APPS += (
     'djcelery',
-    'google_analytics',
     'pml',
 )
 
@@ -40,7 +39,7 @@ GOOGLE_ANALYTICS_IGNORE_PATH = ['/health/', ]
 REMOTE_USER_IGNORE_PATH = ['/vlivebanner/', '/favicon.ico']
 
 GOOGLE_ANALYTICS = {
-    'google_analytics_id': 'MO-40632967-1',
+    'google_analytics_id': 'UA-40632967-1',
 }
 
 CELERY_IMPORTS = ('google_analytics.tasks', 'monitor.tasks', 'moderator.tasks')

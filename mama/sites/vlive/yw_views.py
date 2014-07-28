@@ -10,20 +10,12 @@ class PMLYourStoryView(FormView):
     form_class = PMLYourStoryForm
     template_name = 'yourwords/your_story.html'
 
-    def get(self, request, *args, **kwargs):
-        self.competition_id = int(kwargs['competition_id'])
-        return super(PMLYourStoryView, self).get(request, *args, **kwargs)
-
     def get_context_data(self, **kwargs):
         context = super(PMLYourStoryView, self).get_context_data(**kwargs)
-        try:
-            competition = get_object_or_404(
-                YourStoryCompetition, 
-                pk=self.competition_id)
-            context['competition'] = competition
-            context['competition_id'] = competition.id
-        except AttributeError:
-            pass
+        competition = get_object_or_404(
+            YourStoryCompetition, pk=self.kwargs['competition_id'])
+        context['competition'] = competition
+        context['competition_id'] = competition.id
         return context
 
     def get_initial(self):
@@ -31,27 +23,25 @@ class PMLYourStoryView(FormView):
         initial['next'] = reverse('moms_stories_object_list')
         user = self.request.user
         initial['name'] = user.username
+        initial['competition_id'] = self.kwargs['competition_id']
+
         if not user.is_anonymous and user.email:
             initial['email'] = user.email
         else:
             initial['email'] = 'unspecified@askmama.mobi'
-        try:
-            initial['competition_id'] = self.competition_id
-        except AttributeError:
-            pass
         return initial
 
     def form_valid(self, form):
         competition = get_object_or_404(
-            YourStoryCompetition, 
+            YourStoryCompetition,
             pk=int(form.cleaned_data['competition_id']))
         YourStoryEntry.objects.create(
-            your_story_competition = competition,
-            user = self.request.user,
-            name = form.cleaned_data['name'],
-            email = form.cleaned_data['email'],
-            text = form.cleaned_data['text'],
-            terms = True
+            your_story_competition=competition,
+            user=self.request.user,
+            name=form.cleaned_data['name'],
+            email=form.cleaned_data['email'],
+            text=form.cleaned_data['text'],
+            terms=True
         )
         return super(PMLYourStoryView, self).form_valid(form)
 

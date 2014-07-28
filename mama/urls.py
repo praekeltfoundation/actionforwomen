@@ -11,7 +11,7 @@ from mama.views import (CategoryDetailView, CategoryListView,
                         ContactView,
                         ProfileView, VLiveEditProfile,
                         AskMamaView, QuestionAnswerView,
-                        AskExpertQuestionView,
+                        AskExpertQuestionView, AskMamaArchiveView,
                         MomStoriesListView,
                         MomStoryFormView,
                         MyProfileView, MyProfileEdit,
@@ -114,9 +114,19 @@ urlpatterns = patterns('',
         name='comment-terms'
     ),
     url(
-        r'^ask-mama/$', AskMamaView.as_view(),
+        r'^ask-mama/ask/$', AskMamaView.as_view(),
         {},
         name='askmama_detail'
+    ),
+    url(
+        r'^ask-mama/archive/$', AskMamaArchiveView.as_view(),
+        {},
+        name='askmama_archive'
+    ),
+    url(
+        r'^ask-mama/$',
+        TemplateView.as_view(template_name="mama/askmama_home.html"),
+        name='askmama_home'
     ),
     url(
         r'^ask-mama/answer/(?P<question_id>\d+)/$',
@@ -261,7 +271,8 @@ urlpatterns = patterns('',
     url(r'^likes/like/(?P<content_type>[\w-]+)/(?P<id>\d+)/(?P<vote>-?\d+)$',
         'mama.views.like',
         name='like'),
-    (r'^', include('jmbo.urls')),
+    url(r'^', include('jmbo.urls')),
+    url(r'^djga/', include('google_analytics.urls')),
 )
 
 handler500 = 'mama.views.server_error'

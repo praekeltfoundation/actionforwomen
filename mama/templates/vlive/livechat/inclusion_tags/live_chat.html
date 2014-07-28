@@ -7,11 +7,49 @@
 {% load mama_inclusion_tags %}
 {% load pml_inclusion_tags %}
 
-{% header text='{{live_chat.current_live_chat.title}}' %}
+{% header text='LIVE CHAT' %}
 <MODULE>
   <CONTAINER type="data">
     <TEXT>
-      {{ live_chat.current_live_chat.description|safe|linebreaks }}
+      <b>{{ live_chat.title }}<br/></b>
+       {{ live_chat.expert }}<br/>
+       {{ live_chat.chat_starts_at.time }} on {{ live_chat.chat_starts_at.date }}<br/>
+    </TEXT>
+  </CONTAINER>
+</MODULE>
+
+<MODULE>
+  <CONTAINER type="data">
+    <TEXT>
+      {{ live_chat.description|safe|linebreaks }}
+    </TEXT>
+  </CONTAINER>
+</MODULE>
+
+<MODULE>
+  <CONTAINER type="data">
+    <TEXT>
+      {% if commenting_closed %}
+        <b>We have reached the maximum number of questions for this live chat.
+            Comments have therefore been closed</b><br/>
+        <b>Didn't get your question answered?</b><br/>
+          <LINK href="{% url askmama_detail %}">Visit askMAMA and ask there</LINK>
+    {% else %}
+        {% if can_comment %}
+        {% render_comment_form for live_chat %}
+        {% else %}
+                <b>Comments will open when live chat begins</b>
+        {% endif %}
+    {% if live_chat.can_comment_code == 'auth_required' %}
+    <MODULE>
+      <CONTAINER type="data">
+        <LINK href="{% url login %}?next={{ request.META.PATH_INFO }}">
+        <TEXT>Sign in to comment or ask a question</TEXT>
+        </LINK>
+      </CONTAINER>
+    </MODULE>
+    {% endif %}
+  {% endif %}
     </TEXT>
   </CONTAINER>
 </MODULE>
@@ -21,6 +59,7 @@
   {% if chat_comments %}
     <CONTAINER type="data">
       {% for comment in chat_comments.object_list %}
+
         <TEXT>
           {% if comment.user %}
             {% with comment.user.get_profile as profile %}
@@ -31,31 +70,32 @@
           {% endif %}
 
           {% if comment.user %}
-            <LINK href="{% url public_profile comment.user.id %}">
-            <TEXT><b>{{ comment.name }}</b></TEXT>
-            </LINK><br/>
-          {% else %}
-            <b>{{ comment.name }}</b><br/>
-          {% endif %}
-
-          {{ comment.submit_date }} |
-          {% likes comment template='likes/inclusion_tags/votes.html' %} {% report_comment_abuse comment %}<br/>
+            <LINK href="{% url public_profile comment.user.id %}"><TEXT>{{ comment.name }}</TEXT></LINK>
+                  {% else %}
+                  {{ comment.name }}
+                  {% endif %} asked at {{ comment.submit_date.time }}
           {{ comment.comment|linebreaks }}<br/>
         </TEXT>
 
         {% if comment.livechatresponse_set.exists %}
         <TEXT>
           {% for response in comment.livechatresponse_set.all %}
-            Response by:
             <LINK href="{% url public_profile response.author.id %}">
             <TEXT><color value="red"><b>{{ response.author.username }}</b></color></TEXT>
             </LINK><br/>
-            {{ response.updated_at }}<br/>
-            {{ response.response }}
-          {% endfor %}
-        </TEXT>
-        {% endif %}
+            replied to
+                          {% if comment.user %}
+                  <b><a href="{% url public_profile comment.user.id %}">{{ comment.name }}</a></b>
+                  {% else %}
+                  {{ comment.name }}
+                  {% endif %} at {{ response.updated_at.time }}
+                          {{ response.response }}
+
+                  {% endfor %}
+
+              {% endif %}
       {% endfor %}
+       </TEXT>
     </CONTAINER>
 
     <CONTAINER type="data">
@@ -63,7 +103,7 @@
       {% if chat_comments.has_previous %}
         <LINK href="?p={{chat_comments.previous_page_number}}&amp;answered={{answered}}&amp;popular={{popular}}"><TEXT>Previous</TEXT></LINK> |
       {% else %}
-          <TEXT>Previous</TEXT> |
+          Previous |
       {% endif %}
       <TEXT>
           Page {{ chat_comments.number }} of {{ chat_comments.paginator.num_pages }}
@@ -71,7 +111,7 @@
       {% if chat_comments.has_next %}
           | <LINK href="?p={{chat_comments.next_page_number}}&amp;answered={{answered}}&amp;popular={{popular}}"><TEXT>Next</TEXT></LINK>
       {% else %}
-          | <TEXT>Next</TEXT>
+          | Next
       {% endif %}
       </TEXT>
     </CONTAINER>
@@ -85,16 +125,4 @@
   {% endif %}
 </MODULE>
 
-  {% if live_chat.can_render_comment_form %}
-    {% render_comment_form for live_chat.current_live_chat %}
-  {% else %}
-    {% if live_chat.can_comment_code == 'auth_required' %}
-    <MODULE>
-      <CONTAINER type="data">
-        <LINK href="{% url login %}?next={{ request.META.PATH_INFO }}">
-        <TEXT>Sign in to comment or ask a question</TEXT>
-        </LINK>
-      </CONTAINER>
-    </MODULE>
-    {% endif %}
-  {% endif %}
+
