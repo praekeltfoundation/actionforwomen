@@ -5,7 +5,9 @@
     <div class="content-inner">
         <div class="post">
             {{ preferences.SitePreferences.terms|safe }}
-            <p><a href="{% url registration_register %}">Back to sign up page</a></p>
+            {% if not READ_ONLY_MODE %}
+                <p><a href="{% url registration_register %}">Back to sign up page</a></p>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
