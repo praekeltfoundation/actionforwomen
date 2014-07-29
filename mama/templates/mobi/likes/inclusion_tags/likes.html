@@ -1,4 +1,4 @@
-{% if likes_enabled %}
+{% if likes_enabled and not READ_ONLY_MODE %}
     {{ content_obj.vote_total }}
     Like{{ content_obj.vote_total|pluralize }}
     {% if weeks_ago %}

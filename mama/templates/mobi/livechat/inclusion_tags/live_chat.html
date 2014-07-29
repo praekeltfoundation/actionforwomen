@@ -22,7 +22,7 @@
       {{ live_chat.description|safe|linebreaks }}
     </div>
 
-   {% if commenting_closed %}
+   {% if commenting_closed or READ_ONLY_MODE %}
         <div class="post">
         <b>We have reached the maximum number of questions for this live chat.
             Comments have therefore been closed</b><br/>

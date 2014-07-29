@@ -109,7 +109,7 @@
   </div>
 
 {% if weeks_ago == 0 %}
-  {% if can_render_comment_form %}
+  {% if can_render_comment_form and not READ_ONLY_MODE %}
      {% if askmama_can_vote %}
          <div class="items lightred">
     <div class="h1">
@@ -132,7 +132,7 @@
 {% endif %}
 
   {% if weeks_ago == 0 %}
-    {% if not can_render_comment_form %}
+    {% if not can_render_comment_form and not READ_ONLY_MODE %}
       {% if can_comment_code == 'auth_required' %}
       <div class="item comment no-pic">
         <div class="meta">
