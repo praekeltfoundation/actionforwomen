@@ -112,7 +112,9 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
-    'mama.middleware.ReadOnlyMiddleware',
+    # NOTE: this is a very aggresive middleware that rejects everything
+    #       that isn't a GET or a HEAD request.
+    # 'mama.middleware.ReadOnlyMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
