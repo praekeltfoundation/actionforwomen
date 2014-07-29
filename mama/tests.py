@@ -20,6 +20,7 @@ from mama import utils
 from mama import tasks
 from mama.models import UserProfile, BanAudit
 from mama.middleware import TrackOriginMiddleware, ReadOnlyMiddleware
+from mama.context_processors import read_only_mode
 from mama.models import SitePreferences
 from preferences import preferences
 from post.models import Post
@@ -284,6 +285,24 @@ class TestReadOnlyMiddleware(TestCase):
                        request_factory.get, request_factory.head]:
             request = method('/path', data={'name': u'test'})
             self.assertEqual(self.mw.process_request(request), None)
+
+
+class TestReadOnlyContextProcessor(TestCase):
+
+    def setUp(self):
+        self.request = RequestFactory().get('/path')
+
+    @override_settings(READ_ONLY_MODE=True)
+    def test_read_only_mode_enabled(self):
+        self.assertEqual(read_only_mode(self.request), {
+            'READ_ONLY_MODE': True
+        })
+
+    @override_settings(READ_ONLY_MODE=False)
+    def test_read_only_mode_disabled(self):
+        self.assertEqual(read_only_mode(self.request), {
+            'READ_ONLY_MODE': False
+        })
 
 
 class GeneralPrefrencesTestCase(TestCase):

@@ -100,7 +100,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.request",
     "preferences.context_processors.preferences_cp",
     "livechat.context_processors.current_livechat",
-    "mama.context_processors.comments_open"
+    "mama.context_processors.comments_open",
+    "mama.context_processors.read_only_mode",
 )
 
 # List of callables that know how to import templates from various sources.
