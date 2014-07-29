@@ -18,7 +18,7 @@ from dateutil.relativedelta import *
 from mama import utils
 from mama import tasks
 from mama.models import UserProfile, BanAudit
-from mama.middleware import TrackOriginMiddleware
+from mama.middleware import TrackOriginMiddleware, ReadOnlyMiddleware
 from mama.models import SitePreferences
 from preferences import preferences
 from post.models import Post
@@ -251,6 +251,27 @@ class TrackOriginMiddlewareTestCase(TestCase):
         self.mw.process_request(request)
         updated_profile = UserProfile.objects.get(user=self.user)
         self.assertEqual(updated_profile.origin, settings.ORIGIN)
+
+
+class TestReadOnlyMiddleware(TestCase):
+
+    def setUp(self):
+        self.mw = ReadOnlyMiddleware()
+
+    def test_process_read_requests(self):
+        request_factory = RequestFactory()
+        for method in [request_factory.get, request_factory.head]:
+            request = method('/path', data={'name': u'test'})
+            self.assertEqual(self.mw.process_request(request), None)
+
+    def test_process_write_request(self):
+        request_factory = RequestFactory()
+        for method in [request_factory.post, request_factory.put,
+                       request_factory.delete, request_factory.options]:
+            request = method('/path', data={'name': u'test'})
+            response = self.mw.process_request(request)
+            self.assertEqual(response.status_code, 405)
+            self.assertEqual(response['Allow'], 'HEAD, GET')
 
 
 class GeneralPrefrencesTestCase(TestCase):

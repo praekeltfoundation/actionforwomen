@@ -401,6 +401,9 @@ HS_RECHARGE_STATUS_CODES = {
     "SUCCESS": {"code": 3},
 }
 
+# This disables all POST operations on the site.
+READ_ONLY_MODE = True
+
 # Puppet will put this on the server.
 try:
     from production_settings import *
