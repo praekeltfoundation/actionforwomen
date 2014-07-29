@@ -52,7 +52,9 @@
         </div>
     </div>
 
-    {% post_content_quizzes object %}
+    {% if not READ_ONLY_MODE %}
+        {% post_content_quizzes object %}
+    {% endif %}
 
     {% cache 3600 topic_listing category.slug %}
         {% topic_listing category.slug 1 5 %}

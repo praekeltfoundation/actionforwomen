@@ -30,7 +30,8 @@
                 <div class="title">
                     {% if object.comments_enabled %}
                         <div class="stamp">
-                            {% humanize_time_diff object.created "Ago" %} // {{ object.comment_count }} Comments
+                            {% humanize_time_diff object.created "Ago" %}
+                            {% if not READ_ONLY_MODE %}// {{ object.comment_count }} Comments{% endif %}
                         </div>
                     {% endif %}
                 </div>
@@ -54,7 +55,9 @@
             </div>
             {% endcache %}
 
-            {% mama_object_comments object %}
+            {% if not READ_ONLY_MODE %}
+                {% mama_object_comments object %}
+            {% endif %}
 
             {% cache 3600 baby_center_byline object.id %}
                 {% babycenter_byline object %}
@@ -62,7 +65,9 @@
         </div>
     </div>
 
-    {% post_content_quizzes object %}
+    {% if not READ_ONLY_MODE %}
+        {% post_content_quizzes object %}
+    {% endif %}
 
     {% cache 3600 topic_listing category.slug %}
         {% topic_listing category.slug 1 5 %}
