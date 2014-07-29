@@ -167,6 +167,7 @@ INSTALLED_APPS = (
     'monitor',
     'djcelery',
     'google_analytics',
+    'raven.contrib.django.raven_compat',
 )
 
 COMMENTS_APP = 'mama.commenting'
