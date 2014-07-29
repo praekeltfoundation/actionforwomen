@@ -111,6 +111,7 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'mama.middleware.ReadOnlyMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -402,7 +403,7 @@ HS_RECHARGE_STATUS_CODES = {
 }
 
 # This disables all POST operations on the site.
-READ_ONLY_MODE = True
+READ_ONLY_MODE = False
 
 # Puppet will put this on the server.
 try:
