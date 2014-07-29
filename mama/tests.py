@@ -3,6 +3,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from django.test import RequestFactory, TestCase
 from django.test.client import Client
+from django.test.utils import override_settings
 from django.conf import settings
 from django.utils.crypto import salted_hmac
 from django.contrib.sites.models import Site
@@ -18,7 +19,7 @@ from dateutil.relativedelta import *
 from mama import utils
 from mama import tasks
 from mama.models import UserProfile, BanAudit
-from mama.middleware import TrackOriginMiddleware
+from mama.middleware import TrackOriginMiddleware, ReadOnlyMiddleware
 from mama.models import SitePreferences
 from preferences import preferences
 from post.models import Post
@@ -251,6 +252,38 @@ class TrackOriginMiddlewareTestCase(TestCase):
         self.mw.process_request(request)
         updated_profile = UserProfile.objects.get(user=self.user)
         self.assertEqual(updated_profile.origin, settings.ORIGIN)
+
+
+class TestReadOnlyMiddleware(TestCase):
+
+    def setUp(self):
+        self.mw = ReadOnlyMiddleware()
+
+    @override_settings(READ_ONLY_MODE=True)
+    def test_process_read_requests(self):
+        request_factory = RequestFactory()
+        for method in [request_factory.get, request_factory.head]:
+            request = method('/path', data={'name': u'test'})
+            self.assertEqual(self.mw.process_request(request), None)
+
+    @override_settings(READ_ONLY_MODE=True)
+    def test_process_write_request(self):
+        request_factory = RequestFactory()
+        for method in [request_factory.post, request_factory.put,
+                       request_factory.delete, request_factory.options]:
+            request = method('/path', data={'name': u'test'})
+            response = self.mw.process_request(request)
+            self.assertEqual(response.status_code, 405)
+            self.assertEqual(response['Allow'], 'HEAD, GET')
+
+    @override_settings(READ_ONLY_MODE=False)
+    def test_process_request_read_only_disabled(self):
+        request_factory = RequestFactory()
+        for method in [request_factory.post, request_factory.put,
+                       request_factory.delete, request_factory.options,
+                       request_factory.get, request_factory.head]:
+            request = method('/path', data={'name': u'test'})
+            self.assertEqual(self.mw.process_request(request), None)
 
 
 class GeneralPrefrencesTestCase(TestCase):

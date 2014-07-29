@@ -1,5 +1,5 @@
-from django.core.exceptions import ImproperlyConfigured
 from django.conf import settings
+from django.http import HttpResponseNotAllowed
 
 
 class TrackOriginMiddleware(object):
@@ -18,3 +18,13 @@ class TrackOriginMiddleware(object):
             if profile.origin != settings.ORIGIN:
                 profile.origin = settings.ORIGIN
                 profile.save()
+
+
+class ReadOnlyMiddleware(object):
+
+    ALLOWED_METHODS = frozenset(['GET', 'HEAD'])
+
+    def process_request(self, request):
+        if (settings.READ_ONLY_MODE and
+                request.method not in self.ALLOWED_METHODS):
+            return HttpResponseNotAllowed(self.ALLOWED_METHODS)
