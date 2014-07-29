@@ -16,7 +16,7 @@
 
     <div class="content-inner">
       <div class="post">
-        {% if object.comments_enabled %}
+        {% if object.comments_enabled and not READ_ONLY_MODE %}
           <div class="stats">
             <div class="stamp">
               {% humanize_time_diff object.created "Ago" %} // <a href="#comments">{{ object.comment_count }} Comments</a>

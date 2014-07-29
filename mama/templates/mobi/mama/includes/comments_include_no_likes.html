@@ -2,7 +2,7 @@
 {% load mama_inclusion_tags %}
 {% load moderator_inclusion_tags %}
 
-{% if can_comment %}
+{% if can_comment and not READ_ONLY_MODE %}
     <div class="h1" id="comments">Comments</div>
 
     <div class="items">
