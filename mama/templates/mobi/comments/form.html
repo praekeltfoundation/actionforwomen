@@ -1,4 +1,4 @@
-{% if not comments_open %}
+{% if not comments_open or READ_ONLY_MODE %}
 <div>Comments are currently closed.</div>
 {% else %}
 <form action="{% url post_comment %}" method="post">

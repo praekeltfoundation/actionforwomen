@@ -11,7 +11,7 @@
     <hr/>
     </div>
 
-    {% if user.is_anonymous %}
+    {% if user.is_anonymous and not READ_ONLY_MODE  %}
     <div class="your-story-blurb">
     You must be Signed In to submit your story.
     <br/>
@@ -24,13 +24,13 @@
     </div>
     <form action="{% url your_story competition.pk %}" method="post">
         {% csrf_token %}
-        <input type="hidden" name="next" 
+        <input type="hidden" name="next"
                value="{% url moms_stories_object_list %}" />
-        <input type="hidden" name="name" 
+        <input type="hidden" name="name"
                value="{{ user.username }}" />
-        <input type="hidden" name="email" 
+        <input type="hidden" name="email"
                value="{{ user.email }}" />
-        <input type="hidden" name="terms" 
+        <input type="hidden" name="terms"
                value="true" />
 
         <div class="errorlist">
@@ -41,18 +41,18 @@
             <div class="required">
                 <label for="id_text">Please type your story and press send:</label>
                 {{ form.text.errors }}
-                <div class="helptext"></div> 
+                <div class="helptext"></div>
                 {{ form.text }}
             </div>
         </div>
 
         <p>
-        <strong>Terms and Conditions</strong> 
+        <strong>Terms and Conditions</strong>
         {{ competition.terms_and_conditions|safe }}
         </p>
 
         <div class="row">
-            <input type="submit" class="btn" value="Submit" /> 
+            <input type="submit" class="btn" value="Submit" />
         </div>
 
     </form>
