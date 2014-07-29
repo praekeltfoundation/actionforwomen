@@ -287,6 +287,32 @@ class TestReadOnlyMiddleware(TestCase):
             self.assertEqual(self.mw.process_request(request), None)
 
 
+class TestReadOnlyModeHomePage(TestCase):
+
+    def setUp(self):
+        self.client = Client()
+
+    @override_settings(READ_ONLY_MODE=True)
+    def test_render_homepage_readonly_signin(self):
+        response = self.client.get('/')
+        self.assertNotContains(response, 'Sign In')
+
+    @override_settings(READ_ONLY_MODE=False)
+    def test_render_homepage_signin(self):
+        response = self.client.get('/')
+        self.assertContains(response, 'Sign In')
+
+    @override_settings(READ_ONLY_MODE=True)
+    def test_render_registration_banner_readonly_signin(self):
+        response = self.client.get('/')
+        self.assertNotContains(response, 'Join MAMA')
+
+    @override_settings(READ_ONLY_MODE=False)
+    def test_render_registration_banner_signin(self):
+        response = self.client.get('/')
+        self.assertContains(response, 'Join MAMA')
+
+
 class TestReadOnlyContextProcessor(TestCase):
 
     def setUp(self):
