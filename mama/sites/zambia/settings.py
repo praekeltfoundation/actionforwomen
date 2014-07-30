@@ -1,5 +1,8 @@
 from mama.settings import *
 
+# Zambia only
+READ_ONLY_MODE = True
+
 TEMPLATE_DIRS += (
     os.path.join(PATH, "mama", "templates", "zambia"),
     os.path.join(PATH, "mama", "templates", "unicore"),
