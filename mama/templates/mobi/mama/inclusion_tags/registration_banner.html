@@ -1,4 +1,4 @@
-{% if user.is_anonymous %}
+{% if user.is_anonymous and not READ_ONLY_MODE %}
 <div class="text_banner">
   <div class="banner_content">
     <p>

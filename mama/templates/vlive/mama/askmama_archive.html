@@ -9,23 +9,13 @@
 {% load pml_inclusion_tags %}
 
 {% block body %}
-{% header 'LIVE CHAT ARCHIVE' %}
-<MODULE>
-  <CONTAINER type="data">
-    <TEXT>
-      <b>{{ object.title }}<br/></b>
-       {{ object.expert }}<br/>
-       {{ object.chat_starts_at.time }} on {{ object.chat_starts_at.date }}<br/>
-    </TEXT>
-  </CONTAINER>
-</MODULE>
+{% header 'ASKMAMA ARCHIVE' %}
 
-{% header "Questions and Responses" %}
 <MODULE>
    {% if chat_comments %}
     <CONTAINER type="data">
       {% for comment in chat_comments.object_list %}
-          {% if comment.livechatresponse_set.exists %}
+          {% if comment.replied_to_comments_set.exists %}
         <TEXT>
           {% if comment.user %}
             {% with comment.user.profile as profile %}
@@ -45,17 +35,17 @@
 
        
         <TEXT>
-          {% for response in comment.livechatresponse_set.all %}
-            <LINK href="{% url public_profile response.author.id %}">
-            <TEXT><color value="red"><b>{{ response.author.username }}</b></color></TEXT>
+          {% for response in comment.replied_to_comments_set.all %}
+            <LINK href="{% url public_profile response.user.id %}">
+            <TEXT><color value="red"><b>{{ response.user.username }}</b></color></TEXT>
             </LINK><br/>
             replied to
                           {% if comment.user %}
                   <b><a href="{% url public_profile comment.user.id %}">{{ comment.name }}</a></b>
                   {% else %}
                   {{ comment.name }}
-                  {% endif %} at {{ response.updated_at.time }}
-                          {{ response.response }}
+                  {% endif %} 
+                          {{ response.comment_text }}
 
                   {% endfor %}
                 {% endif %}

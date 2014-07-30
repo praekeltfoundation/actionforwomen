@@ -41,9 +41,8 @@ from mama.forms import (
 )
 from mama.view_modifiers import PopularViewModifier
 from mama.models import Banner, DefaultAvatar
-
 from category.models import Category
-
+from livechat.models import LiveChat
 from poll.forms import PollVoteForm
 from poll.models import Poll
 from post.models import Post
@@ -335,6 +334,31 @@ class MomStoryFormView(FormView):
         )
         return HttpResponseRedirect(self.get_success_url())
 
+class AskMamaArchiveView(DetailView):
+    template_name = "mama/askmama_archive.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(AskMamaArchiveView, self).get_context_data(**kwargs)
+        post = context['post']
+
+        comments = Comment.objects.filter(
+            object_pk=post.id,
+            replied_to_comments_set__isnull=False,
+            ).distinct()
+
+        comments = comments.order_by('-submit_date')
+        request = self.request
+        try:
+            paginator = Paginator(
+                comments,
+                per_page=10)
+            context['chat_comments'] = paginator.page(request.GET.get('p', 1))
+        except (KeyError, AttributeError):
+            pass
+        return context
+
+    def get_object(self):
+        return get_object_or_404(Post, slug='ask-mama')
 
 class AskMamaView(CategoryDetailView):
     """
@@ -822,6 +846,11 @@ def post_comment(request, next=None, using=None):
     # For mxit, we add a next field to the comment form
     if not data["url"] and data.get("next", None):
         data["url"] = data["next"]
+
+    if data['content_type'] == 'livechat.livechat':
+        chat_id = data['object_pk']
+        chat = LiveChat.objects.get(pk=chat_id)
+        chat.check_max_comments()
 
     request.POST = data
 

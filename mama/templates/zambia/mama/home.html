@@ -20,5 +20,7 @@
         {% stories_listing "moms-stories" %}
         {% post_listing "articles" %}
     {% endcache %}
-    {% poll_listing %}
+    {% if not READ_ONLY_MODE %}
+        {% poll_listing %}
+    {% endif %}
 {% endblock %}

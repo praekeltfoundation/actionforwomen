@@ -5,10 +5,10 @@
     <div class="meta">
         <div class="stats">
           {{ object.primary_category.title }}
-          {% if object.comments_enabled %}
+          {% if object.comments_enabled and not READ_ONLY_MODE %}
           | {{ object.comment_count }} Comments
           {% endif %}
-          {% if object.likes_enabled %}
+          {% if object.likes_enabled and not READ_ONLY_MODE %}
           | {{ object.vote_total }} Likes
           {% endif %}
         </div>

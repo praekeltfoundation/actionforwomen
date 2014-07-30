@@ -100,7 +100,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.request",
     "preferences.context_processors.preferences_cp",
     "livechat.context_processors.current_livechat",
-    "mama.context_processors.comments_open"
+    "mama.context_processors.comments_open",
+    "mama.context_processors.read_only_mode",
 )
 
 # List of callables that know how to import templates from various sources.
@@ -111,6 +112,9 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    # NOTE: this is a very aggresive middleware that rejects everything
+    #       that isn't a GET or a HEAD request.
+    # 'mama.middleware.ReadOnlyMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -167,6 +171,7 @@ INSTALLED_APPS = (
     'monitor',
     'djcelery',
     'google_analytics',
+    'raven.contrib.django.raven_compat',
 )
 
 COMMENTS_APP = 'mama.commenting'
@@ -316,6 +321,7 @@ CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 # Uncomment if you're running in DEBUG mode and you want to skip the broker
 # and execute tasks immediate instead of deferring them to the queue / workers.
 # CELERY_ALWAYS_EAGER = DEBUG
+CELERY_ACCEPT_CONTENT = ['json', 'msgpack', 'yaml']
 
 from datetime import timedelta
 
@@ -399,6 +405,9 @@ HS_RECHARGE_STATUS_CODES = {
     "FAILED": {"code": 2},
     "SUCCESS": {"code": 3},
 }
+
+# This disables all POST operations on the site.
+READ_ONLY_MODE = False
 
 # Puppet will put this on the server.
 try:

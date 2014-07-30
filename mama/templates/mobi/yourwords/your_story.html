@@ -11,7 +11,7 @@
     <hr/>
     </div>
 
-    {% if user.is_anonymous %}
+    {% if user.is_anonymous and not READ_ONLY_MODE %}
     <div class="your-story-blurb">
     You must join MAMA or Sign in to submit your story for this competition.
     <br/>

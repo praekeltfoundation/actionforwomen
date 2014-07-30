@@ -2,22 +2,10 @@
 <MODULE>
   <CONTAINER type="data">
     <TEXT>
-      <br/>
-      <LINK href="{{ last_live_chat.url }}">
-      <TEXT>
-        <b>Chat of {{ last_live_chat.chat_ends_at|date:"d M Y" }}:</b>
+          Did you miss the Live Chat with {{ last_live_chat.expert }} on {{ last_live_chat.title }}?<br/>
+        <LINK href="{{ last_live_chat.url }}">Catch up on the answers here</LINK>
+
       </TEXT>
-      </LINK>
-      {{ last_live_chat.title }}
-    </TEXT>
-    <TEXT>
-      If you missed this chat, that ran on 
-      {{ last_live_chat.chat_ends_at|date:"d M Y" }}
-      you can view the conversation by 
-      <LINK href="{{ last_live_chat.url }}">
-      <TEXT>clicking here.</TEXT>
-      </LINK>
-    </TEXT>
   </CONTAINER>
 </MODULE>
 {% endif %}
