@@ -7,9 +7,7 @@
         {% if page.object_list %}
         <div class="items">
             {% for object in page.object_list %}
-                {% if object.object %}
-                    {% render_object object.object "block" %}
-                {% endif %}
+                {% render_object object.as_leaf_class "block" %}
             {% endfor %}
         </div>
         {% else %}
