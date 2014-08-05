@@ -1,3 +1,14 @@
+{% if last_live_chat %}
+<MODULE>
+  <CONTAINER type="data">
+    <TEXT>
+          Did you miss the Live Chat with {{ last_live_chat.expert }} on {{ last_live_chat.title }}?<br/>
+        <LINK href="{{ last_live_chat.url }}">Catch up on the answers here</LINK>
+
+      </TEXT>
+  </CONTAINER>
+</MODULE>
+{% endif %}
 {% if live_chat_advert %}
 <MODULE>
   <CONTAINER type="data">
