@@ -10,21 +10,17 @@
 
 {% block body %}
 {% header 'LIVE CHAT ARCHIVE' %}
-<MODULE>
-  <CONTAINER type="data">
-    <TEXT>
-      <b>{{ object.title }}<br/></b>
-       {{ object.expert }}<br/>
-       {{ object.chat_starts_at.time }} on {{ object.chat_starts_at.date }}<br/>
-    </TEXT>
-  </CONTAINER>
-</MODULE>
 
-{% header "Questions and Responses" %}
 <MODULE>
-   {% if chat_comments %}
+   {% if livechats %}
+        {% for livechat in livechats.object_list %}
     <CONTAINER type="data">
-      {% for comment in chat_comments.object_list %}
+    <TEXT>
+      <b>{{ livechat.title }}<br/></b>
+       {{ livechat.expert }}<br/>
+       {{ livechat.chat_starts_at.time }} on {{ livechat.chat_starts_at.date }}<br/>
+    </TEXT>
+      {% for comment in livechats.object_list %}
           {% if comment.livechatresponse_set.exists %}
         <TEXT>
           {% if comment.user %}
@@ -59,7 +55,7 @@
 
                   {% endfor %}
                 {% endif %}
-
+        {% endfor %}
       {% endfor %}
        </TEXT>
     </CONTAINER>
@@ -67,15 +63,15 @@
     <CONTAINER type="data">
       <TEXT>
       {% if chat_comments.has_previous %}
-        <LINK href="?p={{chat_comments.previous_page_number}}&amp;answered={{answered}}&amp;popular={{popular}}"><TEXT>Previous</TEXT></LINK> |
+        <LINK href="?p={{livechats.previous_page_number}}&amp;answered={{answered}}&amp;popular={{popular}}"><TEXT>Previous</TEXT></LINK> |
       {% else %}
           Previous|
       {% endif %}
       <TEXT>
-          Page {{ chat_comments.number }} of {{ chat_comments.paginator.num_pages }}
+          Page {{ livechats.number }} of {{ livechats.paginator.num_pages }}
       </TEXT>
-      {% if chat_comments.has_next %}
-          | <LINK href="?p={{chat_comments.next_page_number}}&amp;answered={{answered}}&amp;popular={{popular}}">Next</LINK>
+      {% if livechats.has_next %}
+          | <LINK href="?p={{livechats.next_page_number}}&amp;answered={{answered}}&amp;popular={{popular}}">Next</LINK>
       {% else %}
           | Next
       {% endif %}

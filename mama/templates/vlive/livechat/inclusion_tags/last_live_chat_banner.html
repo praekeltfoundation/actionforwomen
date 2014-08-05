@@ -1,11 +1,8 @@
-{% if last_live_chat %}
 <MODULE>
   <CONTAINER type="data">
     <TEXT>
-          Did you miss the Live Chat with {{ last_live_chat.expert }} on {{ last_live_chat.title }}?<br/>
-        <LINK href="{{ last_live_chat.url }}">Catch up on the answers here</LINK>
-
-      </TEXT>
-  </CONTAINER>
+    <LINK href="{% url askmama_archive %}"><TEXT>Live Chat Archive</TEXT></LINK>><br/>
+    </TEXT>
+    <TEXT>Did you miss a Live Chat? View past Live Chats questions and answers here.</TEXT>
+</CONTAINER>
 </MODULE>
-{% endif %}
