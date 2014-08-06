@@ -55,11 +55,9 @@
       {% if chat_comments.has_previous %}
         <LINK href="?p={{livechats.previous_page_number}}&amp;answered={{answered}}&amp;popular={{popular}}"><TEXT>Previous</TEXT></LINK> |
       {% else %}
-          Previous|
+          Previous |
       {% endif %}
-      <TEXT>
           Page {{ livechats.number }} of {{ livechats.paginator.num_pages }}
-      </TEXT>
       {% if livechats.has_next %}
           | <LINK href="?p={{livechats.next_page_number}}&amp;answered={{answered}}&amp;popular={{popular}}">Next</LINK>
       {% else %}
