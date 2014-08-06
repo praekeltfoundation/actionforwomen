@@ -21,7 +21,7 @@
          {{ livechat.chat_starts_at.time }} on {{ livechat.chat_starts_at.date }}<br/>
       </TEXT>
 
-      {% for comment in livechats.comment_set %}
+      {% for comment in livechat.comment_set %}
       {% if comment.livechatresponse_set.exists %}
         <TEXT>
           {% if comment.user %}
@@ -53,7 +53,7 @@
 
     <CONTAINER type="data">
       <TEXT>
-      {% if chat_comments.has_previous %}
+      {% if livechats.has_previous %}
         <LINK href="?p={{livechats.previous_page_number}}&amp;answered={{answered}}&amp;popular={{popular}}"><TEXT>Previous</TEXT></LINK> |
       {% else %}
           Previous |
