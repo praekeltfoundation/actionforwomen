@@ -20,11 +20,7 @@ Used for the AskMAMA section
             <div class="item comment no-pic">
               <div class="meta">
 
-                {% if comment.user %}
-                  <b>{{ comment.name }}</b>
-                  {% else %}
-                  {{ comment.name }}
-                  {% endif %} asked at {{ comment.submit_date.time }}
+                <b>{{ comment.name }}</b> asked at {{ comment.submit_date.time }}
                 <div class="stamp">{{ comment.comment|linebreaks }}</div>
               </div>
 
@@ -33,11 +29,7 @@ Used for the AskMAMA section
                       <div class="meta">
                               <b>{{ response.user.username }}</b>
                        replied to
-                          {% if comment.user %}
-                  <b>{{ comment.name }}</b>
-                  {% else %}
-                  {{ comment.name }}
-                  {% endif %}
+                          <b>{{ comment.name }}</b>
                           <div class="stamp">{{ response.comment_text }}</div>
                       </div>
                   {% endfor %}
