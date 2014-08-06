@@ -21,7 +21,7 @@
          {{ livechat.chat_starts_at.time }} on {{ livechat.chat_starts_at.date }}<br/>
       </TEXT>
 
-      {% for comment in livechats.object_list %}
+      {% for comment in livechats.comment_set %}
       {% if comment.livechatresponse_set.exists %}
         <TEXT>
           {% if comment.user %}
