@@ -61,11 +61,7 @@
             <div class="item comment no-pic">
               <div class="meta">
 
-                {% if comment.user %}
-                  <b>{{ comment.name }}</b>
-                  {% else %}
-                  {{ comment.name }}
-                  {% endif %} asked at {{ comment.submit_date.time }}
+                <b>{{ comment.name }}</b> asked at {{ comment.submit_date.time }}
                 <div class="stamp">{{ comment.comment|linebreaks }}</div>
               </div>
 
@@ -75,11 +71,7 @@
                       <div class="meta">
                               <b>{{ response.author.username }}</b>
                        replied to
-                          {% if comment.user %}
-                  <b>{{ comment.name }}</b>
-                  {% else %}
-                  {{ comment.name }}
-                  {% endif %} at {{ response.updated_at.time }}
+                          <b>{{ comment.name }}</b> at {{ response.updated_at.time }}
                           <div class="stamp">{{ response.response }}</div>
                       </div>
                   {% endfor %}
