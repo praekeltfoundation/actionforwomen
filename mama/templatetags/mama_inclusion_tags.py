@@ -150,7 +150,7 @@ def pml_page_header(context):
     else:
         links.append({
             'title': 'Ask MAMA',
-            'url': reverse('askmama_detail')
+            'url': reverse('askmama_home')
         })
     links.append({
         'title': "Guides",
