@@ -15,7 +15,7 @@
    {% if chat_comments %}
     <CONTAINER type="data">
       {% for comment in chat_comments.object_list %}
-          {% if comment.replied_to_comments_set.exists %}
+      {% if comment.replied_to_comments_set.exists %}
         <TEXT>
           {% if comment.user %}
             {% with comment.user.profile as profile %}
@@ -29,19 +29,18 @@
           {{ comment.comment|linebreaks }}<br/>
         </TEXT>
 
-
-        <TEXT>
           {% for response in comment.replied_to_comments_set.all %}
+          <TEXT>
             <b>{{ response.user.username }}</b>
             replied to
             {{ comment.name }}<br/>
             {{ response.comment_text }}
 
+          </TEXT>
             {% endfor %}
-          {% endif %}
 
+      {% endif %}
       {% endfor %}
-       </TEXT>
     </CONTAINER>
 
     <CONTAINER type="data">
