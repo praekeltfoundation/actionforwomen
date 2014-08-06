@@ -18,7 +18,7 @@
       <TEXT>
         <b>{{ livechat.title }}</b><br/>
          {{ livechat.expert }}<br/>
-         {{ livechat.chat_starts_at.time }} on {{ livechat.chat_starts_at.date }}<br/>
+         {{ livechat.chat_starts_at.time }} on {{ livechat.chat_starts_at.date }}<br/><br/>
       </TEXT>
 
       {% for comment in livechat.comment_set %}
@@ -37,15 +37,15 @@
         </TEXT>
 
 
-        <TEXT>
           {% for response in comment.livechatresponse_set.all %}
+          <TEXT>
             <b>{{ response.author.username }}</b>
             replied to
             <b>{{ comment.name }}</b> at {{ response.updated_at.time }}<br/>
-                    {{ response.response }}<br/>
-
+                    {{ response.response }}
+          </TEXT>
           {% endfor %}
-        </TEXT>
+          <TEXT><br/>----</TEXT>
       {% endif %}
       {% endfor %}
     </CONTAINER>
