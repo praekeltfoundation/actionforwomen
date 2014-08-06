@@ -69,33 +69,23 @@
             {% endwith %}
           {% endif %}
 
-          {% if comment.user %}
-            <LINK href="{% url public_profile comment.user.id %}"><TEXT>{{ comment.name }}</TEXT></LINK>
-                  {% else %}
-                  {{ comment.name }}
-                  {% endif %} asked at {{ comment.submit_date.time }}
+          {{ comment.name }} asked at {{ comment.submit_date.time }}<br/>
           {{ comment.comment|linebreaks }}<br/>
         </TEXT>
 
         {% if comment.livechatresponse_set.exists %}
         <TEXT>
           {% for response in comment.livechatresponse_set.all %}
-            <LINK href="{% url public_profile response.author.id %}">
-            <TEXT><color value="red"><b>{{ response.author.username }}</b></color></TEXT>
-            </LINK><br/>
+            <b>{{ response.author.username }}</b>
             replied to
-                          {% if comment.user %}
-                  <b><a href="{% url public_profile comment.user.id %}">{{ comment.name }}</a></b>
-                  {% else %}
-                  {{ comment.name }}
-                  {% endif %} at {{ response.updated_at.time }}
-                          {{ response.response }}
+            <b>{{ comment.name }}</b> at {{ response.updated_at.time }}<br/>
+                    {{ response.response }}
 
                   {% endfor %}
         </TEXT>
               {% endif %}
       {% endfor %}
-       
+
     </CONTAINER>
 
     <CONTAINER type="data">
