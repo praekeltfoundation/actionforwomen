@@ -21,7 +21,7 @@
        {{ livechat.chat_starts_at.time }} on {{ livechat.chat_starts_at.date }}<br/>
     </TEXT>
       {% for comment in livechats.object_list %}
-          {% if comment.livechatresponse_set.exists %}
+      {% if comment.livechatresponse_set.exists %}
         <TEXT>
           {% if comment.user %}
             {% with comment.user.profile as profile %}
@@ -31,31 +31,21 @@
             {% endwith %}
           {% endif %}
 
-          {% if comment.user %}
-            <LINK href="{% url public_profile comment.user.id %}"><TEXT>{{ comment.name }}</TEXT></LINK>
-                  {% else %}
-                  {{ comment.name }}
-                  {% endif %} asked at {{ comment.submit_date.time }}
+          {{ comment.name }} asked at {{ comment.submit_date.time }}
           {{ comment.comment|linebreaks }}<br/>
         </TEXT>
 
-       
+
         <TEXT>
           {% for response in comment.livechatresponse_set.all %}
-            <LINK href="{% url public_profile response.author.id %}">
-            <TEXT><color value="red"><b>{{ response.author.username }}</b></color></TEXT>
-            </LINK><br/>
+            <b>{{ response.author.username }}</b>
             replied to
-                          {% if comment.user %}
-                  <b><a href="{% url public_profile comment.user.id %}">{{ comment.name }}</a></b>
-                  {% else %}
-                  {{ comment.name }}
-                  {% endif %} at {{ response.updated_at.time }}
-                          {{ response.response }}
+            <b>{{ comment.name }}</b> at {{ response.updated_at.time }}<br/>
+                    {{ response.response }}
 
-                  {% endfor %}
-                {% endif %}
-        {% endfor %}
+            {% endfor %}
+          {% endif %}
+          {% endfor %}
       {% endfor %}
        </TEXT>
     </CONTAINER>

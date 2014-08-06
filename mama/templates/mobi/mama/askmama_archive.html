@@ -20,7 +20,7 @@ Used for the AskMAMA section
               <div class="meta">
 
                 {% if comment.user %}
-                  <b><a href="{% url public_profile comment.user.id %}">{{ comment.name }}</a></b>
+                  <b>{{ comment.name }}</b>
                   {% else %}
                   {{ comment.name }}
                   {% endif %} asked at {{ comment.submit_date.time }}
@@ -30,11 +30,10 @@ Used for the AskMAMA section
               <div class="item comment" style="background-color: rgb(244, 229, 234)">
                   {% for response in comment.replied_to_comments_set.all %}
                       <div class="meta">
-                              <b><a href="{% url public_profile response.user.id %}">
-                                  {{ response.user.username }}</a></b>
+                              <b>{{ response.user.username }}</b>
                        replied to
                           {% if comment.user %}
-                  <b><a href="{% url public_profile comment.user.id %}">{{ comment.name }}</a></b>
+                  <b>{{ comment.name }}</b>
                   {% else %}
                   {{ comment.name }}
                   {% endif %}
