@@ -25,30 +25,20 @@
             {% endwith %}
           {% endif %}
 
-          {% if comment.user %}
-            <LINK href="{% url public_profile comment.user.id %}"><TEXT>{{ comment.name }}</TEXT></LINK>
-                  {% else %}
-                  {{ comment.name }}
-                  {% endif %} asked at {{ comment.submit_date.time }}
+          {{ comment.name }} asked at {{ comment.submit_date.time }}<br/>
           {{ comment.comment|linebreaks }}<br/>
         </TEXT>
 
-       
+
         <TEXT>
           {% for response in comment.replied_to_comments_set.all %}
-            <LINK href="{% url public_profile response.user.id %}">
-            <TEXT><color value="red"><b>{{ response.user.username }}</b></color></TEXT>
-            </LINK><br/>
+            <b>{{ response.user.username }}</b>
             replied to
-                          {% if comment.user %}
-                  <b><a href="{% url public_profile comment.user.id %}">{{ comment.name }}</a></b>
-                  {% else %}
-                  {{ comment.name }}
-                  {% endif %} 
-                          {{ response.comment_text }}
+            {{ comment.name }}<br/>
+            {{ response.comment_text }}
 
-                  {% endfor %}
-                {% endif %}
+            {% endfor %}
+          {% endif %}
 
       {% endfor %}
        </TEXT>
