@@ -358,7 +358,16 @@ class AskMamaArchiveView(DetailView):
         return context
 
     def get_object(self):
-        return get_object_or_404(Post, slug='ask-mama')
+
+        self.category = get_object_or_404(Category,
+                                          slug__iexact='ask-mama')
+        
+        try:
+            return Post.permitted.filter(
+                pin__category=self.category
+            ).latest('created')
+        except Post.DoesNotExist:
+            return None
 
 class AskMamaView(CategoryDetailView):
     """
