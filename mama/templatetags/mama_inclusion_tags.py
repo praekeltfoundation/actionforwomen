@@ -274,6 +274,14 @@ def babycenter_byline(obj):
         return {}
 
 
+@register.inclusion_tag('mama/inclusion_tags/babycenter_logo.html')
+def babycenter_logo(obj):
+    if obj.categories.filter(slug='bc-content'):
+        return {'display': True}
+    else:
+        return {}
+
+
 @register.inclusion_tag('mama/inclusion_tags/vlive_object_comments.html', takes_context=True)
 def vlive_object_comments(context, obj):
     def can_comment(obj, request):

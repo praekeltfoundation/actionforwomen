@@ -15,6 +15,10 @@
     <div class="h1">{{ object.title }}</div>
 
     <div class="content-inner">
+      {% cache 3600 baby_center_logo object.id %}
+        {% babycenter_logo object %}
+      {% endcache %}
+
       <div class="post">
         {% if object.comments_enabled and not READ_ONLY_MODE %}
           <div class="stats">
