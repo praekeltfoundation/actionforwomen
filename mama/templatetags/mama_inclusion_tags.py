@@ -277,7 +277,10 @@ def babycenter_byline(obj):
 @register.inclusion_tag('mama/inclusion_tags/babycenter_logo.html')
 def babycenter_logo(obj):
     if obj.categories.filter(slug='bc-content'):
-        return {'display': True}
+        return {
+            'display': True,
+            'STATIC_URL': settings.STATIC_URL
+        }
     else:
         return {}
 
