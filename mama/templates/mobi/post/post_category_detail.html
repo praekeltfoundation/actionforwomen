@@ -28,6 +28,10 @@
                 {{ object.content|safe }}
             </div>
 
+            {% cache 3600 baby_center_logo object.id %}
+                {% babycenter_logo object %}
+            {% endcache %}
+
             {% cache 3600 links object.id %}
             <div class="post-menu">
                 <div class="items">
