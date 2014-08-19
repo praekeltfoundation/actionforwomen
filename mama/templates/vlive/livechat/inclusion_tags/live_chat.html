@@ -26,33 +26,39 @@
   </CONTAINER>
 </MODULE>
 
+{% if commenting_closed %}
 <MODULE>
   <CONTAINER type="data">
     <TEXT>
-      {% if commenting_closed %}
         <b>We have reached the maximum number of questions for this live chat.
             Comments have therefore been closed</b><br/>
         <b>Didn't get your question answered?</b><br/>
           <LINK href="{% url askmama_detail %}">Visit askMAMA and ask there</LINK>
-    {% else %}
-        {% if can_comment %}
-        {% render_comment_form for live_chat %}
-        {% else %}
-                <b>Comments will open when live chat begins</b>
-        {% endif %}
-    {% if live_chat.can_comment_code == 'auth_required' %}
-    <MODULE>
-      <CONTAINER type="data">
-        <LINK href="{% url login %}?next={{ request.META.PATH_INFO }}">
-        <TEXT>Sign in to comment or ask a question</TEXT>
-        </LINK>
-      </CONTAINER>
-    </MODULE>
-    {% endif %}
-  {% endif %}
     </TEXT>
   </CONTAINER>
 </MODULE>
+{% else %}
+  {% if can_comment %}
+    {% render_comment_form for live_chat %}
+  {% else %}
+    <MODULE>
+    <CONTAINER type="data">
+      <TEXT>
+          <b>Comments will open when live chat begins</b>
+      </TEXT>
+    </CONTAINER>
+    </MODULE>
+  {% endif %}
+  {% if live_chat.can_comment_code == 'auth_required' %}
+  <MODULE>
+    <CONTAINER type="data">
+      <LINK href="{% url login %}?next={{ request.META.PATH_INFO }}">
+      <TEXT>Sign in to comment or ask a question</TEXT>
+      </LINK>
+    </CONTAINER>
+  </MODULE>
+  {% endif %}
+{% endif %}
 
 {% header text='Questions and Responses' %}
 <MODULE>
