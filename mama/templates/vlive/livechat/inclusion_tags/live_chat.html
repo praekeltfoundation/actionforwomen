@@ -76,7 +76,7 @@
         {% if comment.livechatresponse_set.exists %}
         <TEXT>
           {% for response in comment.livechatresponse_set.all %}
-            <b>{{ response.author.username }}</b>
+            <b>{{ response.author.first_name }} {{ response.author.last_name }}</b>
             replied to
             <b>{{ comment.name }}</b> at {{ response.updated_at.time }}<br/>
                     {{ response.response }}
