@@ -300,7 +300,7 @@ class MamaLiveChatAdmin(AdminModeratorMixin, LiveChatAdmin):
 
 
 class MamaCommentAdmin(CommentAdmin):
-    #actions = CommentAdmin.actions + ['mark_spam_no_ban', ]
+    actions = CommentAdmin.actions + ['mark_spam_no_ban', ]
 
     def get_user_display_name(self, obj):
         if obj.name.lower().startswith('anon'):
@@ -318,17 +318,16 @@ class MamaCommentAdmin(CommentAdmin):
         )
     mark_spam.short_description = "Mark selected comments as spam (3 day ban)"
 
-    # TODO - requires updating the copy on the front-end to not say
-    # "User has been banned"
-    #def mark_spam_no_ban(self, modeladmin, request, queryset):
-    #    for comment in queryset:
-    #        utils.classify_comment(comment, cls='spam')
-    #
-    #    self.message_user(
-    #        request,
-    #        "%s comment(s) successfully marked as spam." % queryset.count()
-    #    )
-    #mark_spam_no_ban.short_description = "Mark selected comments as spam (no ban)"
+
+    def mark_spam_no_ban(self, modeladmin, request, queryset):
+        for comment in queryset:
+            utils.classify_comment(comment, cls='spam')
+
+        self.message_user(
+            request,
+            "%s comment(s) successfully marked as spam. (no ban)" % queryset.count()
+        )
+    mark_spam_no_ban.short_description = "Mark selected comments as spam (no ban)"
 
 
 class MamaHamCommentAdmin(MamaCommentAdmin, HamCommentAdmin):
