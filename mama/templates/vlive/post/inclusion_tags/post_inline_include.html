@@ -2,7 +2,7 @@
 
 <b>{{ object.title }}</b><br />
 {% if object.comments_enabled %}
-    <small>{% humanize_time_diff object.created "Ago" %}</small><br /><small>{{ object.comment_count }} Comments{% comment %} // {% likes object %}{% endcomment %}</small>
+    <small>{% humanize_time_diff object.publish_on "Ago" %}</small><br /><small>{{ object.comment_count }} Comments{% comment %} // {% likes object %}{% endcomment %}</small>
     <br /><br />
 {% endif %}
 {{ object.content|safe }}

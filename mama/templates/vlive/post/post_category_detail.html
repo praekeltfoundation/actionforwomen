@@ -19,7 +19,7 @@
     <TEXT>
       <b>{{ object.title }}</b><br/>
       {% if object.comments_enabled %}
-        {% humanize_time_diff object.created "Ago" %}
+        {% humanize_time_diff object.publish_on "Ago" %}
         {% if not READ_ONLY_MODE %}- {{ object.comment_count }} Comments{% endif %}
       {% endif %}
     </TEXT>
