@@ -16,7 +16,7 @@
                     {{ object.title }}
                     {% if object.comments_enabled %}
                         <div class="stamp">
-                            {% humanize_time_diff object.created "Ago" %}
+                            {% humanize_time_diff object.publish_on "Ago" %}
                             {% if not READ_ONLY_MODE %}// <a href="#comments">{{ object.comment_count }} Comments</a>{% endif %}
                         </div>
                     {% endif %}

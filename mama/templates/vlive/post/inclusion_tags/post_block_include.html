@@ -1,7 +1,7 @@
 {% load jmbo_template_tags %}
 
 <a href="{{ object.get_absolute_category_url }}">{{ object.title }}</a><br />
-{% humanize_time_diff object.created "Ago" %}{% if object.comments_enabled and not READ_ONLY_MODE %} // {{ object.comment_count }} Comments{% endif %}{% if object.likes_enabled %} // {{ object.vote_total }} Likes{% endif %}<br/>
+{% humanize_time_diff object.publish_on "Ago" %}{% if object.comments_enabled and not READ_ONLY_MODE %} // {{ object.comment_count }} Comments{% endif %}{% if object.likes_enabled %} // {{ object.vote_total }} Likes{% endif %}<br/>
 {% if object.description %}
   {{ object.description|truncatewords:10 }}
 {% endif %}
