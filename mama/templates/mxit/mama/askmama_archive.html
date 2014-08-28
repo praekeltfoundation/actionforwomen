@@ -16,6 +16,7 @@ Used for the AskMAMA section
     <div class="items">
       {% if chat_comments %}
         {% for comment in chat_comments.object_list %}
+        {% if not comment.is_removed %}
             {% if comment.replied_to_comments_set.exists %}
             <div class="item comment no-pic">
               <div class="meta">
@@ -35,7 +36,7 @@ Used for the AskMAMA section
                   {% endfor %}
               </div>
               {% endif %}
-
+            {% endif %}
             </div>
         {% endfor %}
 
