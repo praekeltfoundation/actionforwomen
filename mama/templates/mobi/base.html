@@ -49,11 +49,7 @@
         {% block footer %}
             {% block footer_search_form %}
             <div class="h1">Search</div>
-            {% if 'ask-mama' in request.path  or 'livechat' in request.path %}
-            <form id="frmSearch" method="get" action="{% url haystack_search_askmama %}">
-            {% else %}
             <form id="frmSearch" method="get" action="{% url haystack_search %}">
-            {% endif %}
                 <div class="row"><input type="text" name="q" value="{{ query }}" class="short" /></div>
                 <div class="row"><input type="submit" name="submit" value="Search" class="btn" /></div>
                 <div class="clear"></div>
