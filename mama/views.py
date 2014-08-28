@@ -46,7 +46,8 @@ from livechat.models import LiveChat
 from poll.forms import PollVoteForm
 from poll.models import Poll
 from post.models import Post
-
+from haystack.views import SearchView
+from haystack.query import SearchQuerySet
 from likes.views import like as likes_view
 
 from jmboyourwords.models import YourStoryEntry, YourStoryCompetition
@@ -343,6 +344,7 @@ class AskMamaArchiveView(DetailView):
 
         comments = Comment.objects.filter(
             object_pk=post.id,
+            is_removed=False,
             replied_to_comments_set__isnull=False,
             ).distinct()
 
