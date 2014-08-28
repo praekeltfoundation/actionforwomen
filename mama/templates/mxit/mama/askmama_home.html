@@ -44,11 +44,7 @@ Used for the AskMAMA section
 {% endblock %}
  {% block searchlink %}
         <p>
-        {% if 'ask-mama' in request.path  or 'livechat' in request.path %}
             <a href="{% url haystack_search_askmama %}">Search the Site</a>
-        {% else %}
-            <a href="{% url haystack_search %}">Search the Site</a>
-        {% endif %}
         </p>
 {% endblock %}
  {% block searchlink %}
