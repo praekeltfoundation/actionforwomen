@@ -77,6 +77,10 @@ class PostAdmin(MamaModelbaseAdmin):
     list_per_page = 10
     readonly_fields = ('created',)
 
+    def queryset(self, request):
+        qs = super(PostAdmin, self).queryset(request)
+        return qs.distinct()
+
     def is_featured(self, obj, *args, **kwargs):
         return obj.categories.filter(slug='featured').exists()
     is_featured.boolean = True
