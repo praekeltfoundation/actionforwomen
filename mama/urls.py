@@ -187,7 +187,8 @@ urlpatterns = patterns('',
         {},
         name='story_comments_list'
     ),
-    url(r'^search/', cache_page(SearchView(results_per_page=5), 60 * 60), name='haystack_search'),
+    url(r'^ask-mama-search/', CommentSearchView(template='search/search_askmama.html',results_per_page=5), name='haystack_search_askmama'),
+    url(r'^search/', PostSearchView(results_per_page=5), name='haystack_search'),
     url(
         r'^accounts/register/$', 'registration.views.register',
         {'backend': 'mama.registration_backend.MamaBackend'},

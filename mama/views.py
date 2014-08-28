@@ -46,7 +46,8 @@ from livechat.models import LiveChat
 from poll.forms import PollVoteForm
 from poll.models import Poll
 from post.models import Post
-
+from haystack.views import SearchView
+from haystack.query import SearchQuerySet
 from likes.views import like as likes_view
 
 from jmboyourwords.models import YourStoryEntry, YourStoryCompetition
@@ -939,3 +940,45 @@ class ConfirmReportView(TemplateView):
         })
 
         return context
+
+
+class CommentSearchView(SearchView):
+    def __name__(self):
+        return "CommentSearchView"
+
+
+    def build_form(self, form_kwargs=None):
+        data = None
+        kwargs = {
+            'load_all': self.load_all,
+        }
+        if form_kwargs:
+            kwargs.update(form_kwargs)
+
+        if len(self.request.GET):
+            data = self.request.GET
+
+        kwargs['searchqueryset'] = SearchQuerySet().models(Comment)
+
+        return self.form_class(data, **kwargs)
+
+
+class PostSearchView(SearchView):
+    def __name__(self):
+        return "PostSearchView"
+
+
+    def build_form(self, form_kwargs=None):
+        data = None
+        kwargs = {
+            'load_all': self.load_all,
+        }
+        if form_kwargs:
+            kwargs.update(form_kwargs)
+
+        if len(self.request.GET):
+            data = self.request.GET
+
+        kwargs['searchqueryset'] = SearchQuerySet().models(Post)
+
+        return self.form_class(data, **kwargs)
