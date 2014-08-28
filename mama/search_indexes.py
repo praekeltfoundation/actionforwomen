@@ -19,9 +19,9 @@ class CommentIndex(SearchIndex):
 
     def index_queryset(self):
         ask_mama = Post.objects.get(primary_category__slug='ask-mama')
+        livechats = LiveChat.objects.all()
         return Comment.objects.filter(
-            object_pk=ask_mama.id,
-            replied_to_comments_set__isnull=False,
-            ).distinct()
+            object_pk__in=[ask_mama.id,] + [chat.id for chat in livechats],
+        replied_to_comments_set__isnull=False).distinct()
 
 site.register(Comment, CommentIndex)

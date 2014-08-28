@@ -20,7 +20,8 @@ from mama.views import (CategoryDetailView, CategoryListView,
                         MxitUpdateDueDateView,
                         PublicProfileView, UserCommentsView,
                         GuidesView, GuidesTopicView,
-                        MoreGuidesView, GuideDetailView)
+                        MoreGuidesView, GuideDetailView,
+                        CommentSearchView, PostSearchView)
 from mama.forms import PasswordResetForm
 import object_tools
 
