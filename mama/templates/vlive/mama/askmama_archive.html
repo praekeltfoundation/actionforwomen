@@ -15,6 +15,7 @@
    {% if chat_comments %}
     <CONTAINER type="data">
       {% for comment in chat_comments.object_list %}
+      {% if not comment.is_removed %}
       {% if comment.replied_to_comments_set.exists %}
         <TEXT>
           {% if comment.user %}
@@ -38,6 +39,7 @@
           </TEXT>
             {% endfor %}
             <TEXT><br/>----</TEXT>
+      {% endif %}
       {% endif %}
       {% endfor %}
     </CONTAINER>
