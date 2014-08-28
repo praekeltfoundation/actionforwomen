@@ -9,6 +9,7 @@
 
     {% if page.object_list %}
         {% for object in page.object_list %}
+            {% if object.object %}
         <TEXT>
           {{ object.object.content_object }}<br/>
           {{ object.object.comment|linebreaks }}<br/>
@@ -20,6 +21,7 @@
           </TEXT>
             {% endfor %}
             <TEXT><br/>----</TEXT>
+          {% endif %}
         {% endfor %}
     {% else %}
         {% text_include template="mama/pml_includes/search_not_found.html" %}

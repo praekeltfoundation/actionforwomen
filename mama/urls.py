@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import cache_page
 from django.views.generic import TemplateView
 from haystack.views import SearchView
+from haystack.query import SearchQuerySet
 from mama.views import (CategoryDetailView, CategoryListView,
                         StoryCommentsView, ConfirmReportView,
                         ContactView,
@@ -20,14 +21,17 @@ from mama.views import (CategoryDetailView, CategoryListView,
                         MxitUpdateDueDateView,
                         PublicProfileView, UserCommentsView,
                         GuidesView, GuidesTopicView,
-                        MoreGuidesView, GuideDetailView,
-                        CommentSearchView, PostSearchView)
+                        MoreGuidesView, GuideDetailView)
 from mama.forms import PasswordResetForm
+from mama.models import Post
+from django.contrib.comments import Comment
 import object_tools
 
 admin.autodiscover()
 object_tools.autodiscover()
 
+postsqs = SearchQuerySet().models(Post)
+commentsqs = SearchQuerySet().models(Comment)
 
 def health(request):
     return HttpResponse('ok')
@@ -188,8 +192,13 @@ urlpatterns = patterns('',
         {},
         name='story_comments_list'
     ),
-    url(r'^ask-mama-search/', CommentSearchView(template='search/search_askmama.html',results_per_page=5), name='haystack_search_askmama'),
-    url(r'^search/', PostSearchView(results_per_page=5), name='haystack_search'),
+    url(r'^ask-mama-search/',  cache_page(SearchView(
+        template='search/search_askmama.html', results_per_page=5,
+        searchqueryset=commentsqs), 60 * 60),
+        name='haystack_search_askmama'),
+    url(r'^search/',  cache_page(SearchView(results_per_page=5,
+                                            searchqueryset=postsqs), 60 * 60),
+        name='haystack_search'),
     url(
         r'^accounts/register/$', 'registration.views.register',
         {'backend': 'mama.registration_backend.MamaBackend'},
