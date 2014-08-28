@@ -17,8 +17,13 @@
                         {% endif %}
                     {% endif %}
                   </div>
-                  {% if comment.is_removed %}
+
+                  {% if comment.is_removed and comment.user.profile.banned %}
+
                   <div class="stamp">This comment has been reported by the community and the user has been banned<br><br/>
+                    Don't know the commenting rules? <a href="{% url comment-terms %}">Read them here</a></div>
+                  {% elif comment.is_removed and not comment.user.profile.banned %}
+                   <div class="stamp">This comment has been removed<br><br/>
                     Don't know the commenting rules? <a href="{% url comment-terms %}">Read them here</a></div>
                   {% else %}
                   <div class="stamp">{{ comment.comment|linebreaks }}</div>
