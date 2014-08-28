@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load jmbo_inclusion_tags mama_inclusion_tags %}
+
+{% block content %}
+    <div class="h1">Search Results for '{{ query }}'</div>
+    <div class="content-inner">
+        {% if page.object_list %}
+        <div class="items">
+            {% for object in page.object_list %}
+                {% if object.object %}
+                    <div class="item comment no-pic">
+              <div class="meta">
+
+                <b>{{ object.object.content_object }}</b>
+                <div class="stamp">{{ object.object.comment|linebreaks }}</div>
+              </div>
+              <div class="item comment" style="background-color: rgb(244, 229, 234);padding-left: 10px">
+                  {% for response in object.object.replied_to_comments_set.all %}
+                      <div class="meta">
+                      <b>Answer</b>
+                          <div class="stamp">{{ response.comment_text }}</div>
+                      </div>
+                  {% endfor %}
+              </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        {% else %}
+            <div class="post">
+                <p><strong>Try Again...</strong></p>
+                <p>Unfortunately no results were found for '{{ query }}'. Please try again with a different query.</p>
+            </div>
+        {% endif %}
+    </div>
+
+    {% pagination page %}
+{% endblock %}

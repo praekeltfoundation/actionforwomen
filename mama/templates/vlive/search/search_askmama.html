@@ -1,0 +1,39 @@
+{% extends 'pml/base.xml' %}
+
+{% load jmbo_inclusion_tags mama_inclusion_tags pml_inclusion_tags %}
+
+{% block body %}
+    {% with 'grey' as color %}
+
+    {% header text='Search Results' color=color %}
+
+    {% if page.object_list %}
+        {% for object in page.object_list %}
+            {% if object.object %}
+        <TEXT>
+          {{ object.object.content_object }}<br/>
+          {{ object.object.comment|linebreaks }}<br/>
+        </TEXT>
+        {% for response in object.object.replied_to_comments_set.all %}
+          <TEXT>
+          <b>Answer</b><br>
+            {{ response.comment_text }}
+          </TEXT>
+            {% endfor %}
+            <TEXT><br/>----</TEXT>
+          {% endif %}
+        {% endfor %}
+    {% else %}
+        {% text_include template="mama/pml_includes/search_not_found.html" %}
+    {% endif %}
+
+    {% pagination page %}
+    {% endwith %}
+
+{% endblock %}
+
+{% block footer %}
+    {% with 'grey' as color %}
+        {{ block.super }}
+    {% endwith %}
+{% endblock %}
