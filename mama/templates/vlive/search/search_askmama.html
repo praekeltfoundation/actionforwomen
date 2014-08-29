@@ -37,3 +37,9 @@
         {{ block.super }}
     {% endwith %}
 {% endblock %}
+
+{% block footer_search_form %}
+  {% header text='Search' color=color %}
+  {% include 'mama/inclusion_tags/search_form_askmama.html' %}
+{% endblock %}
+
