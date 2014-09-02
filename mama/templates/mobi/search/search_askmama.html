@@ -19,7 +19,7 @@
                   {% for response in object.object.replied_to_comments_set.all %}
                       <div class="meta">
                       <b>Answer</b>
-                          <div class="stamp">{{ response.comment_text }}</div>
+                          <div class="stamp">{{ response.comment_text|linebreaks }}</div>
                       </div>
                   {% endfor %}
               {% endif %}
@@ -34,7 +34,7 @@
                   {% for response in object.object.livechatresponse_set.all %}
                       <div class="meta">
                       <b>Answer</b>
-                          <div class="stamp">{{ response.response }}</div>
+                          <div class="stamp">{{ response.response|linebreaks }}</div>
                       </div>
                   {% endfor %}
               {% endif %}
@@ -44,7 +44,7 @@
                 {% for response in object.object.replied_to_comments.all %}
               <div class="meta">
                 <b>{{ response.content_object }}</b>
-                <div class="stamp">{{ response.comment }}</div>
+                <div class="stamp">{{ response.comment|linebreaks }}</div>
               </div>
               {% endfor %}
               <div class="item comment" style="background-color: rgb(244, 229, 234);padding-left: 10px">
@@ -60,7 +60,7 @@
                   <div class="item comment no-pic">
               <div class="meta">
                 <b>{{ object.object.livechat.content_type.name }}</b>
-                <div class="stamp">{{ object.object.comment.comment }}</div>
+                <div class="stamp">{{ object.object.comment.comment|linebreaks }}</div>
               </div>
               <div class="item comment" style="background-color: rgb(244, 229, 234);padding-left: 10px">
 
