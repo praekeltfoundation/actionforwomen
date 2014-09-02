@@ -10,6 +10,8 @@
     {% if page.object_list %}
         {% for object in page.object_list %}
             {% if object.object %}
+
+         {% if object.object.content_type.name == "Post" %}
         <TEXT>
           {{ object.object.content_object }}<br/>
           {{ object.object.comment|linebreaks }}<br/>
@@ -17,9 +19,48 @@
         {% for response in object.object.replied_to_comments_set.all %}
           <TEXT>
           <b>Answer</b><br>
-            {{ response.comment_text }}
+            {{ response.comment_text|linebreaks }}
           </TEXT>
             {% endfor %}
+          {% endif %}
+
+          {% if object.object.content_type.name == "Live Chat" %}
+        <TEXT>
+          {{ object.object.content_object.content_type.name }}<br/>
+          {{ object.object.comment|linebreaks }}<br/>
+        </TEXT>
+        {% for response in object.object.livechatresponse_set.all %}
+          <TEXT>
+          <b>Answer</b><br>
+            {{ response.respons|linebreakse }}
+          </TEXT>
+            {% endfor %}
+          {% endif %}
+
+          {% if object.verbose_name == "Comment reply" %}
+          {% for response in object.object.replied_to_comments.all %}
+          <TEXT>
+          {{ response.content_object }}<br/>
+          {{ response.comment|linebreaks }}<br/>
+          </TEXT>
+          {% endfor %}
+          <TEXT>
+            <b>Answer</b><br>
+            {{ object.object.comment|linebreaks }}
+          </TEXT>
+          {% endif %}
+
+        {% if object.object.livechat.content_type.name == "Live Chat" %}
+        <TEXT>
+          {{ object.object.livechat.content_type.name }}<br/>
+          {{ object.object.comment.comment|linebreaks }}<br/>
+        </TEXT>
+          <TEXT>
+          <b>Answer</b><br>
+            {{ object.object.response|linebreaks }}
+          </TEXT>
+          {% endif %}
+
             <TEXT><br/>----</TEXT>
           {% endif %}
         {% endfor %}

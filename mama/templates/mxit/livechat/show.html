@@ -1,13 +1,12 @@
-{% extends "pml/base.xml" %}
+{% extends "base.html" %}
 
 {% load livechat_tags %}
-{% load pml_inclusion_tags %}
 
 {% block above_content %}
 {{ block.super }}
 {% endblock %}
 
-{% block body %}
+{% block content %}
 {% show_live_chat %}
 {% endblock %}
 {% block footer_search_form %}
@@ -18,4 +17,3 @@
                 <div class="clear"></div>
             </form>
 {% endblock %}
-
