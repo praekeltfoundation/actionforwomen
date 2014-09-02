@@ -2,6 +2,7 @@
 
 import os
 import djcelery
+djcelery.setup_loader()
 
 PATH = os.getcwd()
 
@@ -321,6 +322,7 @@ CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 # Uncomment if you're running in DEBUG mode and you want to skip the broker
 # and execute tasks immediate instead of deferring them to the queue / workers.
 # CELERY_ALWAYS_EAGER = DEBUG
+CELERY_TASK_SERIALIZER = 'json'
 CELERY_ACCEPT_CONTENT = ['json', 'msgpack', 'yaml']
 
 from datetime import timedelta
