@@ -8,9 +8,10 @@
         <div class="items">
             {% for object in page.object_list %}
                 {% if object.object %}
+
+                   {% if object.object.content_type.name == "Post" %}
                     <div class="item comment no-pic">
               <div class="meta">
-
                 <b>{{ object.object.content_object }}</b>
                 <div class="stamp">{{ object.object.comment|linebreaks }}</div>
               </div>
@@ -21,6 +22,55 @@
                           <div class="stamp">{{ response.comment_text }}</div>
                       </div>
                   {% endfor %}
+              {% endif %}
+
+              {% if object.object.content_type.name == "Live Chat" %}
+                  <div class="item comment no-pic">
+              <div class="meta">
+                <b>{{ object.object.content_object.content_type.name }}</b>
+                <div class="stamp">{{ object.object.comment|linebreaks }}</div>
+              </div>
+              <div class="item comment" style="background-color: rgb(244, 229, 234);padding-left: 10px">
+                  {% for response in object.object.livechatresponse_set.all %}
+                      <div class="meta">
+                      <b>Answer</b>
+                          <div class="stamp">{{ response.response }}</div>
+                      </div>
+                  {% endfor %}
+              {% endif %}
+
+              {% if object.verbose_name == "Comment reply" %}
+                  <div class="item comment no-pic">
+                {% for response in object.object.replied_to_comments.all %}
+              <div class="meta">
+                <b>{{ response.content_object }}</b>
+                <div class="stamp">{{ response.comment }}</div>
+              </div>
+              {% endfor %}
+              <div class="item comment" style="background-color: rgb(244, 229, 234);padding-left: 10px">
+
+                      <div class="meta">
+                      <b>Answer</b>
+                          <div class="stamp">{{ object.object.comment|linebreaks }}</div>
+                      </div>
+
+              {% endif %}
+
+              {% if object.object.livechat.content_type.name == "Live Chat" %}
+                  <div class="item comment no-pic">
+              <div class="meta">
+                <b>{{ object.object.livechat.content_type.name }}</b>
+                <div class="stamp">{{ object.object.comment.comment }}</div>
+              </div>
+              <div class="item comment" style="background-color: rgb(244, 229, 234);padding-left: 10px">
+
+                      <div class="meta">
+                      <b>Answer</b>
+                          <div class="stamp">{{ object.object.response|linebreaks }}</div>
+                      </div>
+
+              {% endif %}
+
               </div>
                 {% endif %}
             {% endfor %}

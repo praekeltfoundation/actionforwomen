@@ -7,6 +7,7 @@ from django.views.decorators.cache import cache_page
 from django.views.generic import TemplateView
 from haystack.views import SearchView
 from haystack.query import SearchQuerySet
+from livechat.models import LiveChatResponse
 from mama.views import (CategoryDetailView, CategoryListView,
                         StoryCommentsView, ConfirmReportView,
                         ContactView,
@@ -23,6 +24,7 @@ from mama.views import (CategoryDetailView, CategoryListView,
                         GuidesView, GuidesTopicView,
                         MoreGuidesView, GuideDetailView)
 from mama.forms import PasswordResetForm
+from moderator.models import CommentReply
 from mama.models import Post
 from django.contrib.comments import Comment
 import object_tools
@@ -31,7 +33,7 @@ admin.autodiscover()
 object_tools.autodiscover()
 
 postsqs = SearchQuerySet().models(Post)
-commentsqs = SearchQuerySet().models(Comment)
+commentsqs = SearchQuerySet().models(Comment, CommentReply, LiveChatResponse)
 
 def health(request):
     return HttpResponse('ok')
