@@ -10,6 +10,8 @@
     {% if page.object_list %}
         {% for object in page.object_list %}
             {% if object.object %}
+         <MODULE>
+            <CONTAINER type="data">
 
          {% if object.object.content_type.name == "Post" %}
         <TEXT>
@@ -62,6 +64,8 @@
           {% endif %}
 
             <TEXT><br/>----</TEXT>
+            </CONTAINER>
+           </MODULE>
           {% endif %}
         {% endfor %}
     {% else %}
