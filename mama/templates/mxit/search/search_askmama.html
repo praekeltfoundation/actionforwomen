@@ -88,7 +88,7 @@
 {% endif %}
 <div id="search">
     <p>Type in what you want to search for</p>
-    <form name="search-form" action="{% url haystack_search %}" method="get">
+    <form name="search-form" action="{% url haystack_search_askmama %}" method="get">
         <input type="text" name="q" class="txt"{% if request.GET.q %} value="{{ request.GET.q }}"{% endif %} />
         <input type="submit" name="search-btn" value="Search" />
     </form>
