@@ -11,9 +11,6 @@
 {% endblock %}
 {% block searchlink %}
         <p>
-            <form name="search-form" action="{% url haystack_search_askmama %}" method="get">
-            <input type="text" name="q" class="txt"{% if request.GET.q %} value="{{ request.GET.q }}"{% endif %} />
-            <input type="submit" name="search-btn" value="Search" />
-            </form>
+            <a href="{% url haystack_search_askmama %}">Search the Site</a>
         </p>
 {% endblock %}

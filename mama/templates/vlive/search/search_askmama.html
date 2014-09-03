@@ -18,7 +18,7 @@
         </TEXT>
         {% for response in object.object.replied_to_comments_set.all %}
           <TEXT>
-          <b>Answer</b><br>
+          <b>Answer</b><br/>
             {{ response.comment_text|linebreaks }}
           </TEXT>
             {% endfor %}
@@ -31,8 +31,8 @@
         </TEXT>
         {% for response in object.object.livechatresponse_set.all %}
           <TEXT>
-          <b>Answer</b><br>
-            {{ response.respons|linebreakse }}
+          <b>Answer</b><br/>
+            {{ response.response |linebreaks }}
           </TEXT>
             {% endfor %}
           {% endif %}
@@ -45,7 +45,7 @@
           </TEXT>
           {% endfor %}
           <TEXT>
-            <b>Answer</b><br>
+            <b>Answer</b><br/>
             {{ object.object.comment|linebreaks }}
           </TEXT>
           {% endif %}
@@ -56,7 +56,7 @@
           {{ object.object.comment.comment|linebreaks }}<br/>
         </TEXT>
           <TEXT>
-          <b>Answer</b><br>
+          <b>Answer</b><br/>
             {{ object.object.response|linebreaks }}
           </TEXT>
           {% endif %}
