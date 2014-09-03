@@ -194,9 +194,9 @@ urlpatterns = patterns('',
         {},
         name='story_comments_list'
     ),
-    url(r'^ask-mama-search/',  cache_page(SearchView(
+    url(r'^ask-mama-search/',  SearchView(
         template='search/search_askmama.html', results_per_page=5,
-        searchqueryset=commentsqs), 60 * 60),
+        searchqueryset=commentsqs),
         name='haystack_search_askmama'),
     url(r'^search/',  cache_page(SearchView(results_per_page=5,
                                             searchqueryset=postsqs), 60 * 60),

@@ -2,12 +2,13 @@
 {% load jmbo_inclusion_tags mama_inclusion_tags %}
 
 {% block content %}
-    <div class="h1">Search Results for '{{ query }}'</div>
-    <div class="content-inner">
-        {% if page.object_list %}
-        <div class="items">
-            {% for object in page.object_list %}
-                {% if object.object %}
+{% if request.GET.q %}
+<h1>Search Results for '{{ query }}'</h1>
+<div class="content-inner">
+    {% if page.object_list %}
+    <div class="items">
+        {% for object in page.object_list %}
+            {% if object.object %}
 
                    {% if object.object.content_type.name == "Post" %}
                     <div class="item comment no-pic">
@@ -73,21 +74,25 @@
 
               </div>
                 {% endif %}
-            {% endfor %}
-        </div>
-        {% else %}
-            <div class="post">
-                <p><strong>Try Again...</strong></p>
-                <p>Unfortunately no results were found for '{{ query }}'. Please try again with a different query.</p>
-            </div>
-        {% endif %}
+        {% endfor %}
     </div>
+    {% else %}
+    <div class="post">
+        <p><strong>Try Again...</strong></p>
+        <p>Unfortunately no results were found for '{{ query }}'. Please try again with a different query.</p>
+    </div>
+    {% endif %}
+</div>
 
-    {% pagination page %}
+{% pagination page %}
+{% endif %}
+<div id="search">
+    <p>Type in what you want to search for</p>
+    <form name="search-form" action="{% url haystack_search %}" method="get">
+        <input type="text" name="q" class="txt"{% if request.GET.q %} value="{{ request.GET.q }}"{% endif %} />
+        <input type="submit" name="search-btn" value="Search" />
+    </form>
+</div>
 {% endblock %}
-{% block searchlink %}
-      <p>
-          <a href="{% url haystack_search_askmama %}">Search the Site</a>
 
-      </p>
- {% endblock %}
+{% block searchlink %}{% endblock %}
