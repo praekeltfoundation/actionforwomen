@@ -327,6 +327,6 @@ READ_ONLY_MODE = False
 
 # Puppet will put this on the server.
 try:
-    from production_settings import *
+    from project.local_settings import *
 except ImportError:
     pass
