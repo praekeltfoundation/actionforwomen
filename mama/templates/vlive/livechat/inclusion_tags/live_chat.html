@@ -1,0 +1,124 @@
+{% load jmbo_inclusion_tags %}
+{% load jmbo_template_tags %}
+{% load comments %}
+{% load likes_inclusion_tags %}
+{% load moderator_inclusion_tags %}
+{% load livechat_tags %}
+{% load mama_inclusion_tags %}
+{% load pml_inclusion_tags %}
+
+{% header text='LIVE CHAT' %}
+<MODULE>
+  <CONTAINER type="data">
+    <TEXT>
+      <b>{{ live_chat.title }}<br/></b>
+       {{ live_chat.expert }}<br/>
+       {{ live_chat.chat_starts_at.time }} on {{ live_chat.chat_starts_at.date }}<br/>
+    </TEXT>
+  </CONTAINER>
+</MODULE>
+
+<MODULE>
+  <CONTAINER type="data">
+    <TEXT>
+      {{ live_chat.description|safe|linebreaks }}
+    </TEXT>
+  </CONTAINER>
+</MODULE>
+
+{% if commenting_closed %}
+<MODULE>
+  <CONTAINER type="data">
+    <TEXT>
+        <b>We have reached the maximum number of questions for this live chat.
+            Comments have therefore been closed</b><br/>
+        <b>Didn't get your question answered?</b><br/>
+          <LINK href="{% url askmama_detail %}">Visit askMAMA and ask there</LINK>
+    </TEXT>
+  </CONTAINER>
+</MODULE>
+{% else %}
+  {% if can_comment %}
+    {% render_comment_form for live_chat %}
+  {% else %}
+    <MODULE>
+    <CONTAINER type="data">
+      <TEXT>
+          <b>Comments will open when live chat begins</b>
+      </TEXT>
+    </CONTAINER>
+    </MODULE>
+  {% endif %}
+  {% if live_chat.can_comment_code == 'auth_required' %}
+  <MODULE>
+    <CONTAINER type="data">
+      <LINK href="{% url login %}?next={{ request.META.PATH_INFO }}">
+      <TEXT>Sign in to comment or ask a question</TEXT>
+      </LINK>
+    </CONTAINER>
+  </MODULE>
+  {% endif %}
+{% endif %}
+
+{% header text='Questions and Responses' %}
+<MODULE>
+  {% if chat_comments %}
+    <CONTAINER type="data">
+      {% for comment in chat_comments.object_list %}
+
+        <TEXT>
+          {% if comment.user %}
+            {% with comment.user.get_profile as profile %}
+              {% if profile.avatar %}
+                <IMAGE href="{{ profile.avatar.url }}" align="left" width="44" height="44" />
+              {% endif %}
+            {% endwith %}
+          {% endif %}
+
+          {{ comment.name }} asked at {{ comment.submit_date.time }}<br/>
+          {{ comment.comment|linebreaks }}<br/>
+        </TEXT>
+
+        {% if comment.livechatresponse_set.exists %}
+        <TEXT>
+          {% for response in comment.livechatresponse_set.all %}
+            <b>{{ response.author.first_name }} {{ response.author.last_name }}</b>
+            replied to
+            <b>{{ comment.name }}</b> at {{ response.updated_at.time }}<br/>
+                    {{ response.response }}
+
+                  {% endfor %}
+        </TEXT>
+              {% endif %}
+      {% endfor %}
+
+    </CONTAINER>
+
+    <CONTAINER type="data">
+      <TEXT>
+      {% if chat_comments.has_previous %}
+        <LINK href="?p={{chat_comments.previous_page_number}}&amp;answered={{answered}}&amp;popular={{popular}}"><TEXT>Previous</TEXT></LINK> |
+      {% else %}
+          Previous |
+      {% endif %}
+      <TEXT>
+          Page {{ chat_comments.number }} of {{ chat_comments.paginator.num_pages }}
+      </TEXT>
+      {% if chat_comments.has_next %}
+          | <LINK href="?p={{chat_comments.next_page_number}}&amp;answered={{answered}}&amp;popular={{popular}}"><TEXT>Next</TEXT></LINK>
+      {% else %}
+          | Next
+      {% endif %}
+      </TEXT>
+    </CONTAINER>
+
+  {% else %}
+    <CONTAINER type="data">
+      <TEXT>
+        No questions yet. Go ahead and ask a question.
+      </TEXT>
+    </CONTAINER>
+  {% endif %}
+</MODULE>
+
+

@@ -1,0 +1,32 @@
+{% extends 'pml/base_module.xml' %}
+{% load pml_inclusion_tags %}
+
+{% block content %}
+    {% if not comments_open %}
+    <CONTAINER type="data">
+        <TEXT>Comments are currently closed.</TEXT>
+    </CONTAINER>
+    {% else %}
+    <CONTAINER type="form">
+        <FORM method="GET" href="{% url post_comment %}" submit_text="Post">
+            <FIELD name="csrfmiddlewaretoken" value="{{ csrf_token }}" type="hidden"/>
+            {% for field in form %}
+                {% if field.is_hidden %}
+                    <FIELD name="{{ field.html_name }}" value="{{ field.value }}" type="hidden"/>
+                {% endif %}
+            {% endfor %}
+            <TEXT>
+                <b>Comment</b><br />
+            </TEXT>
+            <FIELD name="{{ form.comment.html_name }}" type="text" />
+            {% if next %}
+            <FIELD name="next" value="{{ next }}" type="hidden"/>
+            {% else %}
+            <FIELD name="next" value="{{ request.path }}" type="hidden"/>
+            {% endif %}
+            <br />
+            <br />
+        </FORM>
+    </CONTAINER>
+    {% endif %}
+{% endblock %}

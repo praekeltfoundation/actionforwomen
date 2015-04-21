@@ -1,0 +1,12 @@
+{% if user.is_anonymous and not READ_ONLY_MODE %}
+<div class="text_banner">
+  <div class="banner_content">
+    <p>
+    <strong>
+      <a href="{% url registration_register %}">Join MAMA</a>
+    </strong><br/>
+    Pregnant? Expecting a baby in the family? Sign-up for essential info each week of your pregnancy stage and baby's first year. You can also ask our experts your questions and enter competitions.
+    </p>
+  </div>
+</div>
+{% endif %}

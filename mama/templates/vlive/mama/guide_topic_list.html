@@ -1,0 +1,64 @@
+{% extends "pml/base.xml" %}
+
+{% load cache jmbo_inclusion_tags %}
+{% load mama_inclusion_tags jmbo_template_tags %}
+{% load likes_inclusion_tags livechat_tags %}
+{% load pml_inclusion_tags %}
+
+{% block body %}
+
+<MODULE backgroundColor="true" palette="{{category.color}}">
+
+  <HEADER>
+    <LABEL>
+    <LINK href="{% url guides_list %}">
+    <TEXT>Guides</TEXT>
+    </LINK> &gt; 
+    <LINK href="{{ category.title }}">
+    <TEXT>{{ category.title }}</TEXT>
+    </LINK>
+    </LABEL>
+  </HEADER>
+
+</MODULE>
+
+
+{% cache 3600 links object.id %}
+<MODULE>
+  {% with object.link_target_set.all as links %}
+    {% for link in links %}
+      {% if link.target.is_permitted %}
+      <CONTAINER type="data">
+        <TEXT>
+          <LINK href="{% url topic_detail link.target.primary_category.slug link.target.slug %}">
+          <TEXT>{{ link.target.title }}</TEXT>
+          </LINK>
+          <p>
+            {{ link.target.description }}
+          </p>
+        </TEXT>
+      </CONTAINER>
+      {% endif %}
+    {% endfor %}
+  {% endwith %}
+</MODULE>
+{% endcache %}
+
+<MODULE>
+  <CONTAINER type="data">
+    <TEXT>
+      <p>
+      <strong>
+        <LINK href="{% url guides_list %}">
+        <TEXT>&lt; Back to Guides</TEXT>
+        </LINK>
+      </strong>    
+      </p>
+    </TEXT>
+  </CONTAINER>
+</MODULE>
+
+{% endblock %}
+
+{% block footer_search_form %}
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block conversion_tracking %}
+<img width="1" height="1" style="border:0; float:left;" src="http://bs.serving-sys.com/BurstingPipe/ActivityServer.bs?cn=as&amp;ActivityID=259980&amp;ns=1&amp;mb=1&amp;dvc=<device>&amp;on=<operator>"/>
+<img height="1" width="1" style="border:0; float:left;" alt="" src="//www.googleadservices.com/pagead/conversion/995766793/imp.gif?value=0&amp;label=gwcnCP_0qAYQieTo2gM&amp;guid=ON&amp;script=0"/>
+{% endblock %}
+
+{% block content %}
+<div class="h1">Sign Up</div>
+<div class="content-inner">
+    <div class="post">
+        <b>Thank you for joining MAMA!</b><br />
+        Remember to Sign in each week to see updates on your baby's growth
+        and development on the home page. Now that you've joined MAMA you
+        can also ask an expert a question.
+    </div>
+
+    <div class="text_banner">
+        <div class="banner_content">
+            <p>
+            <strong>
+                <a href="{% url view_my_profile %}">
+                    Edit my Profile &gt;
+                </a><br/>
+                <a href="{% url home %}">
+                    Take me to my weekly update &gt;
+                </a><br/>
+                <a href="{% url askmama_detail %}">
+                    I want to ask an expert &gt;
+                </a>
+            </strong>
+            </p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+
+{% endblock %}

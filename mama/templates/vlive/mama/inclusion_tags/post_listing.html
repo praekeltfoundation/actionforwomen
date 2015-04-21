@@ -1,0 +1,17 @@
+{% load jmbo_inclusion_tags pml_inclusion_tags %}
+
+{% if object_list %}
+    {% header text=category.title color='orange' %}
+    {% for object in object_list %}
+        {% render_object object "block" %}
+    {% endfor %}
+    <MODULE>
+      <CONTAINER type="data">
+        <TEXT>
+          <LINK href="{{ category.get_absolute_url }}">
+          <TEXT>More {{ category.title|capfirst }} &gt;</TEXT>
+          </LINK>
+        </TEXT>
+      </CONTAINER>
+    </MODULE>
+{% endif %}

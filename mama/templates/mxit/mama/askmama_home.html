@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% comment %}
+Used for the AskMAMA section
+{% endcomment %}
+
+{% load mama_inclusion_tags %}
+{% load askmama_inclusion_tags %}
+{% load livechat_tags %}
+{% load mama_template_tags %}
+
+{% block content %}
+{% include "mama/inclusion_tags/urgent_question_banner.html" %}
+
+<div class="items lightred">
+    <div class="h1">
+  {% mxit_title_bar foreground_color='#FFFFFF' background_color='#B22A2D' text='ASK MAMA' %}
+ </div>
+</div>
+
+    <div class="post">
+    <p>Do you have a medical question about your pregnancy or
+        baby that you'd like our expert to answer this week?</p>
+    </div>
+    <div class="top_10_questions">
+    <a href="{% url askmama_detail %}">
+      <img src="{{ STATIC_URL }}mama/img/livechat_vote.jpg"
+           style="border: none;" />
+    </a>
+  </div>
+    <div class="top_10_questions">
+    <a href="{% url askmama_detail %}">
+      <img src="{{ STATIC_URL }}mama/img/livechat_lastweek.jpg"
+           style="border: none;" />
+    </a>
+  </div>
+    <div class="post">
+    <strong><a href="{% url askmama_archive %}">AskMAMA Archive</a></strong><br/>
+    <p>Read all previous AskMAMA questions and answers here. Your question may already have been answered.</p>
+    </div>
+    {% live_chat_banner %}
+    {% archive_live_chat %}
+    <br>
+{% endblock %}
+{% block searchlink %}
+        <p>
+            <a href="{% url haystack_search_askmama %}">Search the Site</a>
+        </p>
+{% endblock %}

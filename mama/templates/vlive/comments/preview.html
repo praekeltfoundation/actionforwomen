@@ -1,0 +1,34 @@
+{% extends "pml/base.xml" %}
+
+{% block body %}
+{% if form.errors %}
+<CONTAINER type="data">
+    <TEXT>
+        <strong>Please correct the following errors:</strong><br/>
+        {{ form.comment.label_tag }}
+        {% for error in form.errors %}
+            <p>{{ error }}{{ error.message }}</p>
+        {% endfor %}
+    </TEXT>
+</CONTAINER>
+{% endif %}
+<CONTAINER type="form">
+    <FORM method="POST" href="{% url post_comment %}" submit_text="Post">
+        <FIELD name="csrfmiddlewaretoken" value="{{ csrf_token }}" type="hidden"/>
+        {% for field in form %}
+            {% if field.is_hidden %}
+                <FIELD name="{{ field.html_name }}" value="{{ field.value }}" type="hidden"/>
+            {% endif %}
+        {% endfor %}
+        <TEXT>
+            <b>Comment</b><br />
+        </TEXT>
+        <FIELD name="{{ form.comment.html_name }}" type="text" />
+        {% if next %}
+        <FIELD name="next" value="{{ next }}" type="hidden"/>
+        {% endif %}
+        <br />
+        <br />
+    </FORM>
+</CONTAINER>
+{% endblock %}

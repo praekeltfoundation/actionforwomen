@@ -1,0 +1,22 @@
+{% load jmbo_template_tags %}
+
+<div class="item{% if not object.image %} no-pic{% endif %}">
+    {% if object.image %}<a href="{{ object.get_absolute_category_url }}" class="intro-pic"><img src="{{ object.get_thumb_url }}"></a>{% endif %}
+    <div class="meta">
+        <div class="stats">
+          {{ object.primary_category.title }}
+          {% if object.comments_enabled and not READ_ONLY_MODE %}
+          | {{ object.comment_count }} Comments
+          {% endif %}
+          {% if object.likes_enabled and not READ_ONLY_MODE %}
+          | {{ object.vote_total }} Likes
+          {% endif %}
+        </div>
+        <div class="title"><a href="{{ object.get_absolute_category_url }}">{{ object.title }}</a></div>
+        <div class="stamp bigger">
+            {% if object.description %}
+              {{ object.description|truncatewords:10 }}
+            {% endif %}
+        </div>
+    </div>
+</div>

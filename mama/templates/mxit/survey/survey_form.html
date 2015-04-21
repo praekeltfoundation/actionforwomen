@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>askMAMA SURVEY</h1>
+<div class="content-inner">
+    <div class="items">
+        <form id="frmDoSurvey" method="post" action="">
+            {% csrf_token %}
+            {{ form.question.label }}<br/><br/>
+            <select name="{{ form.question.name }}">
+            {% for choice in form.question.field.choices %}
+                <option name="{{ question.name }}" value="{{ choice.0 }}">{{ choice.1 }}</option>
+            {% endfor %}
+            </select>
+
+            <div class="row">
+                <input type="hidden" name="survey_id" value="{{ form.survey_id.value }}"><br/>
+                <input type="hidden" name="question_id" value="{{ form.question_id.value }}"><br/>
+                <input type="submit" name="submit" value="Continue" class="btn" />
+            </div>
+            <div class="clear"></div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+

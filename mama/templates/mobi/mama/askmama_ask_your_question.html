@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% load comments %}
+
+{% block content %}
+
+<div class="content-inner">
+    <div class="items lightred">
+        <div class="h1">
+            Ask our Expert
+        </div>
+        <div class="item no-pic">
+            <div class="meta">
+                <div class="stamp">
+                    Type your question to our expert in the form below and tap
+                    the <strong>Post</strong> button to submit it. You will
+                    then be taken back to the Ask MAMA Page.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% render_comment_form for post.post params.post_id %}
+<script type="text/javascript"
+        src="{{ STATIC_URL }}mama/js/askmama_change_question_label.js">
+</script>
+
+{% endblock %}
+
+{% block footer_search_form %}
+            <div class="h1">Search</div>
+            <form id="frmSearch" method="get" action="{% url haystack_search_askmama %}">
+                <div class="row"><input type="text" name="q" value="{{ query }}" class="short" /></div>
+                <div class="row"><input type="submit" name="submit" value="Search" class="btn" /></div>
+                <div class="clear"></div>
+            </form>
+{% endblock %}

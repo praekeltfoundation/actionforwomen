@@ -1,0 +1,57 @@
+{% load cache %}<?xml version="1.0" encoding="UTF-8"?>
+
+<VZV-PARTNER xmlns:dc="http://purl.org/dc/elements/1.1/"
+             xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+             xmlns:vddr="http://namespaces.vodafone.com/applications/CRE#DDR"
+             xmlns:vmpml="http://namespaces.vodafone.com/applications/3PI#MPML"
+             xmlns:vsrch="http://namespaces.vodafone.com/applications/search#"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:noNamespaceSchemaLocation="http://www.via.vodafone.com/schema/VZV-PARTNER.xsd">
+    <PARTNER-PI>
+        <TRANSFORMER name="VZV-DEFAULT"/>
+    </PARTNER-PI>
+    <PARTNER-BODY>
+        <VZV-DEFAULT>
+            {% block body %}
+                {% cache 600 banner-detail banner_type %}
+                <MODULE backgroundColor="false" border="module">
+                {% if banner %}
+                <CONTAINER type="table">
+                <TABLE border="false">
+                <TR><TD>
+                <CONTAINER type="data">
+                    <TEXT>
+                        <LINK href="{{ banner.url}}">
+                        <IMAGE align="left" type="image/jpeg"
+                               href="{{ ROOT_URL }}{{ banner.image.url }}"
+                               caption="mama"/>
+                        </LINK>
+                    </TEXT>
+                </CONTAINER>
+                </TD></TR>
+                <TR><TD>
+                    <TEXT>
+                        <LINK href="{{banner.url}}">{{ banner.title }}</LINK>
+                        {{ banner.description }}
+                    </TEXT>
+                </TD></TR>
+                </TABLE>
+                </CONTAINER>
+                {% else %}
+                <CONTAINER type="table">
+                <TABLE border="false">
+                <TR><TD>
+                    <TEXT>
+                        <LINK href="/">MAMA</LINK> - With you every step of the way
+                    </TEXT>
+                </TD></TR>
+                </TABLE>
+                </CONTAINER>
+                {% endif %}
+                <FOOTER></FOOTER>
+                </MODULE>
+                {% endcache %}
+            {% endblock %}
+        </VZV-DEFAULT>
+    </PARTNER-BODY>
+</VZV-PARTNER>

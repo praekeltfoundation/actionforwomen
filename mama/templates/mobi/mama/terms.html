@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="h1">Terms of Use</div>
+    <div class="content-inner">
+        <div class="post">
+            {{ preferences.SitePreferences.terms|safe }}
+            {% if not READ_ONLY_MODE %}
+                <p><a href="{% url registration_register %}">Back to sign up page</a></p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

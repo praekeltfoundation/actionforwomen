@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load mama_inclusion_tags %}
+
+{% block content %}
+
+<div class="h1">Comments by 
+{% if comment_maker.profile.alias %}
+    {{ comment_maker.profile.alias }}
+{% else %}
+    Anon.
+{% endif %}
+</div>
+
+<div class="content-inner">
+
+{% for comment in object_list %}
+  <div class="item comment no-pic">
+    <div class="meta">
+      <div class="title">{{ comment.name }}</div>
+      <div class="stamp">{{ comment.submit_date }}</div>
+      <div class="stamp">{{ comment.comment|linebreaks }}</div>
+    </div>
+  </div>
+{% endfor %}
+
+{% pagination page_obj %}
+
+</div>
+
+{% endblock %}

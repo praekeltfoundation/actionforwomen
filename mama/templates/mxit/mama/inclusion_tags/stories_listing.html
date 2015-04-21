@@ -1,0 +1,26 @@
+{% load jmbo_inclusion_tags mama_template_tags %}
+
+{% if object_list %}
+    <div class="{{ category.color }}">
+        {% mxit_title_bar foreground_color='#FFFFFF' background_color='#B22A2D' text=category.title %}
+        <div class="content-inner">
+            <div class="items">
+                {% for object in object_list %}
+                    {% render_object object "block" %}
+                {% endfor %}
+            </div>
+            <div class="more-links">
+              {% comment %}
+              <br/>
+              <a href="{% url moms_stories_object_list %}">
+                Tell Your Story and Win! &gt;
+              </a>
+              {% endcomment %}
+              <br/>
+              <a href="{{ category.get_absolute_url }}">
+                More Stories &gt;
+              </a>
+            </div>
+        </div>
+    </div>
+{% endif %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load mama_template_tags %}
+
+{% block content %}
+    {% mxit_title_bar foreground_color='#FFFFFF' background_color='#FF6A15' text='Get Help' %}
+    <div class="content-inner">
+        <div class="post">
+            {% if preferences.SitePreferences.pregnancy_helpline_number %}
+                <p><strong>Pregnancy:</strong> {{ preferences.SitePreferences.pregnancy_helpline_number }}</p>
+            {% endif %}
+            {% if preferences.SitePreferences.baby_helpline_number %}
+                <p><strong>Baby:</strong> {{ preferences.SitePreferences.baby_helpline_number }}</p>
+            {% endif %}
+            {% if preferences.SitePreferences.hivaids_helpline_number %}
+                <p><strong>HIV/AIDS:</strong> {{ preferences.SitePreferences.hivaids_helpline_number }}</p>
+            {% endif %}
+            <p>Or use the contact form <a href="{% url contact %}">here</a>.</p>
+        </div>
+    </div>
+{% endblock %}

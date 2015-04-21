@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load jmbo_inclusion_tags mama_inclusion_tags %}
+
+{% block content %}
+    <div class="h1">Search Results for '{{ query }}'</div>
+    <div class="content-inner">
+        {% if page.object_list %}
+        <div class="items">
+            {% for object in page.object_list %}
+                {% if object.object %}
+                    {% render_object object.object "block" %}
+                {% endif %}
+            {% endfor %}
+        </div>
+        {% else %}
+            <div class="post">
+                <p><strong>Try Again...</strong></p>
+                <p>Unfortunately no results were found for '{{ query }}'. Please try again with a different query.</p>
+            </div>
+        {% endif %}
+    </div>
+
+    {% pagination page %}
+{% endblock %}

@@ -1,0 +1,20 @@
+{% load pml_inclusion_tags %}
+
+{% if user.is_authenticated %}
+  {% if survey %}
+    {% header text="askMAMA Survey" color='orange' %}
+    <MODULE>
+    <CONTAINER type="data">
+      <TEXT>
+      <p>
+        Please consider participating in the latest 
+        <LINK href="{% url survey:survey_action survey.id %}">
+        <TEXT>survey</TEXT>
+        </LINK>
+        to test your own knowledge of caring for yourself and your newborn.
+      </p>
+      </TEXT>
+    </CONTAINER>
+    </MODULE>
+  {% endif %}
+{% endif %}

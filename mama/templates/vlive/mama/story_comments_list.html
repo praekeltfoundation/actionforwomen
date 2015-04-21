@@ -1,0 +1,50 @@
+{% extends 'pml/base.xml' %}
+
+{% load pml_inclusion_tags %}
+{% load mama_inclusion_tags %}
+{% load likes_inclusion_tags %}
+{% load moderator_inclusion_tags %}
+
+{% block body %}
+{{ block.super }}
+
+{% header "More Comments for {{ post.title}}" 'darkred' %}
+
+{% for comment in object_list %}
+  <MODULE>
+    <CONTAINER type="data">
+      <TEXT>
+        <b>{{ comment.name }}</b><br/>
+            {{ comment.submit_date }}
+            {% if not comment.user.is_staff and comment.user != request.user %}
+                        {% if not comment.is_removed %}
+                            | | <LINK href="{% url confirm_comment comment.content_type comment.id %}?next={{request.path}}"><TEXT>Report</TEXT></LINK>
+                        {% endif %}
+            {% endif %}
+            <br/>
+            {% if comment.is_removed %}
+                  <p>This comment has been reported by the community and the user has been banned</p><br/>
+                  <p>Don't know the commenting rules?</p> <LINK href="{% url comment-terms %}"><TEXT>Read them here</TEXT></LINK>
+            {% else %}
+            {{ comment.comment|linebreaks }}<br/>
+            {% endif %}
+            {% for commentreply in comment.replied_to_comments_set.all %}
+                    <b>{{ commentreply.user.first_name }}</b><br/>
+                    {{ commentreply.comment_text|linebreaks }}
+            {% endfor %}
+      </TEXT>
+    </CONTAINER>
+  </MODULE>
+{% endfor %}
+
+{% pagination page_obj %}
+
+<MODULE backgroundColor="true" palette="MiDarkred">
+  <CONTAINER type="data">
+  <LINK href="{% url category_object_detail category.slug post.slug %}">
+    <TEXT>&amp;lt; Back to {{ post.title }}</TEXT>
+    </LINK>
+  </CONTAINER>
+</MODULE>
+
+{% endblock %}

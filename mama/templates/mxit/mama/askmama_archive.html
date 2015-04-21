@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% comment %}
+Used for the AskMAMA section
+{% endcomment %}
+
+{% load mama_inclusion_tags %}
+{% load askmama_inclusion_tags %}
+{% load mama_template_tags %}
+
+{% block content %}
+
+<div class="text_banner lightred">
+  <div class="h1">{% mxit_title_bar foreground_color='#FFFFFF' background_color='#B22A2D' text='ASK MAMA ARCHIVE' %}</div>
+
+    <div class="items">
+      {% if chat_comments %}
+        {% for comment in chat_comments.object_list %}
+            {% if comment.replied_to_comments_set.exists %}
+            <div class="item comment no-pic">
+              <div class="meta">
+
+                <b>{{ comment.name }}</b> asked at {{ comment.submit_date.time }}
+                <div class="stamp">{{ comment.comment|linebreaks }}</div>
+              </div>
+
+              <div class="item comment" style="background-color: rgb(244, 229, 234)">
+                  {% for response in comment.replied_to_comments_set.all %}
+                      <div class="meta">
+                              <b>{{ response.user.username }}</b>
+                       replied to
+                          <b>{{ comment.name }}</b>
+                          <div class="stamp">{{ response.comment_text }}</div>
+                      </div>
+                  {% endfor %}
+              </div>
+              {% endif %}
+
+            </div>
+        {% endfor %}
+
+        <div class="pagination">
+          {% if chat_comments.has_previous %}
+              <span><a href="?p={{chat_comments.previous_page_number}}&amp;answered={{answered}}&amp;popular={{popular}}">Previous</a></span> |
+          {% else %}
+              <span>Previous</span> |
+          {% endif %}
+          <span class="current">
+              Page {{ chat_comments.number }} of {{ chat_comments.paginator.num_pages }}
+          </span>
+          {% if chat_comments.has_next %}
+              | <span><a href="?p={{chat_comments.next_page_number}}&amp;answered={{answered}}&amp;popular={{popular}}">Next</a></span>
+          {% else %}
+              | <span>Next</span>
+          {% endif %}
+        </div>
+      {% else %}
+        <div class="post">
+          No questions yet. Go ahead and ask a question.
+        </div>
+      {% endif %}
+    </div>
+
+
+</div>
+{% endblock %}
+
+ {% block searchlink %}
+        <p>
+            <a href="{% url haystack_search_askmama %}">Search the Site</a>
+
+        </p>
+   {% endblock %}

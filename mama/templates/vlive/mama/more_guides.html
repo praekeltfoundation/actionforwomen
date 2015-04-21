@@ -1,0 +1,95 @@
+{% extends "pml/base.xml" %}
+
+{% comment %}
+Used for the More Guides List view
+{% endcomment %}
+
+{% load jmbo_inclusion_tags mama_inclusion_tags %}
+{% load pml_inclusion_tags %}
+
+{% block above_content %}
+{{ block.super }}
+<MODULE backgroundColor="true" palette="{{category.color}}">
+
+  <HEADER id="comments">
+    <LABEL>
+    <LINK href="{% url guides_list %}">
+    <TEXT>Guides</TEXT>
+    </LINK> &gt; {{ full_heading }}
+    </LABEL>
+  </HEADER>
+
+</MODULE>
+{% endblock %}
+
+{% block body %}
+
+    {% if object_list %}
+    <MODULE>
+      <CONTAINER type="data">
+        <TEXT>
+          <p>
+          {% if sort == 'pop' %}
+          <LINK href="{% url more_guides_list %}?sort=date&amp;page={{page}}">
+            <TEXT>Latest</TEXT>
+          </LINK> | Popular | 
+          <LINK href="{% url more_guides_list %}?sort=alph&amp;page={{page}}">
+            <TEXT>Alphabetical</TEXT>
+          </LINK>
+          {% else %}
+            {% if sort == 'date' %}
+              Latest | 
+              <LINK href="{% url more_guides_list %}?sort=pop&amp;page={{page}}">
+                <TEXT>Popular</TEXT>
+              </LINK> |
+              <LINK href="{% url more_guides_list %}?sort=alph&amp;page={{page}}">
+                <TEXT>Alphabetical</TEXT>
+              </LINK>
+            {% else %}
+              <LINK href="{% url more_guides_list %}?sort=date&amp;page={{page}}">
+                <TEXT>Latest</TEXT>
+              </LINK> | 
+              <LINK href="{% url more_guides_list %}?sort=pop&amp;page={{page}}">
+                <TEXT>Popular</TEXT>
+              </LINK> | Alphabetical
+            {% endif %}
+          {% endif %}
+          </p>
+        </TEXT>
+      </CONTAINER>
+    </MODULE>
+
+    <MODULE>
+      {% for object in object_list %}
+      <CONTAINER type="data">
+        <TEXT>
+          <LINK href="{% url topic_detail object.primary_category.slug object.slug %}">
+            <TEXT>{{ object.title }}</TEXT>
+          </LINK>
+        </TEXT>
+      </CONTAINER>
+      {% endfor %}
+    </MODULE>
+    {% endif %}
+
+    {% pagination page_obj %}
+
+    {% block below_listing %}
+    <MODULE>
+      <CONTAINER type="data">
+        <TEXT>
+          <p>
+          <strong>
+            <LINK href="{% url guides_list %}">
+            <TEXT>&lt; Back to Life Guides</TEXT>
+            </LINK>
+          </strong>    
+          </p>
+        </TEXT>
+      </CONTAINER>
+    </MODULE>
+    {% endblock %}
+
+{% endblock %}
+
+

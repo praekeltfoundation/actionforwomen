@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block conversion_tracking %}
+<img width="1" height="1" style="border:0" src="http://bs.serving-sys.com/BurstingPipe/ActivityServer.bs?cn=as&amp;ActivityID=259978&amp;ns=1&amp;mb=1&amp;dvc=<device>&amp;on=<operator>"/>
+{% endblock %}
+
+{% load cache mama_inclusion_tags livechat_tags survey_inclusion_tags %}
+
+{% block following_header %}
+{% include "mama/inclusion_tags/registration_banner.html" %}
+{% live_chat_banner %}
+<div id="banner"><img src="{{ STATIC_URL }}mama/img/banner_with_you.jpg" /></div>
+{% random_guide_banner %}
+{% endblock %}
+
+{% block content %}
+    {% ages_and_stages %}
+    {% cache 3600 home %}
+        {% stories_listing "moms-stories" %}
+        {% post_listing "articles" %}
+        {% include "mama/inclusion_tags/askmama_banner.html" %}
+    {% endcache %}
+    {% if not READ_ONLY_MODE %}
+        {% show_content_quizzes %}
+        {% poll_listing %}
+        {% show_survey %}
+    {% endif %}
+{% endblock %}

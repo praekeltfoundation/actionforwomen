@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% load mama_inclusion_tags %}
+{% load likes_inclusion_tags %}
+{% load moderator_inclusion_tags %}
+
+{% block content %}
+{{ block.super }}
+
+<div class="{{ category.color }}">
+    <div class="content-inner">
+
+    <div class="h1"> More comments for {{ post.title }} </div>
+
+    {% if object_list %}
+            <div class="items">
+              {% for comment in object_list %}
+                  <div class="item comment no-pic">
+                      <div class="meta">
+                         <div class="title">{{ comment.name }}</div>
+                            <div class="stamp">{{ comment.submit_date }}
+                        {% if not comment.user.is_staff and comment.user != request.user and request.user.is_authenticated %}
+                        {% if not comment.is_removed %}
+                            | | <a href="{% url confirm_comment comment.content_type comment.id %}?next={{request.path}}">Report</a>
+                        {% endif %}
+                        {% endif %}
+                            </div>
+                        {% if comment.is_removed %}
+                        <div class="stamp">This comment has been reported by the community and the user has been banned<br><br/>
+                        Don't know the commenting rules? <a href="{% url comment-terms %}">Read them here</a></div>
+                        {% else %}
+                        <div class="stamp">{{ comment.comment|linebreaks }}</div>
+                        {% endif %}
+                      </div>
+                  </div>
+                 {% for commentreply in comment.replied_to_comments_set.all %}
+                    <div class="item comment no-pic">
+                        <div class="meta">
+                            <div class="title">{{ commentreply.user.first_name }}</div>
+                            <div class="stamp">{{ commentreply.comment_text|linebreaks }}</div>
+                        </div>
+                    </div>
+                {% endfor %}
+              {% endfor %}
+            </div>
+    {% endif %}
+
+    {% pagination page_obj %}
+
+    <div class="post-menu">
+        <div class="items">
+            <div class="item-nav">
+                <a href="{% url category_object_detail category.slug post.slug %}">
+                    &laquo; Back to {{ post.title }}
+                </a>
+            </div>
+        </div>
+    </div>
+
+    </div>
+</div>
+{% endblock %}
+

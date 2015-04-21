@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+{% load cache mama_inclusion_tags pml_inclusion_tags %}
+<VZV-PARTNER xmlns:dc="http://purl.org/dc/elements/1.1/"
+             xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+             xmlns:vddr="http://namespaces.vodafone.com/applications/CRE#DDR"
+             xmlns:vmpml="http://namespaces.vodafone.com/applications/3PI#MPML"
+             xmlns:vsrch="http://namespaces.vodafone.com/applications/search#"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:noNamespaceSchemaLocation="http://www.via.vodafone.com/schema/VZV-PARTNER.xsd">
+    <PARTNER-PI>
+        <TRANSFORMER name="VZV-DEFAULT"/>
+    </PARTNER-PI>
+    <PARTNER-BODY>
+        {% block header %}
+        {% endblock %}
+        <VZV-DEFAULT>
+            {% with 'orange' as color %}
+            {% cache 3600 pml_page_header %}
+                {% pml_page_header %}
+            {% endcache %}
+
+            {% block following_header %}
+            {% endblock %}
+
+            {% block above_content %}
+            {% endblock %}
+
+            {% block messages %}
+            {% if messages %}
+                {% for message in messages %}
+                {% text_module template=message|safe %}
+                {% endfor %}
+            {% endif %}
+            {% endblock %}
+
+            {% block body %}
+            {% endblock %}
+
+            {% block footer %}
+
+            {% block footer_search_form %}
+              {% header text='Search' color=color %}
+              {% include 'mama/inclusion_tags/search_form.html' %}
+            {% endblock %}
+
+            {% if not homelink %}
+                <MODULE backgroundColor="true" palette="MiGrey">
+                    <CONTAINER type="data">
+                      <TEXT>
+                        <LINK href="{% url home %}">
+                          <TEXT>&lt; Mama Home</TEXT>
+                        </LINK>
+                      </TEXT>
+                    </CONTAINER>
+                </MODULE>
+            {% endif %}
+            
+            <MODULE ignoreDevice="ZTE R237m"  backgroundColor="false" palette="MiOrange">
+                <HEADER><LABEL>Share This Site</LABEL></HEADER>
+                <CONTAINER type="data">
+                    <TEXT>
+                        Share This: <LINK href="http://twitter.com/home?status=MAMA - Mobile Alliance for Maternal Action http://askmama.mobi"><IMAGE href="{{ STATIC_URL }}mama/img/twitter.png"></IMAGE></LINK><LINK href="http://www.facebook.com/sharer.php?u=http://askmama.mobi&amp;t=MAMA - Mobile Alliance for Maternal Action"><IMAGE href="{{ STATIC_URL }}mama/img/facebook.png"></IMAGE></LINK>
+                    </TEXT>
+                </CONTAINER>
+            </MODULE>
+
+            {% endblock %}
+
+            {% endwith %}
+
+        </VZV-DEFAULT>
+    </PARTNER-BODY>
+</VZV-PARTNER>

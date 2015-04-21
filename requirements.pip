@@ -1,0 +1,18 @@
+django-pummel>0.0.7
+-e git+git://github.com/praekelt/jmbo-your-words.git@develop#egg=jmbo-your-words
+-e git+git://github.com/praekelt/mama-survey.git@develop#egg=mama-survey
+-e git+git://github.com/praekelt/django-livechat.git@develop#egg=django-livechat
+# django-tastypie pinned for django < 1.5, since some import locations change.
+django-tastypie < 0.10.0
+mimeparse
+django-moderator
+-e .
+requests
+xmltodict
+mock
+nose
+django-nose
+coverage
+mxit == 0.3.2
+https://github.com/praekelt/django-photologue/tarball/2.10.praekelt#egg=django-photologue
+raven

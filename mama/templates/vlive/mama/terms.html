@@ -1,0 +1,8 @@
+{% extends 'pml/base.xml' %}
+
+{% load pml_inclusion_tags %}
+
+{% block body %}
+    {% header text='Terms of Use' color='grey' %}
+    {% text_module template='{{ preferences.SitePreferences.terms|safe }}' %}
+{% endblock %}

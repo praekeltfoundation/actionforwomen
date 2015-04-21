@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="maroon">
+  <div class="h1">{{competition.title}}</div>
+  <div class="content-inner">
+    <div class="your-story-blurb">
+    <b>{{competition.description}}</b>
+    <br/>
+    <hr/>
+    </div>
+
+    {% if user.is_anonymous and not READ_ONLY_MODE %}
+    <div class="your-story-blurb">
+    You must join MAMA or Sign in to submit your story for this competition.
+    <br/>
+    <a href="{% url login %}">Sign In &gt;</a><br/>
+    <a href="{% url registration_register %}">Join &gt;</a>
+    </div>
+    {% else %}
+    <div class="your-story-blurb">
+    {{competition.content|safe}}
+    </div>
+    <form action="{% url your_story competition.pk %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="next"
+               value="{% url moms_stories_object_list %}" />
+        <input type="hidden" name="name"
+               value="{{ user.username }}" />
+        <input type="hidden" name="email"
+               value="{{ user.email }}" />
+
+        <div class="errorlist">
+            {{ form.non_field_errors }}
+        </div>
+
+        <div class="field">
+            <div class="required">
+                <label for="id_text">Your Story:</label>
+                {{ form.text.errors }}
+                <div class="helptext"></div>
+                {{ form.text }}
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="required">
+                <label>Terms and Conditions</label>
+                {{ competition.terms_and_conditions|safe }}
+            </div>
+        </div>
+
+        <div class="row">
+            <input type="submit" class="btn" value="Submit" />
+        </div>
+
+    </form>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}
+
+{% block footer_search_form %}
+{% endblock %}

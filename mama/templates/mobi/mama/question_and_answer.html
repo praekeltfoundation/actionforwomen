@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{# load jmbo_inclusion_tags #}
+{% load comments %}
+{% load likes_inclusion_tags %}
+{% load moderator_inclusion_tags %}
+
+{% block content %}
+
+<div class="{{ category.color }}">
+  <div class="h1">
+    <a href="{% url askmama_detail %}">AskMAMA</a> -&gt; Q&amp;A
+  </div>
+
+  <div class="content-inner">
+    <div class="items">
+      <div class="item comment no-pic">
+        <div class="meta">
+          <div class="stamp">{% likes question %}</div>
+          <div class="title">{{ question.comment }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="h1">
+    Answer
+  </div>
+
+  <div class="content-inner">
+    <div class="items">
+      {% for answer in answers %}
+      <div class="item comment no-pic">
+        <div class="meta">
+          <div class="stamp">{{ answer.comment }}</div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block footer_search_form %}
+{% endblock %}

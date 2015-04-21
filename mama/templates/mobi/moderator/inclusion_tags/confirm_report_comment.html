@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load mama_inclusion_tags %}
+{% load moderator_inclusion_tags %}
+
+{% block content %}
+    <div class="h1">Report Comment</div>
+    <div class="post">
+        <b>Thanks for keeping MAMA clean! </b><br><br/>
+        <b>Are you sure you want to report this comment?  </b><br><br/>
+           The user will be banned for 1 day if you report this comment. <br><br/>
+        <b>You should only report a comment if it is contains one of the following:</b>
+        swear words, dirty words, sexy-talk, pick-ups,come-ons, rudeness, abusiveness, racism, sexism, a users is
+        forcing their religious beliefs on others or posting phone
+        numbers or email address in the comments stream.<br><br/>
+        Don't know the commenting rules? <a href="{% url comment-terms %}">Read them here</a><br><br/>
+
+    {% report_comment_abuse comment %}
+    </div>
+{% endblock %}

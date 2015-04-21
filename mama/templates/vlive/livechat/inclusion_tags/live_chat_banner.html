@@ -1,0 +1,43 @@
+{% if last_live_chat %}
+<MODULE>
+  <CONTAINER type="data">
+    <TEXT>
+          Did you miss the Live Chat with {{ last_live_chat.expert }} on {{ last_live_chat.title }}?<br/>
+        <LINK href="{{ last_live_chat.url }}">Catch up on the answers here</LINK>
+
+      </TEXT>
+  </CONTAINER>
+</MODULE>
+{% endif %}
+{% if live_chat_advert %}
+<MODULE>
+  <CONTAINER type="data">
+    <TEXT>
+      <b>
+
+        {% if live_chat_advert.cancelled %}
+          Apologies the Live Chat with {{ live_chat_advert.expert }} on {{ live_chat_advert.title }}
+          has been cancelled due to unforeseen circumstances.
+          {% else %}
+      {% if live_chat_advert.commenting_closed %}
+          Live Chat with {{ live_chat_advert.expert }}
+         on {{ live_chat_advert.title }} is now closed.<br/>
+          <LINK href="{{ live_chat_advert.url }}">Click here to view questions and answers...</LINK>
+          {% else %}
+        Join us for Live Chat with {{ live_chat_advert.expert }}
+        on {{ live_chat_advert.title }}
+
+        {% if not live_chat_advert.in_progress %}
+        at {{ live_chat_advert.datetime.time }} on {{ live_chat_advert.datetime.date }}<br/>
+          <LINK href="{{ live_chat_advert.url }}">Find out more</LINK>
+            {% else %}
+            NOW!<br/>
+            <LINK href="{{ live_chat_advert.url }}">Click here to participate</LINK>
+        {% endif %}
+      {% endif %}
+      {% endif %}
+      </b>
+    </TEXT>
+  </CONTAINER>
+</MODULE>
+{% endif %}

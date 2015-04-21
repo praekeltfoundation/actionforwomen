@@ -1,0 +1,65 @@
+{% load comments %}
+{% load mama_inclusion_tags %}
+{% load moderator_inclusion_tags %}
+
+{% if can_comment %}
+    <div class="h1" id="comments">Comments</div>
+
+    <div class="items">
+      {% for comment in comments %}
+          <div class="item comment no-pic">
+              <div class="meta">
+                  <div class="title">{{ comment.name }}</div>
+                  <div class="stamp">{{ comment.submit_date }}
+                    {% if not comment.user.is_staff and comment.user != request.user and request.user.is_authenticated %}
+                        {% if not comment.is_removed %}
+                            | | <a href="{% url confirm_comment comment.content_type comment.id %}?next={{request.path}}">Report</a>
+                        {% endif %}
+                    {% endif %}
+                  </div>
+
+                  {% if comment.is_removed and comment.user.profile.banned %}
+
+                  <div class="stamp">This comment has been reported by the community and the user has been banned<br><br/>
+                    Don't know the commenting rules? <a href="{% url comment-terms %}">Read them here</a></div>
+                  {% elif comment.is_removed and not comment.user.profile.banned %}
+                   <div class="stamp">This comment has been removed<br><br/>
+                    Don't know the commenting rules? <a href="{% url comment-terms %}">Read them here</a></div>
+                  {% else %}
+                  <div class="stamp">{{ comment.comment|linebreaks }}</div>
+                  {% endif %}
+              </div>
+          </div>
+          {% for commentreply in comment.replied_to_comments_set.all %}
+              <div class="item comment no-pic">
+              <div class="meta">
+                  <div class="title">{{ commentreply.user.first_name }}</div>
+                  <div class="stamp">{{ commentreply.comment_text|linebreaks }}</div>
+              </div>
+          </div>
+          {% endfor %}
+      {% empty %}
+          <div class="item comment no-pic">
+              <div class="meta">
+                  <div class="stamp">
+                      No comments yet.
+                  </div>
+              </div>
+          </div>
+      {% endfor %}
+    </div>
+
+    {% if more_comments  %}
+    <div class="post-menu">
+        <div class="items">
+            <div class="item-nav">
+                <a href="{% url story_comments_list category.slug object.slug %}">
+                    More Comments &raquo;
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% include 'mama/includes/comments_new_system.html' %}
+{% endif %}

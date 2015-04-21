@@ -1,0 +1,25 @@
+{% load comments mama_template_tags %}
+
+{% get_comment_count for object as comment_count %}
+
+{% if comment_count or can_render_comment_form %}
+    {% if object.comments_enabled %}
+        <div class="{{ category.color }}">
+            {% mxit_title_bar foreground_color='#FFFFFF' background_color='#B22A2D' text='Comments' %}
+
+            {% if request.GET.commentaction == 'show' %}
+            {% render_comment_list for object %}
+            {% else %}
+            <a href="{{ request.path }}?commentaction=show">Load Comments &gt;</a>
+            <br/>
+            {% endif %}
+            {% if request.GET.commentaction == 'add' %}
+            {% if can_render_comment_form %}
+                {% render_comment_form for object %}
+            {% endif %}
+            {% else %}
+            <a href="{{ request.path }}?commentaction=add">Add Your Comment &gt;</a>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endif %}

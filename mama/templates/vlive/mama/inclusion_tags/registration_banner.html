@@ -1,0 +1,18 @@
+{% load pml_inclusion_tags %}
+
+{% if user.is_anonymous %}
+  {% header text="Join" color='orange' %}
+  <MODULE>
+  <CONTAINER type="data">
+    <TEXT>
+      <p>
+      <LINK href="{% url registration_register %}">
+      <TEXT>Join MAMA</TEXT>
+      </LINK>
+      <br />
+      Pregnant? Expecting a baby in the family? Sign-up for essential info each week of your pregnancy stage and baby's first year. You can also ask our experts your questions and enter competitions.
+      </p>
+    </TEXT>
+  </CONTAINER>
+  </MODULE>
+{% endif %}
