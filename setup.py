@@ -1,57 +1,28 @@
+import os
 from setuptools import setup, find_packages
 
+here = os.path.abspath(os.path.dirname(__file__))
+with open(os.path.join(here, 'README.rst')) as f:
+    README = f.read()
+
+with open(os.path.join(here, 'requirements.txt')) as f:
+    requires = filter(None, f.readlines())
+
+with open(os.path.join(here, 'VERSION')) as f:
+    version = f.read().strip()
+
 setup(
-    name='mama',
-    version='0.5.6',
-    description='Mama Django project.',
-    long_description=open('README.rst', 'r').read() + open('AUTHORS.rst', 'r').read() + open('CHANGELOG.rst', 'r').read(),
+    name='actionforwomen',
+    version=version,
+    description='Action for Women Django project.',
+    long_description=README,
     author='Praekelt Foundation',
     author_email='dev@praekelt.com',
     license='BSD',
-    url='http://github.com/praekelt/mama',
+    url='http://github.com/praekelt/actionforwomen',
     packages=find_packages(),
-    install_requires=[
-        'django==1.4.5',
-        'django-category==0.1',
-        'django-debug-toolbar',
-        'django-export',
-        'django-generate',
-        'django-google-analytics-app',
-        'django-google-credentials',
-        'django-haystack==1.2.7',
-        # install via requirements.pip, django-moderator is broken.
-        # install 0.0.4.1 from GitHub tag which has a fix for the Admin.
-        # 'django-moderator>=0.0.4',
-        'django-preferences',
-        'django-sites-groups',
-        'django-snippetscream',
-        'django-south-admin',
-        'django-registration==0.8',
-        'django-userprofile>=0.0.6',
-        'django-registration==0.8',
-        'django-ckeditor',
-        'gunicorn',
-        'jmbo==0.5.5',
-        'jmbo-poll>=0.0.9',
-        'jmbo-post',
-        'celery==3.1.10',
-        'django-celery==3.1.10',
-        'kombu>3.0',
-        'photon',
-        'psycopg2',
-        'python-ambient',
-        'python-dateutil',
-        'python-memcached',
-        'raven',
-        'south',
-        'Whoosh==2.4.1',
-        #'python-mxit',
-        'django-mxit',
-        'django-celery-email',
-    ],
-    tests_require=[
-        'django-setuptest',
-    ],
+    install_requires=requires,
+    tests_require=requires,
     test_suite="setuptest.setuptest.SetupTestSuite",
     include_package_data=True,
     classifiers=[
