@@ -1,3 +1,12 @@
+import publisher
+from publisher import admin
+
+from djcelery import admin
+import djcelery
+
+import south_admin
+from south_admin import admin
+
 from datetime import datetime
 from dateutil.relativedelta import *
 
@@ -412,3 +421,22 @@ admin.site.register(LiveChat, MamaLiveChatAdmin)
 admin.site.register(AskMamaQuestion, AskMamaQuestionAdmin)
 admin.site.unregister(Relation)
 admin.site.register(Relation, HiddenModelAdmin)
+
+# remove publisher models from admin
+admin.site.unregister(publisher.models.Buzz)
+admin.site.unregister(publisher.models.Facebook)
+admin.site.unregister(publisher.models.Mobile)
+admin.site.unregister(publisher.models.SocialBookmark)
+admin.site.unregister(publisher.models.Twitter)
+admin.site.unregister(publisher.models.Web)
+
+# remove celery from admin
+admin.site.unregister(djcelery.models.TaskState)
+admin.site.unregister(djcelery.models.WorkerState)
+admin.site.unregister(djcelery.models.IntervalSchedule)
+admin.site.unregister(djcelery.models.CrontabSchedule)
+admin.site.unregister(djcelery.models.PeriodicTask)
+
+# remove south from admin
+import south
+admin.site.unregister(south.models.MigrationHistory)
