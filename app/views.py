@@ -27,20 +27,19 @@ from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormView
 from django.views.generic.list import ListView
-from mama.utils import ban_user
+from app.utils import ban_user
 from moderator.utils import classify_comment
-from mama.forms import (
+from app.forms import (
     ContactForm,
     DueDateForm,
     VLiveDueDateForm,
-    MxitDueDateForm,
     ProfileForm,
     VLiveProfileEditForm,
     EditProfileForm,
     MomsStoryEntryForm
 )
-from mama.view_modifiers import PopularViewModifier
-from mama.models import Banner, DefaultAvatar
+from app.view_modifiers import PopularViewModifier
+from app.models import Banner, DefaultAvatar
 from category.models import Category
 from livechat.models import LiveChat
 from poll.forms import PollVoteForm
@@ -52,7 +51,7 @@ from likes.views import like as likes_view
 
 from jmboyourwords.models import YourStoryEntry, YourStoryCompetition
 
-from mama.constants import (
+from app.constants import (
     RELATION_PARENT_CHOICES,
     RELATION_PARENT_TO_BE_CHOICES
 )
@@ -117,7 +116,7 @@ class CategoryDetailView(DetailView):
 
 
 class StoryCommentsView(ListView):
-    template_name = 'mama/story_comments_list.html'
+    template_name = 'app/story_comments_list.html'
     paginate_by = 50
     heading_prefix = ""
 
@@ -179,7 +178,7 @@ class CategoryListView(ListView):
 class GuidesView(TemplateView):
     """
     """
-    template_name="mama/guides.html"
+    template_name="app/guides.html"
 
     def get_context_data(self, **kwargs):
         context = super(GuidesView, self).get_context_data(**kwargs)
@@ -225,7 +224,7 @@ class GuidesView(TemplateView):
 class GuidesTopicView(DetailView):
     """ List the guide topices in a specific 'category'
     """
-    template_name = 'mama/guide_topic_list.html'
+    template_name = 'app/guide_topic_list.html'
 
     def get_object(self):
         post = Post.permitted.get(slug=self.kwargs['slug'])
@@ -239,7 +238,7 @@ class GuidesTopicView(DetailView):
 
 
 class MoreGuidesView(CategoryListView):
-    template_name="mama/more_guides.html"
+    template_name="app/more_guides.html"
     paginate_by = 10
     heading_prefix = "More"
 
@@ -276,11 +275,11 @@ class MoreGuidesView(CategoryListView):
 
 
 class GuideDetailView(CategoryDetailView):
-    template_name = "mama/topic_detail.html"
+    template_name = "app/topic_detail.html"
 
 
 class MomStoriesListView(CategoryListView):
-    template_name = "mama/moms-stories.html"
+    template_name = "app/moms-stories.html"
     paginate_by = 10
     heading_prefix = "More"
 
@@ -336,7 +335,7 @@ class MomStoryFormView(FormView):
         return HttpResponseRedirect(self.get_success_url())
 
 class AskMamaArchiveView(DetailView):
-    template_name = "mama/askmama_archive.html"
+    template_name = "app/askmama_archive.html"
 
     def get_context_data(self, **kwargs):
         context = super(AskMamaArchiveView, self).get_context_data(**kwargs)
@@ -363,7 +362,7 @@ class AskMamaArchiveView(DetailView):
 
         self.category = get_object_or_404(Category,
                                           slug__iexact='ask-mama')
-        
+
         try:
             return Post.permitted.filter(
                 pin__category=self.category
@@ -377,7 +376,7 @@ class AskMamaView(CategoryDetailView):
     CategoryDetailView,
     """
 
-    template_name = "mama/askmama.html"
+    template_name = "app/askapp.html"
     heading_prefix = ""
     context_object_name = 'lead_in_post'
 
@@ -416,7 +415,7 @@ class AskExpertQuestionView(TemplateView):
 
         Uses the Django comments framework for questions.
     """
-    template_name = 'mama/askmama_ask_your_question.html'
+    template_name = 'app/askmama_ask_your_question.html'
 
     def get_context_data(self, **kwargs):
         context = super(AskExpertQuestionView, self).get_context_data(**kwargs)
@@ -427,7 +426,7 @@ class AskExpertQuestionView(TemplateView):
 class QuestionAnswerView(TemplateView):
     """ This view displays a question and its answer in the AskMAMA section.
     """
-    template_name = "mama/question_and_answer.html"
+    template_name = "app/question_and_answer.html"
 
     def get_context_data(self, **kwargs):
         """ Retrieve the question and its answer
@@ -444,7 +443,7 @@ class QuestionAnswerView(TemplateView):
 
 class ContactView(FormView):
     form_class = ContactForm
-    template_name = "mama/contact.html"
+    template_name = "app/contact.html"
 
     def form_valid(self, form):
         recipients = [recipient.email for recipient in \
@@ -466,7 +465,7 @@ class ContactView(FormView):
 
         else:
             subject = "Contact Message from MAMA user"
-            from_address = "MAMA <contact@askmama.mobi>"
+            from_address = "MAMA <contact@askapp.mobi>"
             mail = EmailMessage(
                 subject,
                 message,
@@ -477,7 +476,7 @@ class ContactView(FormView):
             mail.send(fail_silently=False)
 
         # TODO: This should be a redirect to prevent a double POST ???
-        return render_to_response('mama/contact_thanks.html', context_instance=RequestContext(self.request))
+        return render_to_response('app/contact_thanks.html', context_instance=RequestContext(self.request))
 
 
 class MyProfileView(TemplateView):
@@ -485,7 +484,7 @@ class MyProfileView(TemplateView):
     Enables viewing of the user's profile in the HTML site, by the profile
     owner.
     """
-    template_name = 'mama/viewprofile.html'
+    template_name = 'app/viewprofile.html'
 
     def get_context_data(self, **kwargs):
         """ Retrieve the user profile
@@ -511,7 +510,7 @@ class PublicProfileView(TemplateView):
     """
     This is the public view of a member's profile.
     """
-    template_name = 'mama/public_profile_view.html'
+    template_name = 'app/public_profile_view.html'
 
     def get_context_data(self, **kwargs):
         context = super(PublicProfileView, self).get_context_data(**kwargs)
@@ -537,7 +536,7 @@ class UserCommentsView(ListView):
     """
     Shows a list of the user's comments
     """
-    template_name = 'mama/public_comments_view.html'
+    template_name = 'app/public_comments_view.html'
     paginate_by = 5
 
     def get_context_data(self, **kwargs):
@@ -561,7 +560,7 @@ class MyProfileEdit(FormView):
     Enables editing of the user's profile in the HTML site
     """
     form_class = EditProfileForm
-    template_name = 'mama/editprofile.html'
+    template_name = 'app/editprofile.html'
 
     def get_initial(self):
         initial = self.initial.copy()
@@ -641,7 +640,7 @@ class MyProfileEdit(FormView):
 
 class UpdateDueDateView(FormView):
     form_class = DueDateForm
-    template_name = 'mama/update_due_date.html'
+    template_name = 'app/update_due_date.html'
 
     def get_success_url(self):
         return reverse('home')
@@ -660,29 +659,12 @@ class VLiveUpdateDueDateView(UpdateDueDateView):
     form_class = VLiveDueDateForm
 
 
-class MxitUpdateDueDateView(FormView):
-    form_class = MxitDueDateForm
-    template_name = 'mama/update_due_date.html'
-
-    def get_success_url(self):
-        return reverse('home')
-
-    def form_valid(self, form):
-        user = self.request.user
-        profile = user.profile
-        profile.delivery_date = form.cleaned_data['due_date']
-        profile.date_qualifier = 'due_date'
-        profile.unknown_date = False
-        profile.save()
-        return super(MxitUpdateDueDateView, self).form_valid(form)
-
-
 class ProfileView(FormView):
     """
     This seems to be the registration form view specifically for VLive
     """
     form_class = ProfileForm
-    template_name = "mama/profile.html"
+    template_name = "app/profile.html"
 
     def form_valid(self, form):
         user = self.request.user
@@ -705,7 +687,7 @@ class VLiveEditProfile(FormView):
     The profile edit form view specifically for VLive
     """
     form_class = VLiveProfileEditForm
-    template_name = "mama/editprofile.html"
+    template_name = "app/editprofile.html"
 
     def get_initial(self):
         initial = self.initial.copy()
@@ -851,7 +833,7 @@ def post_comment(request, next=None, using=None):
         if profile.alias:
             data['name'] = profile.alias
 
-    data["email"] = 'commentor@askmama.mobi'
+    data["email"] = 'commentor@askapp.mobi'
     data["url"] = request.META.get('HTTP_REFERER', None)
 
     # For mxit, we add a next field to the comment form

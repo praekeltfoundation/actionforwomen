@@ -6,7 +6,7 @@ from django.contrib.sites.models import Site
 from django.contrib.auth.models import User
 from google_credentials import utils
 from photon import Client
-from mama.models import UserProfile
+from app.models import UserProfile
 
 GA_PROFILE_ID = 88472004
 init_date = datetime(2014, 7, 14)

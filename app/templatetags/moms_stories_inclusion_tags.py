@@ -12,7 +12,7 @@ from jmboyourwords.models import YourStoryCompetition
 register = template.Library()
 
 
-@register.inclusion_tag('mama/inclusion_tags/story_competition.html',
+@register.inclusion_tag('app/inclusion_tags/story_competition.html',
                         takes_context=True)
 def your_story_competition(context):
     """ Display the latest available your story competition.

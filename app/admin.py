@@ -26,10 +26,10 @@ from jmboyourwords.models import YourStoryEntry
 from livechat.models import LiveChat
 from livechat.admin import LiveChatAdmin
 
-from mama.utils import ban_user
+from app.utils import ban_user
 from category.models import Category
 from survey.models import ContentQuizToPost
-from mama.models import (
+from app.models import (
     Link,
     NavigationLink,
     SitePreferences,

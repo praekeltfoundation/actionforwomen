@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% comment %}
+Used for Articles and Guides
+{% endcomment %}
+
+{% load jmbo_inclusion_tags mama_inclusion_tags %}
+
+{% block following_header %}
+{{ block.super }}
+{% include "app/inclusion_tags/registration_banner.html" %}
+{% endblock %}
+
+{% block above_content %}
+    <div class="{{ category.color }}">
+        <div class="h1">{{ full_heading }}</div>
+        <div class="item">&nbsp;</div>
+    </div>
+{% endblock %}
+
+{% block content %}
+
+    {% if object_list %}
+    <div class="{{ category.color }}">
+        <div class="content-inner">
+            <a name="listing-top" />
+            <div class="item">
+                {% for object in post_list %}
+                    {% render_object object "block" %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% pagination page_obj %}
+
+    {% if object_list %}
+    <div class="item back-to-top-link">
+        <a href="#listing-top">Back to top &gt;</a>
+    </div>
+    {% endif %}
+
+    {% block below_listing %}
+    {% endblock %}
+
+{% endblock %}

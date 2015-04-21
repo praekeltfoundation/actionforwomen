@@ -2,9 +2,8 @@ import requests
 import json
 from celery.decorators import task
 from datetime import date, timedelta
-from mxit.client import Mxit
 from django.conf import settings
-from mama.utils import mobile_number_to_international, unban_user
+from app.utils import mobile_number_to_international, unban_user
 
 
 @task
@@ -22,17 +21,6 @@ def send_sms(to_msisdn, msg):
         json.dumps(data),
         auth=(settings.VUMI_ACCOUNT_KEY, settings.VUMI_ACCESS_TOKEN),
     )
-
-
-@task
-def send_mxit_message(username, msg):
-    """ Send a mxit message to a single user """
-    client = Mxit(settings.MXIT_CLIENT_ID,
-                  settings.MXIT_CLIENT_SECRET,
-                  settings.MXIT_MOBI_PORTAL_URL)
-
-    app_id = settings.MXIT_APP_ID
-    client.messaging.send_message(app_id, [username], msg)
 
 
 def unban_users():

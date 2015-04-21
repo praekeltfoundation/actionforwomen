@@ -12,7 +12,7 @@ class Command(BaseCommand):
         print "Done!"
 
     def push_banned_users(self):
-        from mama.models import UserProfile
+        from app.models import UserProfile
         client = Client(server='http://holodeck.praekelt.com')
         ban_1 = UserProfile.objects.filter(banned=True, ban_duration=1).count()
         ban_3 = UserProfile.objects.filter(banned=True, ban_duration=3).count()

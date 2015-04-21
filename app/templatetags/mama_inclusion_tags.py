@@ -13,16 +13,16 @@ from poll.models import Poll
 from post.models import Post
 from livechat.models import LiveChat
 
-from mama.forms import DueDateForm, VLiveDueDateForm
+from app.forms import DueDateForm, VLiveDueDateForm
 
-from mama.templatetags.moms_stories_inclusion_tags \
+from app.templatetags.moms_stories_inclusion_tags \
     import your_story_competition
 
 
 register = template.Library()
 
 
-@register.inclusion_tag('mama/inclusion_tags/ages_and_stages.html',
+@register.inclusion_tag('app/inclusion_tags/ages_and_stages.html',
                         takes_context=True)
 def ages_and_stages(context):
     context = copy(context)
@@ -75,7 +75,7 @@ def ages_and_stages(context):
     return context
 
 
-@register.inclusion_tag('mama/inclusion_tags/ages_and_stages.html',
+@register.inclusion_tag('app/inclusion_tags/ages_and_stages.html',
                         takes_context=True)
 def vlive_ages_and_stages(context):
     context = ages_and_stages(context)
@@ -84,7 +84,7 @@ def vlive_ages_and_stages(context):
     return context
 
 
-@register.inclusion_tag('mama/inclusion_tags/page_header.html', takes_context=True)
+@register.inclusion_tag('app/inclusion_tags/page_header.html', takes_context=True)
 def page_header(context):
     context = copy(context)
     help_post = Post.permitted.filter(slug='mama-help')
@@ -96,7 +96,7 @@ def page_header(context):
 
 
 @ register.inclusion_tag(
-    'mama/inclusion_tags/random_guide_banner.html',
+    'app/inclusion_tags/random_guide_banner.html',
     takes_context=True)
 def random_guide_banner(context):
     context = copy(context)
@@ -120,7 +120,7 @@ def random_guide_banner(context):
     return context
 
 
-@register.inclusion_tag('mama/inclusion_tags/page_header.html', takes_context=True)
+@register.inclusion_tag('app/inclusion_tags/page_header.html', takes_context=True)
 def pml_page_header(context):
     context = copy(context)
 
@@ -164,7 +164,7 @@ def pml_page_header(context):
     return context
 
 
-@register.inclusion_tag('mama/inclusion_tags/topic_listing.html', takes_context=True)
+@register.inclusion_tag('app/inclusion_tags/topic_listing.html', takes_context=True)
 def topic_listing(context, category_slug, more, limit=0):
     context = copy(context)
     try:
@@ -185,7 +185,7 @@ def topic_listing(context, category_slug, more, limit=0):
     return context
 
 
-@register.inclusion_tag('mama/inclusion_tags/poll_listing.html', takes_context=True)
+@register.inclusion_tag('app/inclusion_tags/poll_listing.html', takes_context=True)
 def poll_listing(context):
     context = copy(context)
     object_list = Poll.permitted.filter(categories__slug='featured').distinct()
@@ -196,7 +196,7 @@ def poll_listing(context):
     return context
 
 
-@register.inclusion_tag('mama/inclusion_tags/post_listing.html', \
+@register.inclusion_tag('app/inclusion_tags/post_listing.html', \
         takes_context=True)
 def post_listing(context, category_slug):
     result = _get_content_object_list(context, category_slug)
@@ -205,7 +205,7 @@ def post_listing(context, category_slug):
 
 
 @register.inclusion_tag(
-    'mama/inclusion_tags/stories_listing.html', takes_context=True)
+    'app/inclusion_tags/stories_listing.html', takes_context=True)
 def stories_listing(context, category_slug):
     result = _get_content_object_list(context, category_slug)
     # Trim to 3 objects, or provide empty list if it doesn't have one.
@@ -236,7 +236,7 @@ def _get_content_object_list(ctx_dict, category_slug):
     return ctx_dict
 
 
-@register.inclusion_tag('mama/inclusion_tags/pagination.html', takes_context=True)
+@register.inclusion_tag('app/inclusion_tags/pagination.html', takes_context=True)
 def pagination(context, page_obj):
     context = copy(context)
     context.update({
@@ -266,7 +266,7 @@ def pagination(context, page_obj):
     return context
 
 
-@register.inclusion_tag('mama/inclusion_tags/babycenter_byline.html')
+@register.inclusion_tag('app/inclusion_tags/babycenter_byline.html')
 def babycenter_byline(obj):
     if obj.categories.filter(slug='bc-content'):
         return {'display': True}
@@ -274,7 +274,7 @@ def babycenter_byline(obj):
         return {}
 
 
-@register.inclusion_tag('mama/inclusion_tags/babycenter_logo.html')
+@register.inclusion_tag('app/inclusion_tags/babycenter_logo.html')
 def babycenter_logo(obj):
     if obj.categories.filter(slug='bc-content'):
         return {
@@ -285,7 +285,7 @@ def babycenter_logo(obj):
         return {}
 
 
-@register.inclusion_tag('mama/inclusion_tags/vlive_object_comments.html', takes_context=True)
+@register.inclusion_tag('app/inclusion_tags/vlive_object_comments.html', takes_context=True)
 def vlive_object_comments(context, obj):
     def can_comment(obj, request):
         """
@@ -349,7 +349,7 @@ def vlive_object_comments(context, obj):
     return context
 
 
-@register.inclusion_tag('mama/includes/comments_include_no_likes.html', takes_context=True)
+@register.inclusion_tag('app/includes/comments_include_no_likes.html', takes_context=True)
 def mama_object_comments(context, obj):
     def can_comment(obj, request):
         """

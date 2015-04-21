@@ -24,9 +24,9 @@ class Command(BaseCommand):
         from post.models import Post
         from category.models import Category
 
-        from mama.models import UserProfile
-        from mama.tasks import send_mxit_message
-        from mama.utils import format_html_string
+        from app.models import UserProfile
+        from app.tasks import send_mxit_message
+        from app.utils import format_html_string
         import logging
         logger = logging.getLogger('mxit_inbox_logger')
 

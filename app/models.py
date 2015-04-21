@@ -14,11 +14,11 @@ from preferences.models import Preferences
 from userprofile.models import AbstractProfileBase
 from photologue.models import ImageModel
 from jmboyourwords.models import YourStoryCompetition
-from mama.forms import RegistrationForm
+from app.forms import RegistrationForm
 from post.models import Post
 from category.models import Category
 
-from mama.constants import (
+from app.constants import (
     RELATION_TO_BABY_CHOICES,
     FULL_DATE_QUALIFIER_CHOICES
 )

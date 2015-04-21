@@ -1,7 +1,7 @@
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'mama_test.sqlite',
+        'NAME': 'app_test.sqlite',
     }
 }
 
@@ -10,7 +10,7 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sites',
 
-    'mama',
+    'app',
     'category',
     'jmbo',
     'photologue',
@@ -21,4 +21,4 @@ INSTALLED_APPS = (
 
 STATIC_URL = ''
 
-USER_PROFILE_MODULE = 'mama.UserProfile'
+USER_PROFILE_MODULE = 'app.UserProfile'

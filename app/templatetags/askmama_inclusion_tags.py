@@ -1,7 +1,7 @@
 from copy import copy
 from datetime import datetime
 from dateutil.relativedelta import *
-from mama.utils import askmama_can_vote
+from app.utils import askmama_can_vote
 from django.contrib import comments
 from django.contrib.contenttypes.models import ContentType
 from django import template
@@ -15,7 +15,7 @@ register = template.Library()
 
 
 @register.inclusion_tag(
-    'mama/inclusion_tags/favourite_questions_for_week.html',
+    'app/inclusion_tags/favourite_questions_for_week.html',
     takes_context=True)
 def favourite_questions_for_week(context, post,
                                  weeks_ago=0, cpage=1, sort='pop'):

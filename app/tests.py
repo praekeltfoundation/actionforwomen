@@ -18,10 +18,10 @@ from datetime import datetime
 from dateutil.relativedelta import *
 from mama import utils
 from mama import tasks
-from mama.models import UserProfile, BanAudit
-from mama.middleware import TrackOriginMiddleware, ReadOnlyMiddleware
-from mama.context_processors import read_only_mode
-from mama.models import SitePreferences
+from app.models import UserProfile, BanAudit
+from app.middleware import TrackOriginMiddleware, ReadOnlyMiddleware
+from app.context_processors import read_only_mode
+from app.models import SitePreferences
 from preferences import preferences
 from post.models import Post
 from category.models import Category

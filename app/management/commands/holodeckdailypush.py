@@ -17,7 +17,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         self.push(datetime.now())
         print "Done!"
-                
+
     def push(self, datetime_obj):
         range_end = datetime_obj
         range_start = range_end - timedelta(days=1)
@@ -35,7 +35,7 @@ class Command(BaseCommand):
             metrics='ga:visitors'
         )
         unique_users = query.execute()['totalsForAllResults']['ga:visitors']
-        
+
         # Get pageviews from GA
         print "Fetching pageviews from GA"
         query = ga_service.data().ga().get(
@@ -50,7 +50,7 @@ class Command(BaseCommand):
         # Get mean response time
         print "Determining mean response time."
 
-        p = subprocess.Popen(["ab", "-c", "10", "-n", "10", "http://askmama.mobi/"], stdout=subprocess.PIPE)
+        p = subprocess.Popen(["ab", "-c", "10", "-n", "10", "http://askapp.mobi/"], stdout=subprocess.PIPE)
         out, err = p.communicate()
         mean_response_time =  re.findall('Total:.*?\d+.*?(\d+)', out)[0]
 

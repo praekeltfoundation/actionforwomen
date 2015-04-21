@@ -1,4 +1,0 @@
-<b>{{ object.title }}</b><br />
-{% for option in object.polloption_set.all %}
-    {{ option.title }} = {{ option.percentage|floatformat:0 }}%<br />
-{% endfor %}

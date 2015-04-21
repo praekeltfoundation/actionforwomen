@@ -26,7 +26,7 @@ class CommentIndex(SearchIndex):
         livechatresponse = LiveChatResponse.objects.all()
 
         return Comment.objects.filter(Q(
-            object_pk__in=[ask_mama.id, ] + [chat.id for chat in livechats],
+            object_pk__in=[ask_app.id, ] + [chat.id for chat in livechats],
             replied_to_comments_set__isnull=False) | Q(
             id__in=[comment.comment_id for comment in livechatresponse]))
 
@@ -41,7 +41,7 @@ class CommentReplyIndex(SearchIndex):
         ask_mama = Post.objects.get(primary_category__slug='ask-mama')
 
         return CommentReply.objects.filter(
-            replied_to_comments__object_pk__in=[ask_mama.id,])
+            replied_to_comments__object_pk__in=[ask_app.id,])
 
 site.register(CommentReply, CommentReplyIndex)
 

@@ -4,7 +4,7 @@ from django.db.models import Q
 from django.contrib.auth.models import User
 from django.contrib.comments.models import Comment
 from django.core.management.base import BaseCommand
-from mama.models import UserProfile
+from app.models import UserProfile
 from google_credentials import utils
 from photon import Client
 

@@ -5,6 +5,6 @@ before_install:
     - sudo apt-get update -qq
     - sudo apt-get install -qq libtidy-dev libevent-dev python-dev
 install:
-    - pip install -r requirements.pip -U
+    - pip install -r requirements.txt -U
 script:
-    - coverage run --source='.' mama/sites/mobi/manage_dev.py test mama
+    - py.test -s --ds=test_settings --verbose --cov ./app

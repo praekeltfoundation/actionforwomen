@@ -8,7 +8,7 @@ from django.views.generic import TemplateView
 from haystack.views import SearchView
 from haystack.query import SearchQuerySet
 from livechat.models import LiveChatResponse
-from mama.views import (CategoryDetailView, CategoryListView,
+from app.views import (CategoryDetailView, CategoryListView,
                         StoryCommentsView, ConfirmReportView,
                         ContactView,
                         ProfileView, VLiveEditProfile,
@@ -19,13 +19,12 @@ from mama.views import (CategoryDetailView, CategoryListView,
                         MyProfileView, MyProfileEdit,
                         UpdateDueDateView,
                         VLiveUpdateDueDateView,
-                        MxitUpdateDueDateView,
                         PublicProfileView, UserCommentsView,
                         GuidesView, GuidesTopicView,
                         MoreGuidesView, GuideDetailView)
-from mama.forms import PasswordResetForm
+from app.forms import PasswordResetForm
 from moderator.models import CommentReply
-from mama.models import Post
+from app.models import Post
 from django.contrib.comments import Comment
 import object_tools
 
@@ -43,12 +42,12 @@ urlpatterns = patterns('',
     url(r'^health/$', health, name='health'),
     url(
         r'^$',
-        TemplateView.as_view(template_name="mama/home.html"),
+        TemplateView.as_view(template_name="app/home.html"),
         name='home'
     ),
     url(
         r'^about/$',
-        TemplateView.as_view(template_name="mama/about.html"),
+        TemplateView.as_view(template_name="app/about.html"),
         name='about'
     ),
     url(
@@ -58,18 +57,18 @@ urlpatterns = patterns('',
     ),
     url(
         r'^help/$',
-        TemplateView.as_view(template_name="mama/help.html"),
+        TemplateView.as_view(template_name="app/help.html"),
         name='help'
     ),
     url(
         r'^login/$',
         'django.contrib.auth.views.login',
-        {'template_name': 'mama/login.html'},
+        {'template_name': 'app/login.html'},
         name='login'
     ),
     url(
         r'^logout/$',
-        'mama.views.logout',
+        'app.views.logout',
         name='logout'
     ),
     url(
@@ -77,72 +76,72 @@ urlpatterns = patterns('',
         'django.contrib.auth.views.password_reset',
         {
             'password_reset_form': PasswordResetForm,
-            'template_name': 'mama/password_reset.html',
+            'template_name': 'app/password_reset.html',
         },
         name='password_reset'
     ),
     url(
         r'^password-reset-done/$',
         'django.contrib.auth.views.password_reset_done',
-        {'template_name': 'mama/password_reset_done.html'},
+        {'template_name': 'app/password_reset_done.html'},
         name='password_reset_done'
     ),
     url(
         r'^reset/(?P<uidb36>[0-9A-Za-z]{1,13})-(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         'django.contrib.auth.views.password_reset_confirm',
-        {'template_name': 'mama/password_reset_confirm.html'},
+        {'template_name': 'app/password_reset_confirm.html'},
         name='password_reset_confirm'
     ),
     url(
         r'^reset/done/$',
         'django.contrib.auth.views.password_reset_complete',
-        {'template_name': 'mama/password_reset_complete.html'},
+        {'template_name': 'app/password_reset_complete.html'},
         name='password_reset_complete'
     ),
     url(
         r'^poll-vote/(?P<poll_slug>[\w-]+)/$',
-        'mama.views.poll_vote',
+        'app.views.poll_vote',
         name='poll_vote'
     ),
     url(
         r'^post-comment/$',
-        'mama.views.post_comment',
+        'app.views.post_comment',
         name='post_comment'
     ),
     (r'^comments/', include('django.contrib.comments.urls')),
     url(
         r'^terms/$',
-        TemplateView.as_view(template_name="mama/terms.html"),
+        TemplateView.as_view(template_name="app/terms.html"),
         name='terms'
     ),
     url(
         r'^comment-terms/$',
-        TemplateView.as_view(template_name="mama/includes/comment_terms.html"),
+        TemplateView.as_view(template_name="app/includes/comment_terms.html"),
         name='comment-terms'
     ),
     url(
-        r'^ask-mama/ask/$', AskMamaView.as_view(),
+        r'^ask-app/ask/$', AskMamaView.as_view(),
         {},
         name='askmama_detail'
     ),
     url(
-        r'^ask-mama/archive/$', AskMamaArchiveView.as_view(),
+        r'^ask-app/archive/$', AskMamaArchiveView.as_view(),
         {},
         name='askmama_archive'
     ),
     url(
-        r'^ask-mama/$',
-        TemplateView.as_view(template_name="mama/askmama_home.html"),
+        r'^ask-app/$',
+        TemplateView.as_view(template_name="app/askmama_home.html"),
         name='askmama_home'
     ),
     url(
-        r'^ask-mama/answer/(?P<question_id>\d+)/$',
+        r'^ask-app/answer/(?P<question_id>\d+)/$',
         QuestionAnswerView.as_view(),
         {},
         name='askmama_answer_detail'
     ),
     url(
-        r'^ask-mama/ask-expert-question/(?P<post_id>\d+)/$',
+        r'^ask-app/ask-expert-question/(?P<post_id>\d+)/$',
         login_required(AskExpertQuestionView.as_view()),
         name='ask_expert_question'
     ),
@@ -195,7 +194,7 @@ urlpatterns = patterns('',
         name='story_comments_list'
     ),
     url(r'^ask-mama-search/',  SearchView(
-        template='search/search_askmama.html', results_per_page=5,
+        template='search/search_askapp.html', results_per_page=5,
         searchqueryset=commentsqs),
         name='haystack_search_askmama'),
     url(r'^search/',  cache_page(SearchView(results_per_page=5,
@@ -203,7 +202,7 @@ urlpatterns = patterns('',
         name='haystack_search'),
     url(
         r'^accounts/register/$', 'registration.views.register',
-        {'backend': 'mama.registration_backend.MamaBackend'},
+        {'backend': 'app.registration_backend.MamaBackend'},
         name='registration_register'
     ),
     url(
@@ -246,12 +245,12 @@ urlpatterns = patterns('',
     ),
     url(
         r'^comment-agree/$',
-        "mama.views.agree_comment",
+        "app.views.agree_comment",
         name='agree_comment'
     ),
     url(
         r'^report-comment/(?P<content_type>[\w-]+)/(?P<id>\d+)/(?P<vote>-?\d+)/$',
-        'mama.views.report_comment',
+        'app.views.report_comment',
         name='report_comment'),
     url(
         r'^confirm-comment-report/(?P<content_type>[\w-]+)/(?P<id>\d+)/$',
@@ -262,11 +261,6 @@ urlpatterns = patterns('',
         r'^profile/vliveduedate/$',
         VLiveUpdateDueDateView.as_view(),
         name='vlive_update_due_date'
-    ),
-    url(
-        r'^profile/mxitduedate/$',
-        MxitUpdateDueDateView.as_view(),
-        name='mxit_update_due_date'
     ),
 
     url(
@@ -282,13 +276,13 @@ urlpatterns = patterns('',
     (r'^ckeditor/', include('ckeditor.urls')),
     url(r'^google-credentials/', include('google_credentials.urls')),
     url(r'^likes/like/(?P<content_type>[\w-]+)/(?P<id>\d+)/(?P<vote>-?\d+)$',
-        'mama.views.like',
+        'app.views.like',
         name='like'),
     url(r'^', include('jmbo.urls')),
     url(r'^djga/', include('google_analytics.urls')),
 )
 
-handler500 = 'mama.views.server_error'
+handler500 = 'app.views.server_error'
 
 if settings.DEBUG:
     urlpatterns += patterns('',

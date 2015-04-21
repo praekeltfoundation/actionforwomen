@@ -20,10 +20,10 @@ from pml import forms as pml_forms
 from registration.forms import RegistrationFormTermsOfService
 from jmboyourwords.models import YourStoryEntry
 from userprofile import utils
-import mama
+import app
 
-from mama.tasks import send_sms
-from mama.constants import (
+from app.tasks import send_sms
+from app.constants import (
     RELATION_TO_BABY_CHOICES,
     DATE_QUALIFIER_CHOICES
 )
@@ -51,11 +51,11 @@ class PasswordResetForm(PasswordResetForm):
         mobile_number = self.cleaned_data['mobile_number']
         # Fail with invalid number.
         try:
-            self.profile = mama.models.UserProfile.objects.get(
+            self.profile = app.models.UserProfile.objects.get(
                 mobile_number__exact=mobile_number
             )
             self.user = self.profile.user
-        except mama.models.UserProfile.DoesNotExist:
+        except app.models.UserProfile.DoesNotExist:
             raise forms.ValidationError("Unable to find an account for the "
                                         "provided mobile number. Please try "
                                         "again.")
@@ -159,13 +159,13 @@ class RegistrationForm(RegistrationFormTermsOfService):
         RegexValidator('^\d{10}$', message="Enter a valid mobile number in "
                        "the form 0719876543")(mobile_number)
         try:
-            mama.models.UserProfile.objects.get(
+            app.models.UserProfile.objects.get(
                 mobile_number__exact=mobile_number
             )
             raise ValidationError('A user with that mobile number already '
                                   'exists. <a href="%s">Forgotten your '
                                   'password?</a>' % reverse("password_reset"))
-        except mama.models.UserProfile.DoesNotExist:
+        except app.models.UserProfile.DoesNotExist:
             return mobile_number
 
     def clean(self):
@@ -332,7 +332,7 @@ class EditProfileForm(RegistrationForm):
 
     @property
     def default_avatars(self):
-        return mama.models.DefaultAvatar.objects.all()
+        return app.models.DefaultAvatar.objects.all()
 
 
 class DueDateForm(forms.Form):
@@ -515,28 +515,6 @@ class VLiveDueDateForm(forms.Form):
             raise forms.ValidationError(
                     "The due date was entered incorrectly.")
         return due_date
-
-
-class MxitDueDateForm(forms.Form):
-    due_date = forms.CharField(
-        required = True,
-        label = "Due Date",
-    )
-
-    def clean(self):
-        """
-        Check that the due date is provided and correct.
-        """
-        cleaned_data = super(MxitDueDateForm, self).clean()
-        try:
-            delivery_date = cleaned_data['due_date']
-            delivery_date = parser.parse(delivery_date)
-        except (KeyError, ValueError):
-            msg = "The due date was entered incorrectly. Please enter the due date in the format yyyy-mm-dd"
-            self.errors['due_date'] = self.error_class([msg])
-            if 'due_date' in cleaned_data:
-                del cleaned_data['due_date']
-        return cleaned_data
 
 
 class MomsStoryEntryForm(forms.ModelForm):

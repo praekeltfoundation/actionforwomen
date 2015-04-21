@@ -4,7 +4,7 @@ from django.core.management.base import BaseCommand
 from google_credentials import utils
 from photon import Client
 from django.contrib.auth.models import User
-from mama.models import UserProfile
+from app.models import UserProfile
 
 GA_PROFILE_ID = 81239767
 init_date = datetime(2014, 2, 1, 0, 0, 0)

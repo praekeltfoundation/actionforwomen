@@ -37,7 +37,7 @@ def unban_user(user):
 
 
 def ban_user(user, duration, reporter):
-    from mama.models import BanAudit
+    from app.models import BanAudit
     if user.profile and reporter.is_authenticated():
         profile = user.profile
         profile.banned = True

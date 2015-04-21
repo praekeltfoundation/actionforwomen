@@ -5,7 +5,7 @@ from category.models import Category
 from django.core.management.base import BaseCommand
 from django.contrib.sites.models import Site
 from django.template.defaultfilters import linebreaks
-from mama.models import Link
+from app.models import Link
 from post.models import Post
 
 
@@ -30,12 +30,12 @@ class Command(BaseCommand):
             title = node.getElementsByTagName('title')[0].firstChild.data
             raw_content = node.getElementsByTagName('body')[0].toxml().lstrip('<body>').rstrip('</body>')
             content = linebreaks(raw_content.replace('\n<ul>\n', '<ul>').replace('</li>\n', '</li>').replace('\n', '\n\n')).replace('\n', '').replace('<p></p>', '')
-                
+
             prenatal = node.getElementsByTagName('prenatal')
             if prenatal:
                 prenatal = prenatal[0].firstChild.data
                 categories.append(Category.objects.get_or_create(title="Prenatal Week %s" % prenatal, slug="prenatal-week-%s" % prenatal)[0])
-                
+
             postnatal = node.getElementsByTagName('postnatal')
             if postnatal:
                 postnatal = postnatal[0].firstChild.data
@@ -74,7 +74,7 @@ class Command(BaseCommand):
         print "Creating baby post links..."
         for source, targets in links.items():
             for target in targets:
-                
+
                 link, created = Link.objects.get_or_create(
                     source_id=source,
                     target_id=target[0],
