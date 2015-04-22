@@ -45,4 +45,4 @@ pytest-cov
 pytest-xdist
 jmbo-your-words==0.0.5
 mama-survey==1.0.0
-django-livechat==1.0.0
+django-livechat==1.0.1
