@@ -43,6 +43,6 @@ pytest
 pytest-django
 pytest-cov
 pytest-xdist
-https://github.com/praekelt/jmbo-your-words/tarball/develop#egg=jmbo-your-words
-https://github.com/praekelt/mama-survey/tarball/develop#egg=mama-survey
-https://github.com/praekelt/django-livechat/tarball/develop#egg=django-livechat
+jmbo-your-words==0.0.5
+mama-survey==1.0.0
+django-livechat==1.0.0
