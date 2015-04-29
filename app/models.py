@@ -24,8 +24,8 @@ from app.constants import (
 )
 
 
-class MomsStoryPost(Post):
-    primary_category_slug = 'moms-stories'
+class StoryPost(Post):
+    primary_category_slug = 'stories'
 
     class Meta:
         app_label = 'post'
@@ -35,11 +35,11 @@ class MomsStoryPost(Post):
         if not self.primary_category:
             self.primary_category = Category.objects.get(
                 slug=self.primary_category_slug)
-        super(MomsStoryPost, self).save(*args, **kwargs)
+        super(StoryPost, self).save(*args, **kwargs)
 
 
-class ArticlePost(Post):
-    primary_category_slug = 'articles'
+class SupportPost(Post):
+    primary_category_slug = 'support'
 
     class Meta:
         app_label = 'post'
@@ -49,7 +49,21 @@ class ArticlePost(Post):
         if not self.primary_category:
             self.primary_category = Category.objects.get(
                 slug=self.primary_category_slug)
-        super(ArticlePost, self).save(*args, **kwargs)
+        super(SupportPost, self).save(*args, **kwargs)
+
+
+class FAQPost(Post):
+    primary_category_slug = 'faq'
+
+    class Meta:
+        app_label = 'post'
+        proxy = True
+
+    def save(self, *args, **kwargs):
+        if not self.primary_category:
+            self.primary_category = Category.objects.get(
+                slug=self.primary_category_slug)
+        super(FAQPost, self).save(*args, **kwargs)
 
 
 class Link(models.Model):

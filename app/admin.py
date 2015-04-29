@@ -44,13 +44,14 @@ from app.models import (
     SitePreferences,
     Banner,
     DefaultAvatar,
-    ArticlePost,
-    MomsStoryPost,
+    SupportPost,
+    StoryPost,
+    FAQPost,
     BanAudit
 )
 
 
-class MamaModelbaseAdmin(AdminModeratorMixin, ModelBaseAdmin):
+class ActonforwomenModelbaseAdmin(AdminModeratorMixin, ModelBaseAdmin):
     raw_id_fields = ('owner', )
 
 
@@ -71,7 +72,7 @@ class ContentQuizInline(admin.TabularInline):
     fk_name = 'post'
 
 
-class PostAdmin(MamaModelbaseAdmin):
+class PostAdmin(ActonforwomenModelbaseAdmin):
     inlines = ModelBaseAdmin.inlines + [
         LinkInline,
         NavigationLinkInline,
@@ -103,19 +104,19 @@ class PostAdmin(MamaModelbaseAdmin):
     _view_comments.allow_tags = True
 
 
-class MamaPostAdmin(PostAdmin):
+class ActonforwomenPostAdmin(PostAdmin):
 
     def queryset(self, request):
-        qs = super(MamaPostAdmin, self).queryset(request)
+        qs = super(ActonforwomenPostAdmin, self).queryset(request)
         return qs.filter(
             primary_category__slug=self.model.primary_category_slug)
 
 
-class MamaPollAdmin(PollAdmin):
+class ActonforwomenPollAdmin(PollAdmin):
     raw_id_fields = ('owner', )
 
 
-class BannerAdmin(MamaModelbaseAdmin):
+class BannerAdmin(ActonforwomenModelbaseAdmin):
     list_filter = (
         'state',
         'created',
@@ -149,7 +150,7 @@ class DefaultAvatarAdmin(admin.ModelAdmin):
     _image.allow_tags = True
 
 
-class MamaYourStoryEntryAdmin(YourStoryEntryAdmin):
+class ActionforwomenYourStoryEntryAdmin(YourStoryEntryAdmin):
     list_display = ('name', 'user', 'user_msisdn', 'text', 'created',)
 
     def user_msisdn(self, obj):
@@ -158,12 +159,12 @@ class MamaYourStoryEntryAdmin(YourStoryEntryAdmin):
         return profile.mobile_number
 
 
-class AskMamaQuestion(Comment):
+class Question(Comment):
 
     class Meta:
         proxy = True
-        verbose_name = "Question for MAMA"
-        verbose_name_plural = "Questions for MAMA"
+        verbose_name = "Question for expert"
+        verbose_name_plural = "Questions for expert"
         ordering = None
 
 
@@ -220,7 +221,7 @@ class WeeklyFilter(admin.filters.SimpleListFilter):
         return queryset
 
 
-class AskMamaQuestionAdmin(CommentAdmin):
+class QuestionAdmin(CommentAdmin):
 
     """ Add a filter to filter out 'This week's favourite stories' in CMS
     """
@@ -236,18 +237,18 @@ class AskMamaQuestionAdmin(CommentAdmin):
 
     def queryset(self, request):
         """ Filter the questions that have been submitted this week in the
-            AskMama section.
+            question section.
         """
         latest_pinned = self.get_askmama_latest_pinned_post()
         if latest_pinned:
             pct = ContentType.objects.get_for_model(latest_pinned.__class__)
 
             # Filter the comments linked to the post
-            questions = AskMamaQuestion.objects.filter(
+            questions = Question.objects.filter(
                 content_type=pct,
                 object_pk=latest_pinned.id)
         else:
-            questions = AskMamaQuestion.objects.none()
+            questions = Question.objects.none()
 
         # leave out the moderator answers
         questions = questions.exclude(user__is_staff=True)
@@ -278,7 +279,7 @@ class AskMamaQuestionAdmin(CommentAdmin):
         """ Get the latest askmama category pinned post
         """
         try:
-            category = Category.objects.get(slug__iexact='ask-mama')
+            category = Category.objects.get(slug__iexact='question')
         except Category.DoesNotExist:
             return None
         try:
@@ -305,15 +306,15 @@ class HiddenModelAdmin(admin.ModelAdmin):
         return {}
 
 
-class AskMamaPreferencesAdmin(PreferencesAdmin):
+class ActionforwomenPreferencesAdmin(PreferencesAdmin):
     raw_id_fields = ('contact_email_recipients', )
 
 
-class MamaLiveChatAdmin(AdminModeratorMixin, LiveChatAdmin):
+class ActionforwomenLiveChatAdmin(AdminModeratorMixin, LiveChatAdmin):
     pass
 
 
-class MamaCommentAdmin(CommentAdmin):
+class ActionforwomenCommentAdmin(CommentAdmin):
     actions = CommentAdmin.actions + ['mark_spam_no_ban', ]
 
     def get_user_display_name(self, obj):
@@ -344,28 +345,33 @@ class MamaCommentAdmin(CommentAdmin):
     mark_spam_no_ban.short_description = "Mark selected comments as spam (no ban)"
 
 
-class MamaHamCommentAdmin(MamaCommentAdmin, HamCommentAdmin):
+class ActionforwomenHamCommentAdmin(
+        ActionforwomenCommentAdmin, HamCommentAdmin):
     pass
 
 
-class MamaReportedCommentAdmin(MamaCommentAdmin, ReportedCommentAdmin):
+class ActionforwomenReportedCommentAdmin(
+        ActionforwomenCommentAdmin, ReportedCommentAdmin):
     pass
 
 
-class MamaSpamCommentAdmin(MamaCommentAdmin, SpamCommentAdmin):
+class ActionforwomenSpamCommentAdmin(
+        ActionforwomenCommentAdmin, SpamCommentAdmin):
     pass
 
 
-class MamaUnsureCommentAdmin(MamaCommentAdmin, UnsureCommentAdmin):
+class ActionforwomenUnsureCommentAdmin(
+        ActionforwomenCommentAdmin, UnsureCommentAdmin):
     pass
 
 
-class ModelBaseHiddenAdmin(MamaModelbaseAdmin, HiddenModelAdmin):
+class ModelBaseHiddenAdmin(ActonforwomenModelbaseAdmin, HiddenModelAdmin):
     pass
 
 
 class BanAuditAdmin(admin.ModelAdmin):
-    list_display = ('user', 'banned_by', 'banned_on', 'ban_duration', '_is_banned')
+    list_display = (
+        'user', 'banned_by', 'banned_on', 'ban_duration', '_is_banned')
     list_filter = ('banned_on', 'ban_duration')
     raw_id_fields = ('user', 'banned_by')
     readonly_fields = ('user', 'banned_by', 'ban_duration')
@@ -384,7 +390,7 @@ class BanAuditAdmin(admin.ModelAdmin):
 
 
 admin.site.register(BanAudit, BanAuditAdmin)
-admin.site.register(SitePreferences, AskMamaPreferencesAdmin)
+admin.site.register(SitePreferences, ActionforwomenPreferencesAdmin)
 admin.site.register(Banner, BannerAdmin)
 admin.site.register(DefaultAvatar, DefaultAvatarAdmin)
 
@@ -395,30 +401,31 @@ try:
 except NotRegistered:
     pass
 admin.site.register(Post, PostAdmin)
-admin.site.register(ArticlePost, MamaPostAdmin)
-admin.site.register(MomsStoryPost, MamaPostAdmin)
-admin.site.register(Poll, MamaPollAdmin)
+admin.site.register(StoryPost, ActonforwomenPostAdmin)
+admin.site.register(SupportPost, ActonforwomenPostAdmin)
+admin.site.register(FAQPost, ActonforwomenPostAdmin)
+admin.site.register(Poll, ActonforwomenPollAdmin)
 
 admin.site.unregister(Comment)
 admin.site.unregister(HamComment)
 admin.site.unregister(ReportedComment)
 admin.site.unregister(SpamComment)
 admin.site.unregister(UnsureComment)
-admin.site.register(Comment, MamaCommentAdmin)
-admin.site.register(HamComment, MamaHamCommentAdmin)
-admin.site.register(ReportedComment, MamaReportedCommentAdmin)
-admin.site.register(SpamComment, MamaSpamCommentAdmin)
-admin.site.register(UnsureComment, MamaUnsureCommentAdmin)
+admin.site.register(Comment, ActionforwomenCommentAdmin)
+admin.site.register(HamComment, ActionforwomenHamCommentAdmin)
+admin.site.register(ReportedComment, ActionforwomenReportedCommentAdmin)
+admin.site.register(SpamComment, ActionforwomenSpamCommentAdmin)
+admin.site.register(UnsureComment, ActionforwomenUnsureCommentAdmin)
 
 try:
     admin.site.unregister(YourStoryEntry)
     admin.site.unregister(LiveChat)
 except NotRegistered:
     pass
-admin.site.register(YourStoryEntry, MamaYourStoryEntryAdmin)
-admin.site.register(LiveChat, MamaLiveChatAdmin)
+admin.site.register(YourStoryEntry, ActionforwomenYourStoryEntryAdmin)
+admin.site.register(LiveChat, ActionforwomenLiveChatAdmin)
 
-admin.site.register(AskMamaQuestion, AskMamaQuestionAdmin)
+admin.site.register(Question, QuestionAdmin)
 admin.site.unregister(Relation)
 admin.site.register(Relation, HiddenModelAdmin)
 
