@@ -14,5 +14,8 @@
         </p>
         {% endif %}
   </a>
-  <a href="#" class="link-comments"><i class="i i-comment"></i>{{object.comment_count}}</a>
+  {% if object.comments_enabled %}
+  <a href="#" class="link-comments">
+    <i class="i i-comment"></i>{{object.comment_count}}</a>
+  {% endif %}
 </div>
