@@ -12,7 +12,7 @@ django-snippetscream
 django-south-admin
 django-userprofile>=0.0.6
 django-registration==0.8
-django-ckeditor
+django-ckeditor==4.0.2
 gunicorn
 https://github.com/praekelt/django-photologue/tarball/2.10.praekelt#egg=django-photologue
 jmbo==0.5.5
