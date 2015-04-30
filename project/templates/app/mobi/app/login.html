@@ -2,6 +2,7 @@
 
 {% block nav_script %}{% endblock %}
 {% block nav %}{% endblock %}
+{% block menu %}{% endblock %}
 
 {% block content %}
 
@@ -37,7 +38,7 @@
   <input id="id_username" name="username" maxlength="30" type="text" class="input-wide">
 </label>
 
-<label for="id_password">Mobile Number
+<label for="id_password">Password
 	{% if form.password.errors %}
 			{% for error in form.password.errors %}
 				<p>{{ error }}</p>
@@ -60,5 +61,3 @@
 </form>
 {% endif %}
 {% endblock %}
-
-{% block menu %}{% endblock %}

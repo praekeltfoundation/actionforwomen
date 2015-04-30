@@ -103,34 +103,6 @@ class RegistrationForm(RegistrationFormTermsOfService):
         required=True,
         label="Your mobile number"
     )
-    relation_to_baby = forms.ChoiceField(
-        widget=forms.RadioSelect(),
-        choices=RELATION_TO_BABY_CHOICES,
-        label='Are you a...',
-        initial='mom_or_mom_to_be'
-    )
-    date_qualifier = forms.ChoiceField(
-        widget=forms.RadioSelect(),
-        initial='due_date',
-        choices=DATE_QUALIFIER_CHOICES,
-        label=("Please enter your baby's birthday or due date. Click 'Unknown'"
-               " if you are not sure when your baby is due to be born.")
-    )
-    delivery_date = forms.DateField(
-        required=False,
-        label="",
-        widget=SelectDateWidget(
-            years=range(date.today().year-10, date.today().year+1))
-    )
-    due_date = forms.DateField(
-        required=False,
-        label="",
-        widget=SelectDateWidget()
-    )
-    unknown_date = forms.BooleanField(
-        required=False,
-        label='Unknown'
-    )
 
     def __init__(self, *args, **kwargs):
         super(RegistrationForm, self).__init__(*args, **kwargs)
@@ -141,11 +113,6 @@ class RegistrationForm(RegistrationFormTermsOfService):
             'username',
             'password1',
             'mobile_number',
-            'relation_to_baby',
-            'date_qualifier',
-            'delivery_date',
-            'unknown_date',
-            'due_date',
             'tos',
         ]
         self.fields['username'].label = "Choose a username"
@@ -167,68 +134,6 @@ class RegistrationForm(RegistrationFormTermsOfService):
                                   'password?</a>' % reverse("password_reset"))
         except app.models.UserProfile.DoesNotExist:
             return mobile_number
-
-    def clean(self):
-        """
-        Check that the birth date is provided, if the person selected birth
-        date as the date type.
-        Check that the due date is provided or the unknown check box is checked
-        if due date is selected as the date type.
-
-        Note, for the registration form, we have both a delivery date and due
-        date field on the form. If the validation passes, we assign the due
-        date to the delivery date, to be stored in the profile with the
-        correctly selected date qualifier.
-
-        For the edit profile form, we only have a delivery_date field on the
-        form, so if there is no due date in the cleaned_data dict, we assign
-        the delivery date value to the due date as well, for the rest of the
-        validation to work continue as normal.
-        """
-        cleaned_data = super(RegistrationForm, self).clean()
-        try:
-            delivery_date = cleaned_data['delivery_date']
-        except KeyError:
-            delivery_date = None
-        try:
-            due_date = cleaned_data['due_date']
-        except KeyError:
-            # The profile edit form will throw this error, so we just ensure
-            # that we assign the delivery date to the due date, so that the
-            # rest of the validation works as normal
-            due_date = cleaned_data['delivery_date']
-        try:
-            date_qualifier = cleaned_data['date_qualifier']
-        except KeyError:
-            date_qualifier = 'unspecified'
-        try:
-            unknown_date = cleaned_data['unknown_date']
-        except KeyError:
-            pass
-        if date_qualifier == 'birth_date' and delivery_date is None:
-            msg = 'You need to provide a birth date'
-            self._errors['delivery_date'] = self.error_class([msg])
-            try:
-                del cleaned_data['delivery_date']
-            except KeyError:
-                pass
-        elif date_qualifier == 'due_date' and due_date is None \
-                and not unknown_date:
-            msg = "Either provide a due date, or check the \
-                  'Unknown' check box below the due date."
-            self._errors['due_date'] = self.error_class([msg])
-            try:
-                del cleaned_data['due_date']
-            except KeyError:
-                pass
-
-        # When registering, check if the due date is selected and provided, and
-        # there are no errors, and then assign its value to the delivery date.
-        if date_qualifier == 'due_date' and due_date is not None \
-                and not self._errors:
-            cleaned_data['delivery_date'] = due_date
-
-        return cleaned_data
 
 
 class EditProfileForm(RegistrationForm):
