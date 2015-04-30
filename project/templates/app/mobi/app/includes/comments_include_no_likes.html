@@ -60,8 +60,8 @@
 </ul>
 
 {% if more_comments  %}
-<p class="cta"><a href="{% url story_comments_list category.slug object.slug %}">+ More Comments</a></p>
+<a href="{% url story_comments_list category.slug object.slug %}" class="btn btn-wide">More Comments</a>
 {% endif %}
-
+</div>
 {% include 'app/includes/comments_new_system.html' %}
 {% endif %}
