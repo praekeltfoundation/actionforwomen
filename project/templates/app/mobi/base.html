@@ -125,7 +125,9 @@
         <img src="{% google_analytics request %}" width="0" height="0" />
     </div>
 
-    <form action="" class="form-sign-in highlight-primary hidden" id="signin">
+    {% block menu_forms %}
+    <form method="post" id="signin" action="{% url login %}" class="form-sign-in highlight-primary">
+      {% csrf_token %}
       <fieldset>
         <legend>Sign In</legend>
         <p>Enter your username and 4-digit PIN</p>
@@ -133,43 +135,47 @@
           <input type="text" id="username" name="username" class="input-wide" />
         </label>
             <label for="pin">PIN
-          <input type="text" pattern="[0-9]{4}" id="pin" name="pin" class="input-wide" />
+          <input type="password" pattern="[0-9]{4}" id="pin" name="password" class="input-wide" />
         </label>
-            <label for="remember-me">
-          <input type="checkbox" id="remember-me" name="remember-me">
+        <label for="remember-me">
+          <input type="checkbox" id="remember-me" name="remember-me"/>
           Remember me
         </label>
         <input type="submit" value="Submit" class="btn btn-wide" />
       </fieldset>
 
-      <a href="#">I forgot my password</a>
+      <a href="{% url password_reset %}">I forgot my password</a>
 
       <div class="sign-up">
         <p>Don't have an account?<br />
-        <a href="#">Sign up here to get started</a></p>
+        <a href="{% url registration_register %}">Sign up here to get started</a></p>
       </div>
-
     </form>
-    <form action="" class="form-sign-in highlight-primary hidden" id="register">
+
+    <form method="post" id="register" action="{% url registration_register %}" class="form-sign-in highlight-primary">
+      {% csrf_token %}
       <fieldset>
         <legend>Register</legend>
 
         <label for="username">Username
           <input type="text" id="username" name="username" class="input-wide" />
         </label>
+        <label for="id_password1">Password
+        <input name="password1" id="id_password1" type="password" class="input-wide">
+        </label>
+
             <label for="mobile-number">Mobile Number
-          <input type="tel" id="mobile-number" name="mobile-number" class="input-wide" />
+          <input type="tel" id="mobile-number" name="mobile_number" class="input-wide" />
         </label>
-            <label for="username">Username
-          <input type="text" id="username" name="username" class="input-wide" />
-        </label>
-            <label for="username">Username
-          <input type="text" id="username" name="username" class="input-wide" />
+        <label for="id_tos">
+        <input id="id_tos" class="required" name="tos" type="checkbox"> I accept the <a href="/terms/">terms and conditions</a> of use.
         </label>
       </fieldset>
     </form>
 
     <form action="" class="form-search highlight-primary hidden" id="search">
+    {% csrf_token %}
+
       <fieldset>
         <legend>Search</legend>
 
@@ -179,6 +185,7 @@
         <input type="submit" value="Submit" class="btn btn-wide" />
       </fieldset>
     </form>
+    {% endblock %}
 
     {% block menu %}
     <nav class="nav-menu highlight-primary" id="menu">
