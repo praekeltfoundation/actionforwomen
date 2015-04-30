@@ -48,7 +48,7 @@
 </head>
 <body>
   <nav class="nav-main highlight-primary">
-    <a href="#" id="logo"><img src="{{ STATIC_URL }}img/a4w-live.png" alt="A4W Live"></a>
+    <a href="/" id="logo"><img src="{{ STATIC_URL }}img/a4w-live.png" alt="A4W Live"></a>
     <a href="#menu" id="jump"><i class="i i-hamburger"></i><span class="visuallyhidden">menu</span></a>
     <a href="#main" id="close" class="hidden"><i class="i i-close" aria-label="close"></i><span class="visuallyhidden">close</span></a>
     <a href="#main" id="back" class="hidden"><i class="i i-back" aria-label="back"></i><span class="visuallyhidden">back</span></a>
@@ -179,15 +179,18 @@
 
 </form>
 
-    <nav class="nav-menu highlight-primary" id="menu">
+  <nav class="nav-menu highlight-primary" id="menu">
     <ul class="nav list-block" role="navigation">
-      <li><a href="signin.html" id="show-signin">Sign In</a></li>
-      <li><a href="register.html" id="show-register">Register</a></li>
+      {% if not user.is_authenticated %}
+      <li><a href="{% url login %}" id="show-signin">Sign In</a></li>
+      <li><a href="{% url registration_register %}" id="show-register">Register</a></li>
+      {% else %}
+      <li><a href="{% url logout %}">Logout</a></li>
+      {% endif %}
       <li><a href="search.html" id="show-search">Search</a></li>
-      <li><a href="#">Stories</a></li>
-      <li><a href="#">Support</a></li>
-      <li><a href="#">FAQs</a></li>
-      <li><a href="#">Contact Us</a></li>
+      <li><a href="{% url category_object_list 'stories' %}">Stories</a></li>
+      <li><a href="{% url category_object_list 'support' %}">Support</a></li>
+      <li><a href="{% url category_object_list 'faq' %}">FAQs</a></li>
     </ul>
     <p><a href="#" class="lang-change">Changer de langue à Française</a></p>
   </nav>

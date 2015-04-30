@@ -3,10 +3,7 @@
 {% load cache mama_inclusion_tags livechat_tags survey_inclusion_tags %}
 
 {% block content %}
-    {% cache 0 home %}
-        {% stories_listing "moms-stories" %}
-        {% post_listing "articles" %}
-    {% endcache %}
+    {% stories_listing "stories" %}
     {% if not READ_ONLY_MODE %}
         {% show_content_quizzes %}
         {% poll_listing %}

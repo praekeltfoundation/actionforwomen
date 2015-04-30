@@ -1,9 +1,11 @@
 {% if not comments_open or READ_ONLY_MODE %}
-<div>Comments are currently closed.</div>
+<p>Comments are currently closed.</p>
 {% else %}
+
+<div class="add-comment" id="add-comment">
 <form action="{% url post_comment %}" method="post">
     {% csrf_token %}
-    <div class="row" style="display:none;">
+    <div style="display:none;">
         {% for field in form %}
             {% if field.is_hidden %}
                 {{ field }}
@@ -12,21 +14,18 @@
             {% endif %}
         {% endfor %}
     </div>
-    <div class="row">
-        {{ form.comment.label_tag }}
-        {% if form.comment.errors %}
-            <div class="errors">
-                {% for error in form.comment.errors %}
-                    <p>{{ error }}</p>
-                {% endfor %}
-            </div>
-        {% endif %}
-        {{ form.comment }}
-    </div>
-    <div class="row">
-        <input type="submit" name="post" value="Post" class="btn" />
-        {% if next %}<div><input type="hidden" name="next" value="{{ next }}" /></div>{% endif %}
-    </div>
-    <div class="clear"></div>
+    {% if form.comment.errors %}
+        <div class="errors">
+            {% for error in form.comment.errors %}
+                <p>{{ error }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <label for="your-comment">Add your comment
+      <textarea id="id_comment" name="comment"></textarea>
+    </label>
+    <input type="submit" name="post" value="Post" class="btn btn-wide" />
+    {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
 </form>
+</div>
 {% endif %}
