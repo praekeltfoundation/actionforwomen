@@ -24,7 +24,10 @@
           var s = document.getElementsByTagName('script')[0];
           s.parentNode.insertBefore(wf, s);
         })();
+    </script>
 
+    {% block nav_script %}
+    <script type="text/javascript">
         /*! loadJS: load a JS file asynchronously. [c]2014 @scottjehl, Filament Group, Inc. (Based on http://goo.gl/REQGQ by Paul Irish). Licensed MIT */
       function loadJS( src, cb ){
         "use strict";
@@ -45,14 +48,17 @@
       }
 
     </script>
+    {% endblock %}
 </head>
 <body>
-  <nav class="nav-main highlight-primary">
-    <a href="/" id="logo"><img src="{{ STATIC_URL }}img/a4w-live.png" alt="A4W Live"></a>
-    <a href="#menu" id="jump"><i class="i i-hamburger"></i><span class="visuallyhidden">menu</span></a>
-    <a href="#main" id="close" class="hidden"><i class="i i-close" aria-label="close"></i><span class="visuallyhidden">close</span></a>
-    <a href="#main" id="back" class="hidden"><i class="i i-back" aria-label="back"></i><span class="visuallyhidden">back</span></a>
-  </nav>
+    {% block nav %}
+    <nav class="nav-main highlight-primary">
+      <a href="/" id="logo"><img src="{{ STATIC_URL }}img/a4w-live.png" alt="A4W Live"></a>
+      <a href="#menu" id="jump"><i class="i i-hamburger"></i><span class="visuallyhidden">menu</span></a>
+      <a href="#main" id="close" class="hidden"><i class="i i-close" aria-label="close"></i><span class="visuallyhidden">close</span></a>
+      <a href="#main" id="back" class="hidden"><i class="i i-back" aria-label="back"></i><span class="visuallyhidden">back</span></a>
+    </nav>
+    {% endblock %}
 
     {% block following_header %}
     {% endblock %}
@@ -120,80 +126,77 @@
     </div>
 
     <form action="" class="form-sign-in highlight-primary hidden" id="signin">
+      <fieldset>
+        <legend>Sign In</legend>
+        <p>Enter your username and 4-digit PIN</p>
+        <label for="username">Username
+          <input type="text" id="username" name="username" class="input-wide" />
+        </label>
+            <label for="pin">PIN
+          <input type="text" pattern="[0-9]{4}" id="pin" name="pin" class="input-wide" />
+        </label>
+            <label for="remember-me">
+          <input type="checkbox" id="remember-me" name="remember-me">
+          Remember me
+        </label>
+        <input type="submit" value="Submit" class="btn btn-wide" />
+      </fieldset>
 
-  <fieldset>
-    <legend>Sign In</legend>
-    <p>Enter your username and 4-digit PIN</p>
-    <label for="username">Username
-  <input type="text" id="username" name="username" class="input-wide" />
-</label>
-    <label for="pin">PIN
-  <input type="text" pattern="[0-9]{4}" id="pin" name="pin" class="input-wide" />
-</label>
-    <label for="remember-me">
-  <input type="checkbox" id="remember-me" name="remember-me">
-  Remember me
-</label>
+      <a href="#">I forgot my password</a>
 
-    <input type="submit" value="Submit" class="btn btn-wide" />
+      <div class="sign-up">
+        <p>Don't have an account?<br />
+        <a href="#">Sign up here to get started</a></p>
+      </div>
 
-  </fieldset>
+    </form>
+    <form action="" class="form-sign-in highlight-primary hidden" id="register">
+      <fieldset>
+        <legend>Register</legend>
 
-  <a href="#">I forgot my password</a>
+        <label for="username">Username
+          <input type="text" id="username" name="username" class="input-wide" />
+        </label>
+            <label for="mobile-number">Mobile Number
+          <input type="tel" id="mobile-number" name="mobile-number" class="input-wide" />
+        </label>
+            <label for="username">Username
+          <input type="text" id="username" name="username" class="input-wide" />
+        </label>
+            <label for="username">Username
+          <input type="text" id="username" name="username" class="input-wide" />
+        </label>
+      </fieldset>
+    </form>
 
-  <div class="sign-up">
-    <p>Don't have an account?<br />
-    <a href="#">Sign up here to get started</a></p>
-  </div>
+    <form action="" class="form-search highlight-primary hidden" id="search">
+      <fieldset>
+        <legend>Search</legend>
 
-</form>
-<form action="" class="form-sign-in highlight-primary hidden" id="register">
+        <label for="input-search"><span class="visuallyhidden">Search:</span>
+          <input type="search" id="input-search" name="input-search" placeholder="e.g. women" class="input-wide" />
+        </label>
+        <input type="submit" value="Submit" class="btn btn-wide" />
+      </fieldset>
+    </form>
 
-  <fieldset>
-    <legend>Register</legend>
-
-    <label for="username">Username
-  <input type="text" id="username" name="username" class="input-wide" />
-</label>
-    <label for="mobile-number">Mobile Number
-  <input type="tel" id="mobile-number" name="mobile-number" class="input-wide" />
-</label>
-    <label for="username">Username
-  <input type="text" id="username" name="username" class="input-wide" />
-</label>
-    <label for="username">Username
-  <input type="text" id="username" name="username" class="input-wide" />
-</label>
-  </fieldset>
-
-</form>
-<form action="" class="form-search highlight-primary hidden" id="search">
-
-  <fieldset>
-    <legend>Search</legend>
-    <label for="input-search"><span class="visuallyhidden">Search:</span>
-  <input type="search" id="input-search" name="input-search" placeholder="e.g. women" class="input-wide" />
-</label>
-<input type="submit" value="Submit" class="btn btn-wide" />
-  </fieldset>
-
-</form>
-
-  <nav class="nav-menu highlight-primary" id="menu">
-    <ul class="nav list-block" role="navigation">
-      {% if not user.is_authenticated %}
-      <li><a href="{% url login %}" id="show-signin">Sign In</a></li>
-      <li><a href="{% url registration_register %}" id="show-register">Register</a></li>
-      {% else %}
-      <li><a href="{% url logout %}">Logout</a></li>
-      {% endif %}
-      <li><a href="search.html" id="show-search">Search</a></li>
-      <li><a href="{% url category_object_list 'stories' %}">Stories</a></li>
-      <li><a href="{% url category_object_list 'support' %}">Support</a></li>
-      <li><a href="{% url category_object_list 'faq' %}">FAQs</a></li>
-    </ul>
-    <p><a href="#" class="lang-change">Changer de langue à Française</a></p>
-  </nav>
-  <a href="#main" id="nav-close" class="hidden">main</a>
+    {% block menu %}
+    <nav class="nav-menu highlight-primary" id="menu">
+      <ul class="nav list-block" role="navigation">
+        {% if not user.is_authenticated %}
+        <li><a href="{% url login %}" id="show-signin">Sign In</a></li>
+        <li><a href="{% url registration_register %}" id="show-register">Register</a></li>
+        {% else %}
+        <li><a href="{% url logout %}">Logout</a></li>
+        {% endif %}
+        <li><a href="search.html" id="show-search">Search</a></li>
+        <li><a href="{% url category_object_list 'stories' %}">Stories</a></li>
+        <li><a href="{% url category_object_list 'support' %}">Support</a></li>
+        <li><a href="{% url category_object_list 'faq' %}">FAQs</a></li>
+      </ul>
+      <p><a href="#" class="lang-change">Changer de langue à Française</a></p>
+    </nav>
+    <a href="#main" id="nav-close" class="hidden">main</a>
+    {% endblock %}
 </body>
 </html>
