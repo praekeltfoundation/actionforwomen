@@ -32,7 +32,7 @@
     <p class="article-date">{% humanize_time_diff object.publish_on "Ago" %}</p>
   </div>
   {% if object.comments_enabled %}
-    <a href="#" class="link-comments link-comments-alt">
+    <a href="#comments" class="link-comments link-comments-alt">
     <i class="i i-comment i-comment-alt"></i>{{ object.comment_count }}</a>
   {% endif %}
 </header>
