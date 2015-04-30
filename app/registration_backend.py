@@ -17,7 +17,6 @@ class MamaBackend(SimpleBackend):
         # Set alias from uername
         profile = user.profile
         if not profile.alias:
-            profile.alias = user.username
             profile.save()
 
         return ('registration_done', (), {})

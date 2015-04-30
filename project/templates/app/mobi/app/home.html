@@ -2,16 +2,8 @@
 
 {% load cache mama_inclusion_tags livechat_tags survey_inclusion_tags %}
 
-{% block following_header %}
-{% include "app/inclusion_tags/registration_banner.html" %}
-{% live_chat_banner %}
-{% endblock %}
-
 {% block content %}
-    {% cache 3600 home %}
-        {% stories_listing "moms-stories" %}
-        {% post_listing "articles" %}
-    {% endcache %}
+    {% stories_listing "stories" %}
     {% if not READ_ONLY_MODE %}
         {% show_content_quizzes %}
         {% poll_listing %}

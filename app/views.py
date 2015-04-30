@@ -609,7 +609,6 @@ class MyProfileEdit(FormView):
         """
         user = self.request.user
         profile = user.profile
-        profile.alias = form.cleaned_data['username']
         profile.mobile_number = form.cleaned_data['mobile_number']
         profile.relation_to_baby = form.cleaned_data['relation_to_baby']
         profile.about_me = form.cleaned_data['about_me']
@@ -669,7 +668,6 @@ class ProfileView(FormView):
     def form_valid(self, form):
         user = self.request.user
         profile = user.profile
-        profile.alias = form.cleaned_data['username']
         if form.cleaned_data['delivery_date']:
             # parser returns today's date for an empty string.
             profile.delivery_date = parser.parse(
@@ -734,7 +732,6 @@ class VLiveEditProfile(FormView):
         """
         user = self.request.user
         profile = user.profile
-        profile.alias = form.cleaned_data['username']
         profile.relation_to_baby = form.cleaned_data['relation_to_baby']
         profile.about_me = form.cleaned_data['about_me']
         profile.baby_name = form.cleaned_data['baby_name']
