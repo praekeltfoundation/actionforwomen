@@ -31,8 +31,8 @@ from post.models import Post
 from poll.models import Poll
 from poll.admin import PollAdmin
 from jmboyourwords.admin import YourStoryEntryAdmin
-from jmboyourwords.models import YourStoryEntry
-from livechat.models import LiveChat
+from jmboyourwords.models import YourStoryEntry, YourStoryCompetition
+from livechat.models import LiveChat, LiveChatResponse
 from livechat.admin import LiveChatAdmin
 
 from app.utils import ban_user
@@ -391,7 +391,6 @@ class BanAuditAdmin(admin.ModelAdmin):
 
 admin.site.register(BanAudit, BanAuditAdmin)
 admin.site.register(SitePreferences, ActionforwomenPreferencesAdmin)
-admin.site.register(Banner, BannerAdmin)
 admin.site.register(DefaultAvatar, DefaultAvatarAdmin)
 
 admin.site.register(ModelBase, ModelBaseHiddenAdmin)
@@ -419,13 +418,12 @@ admin.site.register(UnsureComment, ActionforwomenUnsureCommentAdmin)
 
 try:
     admin.site.unregister(YourStoryEntry)
+    admin.site.unregister(YourStoryCompetition)
     admin.site.unregister(LiveChat)
+    admin.site.unregister(LiveChatResponse)
 except NotRegistered:
     pass
-admin.site.register(YourStoryEntry, ActionforwomenYourStoryEntryAdmin)
-admin.site.register(LiveChat, ActionforwomenLiveChatAdmin)
 
-admin.site.register(Question, QuestionAdmin)
 admin.site.unregister(Relation)
 admin.site.register(Relation, HiddenModelAdmin)
 
