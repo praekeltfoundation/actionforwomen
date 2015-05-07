@@ -16,6 +16,9 @@ from django.contrib.comments.models import Comment
 from django.contrib.admin.sites import NotRegistered
 from django.contrib.contenttypes.models import ContentType
 
+from django.contrib.auth.models import User
+from django.contrib.auth.admin import UserAdmin
+
 from jmbo.models import ModelBase, Relation
 from jmbo.admin import ModelBaseAdmin
 from preferences.admin import PreferencesAdmin
@@ -416,13 +419,19 @@ admin.site.register(ReportedComment, ActionforwomenReportedCommentAdmin)
 admin.site.register(SpamComment, ActionforwomenSpamCommentAdmin)
 admin.site.register(UnsureComment, ActionforwomenUnsureCommentAdmin)
 
+from userprofile.admin import ProfileInline
+
 try:
     admin.site.unregister(YourStoryEntry)
     admin.site.unregister(YourStoryCompetition)
     admin.site.unregister(LiveChat)
     admin.site.unregister(LiveChatResponse)
+    admin.site.unregister(User)
 except NotRegistered:
     pass
+
+# Hide userprofile.admin fields by using the default django admin for User
+admin.site.register(User, UserAdmin)
 
 admin.site.unregister(Relation)
 admin.site.register(Relation, HiddenModelAdmin)
