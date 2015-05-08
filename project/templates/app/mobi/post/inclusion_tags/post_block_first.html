@@ -3,7 +3,7 @@
   {% if object.image %}
       <img src="{{ object.get_large_url }}" alt="{{ object.title }}"/>
   {% else %}
-      <img src="{{ STATIC_URL }}img/squitten.jpg" alt="{{ object.title }}"/>
+      <img src="{{ STATIC_URL }}img/img_holder.png" alt="{{ object.title }}"/>
   {% endif %}
   <a href="{{ object.get_absolute_category_url }}" class="over-text">
     <h3 class="article-title">{{ object.title }}</h3>

@@ -15,7 +15,7 @@
 {% for comment in comments %}
   <li class="comment">
     <span class="avatar">
-      <img src="{{STATIC_URL}}img/squitten-s.jpg" alt="A small square kitten">
+      <img src="{{ STATIC_URL }}img/img_holder_s.png" alt="{{ comment.name }}"/>
     </span>
 
     <span class="comment-meta">
@@ -44,7 +44,7 @@
     {% for commentreply in comment.replied_to_comments_set.all %}
       <li class="comment">
         <span class="avatar">
-          <img src="{{STATIC_URL}}img/squitten-s.jpg" alt="A small square kitten">
+          <img src="{{ STATIC_URL }}img/img_holder_s.png" alt="{{ comment.name }}"/>
         </span>
 
         <span class="comment-meta">
