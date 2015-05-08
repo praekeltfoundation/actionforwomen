@@ -18,9 +18,9 @@
   {% endif %}
   <a href="#" class="over-text">
     <h3 class="article-title">{{ object.title }}</h3>
-    {% if object.description %}
+    {% if object.subtitle %}
     <p>
-      {{ object.description }}
+      {{ object.subtitle }}
     </p>
     {% endif %}
   </a>
@@ -36,7 +36,10 @@
     <i class="i i-comment i-comment-alt"></i>{{ object.comment_count }}</a>
   {% endif %}
 </header>
-<article>{{ object.content|safe }}</article>
+<article>
+<p>{{ object.description }}</p>
+{{ object.content|safe }}
+</article>
 
 {% if not READ_ONLY_MODE %}
 {% mama_object_comments object %}

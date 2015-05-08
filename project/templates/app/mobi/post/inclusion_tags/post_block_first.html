@@ -7,9 +7,9 @@
   {% endif %}
   <a href="{{ object.get_absolute_category_url }}" class="over-text">
     <h3 class="article-title">{{ object.title }}</h3>
-        {% if object.description %}
+        {% if object.subtitle %}
         <p>
-          {{ object.description }}
+          {{ object.subtitle }}
         </p>
         {% endif %}
   </a>

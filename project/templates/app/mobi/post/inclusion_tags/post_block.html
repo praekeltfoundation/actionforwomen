@@ -8,9 +8,9 @@
 </a>
 <div class="article-teaser-text">
   <a href="{{ object.get_absolute_category_url }}">{{ object.title }}</a>
-  {% if object.description %}
+  {% if object.subtitle %}
     <p>
-      {{ object.description }}
+      {{ object.subtitle }}
     </p>
     {% endif %}
 </div>
@@ -18,9 +18,9 @@
     <h3 class="article-title">
         <a href="{{ object.get_absolute_category_url }}">{{ object.title }}</a>
     </h3>
-    {% if object.description %}
+    {% if object.subtitle %}
     <p>
-      {{ object.description }}
+      {{ object.subtitle }}
     </p>
     {% endif %}
 {% endif %}
