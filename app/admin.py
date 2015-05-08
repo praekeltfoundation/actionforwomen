@@ -50,6 +50,8 @@ from app.models import (
     SupportPost,
     StoryPost,
     FAQPost,
+    FactPost,
+    CelebrityPost,
     BanAudit
 )
 
@@ -406,6 +408,8 @@ admin.site.register(Post, PostAdmin)
 admin.site.register(StoryPost, ActonforwomenPostAdmin)
 admin.site.register(SupportPost, ActonforwomenPostAdmin)
 admin.site.register(FAQPost, ActonforwomenPostAdmin)
+admin.site.register(FactPost, ActonforwomenPostAdmin)
+admin.site.register(CelebrityPost, ActonforwomenPostAdmin)
 admin.site.register(Poll, ActonforwomenPollAdmin)
 
 admin.site.unregister(Comment)

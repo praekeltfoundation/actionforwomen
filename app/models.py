@@ -30,6 +30,8 @@ class StoryPost(Post):
     class Meta:
         app_label = 'post'
         proxy = True
+        verbose_name = 'Stories'
+        verbose_name_plural = 'Stories'
 
     def save(self, *args, **kwargs):
         if not self.primary_category:
@@ -44,6 +46,8 @@ class SupportPost(Post):
     class Meta:
         app_label = 'post'
         proxy = True
+        verbose_name = 'Support'
+        verbose_name_plural = 'Support'
 
     def save(self, *args, **kwargs):
         if not self.primary_category:
@@ -58,12 +62,46 @@ class FAQPost(Post):
     class Meta:
         app_label = 'post'
         proxy = True
+        verbose_name = 'FAQs'
+        verbose_name_plural = 'FAQs'
 
     def save(self, *args, **kwargs):
         if not self.primary_category:
             self.primary_category = Category.objects.get(
                 slug=self.primary_category_slug)
         super(FAQPost, self).save(*args, **kwargs)
+
+
+class CelebrityPost(Post):
+    primary_category_slug = 'celebrity'
+
+    class Meta:
+        app_label = 'post'
+        proxy = True
+        verbose_name = 'Celebrities'
+        verbose_name_plural = 'Celebrities'
+
+    def save(self, *args, **kwargs):
+        if not self.primary_category:
+            self.primary_category = Category.objects.get(
+                slug=self.primary_category_slug)
+        super(CelebrityPost, self).save(*args, **kwargs)
+
+
+class FactPost(Post):
+    primary_category_slug = 'fact'
+
+    class Meta:
+        app_label = 'post'
+        proxy = True
+        verbose_name = 'Facts'
+        verbose_name_plural = 'Facts'
+
+    def save(self, *args, **kwargs):
+        if not self.primary_category:
+            self.primary_category = Category.objects.get(
+                slug=self.primary_category_slug)
+        super(FactPost, self).save(*args, **kwargs)
 
 
 class Link(models.Model):
