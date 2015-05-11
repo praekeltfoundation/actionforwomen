@@ -149,22 +149,6 @@ class NavigationLink(models.Model):
 
 class SitePreferences(Preferences):
     __module__ = 'preferences.models'
-    pregnancy_helpline_number = models.CharField(
-        max_length=64,
-        blank=True,
-        null=True
-    )
-    baby_helpline_number = models.CharField(
-        max_length=64,
-        blank=True,
-        null=True
-    )
-    hivaids_helpline_number = models.CharField(
-        "HIV/Aids helpline number",
-        max_length=64,
-        blank=True,
-        null=True
-    )
     about = RichTextField(
         blank=True,
         null=True
