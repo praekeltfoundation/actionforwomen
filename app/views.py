@@ -493,6 +493,7 @@ class MyProfileView(TemplateView):
         user = self.request.user
         profile = user.profile
         context['username'] = user.username
+        context['sur_name'] = profile.sur_name
         if profile.avatar:
             context['avatar'] = profile.avatar.url
         context['mobile_number'] = profile.mobile_number
@@ -567,6 +568,8 @@ class MyProfileEdit(FormView):
         user = self.request.user
         profile = user.profile
         initial['username'] = user.username
+        initial['sur_name'] = profile.sur_name
+        initial['engage_anonymously'] = profile.engage_anonymously
         initial['avatar'] = profile.avatar
         initial['mobile_number'] = profile.mobile_number
         initial['relation_to_baby'] = profile.relation_to_baby
@@ -589,14 +592,14 @@ class MyProfileEdit(FormView):
 
     def get_form(self, form_class):
         form = super(MyProfileEdit, self).get_form(form_class)
-        if form.initial['date_qualifier'] == 'due_date':
-            form.fields['relation_to_baby'].choices = RELATION_PARENT_TO_BE_CHOICES
-            form.fields['delivery_date'].label = 'Due Date'
-        else:
-            form.fields['relation_to_baby'].choices = RELATION_PARENT_CHOICES
-            form.fields['delivery_date'].label = 'Birth Date'
-            del form.fields['unknown_date']
-            del form.fields['baby_has_been_born']
+        # if form.initial['date_qualifier'] == 'due_date':
+        #     form.fields['relation_to_baby'].choices = RELATION_PARENT_TO_BE_CHOICES
+        #     form.fields['delivery_date'].label = 'Due Date'
+        # else:
+        #     form.fields['relation_to_baby'].choices = RELATION_PARENT_CHOICES
+        #     form.fields['delivery_date'].label = 'Birth Date'
+        #     del form.fields['unknown_date']
+        #     del form.fields['baby_has_been_born']
         return form
 
     def form_valid(self, form):
@@ -610,10 +613,10 @@ class MyProfileEdit(FormView):
         user = self.request.user
         profile = user.profile
         profile.mobile_number = form.cleaned_data['mobile_number']
-        profile.relation_to_baby = form.cleaned_data['relation_to_baby']
+        # profile.relation_to_baby = form.cleaned_data['relation_to_baby']
         profile.about_me = form.cleaned_data['about_me']
         profile.baby_name = form.cleaned_data['baby_name']
-        profile.date_qualifier = form.cleaned_data['date_qualifier']
+        # profile.date_qualifier = form.cleaned_data['date_qualifier']
         try:
             profile.unknown_date = form.cleaned_data['unknown_date']
         except KeyError:
@@ -624,7 +627,12 @@ class MyProfileEdit(FormView):
                 profile.unknown_date = False
         except KeyError:
             pass
-        profile.delivery_date = form.cleaned_data['delivery_date']
+        # profile.delivery_date = form.cleaned_data['delivery_date']
+
+        if self.request.FILES.get('image'):
+            profile.avatar = self.request.FILES['image']
+        profile.sur_name = form.cleaned_data['sur_name']
+        profile.engage_anonymously = form.cleaned_data['engage_anonymously']
 
         # save the avatar from the raw form data
         if form.data.has_key('default_avatar_id'):
@@ -692,6 +700,7 @@ class VLiveEditProfile(FormView):
         user = self.request.user
         profile = user.profile
         initial['username'] = profile.alias
+        initial['sur_name'] = profile.sur_name
         initial['relation_to_baby'] = profile.relation_to_baby
         initial['about_me'] = profile.about_me
         initial['baby_name'] = profile.baby_name
