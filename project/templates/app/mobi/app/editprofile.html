@@ -27,10 +27,8 @@
     <div class="profile-details-name">Surname</div> -->
   </div>
   
-  <label for="name" class="label-wide">{{ form.username.label_tag }}
-    <!-- <input type="text" class="input-wide" name="name" id="name" /> -->
-    {{ form.username }}
-  </label>
+  {{ form.username }}
+  
   {% if form.username.errors %}
     <div class="errors">
         {% for error in form.username.errors %}
@@ -39,13 +37,13 @@
     </div>
   {% endif %}
 
-  <label for="surname" class="label-wide">{{ form.sur_name.label_tag }}
+  <label for="last_name" class="label-wide">{{ form.last_name.label_tag }}
     <!-- <input type="text" class="input-wide" name="surname" id="surname" /> -->
-    {{ form.sur_name }}
+    {{ form.last_name }}
   </label>
-  {% if form.sur_name.errors %}
+  {% if form.last_name.errors %}
     <div class="errors">
-        {% for error in form.sur_name.errors %}
+        {% for error in form.last_name.errors %}
             <p>{{ error }}</p>
         {% endfor %}
     </div>
@@ -59,19 +57,6 @@
   {% if form.mobile_number.errors %}
     <div class="errors">
         {% for error in form.mobile_number.errors %}
-            <p>{{ error|safe }}</p>
-        {% endfor %}
-    </div>
-  {% endif %}
-
-
-  <label for="surname" class="label-wide">{{ form.about_me.label_tag }}
-    <!-- <input type="text" class="input-wide" name="surname" id="surname" /> -->
-    {{ form.about_me }}
-  </label>
-  {% if form.about_me.errors %}
-    <div class="errors">
-        {% for error in form.about_me.errors %}
             <p>{{ error|safe }}</p>
         {% endfor %}
     </div>
