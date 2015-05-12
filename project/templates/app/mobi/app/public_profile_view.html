@@ -16,18 +16,7 @@
       </a> Made<br/>
     </div>
   </div>
-
-  {% if about_me %}
-  <div class="post">
-    <div class="title">
-        About {{ alias }}
-    </div>
-    <div class="stamp"> 
-      {{ about_me|safe }}
-    </div>
-  </div>
-  {% endif %}
-
+  
   {% if date_type != 'unspecified' or delivery_date %}
   <div class="post">
     <div class="title">

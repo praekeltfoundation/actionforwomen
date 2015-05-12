@@ -13,52 +13,74 @@
 </div>
 {% endif %}
 
-<div class="row">
-    <div class="post">
-        Update your profile page if you want to change your username or
-        phone number. You can also add more info about yourself and baby.
-    </div>
-</div>
-
-<form method="post" id="frmProfileEdit" action="">
+<form method="post" id="frmProfileEdit" action="" class="profile" enctype="multipart/form-data">
 {% csrf_token %}
+  <div class="profile-details">
+    <span class="avatar">
+      {% if avatar %}
+        <img src="{{ avatar }}" width="44" height="44" />
+      {% else %}
+        <img src="{{ STATIC_URL }}img/user.jpg" width="44" height="44" />
+      {% endif %}
+    </span>
+    <div class="profile-details-name">Edit your Profile</div><!-- 
+    <div class="profile-details-name">Surname</div> -->
+  </div>
+  
+  {{ form.username }}
+  
+  {% if form.username.errors %}
+    <div class="errors">
+        {% for error in form.username.errors %}
+            <p>{{ error }}</p>
+        {% endfor %}
+    </div>
+  {% endif %}
 
-    <div class="h1">About Me</div>
-    <div class="row">
-        {{ form.username.label_tag }}
-        {% if form.username.errors %}
-            <div class="errors">
-                {% for error in form.username.errors %}
-                    <p>{{ error }}</p>
-                {% endfor %}
-            </div>
-        {% endif %}
-        {{ form.username }}
+  <label for="last_name" class="label-wide">{{ form.last_name.label_tag }}
+    <!-- <input type="text" class="input-wide" name="surname" id="surname" /> -->
+    {{ form.last_name }}
+  </label>
+  {% if form.last_name.errors %}
+    <div class="errors">
+        {% for error in form.last_name.errors %}
+            <p>{{ error }}</p>
+        {% endfor %}
     </div>
-    <div class="row">
-        {{ form.mobile_number.label_tag }}
-        {% if form.mobile_number.errors %}
-            <div class="errors">
-                {% for error in form.mobile_number.errors %}
-                    <p>{{ error|safe }}</p>
-                {% endfor %}
-            </div>
-        {% endif %}
-        {{ form.mobile_number }}
-        e.g. 0719876543
+  {% endif %}
+
+  <label for="surname" class="label-wide">{{ form.mobile_number.label_tag }}
+    <!-- <input type="text" class="input-wide" name="surname" id="surname" /> -->
+    {{ form.mobile_number }}
+    e.g. 14034228916
+  </label>
+  {% if form.mobile_number.errors %}
+    <div class="errors">
+        {% for error in form.mobile_number.errors %}
+            <p>{{ error|safe }}</p>
+        {% endfor %}
     </div>
-    <div class="row">
-        {{ form.relation_to_baby.label_tag }}
-        {% if form.relation_to_baby.errors %}
-            <div class="errors">
-                {% for error in form.relation_to_baby.errors %}
-                    <p>{{ error|safe }}</p>
-                {% endfor %}
-            </div>
-        {% endif %}
-        {{ form.relation_to_baby }}
+  {% endif %}
+
+
+  <label for="surname" class="label-wide">{{ form.engage_anonymously.label_tag }}
+    <!-- <input type="text" class="input-wide" name="surname" id="surname" /> -->
+    {{ form.engage_anonymously }}
+  </label>
+  {% if form.engage_anonymously.errors %}
+    <div class="errors">
+        {% for error in form.engage_anonymously.errors %}
+            <p>{{ error|safe }}</p>
+        {% endfor %}
     </div>
+  {% endif %}
+
+
+
+
     <div class="row">
+        <label for="id_avatar">Upload your picture:</label>
+        {{ form.image }} <!--Added by TAG-->
         {% comment %}
         {{ form.avatar.label_tag }}
         {% if form.avatar.errors %}
@@ -82,68 +104,8 @@
         </div>
         {% endif %}
     </div>
-    <div class="row" style="clear: both">
-        {{ form.about_me.label_tag }}
-        {% if form.about_me.errors %}
-            <div class="errors">
-                {% for error in form.about_me.errors %}
-                    <p>{{ error|safe }}</p>
-                {% endfor %}
-            </div>
-        {% endif %}
-        {{ form.about_me }}
-    </div>
-    <div class="row">
-      <br/>
-    </div>
 
-    <div class="h1">About My Baby</div>
-    <div class="row">
-        {{ form.baby_name.label_tag }}
-        {% if form.baby_name.errors %}
-            <div class="errors">
-                {% for error in form.baby_name.errors %}
-                    <p>{{ error|safe }}</p>
-                {% endfor %}
-            </div>
-        {% endif %}
-        {{ form.baby_name }}
-    </div>
-    {{ form.date_qualifier }}
-    <div class="row shorter">
-        {{ form.delivery_date.label_tag }}
-        {% if form.delivery_date.errors %}
-            <div class="errors">
-                {% for error in form.delivery_date.errors %}
-                    <p>{{ error }}</p>
-                {% endfor %}
-            </div>
-        {% endif %}
-        {{ form.delivery_date }}
-    </div>
-    <div class="row">
-        {% if form.unknown_date.errors %}
-            <div class="errors">
-                {% for error in form.unknown_date.errors %}
-                    <p>{{ error|safe }}</p>
-                {% endfor %}
-            </div>
-        {% endif %}
-        {{ form.unknown_date }} {{ form.unknown_date.label }}
-    </div>
-    <div class="row">
-        {% if form.baby_has_been_born.errors %}
-            <div class="errors">
-                {% for error in form.baby_has_been_born.errors %}
-                    <p>{{ error|safe }}</p>
-                {% endfor %}
-            </div>
-        {% endif %}
-        {{ form.baby_has_been_born }} {{ form.baby_has_been_born.label }}
-    </div>
-    <div class="row">
-        <input type="submit" name="submit" value="Save" class="btn" />
-    </div>
+  <input type="submit" value="Update profile" class="btn btn-wide">
 </form>
 
 {% endblock %}

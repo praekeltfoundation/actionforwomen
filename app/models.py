@@ -310,6 +310,11 @@ class UserProfile(AbstractProfileBase):
     avatar = models.ImageField('avatar', max_length=100,
                                upload_to='users/profile',
                                blank=True, null=True)
+    engage_anonymously = models.BooleanField(
+        help_text='Whether engage_anonymously or not.',
+        default=False,
+        blank=True,
+    )
 
     def relation_description(self):
         """
