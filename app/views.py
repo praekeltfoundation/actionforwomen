@@ -578,9 +578,8 @@ class MyProfileEdit(FormView):
         profile = user.profile
         profile.mobile_number = form.cleaned_data['mobile_number']
 
-        if self.request.FILES.get('image'):
-            profile.avatar = self.request.FILES['image']
         user.last_name = form.cleaned_data['last_name']
+        profile.avatar = form.cleaned_data['avatar']
         profile.engage_anonymously = form.cleaned_data['engage_anonymously']
 
         # save the avatar from the raw form data

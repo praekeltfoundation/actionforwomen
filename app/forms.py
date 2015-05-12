@@ -17,6 +17,9 @@ from django.utils.http import int_to_base36
 from django.utils.safestring import mark_safe
 from django.core.mail import EmailMessage, mail_managers
 
+from PIL import Image
+from django.utils.translation import ugettext as _
+
 from pml import forms as pml_forms
 from registration.forms import RegistrationFormTermsOfService
 from jmboyourwords.models import YourStoryEntry
@@ -218,7 +221,11 @@ class EditProfileForm(RegistrationForm):
         label="Baby has been born",
         required=False
     )
-    image = forms.ImageField()
+    avatar = forms.ImageField(
+        label="Upload Picture",
+        required=False
+    )
+
     username = forms.CharField(
         max_length=100,
         label="Username",
@@ -240,6 +247,7 @@ class EditProfileForm(RegistrationForm):
         self.fields.keyOrder = [
             'username',
             'mobile_number',
+            'avatar',
             'last_name',
             'engage_anonymously',
         ]
@@ -268,6 +276,25 @@ class EditProfileForm(RegistrationForm):
             raise forms.ValidationError(
                 "Could not find a user with this username.")
         return self.cleaned_data['username']
+
+    def clean_avatar(self):
+        image = self.cleaned_data.get('avatar', False)
+        try:
+            img = Image.open(image)
+            w, h = img.size
+            max_width = max_height = 500
+            if w > max_width or h > max_height:
+                raise forms.ValidationError(
+                    _('Please use an image that is smaller or equal to '
+                      '%s x %s pixels.' % (max_width, max_height)))
+            main, sub = image.content_type.split('/')
+            if not (main == 'image' and sub.lower() in ['jpeg', 'pjpeg', 'png', 'jpg']):
+                raise forms.ValidationError(_('Please use a JPEG or PNG image.'))
+            if len(image) > (1 * 1024 * 1024):
+                raise forms.ValidationError(_('Image file too large ( maximum 1mb )'))
+        except AttributeError:
+            pass
+        return image    
 
     def clean_last_name(self):
         """

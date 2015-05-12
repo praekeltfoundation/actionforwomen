@@ -76,13 +76,8 @@
   {% endif %}
 
 
-
-
     <div class="row">
         <label for="id_avatar">Upload your picture:</label>
-        {{ form.image }} <!--Added by TAG-->
-        {% comment %}
-        {{ form.avatar.label_tag }}
         {% if form.avatar.errors %}
             <div class="errors">
                 {% for error in form.avatar.errors %}
@@ -91,7 +86,6 @@
             </div>
         {% endif %}
         {{ form.avatar }}
-        {% endcomment %}
         {% if form.default_avatars %}
         <div style="float: left">
             <label for="id_avatar">Choose an avatar:</label>
