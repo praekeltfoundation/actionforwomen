@@ -22,7 +22,7 @@ from app.views import (CategoryDetailView, CategoryListView,
                         PublicProfileView, UserCommentsView,
                         GuidesView, GuidesTopicView,
                         MoreGuidesView, GuideDetailView)
-from app.forms import PasswordResetForm
+from app.forms import PasswordResetForm, PasswordResetEmailForm
 from moderator.models import CommentReply
 from app.models import Post
 from django.contrib.comments import Comment
@@ -70,6 +70,15 @@ urlpatterns = patterns('',
         r'^logout/$',
         'app.views.logout',
         name='logout'
+    ),
+    url(
+        r'^resetpassword/$', 
+        'django.contrib.auth.views.password_reset',
+        {
+            'password_reset_form': PasswordResetEmailForm,
+            'template_name': 'app/password_reset_email.html',
+        }, 
+        name="reset_password_email"
     ),
     url(
         r'^password-reset/$',
