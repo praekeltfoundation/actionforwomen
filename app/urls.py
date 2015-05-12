@@ -72,7 +72,7 @@ urlpatterns = patterns('',
         name='logout'
     ),
     url(
-        r'^resetpassword/$', 
+        r'^password-reset/$', 
         'django.contrib.auth.views.password_reset',
         {
             'password_reset_form': PasswordResetEmailForm,
