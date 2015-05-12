@@ -1,39 +1,42 @@
 {% load i18n jmbo_template_tags %}
-
 <div class="object-widget-inclusion poll-widget-inclusion" id="poll-widget-oid-{{ object.id }}">
-    {% if object.image %}<div class="image"><img src="{{ object.get_modelbase_list_item_thumbnail_LAYER_url }}"/></div>{% endif %}
-    <div class="poll-form-title">{{ object.title }}</div>
-
+    <!-- {% if object.image %}<div class="image"><img src="{{ object.get_modelbase_list_item_thumbnail_LAYER_url }}"/></div>{% endif %} -->
     {% if can_vote_on_poll and not READ_ONLY_MODE %}
-        <form action="{% url poll_vote object.slug %}" method="POST" id="poll-widget-form-{{ object.id }}">
-            {% csrf_token %}
-            {{ form.as_div }}
-            <div class="row">
-                <input type="submit" value="{% trans "Vote" %}" class="btn" />
-                <a href="{{ object.get_absolute_url }}?results=1" onclick="document.getElementById('poll-widget-results-{{ object.id }}').style.display = 'block'; document.getElementById('poll-widget-form-{{ object.id }}').style.display = 'none'; return false;">{% trans "See results" %}</a>
+        <form action="{% url poll_vote object.slug %}" method="POST" id="poll-widget-form-{{ object.id }}" class="poll highlight-quaternary">
+        {% csrf_token %}
+            <h3 class="article-title">{{ object.title }}</h3>
+            <div class="poll-options">
+                {{ form.as_div }}
+            </div>
+            <div class="poll-view-results">
+                <input type="submit" value="{% trans "Vote" %}" class="btn btn-wide">
+                <p class="cta"><a href="{{ object.get_absolute_url }}?results=1" onclick="document.getElementById('poll-widget-results-{{ object.id }}').style.display = 'block'; document.getElementById('poll-widget-form-{{ object.id }}').style.display = 'none'; return false;">{% trans "See results" %}</a></p>
             </div>
         </form>
     {% endif %}
 
-    <div id="poll-widget-results-{{ object.id }}" {% if can_vote_on_poll %}style="display: none;"{% endif %}>
-        <table class="poll-results" cellspacing="0">
-        {% for obj in object.polloption_set.all %}
-            <tr class="poll-result-{{ forloop.counter }}">
-                <td>{{ obj.title }}</td>
-                <td class="bar">
-                    <div style="width: {{ obj.percentage }}%;">&nbsp;</div>
-                </td>
-                <td>
-                    {{ obj.percentage|floatformat }}%
-                </td>
-            </tr>
-        {% endfor %}
-        </table>
-        {% if can_vote_on_poll and not READ_ONLY_MODE %}
+    <div class="poll-results" id="poll-widget-results-{{ object.id }}" {% if can_vote_on_poll %}style="display: none;"{% endif %}>
+    <h3 class="article-title">{{ object.title }}</h3>    
+    {% for obj in object.polloption_set.all %}
+        <div class="poll-result">
+            <span class="poll-result-answer">{{ obj.title }}</span>
+
+        {% if obj.percentage|floatformat == "100" %}
+            <div class="poll-result-bar poll-results-bar-large" style="width: {{ obj.percentage|floatformat }}%" data-percent="{{ obj.percentage|floatformat }}%"></div>
+        {% elif obj.percentage|floatformat > "75" %}
+            <div class="poll-result-bar rightAfter" style="width: {{ obj.percentage|floatformat }}%" data-percent="{{ obj.percentage|floatformat }}%"></div>
+        {% else %}
+            <div class="poll-result-bar"  style="width: {{ obj.percentage|floatformat }}%" data-percent="{{ obj.percentage|floatformat }}%"></div>
+        {% endif %}
+            
+        </div>
+    {% endfor %}  
+
+    {% if can_vote_on_poll and not READ_ONLY_MODE %}
         <div class="row">
           <input type="button" class="btn" value="Vote" onclick="document.getElementById('poll-widget-results-{{ object.id }}').style.display = 'none'; document.getElementById('poll-widget-form-{{ object.id }}').style.display = 'block'; return false;" />
         </div>
-        {% endif %}
+    {% endif %}
     </div>
 
     {% if not can_vote_on_poll or READ_ONLY_MODE %}
@@ -41,5 +44,4 @@
             <a href="{% url login %}">{% trans "You must be signed in to vote" %}</a>
         {% endif %}
     {% endif %}
-
 </div>
