@@ -145,7 +145,7 @@ class PasswordResetEmailForm(forms.Form):
             recipients,
             headers={'From': from_address, 'Reply-To': from_address}
         )
-        mail.send(fail_silently=False)        
+        mail.send(fail_silently=True)        
 
 
 class RegistrationForm(RegistrationFormTermsOfService):
