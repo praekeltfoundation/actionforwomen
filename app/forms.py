@@ -99,7 +99,7 @@ class PasswordResetForm(PasswordResetForm):
 
 
 class PasswordResetEmailForm(forms.Form):
-    email = forms.CharField(max_length=64)
+    email = forms.EmailField()
 
         
     def clean_email(self):
