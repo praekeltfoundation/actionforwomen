@@ -4,7 +4,7 @@
 {% if not comments_open %}
 <div>Comments are currently closed.</div>
 {% else %}
-<form action="{% url post_comment %}" method="post">
+<form action="{% url post_comment %}" method="post" class="padded-page">
     {% csrf_token %}
     <div class="row" style="display:none;">
         {% for field in form %}
@@ -15,7 +15,7 @@
             {% endif %}
         {% endfor %}
     </div>
-    <div class="row">
+    <fieldset>
         {{ form.comment.label_tag }}
         {% if form.comment.errors %}
             <div class="errors">
@@ -25,12 +25,9 @@
             </div>
         {% endif %}
         {{ form.comment }}
-    </div>
-    <div class="row">
         <input type="submit" name="post" value="Post" class="btn" />
         {% if next %}<div><input type="hidden" name="next" value="{{ next }}" /></div>{% endif %}
-    </div>
-    <div class="clear"></div>
+    </fieldset>
 </form>
 {% endif %}
 {% endblock %}
