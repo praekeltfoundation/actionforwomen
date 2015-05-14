@@ -19,7 +19,7 @@
 {% elif not READ_ONLY_MODE %}
 
 {% if not user.profile %}
-    <div class="comments highlight-quaternary">
+    <div class="comments highlight-quaternary" id="add-comment">
     You must be registered to comment <a href="{% url login %}" id="show-signin-additional">Sign in here</a>
     </div>
 {% else %}
@@ -30,7 +30,7 @@
         </div>
 
     {% else %}
-        <div class="comments highlight-quaternary">
+        <div class="comments highlight-quaternary" id="add-comment">
         <b>Want to comment? You will need to accept our new commenting rules first.</b><br><br/>
         <b>Commenting Rules</b><br/>
         The A4W community likes comments that show you’re as serious about yourself and your family’s future as we are.  But there are comments that we don’t like: swear words, dirty words, sexy-talk, pick-ups, come-ons, rudeness, abusiveness, racism, sexism, forcing your religious beliefs on others and posting your phone number or email address in the comments stream.<br><br/>
