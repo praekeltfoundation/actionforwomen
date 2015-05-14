@@ -15,6 +15,7 @@ from django.core.validators import RegexValidator
 from django.forms.extras.widgets import SelectDateWidget
 from django.utils.http import int_to_base36
 from django.utils.safestring import mark_safe
+from django.core.mail import EmailMessage, mail_managers
 
 from pml import forms as pml_forms
 from registration.forms import RegistrationFormTermsOfService
@@ -85,7 +86,7 @@ class PasswordResetForm(PasswordResetForm):
         token = default_token_generator.make_token(self.profile.user)
         current_site = get_current_site(kwargs['request'])
 
-        message = "Hi %s. Follow this link to reset your MAMA password: http://%s%s" % (
+        message = "Hi %s. Follow this link to reset your pin: http://%s%s" % (
             self.user.username,
             current_site.domain,
             reverse(
@@ -95,6 +96,56 @@ class PasswordResetForm(PasswordResetForm):
         )
 
         send_sms.delay(self.profile.mobile_number, message)
+
+
+class PasswordResetEmailForm(forms.Form):
+    email = forms.EmailField()
+
+        
+    def clean_email(self):
+        """
+        Validates that an active user exists with the given email address.
+        """
+        email = self.cleaned_data['email']
+        # Fail with invalid number.
+        try:
+            email = self.cleaned_data["email"]
+            self.user = User.objects.get(email__iexact=email)
+        except app.models.UserProfile.DoesNotExist:
+            raise forms.ValidationError("Unable to find an account for the "
+                                        "provided email. Please try "
+                                        "again.")
+        return email
+    def save(self, *args, **kwargs):
+        """
+        Generates a one-use only link for resetting password and sends to the
+        user.
+        """
+
+        uid = int_to_base36(self.user.id)
+        token = default_token_generator.make_token(self.user)
+        current_site = get_current_site(kwargs['request'])
+
+        message = "Hi %s. Follow this link to reset your pin: http://%s%s" % (
+            self.user.username,
+            current_site.domain,
+            reverse(
+                'password_reset_confirm',
+                kwargs={'uidb36': uid, 'token': token}
+            )
+        )
+
+        subject = "Password Reset"
+        recipients= [self.user.email]
+        from_address = settings.FROM_EMAIL_ADDRESS
+        mail = EmailMessage(
+            subject,
+            message,
+            from_address,
+            recipients,
+            headers={'From': from_address, 'Reply-To': from_address}
+        )
+        mail.send(fail_silently=True)        
 
 
 class RegistrationForm(RegistrationFormTermsOfService):
@@ -107,16 +158,19 @@ class RegistrationForm(RegistrationFormTermsOfService):
     def __init__(self, *args, **kwargs):
         super(RegistrationForm, self).__init__(*args, **kwargs)
         # set up the form
-        del self.fields['email']
+        #del self.fields['email']
         del self.fields['password2']
         self.fields.keyOrder = [
             'username',
+            'email',
             'password1',
             'mobile_number',
             'tos',
         ]
         self.fields['username'].label = "Choose a username"
+        self.fields['email'].label = "Choose email"
         self.fields['password1'].label = "Choose a password"
+
         self.fields['tos'].label = mark_safe('I accept the <a href="%s">terms '
                                              'and conditions</a> of use.'
                                              % reverse("terms"))
@@ -134,6 +188,17 @@ class RegistrationForm(RegistrationFormTermsOfService):
                                   'password?</a>' % reverse("password_reset"))
         except app.models.UserProfile.DoesNotExist:
             return mobile_number
+
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        try:
+            User.objects.get(
+                email__exact=email
+            )
+            raise ValidationError('A user with that email already '
+                                  'exists')
+        except User.DoesNotExist:
+            return email
 
 
 class EditProfileForm(RegistrationForm):

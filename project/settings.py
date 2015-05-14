@@ -325,6 +325,8 @@ RECIPIENT = []
 # This disables all POST operations on the site.
 READ_ONLY_MODE = False
 
+FROM_EMAIL_ADDRESS = "ActionForWomen<contact@actionforwomen.mobi>"
+
 # Puppet will put this on the server.
 try:
     from project.local_settings import *

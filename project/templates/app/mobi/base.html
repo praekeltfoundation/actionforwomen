@@ -144,7 +144,7 @@
         <input type="submit" value="Submit" class="btn btn-wide" />
       </fieldset>
 
-      <a href="{% url password_reset %}">I forgot my password</a>
+      <a href="{% url reset_password_email %}">I forgot my password</a>
 
       <div class="sign-up">
         <p>Don't have an account?<br />
@@ -161,7 +161,7 @@
           <input type="text" id="username" name="username" class="input-wide" />
         </label>
         <label for="id_password1">Password
-        <input name="password1" id="id_password1" type="password" class="input-wide">
+        <input name="password1" id="id_password1" type="password" class="input-wide" maxlength="4">
         </label>
 
             <label for="mobile-number">Mobile Number
@@ -195,6 +195,7 @@
         <li><a href="{% url login %}" id="show-signin">Sign In</a></li>
         <li><a href="{% url registration_register %}" id="show-register">Register</a></li>
         {% else %}
+        <li><a href="{% url view_my_profile %}">View Profile</a></li>
         <li><a href="{% url logout %}">Logout</a></li>
         {% endif %}
         <li><a href="search.html" id="show-search">Search</a></li>
