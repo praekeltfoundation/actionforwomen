@@ -185,7 +185,7 @@ class RegistrationForm(RegistrationFormTermsOfService):
             )
             raise ValidationError('A user with that mobile number already '
                                   'exists. <a href="%s">Forgotten your '
-                                  'password?</a>' % reverse("password_reset"))
+                                  'password?</a>' % reverse("reset_password_email"))
         except app.models.UserProfile.DoesNotExist:
             return mobile_number
 
