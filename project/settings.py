@@ -321,7 +321,6 @@ CELERY_ACCEPT_CONTENT = ['json', 'msgpack', 'yaml']
 EMAIL_BACKEND = 'djcelery_email.backends.CeleryEmailBackend'
 
 CELERY_EMAIL_TASK_CONFIG = {
-    'queue': 'django_email',
     'delivery_mode': 1,  # non persistent
     'rate_limit': '50/m',  # 50 chunks per minute
 }
