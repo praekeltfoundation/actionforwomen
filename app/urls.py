@@ -72,22 +72,13 @@ urlpatterns = patterns('',
         name='logout'
     ),
     url(
-        r'^resetpassword/$', 
+        r'^password-reset/$', 
         'django.contrib.auth.views.password_reset',
         {
             'password_reset_form': PasswordResetEmailForm,
             'template_name': 'app/password_reset_email.html',
         }, 
         name="reset_password_email"
-    ),
-    url(
-        r'^password-reset/$',
-        'django.contrib.auth.views.password_reset',
-        {
-            'password_reset_form': PasswordResetForm,
-            'template_name': 'app/password_reset.html',
-        },
-        name='password_reset'
     ),
     url(
         r'^password-reset-done/$',

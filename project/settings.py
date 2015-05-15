@@ -170,6 +170,7 @@ INSTALLED_APPS = (
     'livechat',
     'app.commenting',
     'djcelery',
+    'djcelery_email',
     'google_analytics',
     'raven.contrib.django.raven_compat',
 )
@@ -319,11 +320,18 @@ CELERY_ACCEPT_CONTENT = ['json', 'msgpack', 'yaml']
 # then just print the emails to stdout for debugging.
 EMAIL_BACKEND = 'djcelery_email.backends.CeleryEmailBackend'
 
+CELERY_EMAIL_TASK_CONFIG = {
+    'delivery_mode': 1,  # non persistent
+    'rate_limit': '50/m',  # 50 chunks per minute
+}
+
 SENDER = ""
 RECIPIENT = []
 
 # This disables all POST operations on the site.
 READ_ONLY_MODE = False
+
+FROM_EMAIL_ADDRESS = "ActionForWomen<contact@actionforwomen.mobi>"
 
 # Puppet will put this on the server.
 try:

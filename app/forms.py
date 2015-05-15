@@ -89,7 +89,7 @@ class PasswordResetForm(PasswordResetForm):
         token = default_token_generator.make_token(self.profile.user)
         current_site = get_current_site(kwargs['request'])
 
-        message = "Hi %s. Follow this link to reset your MAMA password: http://%s%s" % (
+        message = "Hi %s. Follow this link to reset your pin: http://%s%s" % (
             self.user.username,
             current_site.domain,
             reverse(
@@ -102,7 +102,7 @@ class PasswordResetForm(PasswordResetForm):
 
 
 class PasswordResetEmailForm(forms.Form):
-    email = forms.CharField(max_length=64)
+    email = forms.EmailField()
 
         
     def clean_email(self):
@@ -129,7 +129,7 @@ class PasswordResetEmailForm(forms.Form):
         token = default_token_generator.make_token(self.user)
         current_site = get_current_site(kwargs['request'])
 
-        message = "Hi %s. Follow this link to reset your MAMA password: http://%s%s" % (
+        message = "Hi %s. Follow this link to reset your pin: http://%s%s" % (
             self.user.username,
             current_site.domain,
             reverse(
@@ -140,7 +140,7 @@ class PasswordResetEmailForm(forms.Form):
 
         subject = "Password Reset"
         recipients= [self.user.email]
-        from_address = "ActionForWomen<contact@actionforwomen.mobi>"
+        from_address = settings.FROM_EMAIL_ADDRESS
         mail = EmailMessage(
             subject,
             message,
@@ -148,7 +148,7 @@ class PasswordResetEmailForm(forms.Form):
             recipients,
             headers={'From': from_address, 'Reply-To': from_address}
         )
-        mail.send(fail_silently=False)        
+        mail.send(fail_silently=True)        
 
 
 class RegistrationForm(RegistrationFormTermsOfService):
