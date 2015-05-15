@@ -72,6 +72,11 @@ urlpatterns = patterns('',
         name='logout'
     ),
     url(
+        r'^set_lang/$',
+        'app.views.set_language',
+        name='set_lang'
+    ),
+    url(
         r'^password-reset/$', 
         'django.contrib.auth.views.password_reset',
         {

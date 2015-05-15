@@ -1,0 +1,221 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-05-13 19:13+0530\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+
+#: app/admin.py:181
+msgid "this week"
+msgstr ""
+
+#: app/admin.py:182
+msgid "last week"
+msgstr ""
+
+#: app/admin.py:183
+msgid "older"
+msgstr ""
+
+#: app/forms.py:300
+#, python-format
+msgid "Please use an image that is smaller or equal to 500 x 500 pixels."
+msgstr ""
+
+#: app/forms.py:307
+msgid "Please use a JPEG or PNG image."
+msgstr ""
+
+#: app/forms.py:311
+msgid "Image file too large ( maximum 1mb )"
+msgstr ""
+
+#: project/settings.py:355
+msgid "English"
+msgstr "Angielski"
+
+#: project/settings.py:356
+msgid "French"
+msgstr ""
+
+#: project/templates/app/mobi/admin/base_site.html:4
+msgid "site admin"
+msgstr ""
+
+#: project/templates/app/mobi/admin/base_site.html:7
+msgid "Administration"
+msgstr ""
+
+#: project/templates/app/mobi/poll/inclusion_tags/poll_widget.html:12
+msgid "Vote"
+msgstr ""
+
+#: project/templates/app/mobi/poll/inclusion_tags/poll_widget.html:13
+msgid "See results"
+msgstr ""
+
+#: project/templates/app/mobi/poll/inclusion_tags/poll_widget.html:41
+msgid "You must be signed in to vote"
+msgstr ""
+
+#: project/templates/app/mobi/base.html:213
+msgid "This is a translation"
+msgstr "French Angielski"
+
+
+#: project/templates/app/mobi/base.html:111
+msgid "About"
+msgstr "environ"
+
+#: project/templates/app/mobi/base.html:111
+msgid "Terms"
+msgstr "termes"
+
+#: project/templates/app/mobi/base.html:111
+msgid "Site Language:"
+msgstr "Langue du site:"
+
+#: project/templates/app/mobi/base.html:114
+msgid "All rights reserved."
+msgstr "Tous droits réservés."
+
+#: project/templates/app/mobi/base.html:160
+msgid "Username"
+msgstr "Nom d'utilisateur"
+
+#: project/templates/app/mobi/base.html:183, 181
+msgid "Search:"
+msgstr "recherche:"
+
+#: project/templates/app/mobi/base.html:195
+msgid "Sign In"
+msgstr "S'inscrire"
+
+#: project/templates/app/mobi/base.html:198
+msgid "View Profile"
+msgstr "Voir Le Profil"
+
+#: project/templates/app/mobi/base.html:199
+msgid "Logout"
+msgstr "Se Déconnecter"
+
+#: project/templates/app/mobi/base.html:201
+msgid "Search"
+msgstr "recherche"
+
+#: project/templates/app/mobi/base.html:202
+msgid "Stories"
+msgstr "histoires"
+
+#: project/templates/app/mobi/base.html:203
+msgid "Celebrities"
+msgstr "célébrités"
+
+#: project/templates/app/mobi/base.html:204
+msgid "Facts"
+msgstr "réalités"
+
+#: project/templates/app/mobi/base.html:205
+msgid "Support"
+msgstr "soutien"
+
+#: project/templates/app/mobi/base.html:206
+msgid "FAQs"
+msgstr "FAQs"
+
+
+#: project/templates/app/mobi/base.html:133
+msgid "Enter your username and 4-digit PIN"
+msgstr "Entrez votre nom d'utilisateur et un code PIN à 4 chiffres"
+
+
+#: project/templates/app/mobi/base.html:137
+msgid "PIN"
+msgstr "PIN"
+
+#: project/templates/app/mobi/base.html:142
+msgid "Remember me"
+msgstr "souviens-toi de moi"
+
+#: project/templates/app/mobi/base.html:147
+msgid "I forgot my password"
+msgstr "J'ai oublié mon mot de passe"
+
+#: project/templates/app/mobi/base.html:150
+msgid "Don't have an account?"
+msgstr "Vous n'avez pas de compte?"
+
+#: project/templates/app/mobi/base.html:151
+msgid "Sign up here to get started"
+msgstr "Inscrivez-vous ici pour commencer"
+
+#: project/templates/app/mobi/base.html:158
+msgid "Register"
+msgstr "Inscription"
+
+#: project/templates/app/mobi/base.html:160
+#msgid "Username"
+#msgstr "Username"
+
+#: project/templates/app/mobi/base.html:163
+msgid "Password"
+msgstr "mot de passe"
+
+#: project/templates/app/mobi/base.html:167
+msgid "Mobile Number"
+msgstr "Numéro De Téléphone"
+
+#: project/templates/app/mobi/base.html:171
+msgid "I accept the"
+msgstr "Je accepte la"
+
+#: project/templates/app/mobi/base.html:171
+msgid "terms and conditions"
+msgstr "termes et conditions"
+
+#: project/templates/app/mobi/base.html:171
+msgid "of use"
+msgstr "utile"
+
+msgid "Mobile number"
+msgstr "numéro de téléphone"
+
+msgid "Email"
+msgstr "email"
+
+msgid "Submit"
+msgstr "soumettre"
+
+msgid "Sign Up"
+msgstr "signer"
+
+msgid "Thank you for joining A4W!"
+msgstr "Merci de vous joindre A4W !"
+
+msgid "Take me to the home page"
+msgstr "Aller à la page d'accueil"
+
+msgid "Your username and password didn't match. Please try again."
+msgstr "Votre nom d'utilisateur et mot de passe ne correspondent pas. S'il vous plaît essayer à nouveau."
+
+msgid "Oops, please make sure of the following:"
+msgstr "Oops , s'il vous plaît assurez-vous de ce qui suit :"
+
+msgid "You are now signed in."
+msgstr "Vous êtes maintenant connecté ."
+
+msgid "Click here to continue to the homepage."
+msgstr "Cliquez ici pour continuer à la page d'accueil ."

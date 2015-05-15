@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% load mama_inclusion_tags %}
 {% load likes_inclusion_tags %}
@@ -8,7 +9,7 @@
 {{ block.super }}
 
 <div class="{{ category.color }} padded-page">
-    <h3> More comments for {{ post.title }} </h3>
+    <h3> {% trans "More comments for" %} {{ post.title }} </h3>
 
     {% if object_list %}
         <ul class="comment-list">
@@ -23,11 +24,11 @@
             </span>
 
             {% if comment.is_removed and comment.user.profile.banned %}
-            <p>This comment has been reported by the community and the user has been banned<br><br/>
-              Don't know the commenting rules? <a href="{% url comment-terms %}">Read them here</a></p>
+            <p>{% trans "This comment has been reported by the community and the user has been banned" %}<br><br/>
+              {% trans "Don't know the commenting rules?"%}" <a href="{% url comment-terms %}">{% trans "Read them here" %}</a></p>
             {% elif comment.is_removed and not comment.user.profile.banned %}
-             <p>This comment has been removed<br><br/>
-              Don't know the commenting rules? <a href="{% url comment-terms %}">Read them here</a></p>
+             <p>{% trans "This comment has been removed" %}<br><br/>
+              {% trans "Don't know the commenting rules?" %}" <a href="{% url comment-terms %}">{% trans "Read them here" %}</a></p>
             {% else %}
             <p>{{ comment.comment|linebreaks }}</p>
             {% endif %}
@@ -35,7 +36,7 @@
               {% if not comment.user.is_staff and comment.user != request.user and request.user.is_authenticated %}
                   {% if not comment.is_removed %}
                     <ul class="comment-actions nav list-inline">
-                      <li><a href="{% url confirm_comment comment.content_type comment.id %}?next={{request.path}}">Report</a></li>
+                      <li><a href="{% url confirm_comment comment.content_type comment.id %}?next={{request.path}}">{% trans "Report" %}</a></li>
                     </ul>
                   {% endif %}
               {% endif %}
@@ -54,7 +55,7 @@
             {% endfor %}
         {% empty %}
             <li class="comment">
-                <p>No comments yet.</p>
+                <p>{% trans "No comments yet." %}</p>
             </li>
         {% endfor %}
         </ul>
@@ -63,7 +64,7 @@
     {% pagination page_obj %}
 
     <a href="{% url category_object_detail category.slug post.slug %}" class="btn btn-wide">
-        &laquo; Back to {{ post.title }}
+        &laquo; {% trans "Back to" %} {{ post.title }}
     </a>
 </div>
 {% endblock %}

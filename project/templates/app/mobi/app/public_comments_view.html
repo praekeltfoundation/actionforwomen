@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% load mama_inclusion_tags %}
+{% load i18n %}
 
 {% block content %}
 
-<div class="h1">Comments by 
+<div class="h1">{% trans "Comments by" %}"
 {% if comment_maker.profile.alias %}
     {{ comment_maker.profile.alias }}
 {% else %}

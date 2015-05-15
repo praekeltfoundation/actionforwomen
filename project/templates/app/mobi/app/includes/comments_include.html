@@ -1,9 +1,10 @@
 {% load comments %}
 {% load likes_inclusion_tags %}
 {% load moderator_inclusion_tags %}
+{% load i18n %}
 
 {% if can_comment %}
-    <div class="h1" id="comments">Comments</div>
+    <div class="h1" id="comments">{% trans "Comments" %}</div>
 
     <div class="items">
       {% for comment in comments %}
@@ -22,7 +23,7 @@
           <div class="item comment no-pic">
               <div class="meta">
                   <div class="stamp">
-                      No comments yet.
+                      {% trans "No comments yet." %}
                   </div>
               </div>
           </div>
@@ -34,7 +35,7 @@
         <div class="items">
             <div class="item-nav">
                 <a href="{% url story_comments_list category.slug object.slug %}">
-                    More Comments &raquo;
+                    {% trans "More Comments" %} &raquo;
                 </a>
             </div>
         </div>

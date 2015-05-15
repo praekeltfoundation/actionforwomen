@@ -103,6 +103,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "livechat.context_processors.current_livechat",
     "app.context_processors.comments_open",
     "app.context_processors.read_only_mode",
+    'django.core.context_processors.i18n',
 )
 
 # List of callables that know how to import templates from various sources.
@@ -117,6 +118,7 @@ MIDDLEWARE_CLASSES = (
     #       that isn't a GET or a HEAD request.
     # 'app.middleware.ReadOnlyMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -338,3 +340,13 @@ try:
     from project.local_settings import *
 except ImportError:
     pass
+    
+LOCALE_PATHS = (
+    os.path.join(PATH, "locale"),
+)
+USE_I18N = True
+ugettext = lambda s: s
+LANGUAGES = (
+    ('en', ugettext('English')),
+    ('fr', ugettext('French')),
+)

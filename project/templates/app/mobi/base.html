@@ -1,10 +1,10 @@
 <!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
 {% load cache mama_inclusion_tags %}
-
+{% load i18n %}
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Action for Women / {% if object %}{{ object.title }}{% else %}Mobile{% endif %}</title>
+    <title>{% trans "Action for Women" %} / {% if object %}{{ object.title }}{% else %}{% trans "Mobile" %}{% endif %}</title>
     <meta name="viewport" content="width=device-width; initial-scale=1.0;" />
     <meta name="description" content="{% if object %}{{ object.description }}{% endif %}">
     <meta name="keywords" content="woman,women">
@@ -94,11 +94,11 @@
             {% block footer_search_form %}
             <form action="" class="form-search highlight-primary hidden" id="search">
               <fieldset>
-                <legend>Search</legend>
-                <label for="input-search"><span class="visuallyhidden">Search:</span>
+                <legend>{% trans "Search" %}</legend>
+                <label for="input-search"><span class="visuallyhidden">{% trans "Search:" %}</span>
                   <input type="search" id="input-search" name="input-search" placeholder="e.g. women" class="input-wide" />
                 </label>
-                <input type="submit" value="Submit" class="btn btn-wide" />
+                <input type="submit" value='{% trans "Submit" %}' class="btn btn-wide" />
               </fieldset>
             </form>
             {% endblock %}
@@ -108,10 +108,10 @@
               <li><a href="#"><i class="i i-facebook"></i> <span class="visuallyhidden">Facebook</span></a></li><li><a href="#"><i class="i i-twitter"></i> <span class="visuallyhidden">Twitter</span></a></li>
             </ul>
               <ul class="nav nav-legal-lang list-inline" role="navigation">
-              <li><a href="{% url about %}">About</a></li><li><a href="{% url terms %}">Terms</a></li><li>Site Language: <a href="#" class="active">English</a> <a href="#">Française</a></li>
+              <li><a href="{% url about %}">{% trans "About" %}</a></li><li><a href="{% url terms %}">{% trans "Terms" %}</a></li><li>{% trans "Site Language:" %} <a href="{% url set_lang %}?lang=en&next={{request.path}}" class="active">English</a> <a href="{% url set_lang %}?lang=fr&next={{request.path}}">Française</a></li>
             </ul>
               <div class="copyright">
-              <p>&copy; {% now "Y" %} The NGO.<br />All rights reserved.</p>
+              <p>&copy; {% now "Y" %} The NGO.<br />{% trans "All rights reserved." %}</p>
             </div>
             </div>
         {% endblock %}
@@ -129,46 +129,46 @@
     <form method="post" id="signin" action="{% url login %}" class="form-sign-in highlight-primary">
       {% csrf_token %}
       <fieldset>
-        <legend>Sign In</legend>
-        <p>Enter your username and 4-digit PIN</p>
-        <label for="username">Username
+        <legend>{% trans "Sign In" %}</legend>
+        <p>{% trans "Enter your username and 4-digit PIN" %}</p>
+        <label for="username">{% trans "Username" %}
           <input type="text" id="username" name="username" class="input-wide" />
         </label>
-            <label for="pin">PIN
+            <label for="pin">{% trans "PIN" %}
           <input type="password" pattern="[0-9]{4}" id="pin" name="password" class="input-wide" />
         </label>
         <label for="remember-me">
           <input type="checkbox" id="remember-me" name="remember-me"/>
-          Remember me
+          {% trans "Remember me" %}
         </label>
         <input type="submit" value="Submit" class="btn btn-wide" />
       </fieldset>
 
-      <a href="{% url reset_password_email %}">I forgot my password</a>
+      <a href="{% url reset_password_email %}">{% trans "I forgot my password" %}</a>
 
       <div class="sign-up">
-        <p>Don't have an account?<br />
-        <a href="{% url registration_register %}">Sign up here to get started</a></p>
+        <p>{% trans "Don't have an account?" %}<br />
+        <a href="{% url registration_register %}">{% trans "Sign up here to get started" %}</a></p>
       </div>
     </form>
 
     <form method="post" id="register" action="{% url registration_register %}" class="form-sign-in highlight-primary">
       {% csrf_token %}
       <fieldset>
-        <legend>Register</legend>
+        <legend>{% trans "Register" %}</legend>
 
-        <label for="username">Username
+        <label for="username">{% trans "Username" %}
           <input type="text" id="username" name="username" class="input-wide" />
         </label>
-        <label for="id_password1">Password
+        <label for="id_password1">{% trans "Password" %}
         <input name="password1" id="id_password1" type="password" class="input-wide" maxlength="4">
         </label>
 
-            <label for="mobile-number">Mobile Number
+            <label for="mobile-number">{% trans "Mobile Number" %}
           <input type="tel" id="mobile-number" name="mobile_number" class="input-wide" />
         </label>
         <label for="id_tos">
-        <input id="id_tos" class="required" name="tos" type="checkbox"> I accept the <a href="/terms/">terms and conditions</a> of use.
+        <input id="id_tos" class="required" name="tos" type="checkbox"> {% trans "I accept the" %} <a href="/terms/">{% trans "terms and conditions" %}</a> {% trans "of use" %}.
         </label>
         <input type="submit" value="Submit" class="btn btn-wide" />
       </fieldset>
@@ -178,9 +178,9 @@
     {% csrf_token %}
 
       <fieldset>
-        <legend>Search</legend>
+        <legend>{% trans "Search" %}</legend>
 
-        <label for="input-search"><span class="visuallyhidden">Search:</span>
+        <label for="input-search"><span class="visuallyhidden">{% trans "Search:" %}</span>
           <input type="search" id="input-search" name="input-search" placeholder="e.g. women" class="input-wide" />
         </label>
         <input type="submit" value="Submit" class="btn btn-wide" />
@@ -192,18 +192,18 @@
     <nav class="nav-menu highlight-primary" id="menu">
       <ul class="nav list-block" role="navigation">
         {% if not user.is_authenticated %}
-        <li><a href="{% url login %}" id="show-signin">Sign In</a></li>
-        <li><a href="{% url registration_register %}" id="show-register">Register</a></li>
+        <li><a href="{% url login %}" id="show-signin">{% trans "Sign In" %}</a></li>
+        <li><a href="{% url registration_register %}" id="show-register">{% trans "Register" %}</a></li>
         {% else %}
-        <li><a href="{% url view_my_profile %}">View Profile</a></li>
-        <li><a href="{% url logout %}">Logout</a></li>
+        <li><a href="{% url view_my_profile %}">{% trans "View Profile" %}</a></li>
+        <li><a href="{% url logout %}">{% trans "Logout" %}</a></li>
         {% endif %}
-        <li><a href="search.html" id="show-search">Search</a></li>
-        <li><a href="{% url category_object_list 'stories' %}">Stories</a></li>
-        <li><a href="{% url category_object_list 'celebrity' %}">Celebrities</a></li>
-        <li><a href="{% url category_object_list 'fact' %}">Facts</a></li>
-        <li><a href="{% url category_object_list 'support' %}">Support</a></li>
-        <li><a href="{% url category_object_list 'faq' %}">FAQs</a></li>
+        <li><a href="search.html" id="show-search">{% trans "Search" %}</a></li>
+        <li><a href="{% url category_object_list 'stories' %}">{% trans "Stories" %}</a></li>
+        <li><a href="{% url category_object_list 'celebrity' %}">{% trans "Celebrities" %}</a></li>
+        <li><a href="{% url category_object_list 'fact' %}">{% trans "Facts" %}</a></li>
+        <li><a href="{% url category_object_list 'support' %}">{% trans "Support" %}</a></li>
+        <li><a href="{% url category_object_list 'faq' %}">{% trans "FAQs" %}</a></li>
       </ul>
       <p><a href="#" class="lang-change">Changer de langue à Française</a></p>
     </nav>

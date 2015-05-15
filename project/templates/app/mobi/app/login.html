@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block nav_script %}{% endblock %}
 {% block nav %}{% endblock %}
@@ -17,20 +18,20 @@
 
 {% if request.user.is_authenticated %}
 	<p>
-			<p><strong>Thanks!</strong></p>
-			<p>You are now signed in. <a href="{% url home %}">Click here to continue to the homepage.</a></p>
+			<p><strong>{% trans "Thanks!" %}</strong></p>
+			<p>{% trans "You are now signed in." %} <a href="{% url home %}">{% trans "Click here to continue to the homepage." %}</a></p>
 	</p>
 {% else %}
 {% if form.errors or form.non_field_errors %}
 <div class="errors">
-	<p>Oops, please make sure of the following:</p>
+	<p>{% trans "Oops, please make sure of the following:" %}</p>
 	{% if form.non_field_errors %}
-		<p>Your username and password didn't match. Please try again.</p>
+		<p>{% trans "Your username and password didn't match. Please try again." %}</p>
 	{% endif %}
 </div>
 {% endif %}
 
-<label for="id_username">Username
+<label for="id_username">{% trans "Username" %}
 	{% if form.username.errors %}
 				{% for error in form.username.errors %}
 					<p>{{ error }}</p>
@@ -39,7 +40,7 @@
   <input id="id_username" name="username" maxlength="30" type="text" class="input-wide">
 </label>
 
-<label for="id_password">Password
+<label for="id_password">{% trans "Password" %}
 	{% if form.password.errors %}
 			{% for error in form.password.errors %}
 				<p>{{ error }}</p>
@@ -48,16 +49,16 @@
   <input name="password" id="id_password" type="password" class="input-wide">
 </label>
 
-	<input value="Submit" class="btn btn-wide" type="submit">
+	<input value='{% trans "Submit"%}' class="btn btn-wide" type="submit">
 
   </fieldset>
 
-<a href="{% url reset_password_email %}">I forgot my password</a>
+<a href="{% url reset_password_email %}">{% trans "I forgot my password" %}</a>
 
 
 <div class="sign-up">
-  <p>Don't have an account?<br />
-  <a href="{% url registration_register %}">Sign up here to get started</a></p>
+  <p>{% trans "Don't have an account?" %}<br />
+  <a href="{% url registration_register %}">{% trans "Sign up here to get started" %}</a></p>
 </div>
 
 </form>

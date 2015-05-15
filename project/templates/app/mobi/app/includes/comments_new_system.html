@@ -1,45 +1,43 @@
 {% load comments %}
 {% load moderator_inclusion_tags %}
+{% load i18n %}
 
 {% if user.profile.banned %}
 <div class="comments highlight-quaternary">
 {% if user.profile.ban_duration == 1 %}
-    <b>You are banned from commenting for the rest of the day because a comment you made was reported by the
-    community. You will be able to comment again tomorrow</b><br><br/>
+    <b>{% trans "You are banned from commenting for the rest of the day because a comment you made was reported by the community. You will be able to comment again tomorrow" %}</b><br><br/>
 
-    Don't know why your comment was reported? <a href="{% url comment-terms %}">Read them here</a>
+    {% trans "Don't know why your comment was reported?" %} <a href="{% url comment-terms %}">{% trans "Read them here" 5}</a>
 
 {% else %}
-    <b>You are banned from commenting for {{ user.profile.ban_duration }} days because a comment you made was reported by a
-    MAMA Moderator</b><br><br/>
-
-    Don't know why your comment was reported? <a href="{% url comment-terms %}">Read them here</a>
+    <b>{% trans "You are banned from commenting for" %} {{ user.profile.ban_duration }} {% trans "days because a comment you made was reported by a MAMA Moderator" %}</b><br><br/>
+    {% trans "Don't know why your comment was reported?" %} <a href="{% url comment-terms %}">{% trans "Read them here" %}</a>
 {% endif %}
 </div>
 {% elif not READ_ONLY_MODE %}
 
 {% if not user.profile %}
     <div class="comments highlight-quaternary" id="add-comment">
-    You must be registered to comment <a href="{% url login %}" id="show-signin-additional">Sign in here</a>
+    {% trans "You must be registered to comment" %} <a href="{% url login %}" id="show-signin-additional">{% trans "Sign in here" %}</a>
     </div>
 {% else %}
     {% if user.profile.accepted_commenting_terms %}
         {% render_comment_form for object %}
         <div class="comments highlight-quaternary">
-        Don't know the commenting rules? <a href="{% url comment-terms %}">Read them here</a>
+        {% trans "Don't know the commenting rules?" %} <a href="{% url comment-terms %}">{% trans "Read them here" %}</a>
         </div>
 
     {% else %}
         <div class="comments highlight-quaternary" id="add-comment">
-        <b>Want to comment? You will need to accept our new commenting rules first.</b><br><br/>
-        <b>Commenting Rules</b><br/>
-        The A4W community likes comments that show you’re as serious about yourself and your family’s future as we are.  But there are comments that we don’t like: swear words, dirty words, sexy-talk, pick-ups, come-ons, rudeness, abusiveness, racism, sexism, forcing your religious beliefs on others and posting your phone number or email address in the comments stream.<br><br/>
-        <b>A4W operates on a zero tolerance basis when it comes to inappropriate use of our site. This means:</b><br/>
-        1. Moderators will remove the comments we don’t like. If your comment is removed by a moderator you will be banned from commenting on A4W for 3 days.<br/>
-        2. Any A4W user (yourself included) can remove comments that are offensive by clicking ‘Report’. If your comment is reported by another community member you will be banned from commenting on A4W for 1 day.<br><br/>
-        Help keep A4W clean by abiding by the rules and reporting any inappropriate behaviour.<br/>
+        <b>{% trans "Want to comment? You will need to accept our new commenting rules first." %}</b><br><br/>
+        <b>{% trans "Commenting Rules" %}</b><br/>
+        {% trans "The A4W community likes comments that show you’re as serious about yourself and your family’s future as we are.  But there are comments that we don’t like: swear words, dirty words, sexy-talk, pick-ups, come-ons, rudeness, abusiveness, racism, sexism, forcing your religious beliefs on others and posting your phone number or email address in the comments stream." %}<br><br/>
+        <b>{% trans "A4W operates on a zero tolerance basis when it comes to inappropriate use of our site. This means:" %} </b><br/>
+        {% trans "1. Moderators will remove the comments we don’t like. If your comment is removed by a moderator you will be banned from commenting on A4W for 3 days." %}<br/>
+        {% trans "2. Any A4W user (yourself included) can remove comments that are offensive by clicking ‘Report’. If your comment is reported by another community member you will be banned from commenting on A4W for 1 day." %}<br><br/>
+        {% trans "Help keep A4W clean by abiding by the rules and reporting any inappropriate behaviour." %}<br/>
         <br><br/>
-        <a href="{% url agree_comment %}" type="submit" class="btn">Accept</a>
+        <a href="{% url agree_comment %}" type="submit" class="btn">{% trans "Accept" %}</a>
         <br><br/>
         </div>
     {% endif %}
