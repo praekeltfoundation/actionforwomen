@@ -34,7 +34,7 @@ mimeparse
 django-moderator
 requests
 xmltodict
-raven
+raven==5.0.0
 mock
 nose
 django-nose
