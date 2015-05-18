@@ -205,6 +205,20 @@ def post_listing(context, category_slug):
 
 
 @register.inclusion_tag(
+    'app/inclusion_tags/featured_listing.html', takes_context=True)
+def featured_listing(context, category_slug):
+    result = _get_content_object_list(context, category_slug)
+    # Trim to 3 objects, or provide empty list if it doesn't have one.
+    if 'object_list' in result:
+        result['object_list'] = result['object_list'][:5]
+    else:
+        result['object_list'] = []
+    competition = your_story_competition({})
+    if competition:
+        result.update(competition)
+    return result    
+
+@register.inclusion_tag(
     'app/inclusion_tags/stories_listing.html', takes_context=True)
 def stories_listing(context, category_slug):
     result = _get_content_object_list(context, category_slug)

@@ -3,7 +3,7 @@
 {% load cache mama_inclusion_tags livechat_tags survey_inclusion_tags %}
 
 {% block content %}
-    {% stories_listing "stories" %}
+    {% featured_listing "featured" %}
     {% if not READ_ONLY_MODE %}
         {% show_content_quizzes %}
         {% poll_listing %}
