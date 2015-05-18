@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block nav_script %}{% endblock %}
 {% block nav %}{% endblock %}
@@ -12,7 +13,7 @@
 <input type="hidden" name="next" value="{% if request.GET.next %}{{ request.GET.next }}{% else %}{% if form.errors %}{{ request.POST.next }}{% endif %}{% endif %}" />
 
 <fieldset>
-<legend>Register</legend>
+<legend>{% trans "Register" %}</legend>
 
 {% if form.errors or form.non_field_errors %}
     <p>Oops, please make sure of the following:</p>
@@ -23,7 +24,7 @@
     {% endif %}
 {% endif %}
 
-<label for="id_username">Username
+<label for="id_username">{% trans "Username" %}
   {% if form.username.errors %}
               {% for error in form.username.errors %}
                   <p>{{ error }}</p>
@@ -32,7 +33,7 @@
 <input id="id_username" name="username" maxlength="30" type="text" class="input-wide" value="{{form.username.value|default:""}}">
 </label>
 
-<label for="id_email">Email
+<label for="id_email">{% trans "Email" %}
   {% if form.email.errors %}
               {% for error in form.email.errors %}
                   <p>{{ error }}</p>
@@ -41,7 +42,7 @@
 <input id="id_email" name="email" maxlength="30" type="text" class="input-wide" value="{{form.email.value|default:""}}">
 </label>
 
-<label for="id_password1">Password
+<label for="id_password1">{% trans "Password" %}
   {% if form.password1.errors %}
           {% for error in form.password1.errors %}
               <p>{{ error }}</p>
@@ -50,7 +51,7 @@
 <input name="password1" id="id_password1" type="password" class="input-wide" maxlength="4">
 </label>
 
-<label for="id_mobile_number">Mobile number
+<label for="id_mobile_number">{% trans "Mobile number" %}
   {% if form.mobile_number.errors %}
           {% for error in form.mobile_number.errors %}
               <p>{{ error|safe }}</p>
@@ -67,7 +68,7 @@
 {% endif %}
 {{ form.tos }} {{ form.tos.label }}
 </label>
-<input value="Register" class="btn btn-wide" type="submit">
+<input value='{% trans "Register" %}' class="btn btn-wide" type="submit">
 
 </fieldset>
 

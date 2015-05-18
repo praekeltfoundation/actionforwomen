@@ -71,7 +71,27 @@ URL_REGEX = re.compile(
     r'(?:/?|[/?]\S+)', re.IGNORECASE
 )
 
+from django.utils import translation
 
+def set_language(request):
+    next = request.REQUEST.get('next', None)
+    if not next:
+        next = request.META.get('HTTP_REFERER', None)
+    if not next:
+        next = '/'
+    response = HttpResponseRedirect(next)
+    if request.method == 'GET':
+        lang_code = request.GET.get('lang', None)
+        request.session['django_language'] = lang_code
+        translation.activate(lang_code)
+        # if lang_code and check_for_language(lang_code):
+        #     if hasattr(request, 'session'):
+        #         request.session['django_language'] = lang_code
+        #     else:
+        #         response.set_cookie(settings.LANGUAGE_COOKIE_NAME, lang_code)
+        #     translation.activate(lang_code)
+    return response
+    
 class CategoryDetailView(DetailView):
     template_name = "post/post_category_detail.html"
 

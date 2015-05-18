@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
 <div class="padded-page">
-    <h1>Terms of Use</h1>
+    <h1>{% trans "Terms of Use" %}</h1>
     {{ preferences.SitePreferences.terms|safe }}
     {% if not READ_ONLY_MODE %}
-        <p><a href="{% url registration_register %}">Back to sign up page</a></p>
+        <p><a href="{% url registration_register %}">{% trans "Back to sign up page" %}</a></p>
     {% endif %}
 </div>
 {% endblock %}

@@ -1,0 +1,414 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-05-14 10:15+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: app/admin.py:181
+msgid "this week"
+msgstr ""
+
+#: app/admin.py:182
+msgid "last week"
+msgstr ""
+
+#: app/admin.py:183
+msgid "older"
+msgstr ""
+
+#: app/forms.py:299
+#, fuzzy
+msgid "image_validation"
+msgstr "Please use an image that is smaller or equal to 500 x 500 pixels."
+
+#: app/forms.py:305
+msgid "Please use a JPEG or PNG image."
+msgstr ""
+
+#: app/forms.py:309
+msgid "Image file too large ( maximum 1mb )"
+msgstr ""
+
+#: project/settings.py:355
+msgid "English"
+msgstr "English"
+
+#: project/settings.py:356
+msgid "French"
+msgstr ""
+
+#: project/settings.py:357
+msgid "Polish"
+msgstr ""
+
+#: project/templates/app/mobi/base.html:213
+msgid "This is a translation"
+msgstr "This is a translation"
+
+#: project/templates/app/mobi/base.html:214
+#, python-format
+msgid ""
+"\n"
+"    This is %(book_t)s by %(author_t)s. Block trans is powerful!\n"
+"    "
+msgstr ""
+
+#: project/templates/app/mobi/admin/base_site.html:4
+msgid "site admin"
+msgstr ""
+
+#: project/templates/app/mobi/admin/base_site.html:7
+msgid "Administration"
+msgstr ""
+
+#: project/templates/app/mobi/poll/inclusion_tags/poll_widget.html:12
+msgid "Vote"
+msgstr ""
+
+#: project/templates/app/mobi/poll/inclusion_tags/poll_widget.html:13
+msgid "See results"
+msgstr ""
+
+#: project/templates/app/mobi/poll/inclusion_tags/poll_widget.html:41
+msgid "You must be signed in to vote"
+msgstr ""
+
+
+#: project/templates/app/mobi/base.html:111
+msgid "About"
+msgstr "About"
+
+#: project/templates/app/mobi/base.html:111
+msgid "Terms"
+msgstr "Terms"
+
+#: project/templates/app/mobi/base.html:111
+msgid "Site Language:"
+msgstr "Site Language:"
+
+#: project/templates/app/mobi/base.html:114
+msgid "All rights reserved."
+msgstr "All rights reserved."
+
+#: project/templates/app/mobi/base.html:160
+msgid "Username"
+msgstr "Username"
+
+#: project/templates/app/mobi/base.html:183, 181
+msgid "Search:"
+msgstr "Search:"
+
+
+#: project/templates/app/mobi/base.html:198
+msgid "View Profile"
+msgstr "View Profile"
+
+#: project/templates/app/mobi/base.html:199
+msgid "Logout"
+msgstr "Logout"
+
+#: project/templates/app/mobi/base.html:201
+msgid "Search"
+msgstr "Search"
+
+#: project/templates/app/mobi/base.html:202
+msgid "Stories"
+msgstr "Stories"
+
+#: project/templates/app/mobi/base.html:203
+msgid "Celebrities"
+msgstr "Celebrities"
+
+#: project/templates/app/mobi/base.html:204
+msgid "Facts"
+msgstr "Facts"
+
+#: project/templates/app/mobi/base.html:205
+msgid "Support"
+msgstr "Support"
+
+#: project/templates/app/mobi/base.html:206
+msgid "FAQs"
+msgstr "FAQs"
+
+
+#: project/templates/app/mobi/base.html:132
+msgid "Sign In"
+msgstr "Sign In"
+
+#: project/templates/app/mobi/base.html:133
+msgid "Enter your username and 4-digit PIN"
+msgstr "Enter your username and 4-digit PIN"
+
+
+#: project/templates/app/mobi/base.html:137
+msgid "PIN"
+msgstr "PIN"
+
+#: project/templates/app/mobi/base.html:142
+msgid "Remember me"
+msgstr "Remember me"
+
+#: project/templates/app/mobi/base.html:147
+msgid "I forgot my password"
+msgstr "I forgot my password"
+
+#: project/templates/app/mobi/base.html:150
+msgid "Don't have an account?"
+msgstr "Don't have an account?"
+
+#: project/templates/app/mobi/base.html:151
+msgid "Sign up here to get started"
+msgstr "Sign up here to get started"
+
+#: project/templates/app/mobi/base.html:158
+msgid "Register"
+msgstr "Register"
+
+#: project/templates/app/mobi/base.html:160
+#msgid "Username"
+#msgstr "Username"
+
+#: project/templates/app/mobi/base.html:163
+msgid "Password"
+msgstr "Password"
+
+#: project/templates/app/mobi/base.html:167
+msgid "Mobile Number"
+msgstr "Mobile Number"
+
+#: project/templates/app/mobi/base.html:171
+msgid "I accept the"
+msgstr "I accept the"
+
+#: project/templates/app/mobi/base.html:171
+msgid "terms and conditions"
+msgstr "terms and conditions"
+
+#: project/templates/app/mobi/base.html:171
+msgid "of use"
+msgstr "of use"
+
+msgid "Mobile number"
+msgstr "Mobile number"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Sign Up"
+msgstr "Sign Up"
+
+msgid "Thank you for joining A4W!"
+msgstr "Thank you for joining A4W!"
+
+msgid "Take me to the home page"
+msgstr "Take me to the home page"
+
+msgid "Your username and password didn't match. Please try again."
+msgstr "Your username and password didn't match. Please try again."
+
+msgid "Oops, please make sure of the following:"
+msgstr "Oops, please make sure of the following:"
+
+msgid "You are now signed in."
+msgstr "You are now signed in."
+
+msgid "Click here to continue to the homepage."
+msgstr "Click here to continue to the homepage."
+
+msgid "Add your comment"
+msgstr "Add your comment"
+
+msgid "Post"
+msgstr "Post"
+
+msgid "Comments are currently closed."
+msgstr "Comments are currently closed."
+
+msgid "My Profile"
+msgstr "My Profile"
+
+msgid "Edit your Profile"
+msgstr "Edit your Profile"
+
+
+msgid "Upload your picture:"
+msgstr "Upload your picture:"
+
+
+msgid "Update profile"
+msgstr "Update profile"
+
+
+msgid "Choose an avatar:"
+msgstr "Choose an avatar:"
+
+
+msgid "Please enter your mobile number and we will send you a new password."
+msgstr "Please enter your mobile number and we will send you a new password."
+
+msgid "Send"
+msgstr "Send"
+
+msgid "Reset Password"
+msgstr "Reset Password"
+
+
+msgid "Password Reset Complete"
+msgstr "Password Reset Complete"
+
+msgid "Thanks!"
+msgstr "Thanks!"
+
+msgid "Click here to sign in."
+msgstr "Click here to sign in."
+
+msgid "Your password has been set."
+msgstr "Your password has been set."
+
+
+msgid "Please enter your new password twice so we can verify you typed it in correctly."
+msgstr "Please enter your new password twice so we can verify you typed it in correctly."
+
+msgid "The password reset link was invalid, possibly because it has already been used."
+msgstr "The password reset link was invalid, possibly because it has already been used."
+
+msgid "Please request a new password reset."
+msgstr "Please request a new password reset."
+
+msgid "Reset"
+msgstr "Reset"
+
+msgid "Enter New Password"
+msgstr "Enter New Password"
+
+msgid "You should receive an email containing details on resetting your password shortly."
+msgstr "You should receive an email containing details on resetting your password shortly."
+
+msgid "Password Reset Instructions Sent"
+msgstr "Password Reset Instructions Sent"
+
+
+msgid "Comments by"
+msgstr "Comments by"
+
+msgid "More comments for"
+msgstr "More comments for"
+
+msgid "Read them here"
+msgstr "Read them here"
+
+msgid "Don't know the commenting rules?"
+msgstr "Don't know the commenting rules?"
+
+
+msgid "This comment has been removed"
+msgstr "This comment has been removed"
+
+msgid "This comment has been reported by the community and the user has been banned"
+msgstr "This comment has been reported by the community and the user has been banned"
+
+msgid "Report"
+msgstr "Report"
+
+msgid "No comments yet."
+msgstr "No comments yet."
+
+
+msgid "Back to"
+msgstr "Back to"
+
+msgid "Back to sign up page"
+msgstr "Back to sign up page"
+
+msgid "Terms of Use"
+msgstr "Terms of Use"
+
+msgid "Profile details"
+msgstr "Profile details"
+
+msgid "Edit My Profile"
+msgstr "Edit My Profile"
+
+msgid "Reset My Password"
+msgstr "Reset My Password"
+
+msgid "Comments"
+msgstr "Comments"
+
+msgid "Made"
+msgstr "Made"
+
+msgid "Next"
+msgstr "Next"
+
+
+msgid "Prev"
+msgstr "Prev"
+
+msgid "See more stories"
+msgstr "See more stories"
+
+msgid "More Comments"
+msgstr "More Comments"
+
+msgid "You are banned from commenting for the rest of the day because a comment you made was reported by the community. You will be able to comment again tomorrow"
+msgstr "You are banned from commenting for the rest of the day because a comment you made was reported by the community. You will be able to comment again tomorrow"
+
+msgid "Don't know why your comment was reported?"
+msgstr "Don't know why your comment was reported?"
+
+msgid "You are banned from commenting for"
+msgstr "You are banned from commenting for"
+
+msgid "days because a comment you made was reported by a MAMA Moderator"
+msgstr "days because a comment you made was reported by a MAMA Moderator"
+
+msgid "You must be registered to comment"
+msgstr "You must be registered to comment"
+
+msgid "Want to comment? You will need to accept our new commenting rules first."
+msgstr "Want to comment? You will need to accept our new commenting rules first."
+
+msgid "Commenting Rules"
+msgstr "Commenting Rules"
+
+msgid "Accept"
+msgstr "Accept"
+
+msgid "The A4W community likes comments that show you’re as serious about yourself and your family’s future as we are.  But there are comments that we don’t like: swear words, dirty words, sexy-talk, pick-ups, come-ons, rudeness, abusiveness, racism, sexism, forcing your religious beliefs on others and posting your phone number or email address in the comments stream."
+msgstr "The A4W community likes comments that show you’re as serious about yourself and your family’s future as we are.  But there are comments that we don’t like: swear words, dirty words, sexy-talk, pick-ups, come-ons, rudeness, abusiveness, racism, sexism, forcing your religious beliefs on others and posting your phone number or email address in the comments stream."
+
+
+msgid "A4W operates on a zero tolerance basis when it comes to inappropriate use of our site. This means:"
+msgstr "A4W operates on a zero tolerance basis when it comes to inappropriate use of our site. This means:"
+
+msgid "1. Moderators will remove the comments we don’t like. If your comment is removed by a moderator you will be banned from commenting on A4W for 3 days."
+msgstr "1. Moderators will remove the comments we don’t like. If your comment is removed by a moderator you will be banned from commenting on A4W for 3 days."
+
+msgid "2. Any A4W user (yourself included) can remove comments that are offensive by clicking ‘Report’. If your comment is reported by another community member you will be banned from commenting on A4W for 1 day."
+msgstr "2. Any A4W user (yourself included) can remove comments that are offensive by clicking ‘Report’. If your comment is reported by another community member you will be banned from commenting on A4W for 1 day."
+
+
+msgid "Help keep A4W clean by abiding by the rules and reporting any inappropriate behaviour."
+msgstr "Help keep A4W clean by abiding by the rules and reporting any inappropriate behaviour."
+
+
+msgid "Action for Women"
+msgstr "Action for Women"
+
+msgid "Mobile"
+msgstr "Mobile"

@@ -1,5 +1,7 @@
+{% load i18n %}
+
 {% if not comments_open or READ_ONLY_MODE %}
-<p>Comments are currently closed.</p>
+<p>{% trans "Comments are currently closed." %}</p>
 {% else %}
 
 <div class="add-comment" id="add-comment">
@@ -21,10 +23,10 @@
             {% endfor %}
         </div>
     {% endif %}
-    <label for="your-comment">Add your comment
+    <label for="your-comment">{% trans "Add your comment" %}
       <textarea id="id_comment" name="comment"></textarea>
     </label>
-    <input type="submit" name="post" value="Post" class="btn btn-wide" />
+    <input type="submit" name="post" value='{% trans "Post" %}' class="btn btn-wide" />
     {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
 </form>
 </div>

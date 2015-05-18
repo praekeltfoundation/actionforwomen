@@ -1,8 +1,9 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block content %}
 
-<div class="h1">{{ alias }}&apos;s Profile</div>
+<div class="h1">{{ alias }}&apos;s {% trans "Profile" %}</div>
 <div class="content-inner">
   <div class="post">
     {% if avatar %}
@@ -12,8 +13,8 @@
       {{ alias }}<br/>
       {{ relation_description}}<br/>
       <a href="{% url public_user_comments user_id %}">
-          {{ comments }} Comments
-      </a> Made<br/>
+          {{ comments }} {% trans "Comments" %}
+      </a> {% trans "Made" %}<br/>
     </div>
   </div>
   

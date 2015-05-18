@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load i18n %}
 {% block nav_script %}{% endblock %}
 {% block nav %}{% endblock %}
 {% block menu %}{% endblock %}
@@ -10,11 +10,11 @@
 <form method="post" id="frmLogin" action="{% url login %}" class="form-sign-in highlight-primary">
 
 <fieldset>
-<legend>Sign Up</legend>
+<legend>{% trans "Sign Up" %}</legend>
 <p><br/>
-<b>Thank you for joining A4W!</b><br /></p>
+<b>{% trans "Thank you for joining A4W!" %}</b><br /></p>
 
-    <a href="{% url home %}">Take me to the home page&gt;</a>
+    <a href="{% url home %}">{% trans "Take me to the home page" %}&gt;</a>
 </fieldset>
 </form>
 {% endblock %}
