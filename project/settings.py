@@ -103,6 +103,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "livechat.context_processors.current_livechat",
     "app.context_processors.comments_open",
     "app.context_processors.read_only_mode",
+    "app.context_processors.get_site_urls",
     'django.core.context_processors.i18n',
 )
 
@@ -340,7 +341,7 @@ try:
     from project.local_settings import *
 except ImportError:
     pass
-    
+
 LOCALE_PATHS = (
     os.path.join(PATH, "locale"),
 )
