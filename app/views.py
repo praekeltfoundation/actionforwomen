@@ -82,7 +82,6 @@ def set_language(request):
     response = HttpResponseRedirect(next)
     if request.method == 'GET':
         lang_code = request.GET.get('lang', None)
-        print lang_code
         request.session['django_language'] = lang_code
         translation.activate(lang_code)
         # if lang_code and check_for_language(lang_code):
