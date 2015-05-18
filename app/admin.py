@@ -91,6 +91,7 @@ class PostAdmin(ActonforwomenModelbaseAdmin):
     ordering = ('-publish_on', '-created')
     list_per_page = 10
     readonly_fields = ('created',)
+    list_filter = ('sites',) + ActonforwomenModelbaseAdmin.list_filter
 
     def queryset(self, request):
         qs = super(PostAdmin, self).queryset(request)
@@ -119,6 +120,7 @@ class ActonforwomenPostAdmin(PostAdmin):
 
 class ActonforwomenPollAdmin(PollAdmin):
     raw_id_fields = ('owner', )
+    list_filter = ('sites',) + PollAdmin.list_filter
 
 
 class BannerAdmin(ActonforwomenModelbaseAdmin):
