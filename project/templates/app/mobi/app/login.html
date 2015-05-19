@@ -14,7 +14,7 @@
 <input type="hidden" name="next" value="{% if request.GET.next %}{{ request.GET.next }}{% else %}{% if form.errors %}{{ request.POST.next }}{% endif %}{% endif %}" />
 
 <fieldset>
-<legend>Login</legend>
+<legend>{% trans "Sign in" %}</legend>
 
 {% if request.user.is_authenticated %}
 	<p>

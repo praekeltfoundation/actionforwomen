@@ -104,7 +104,7 @@ class PasswordResetForm(PasswordResetForm):
 class PasswordResetEmailForm(forms.Form):
     email = forms.EmailField()
 
-        
+
     def clean_email(self):
         """
         Validates that an active user exists with the given email address.
@@ -148,7 +148,7 @@ class PasswordResetEmailForm(forms.Form):
             recipients,
             headers={'From': from_address, 'Reply-To': from_address}
         )
-        mail.send(fail_silently=True)        
+        mail.send(fail_silently=True)
 
 
 class RegistrationForm(RegistrationFormTermsOfService):
@@ -254,7 +254,7 @@ class EditProfileForm(RegistrationForm):
         self.fields['username'].label = "Username"
         self.fields['last_name'].label = "Surname"
         self.fields['mobile_number'].label = "Mobile Number"
-        
+
         # sort out some form display logic
         initial = kwargs['initial']
 
@@ -286,7 +286,7 @@ class EditProfileForm(RegistrationForm):
             if w > max_width or h > max_height:
                 raise forms.ValidationError(
                     _('Please use an image that is smaller or equal to '
-                      '%s x %s pixels.' % (max_width, max_height)))
+                      '500 x 500 pixels.'))
             main, sub = image.content_type.split('/')
             if not (main == 'image' and sub.lower() in ['jpeg', 'pjpeg', 'png', 'jpg']):
                 raise forms.ValidationError(_('Please use a JPEG or PNG image.'))
@@ -294,7 +294,7 @@ class EditProfileForm(RegistrationForm):
                 raise forms.ValidationError(_('Image file too large ( maximum 1mb )'))
         except AttributeError:
             pass
-        return image    
+        return image
 
     def clean_last_name(self):
         """

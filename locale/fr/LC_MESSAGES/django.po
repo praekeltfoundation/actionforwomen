@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-13 19:13+0530\n"
+"POT-Creation-Date: 2015-05-19 11:42+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,38 +18,182 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 
-#: app/admin.py:181
+#: app/admin.py:188
 msgid "this week"
 msgstr ""
 
-#: app/admin.py:182
+#: app/admin.py:189
 msgid "last week"
 msgstr ""
 
-#: app/admin.py:183
+#: app/admin.py:190
 msgid "older"
 msgstr ""
 
-#: app/forms.py:300
-#, python-format
+#: app/forms.py:288
 msgid "Please use an image that is smaller or equal to 500 x 500 pixels."
 msgstr ""
 
-#: app/forms.py:307
+#: app/forms.py:292
 msgid "Please use a JPEG or PNG image."
 msgstr ""
 
-#: app/forms.py:311
+#: app/forms.py:294
 msgid "Image file too large ( maximum 1mb )"
 msgstr ""
 
-#: project/settings.py:355
+#: project/settings.py:350
 msgid "English"
 msgstr "Angielski"
 
-#: project/settings.py:356
+#: project/settings.py:351
 msgid "French"
 msgstr ""
+
+#: project/templates/app/mobi/base.html:7
+msgid "Action for Women"
+msgstr ""
+
+#: project/templates/app/mobi/base.html:7
+#, fuzzy
+msgid "Mobile"
+msgstr "Numéro De Téléphone"
+
+#: project/templates/app/mobi/base.html:97
+#: project/templates/app/mobi/base.html:188
+#: project/templates/app/mobi/base.html:208
+msgid "Search"
+msgstr "recherche"
+
+#: project/templates/app/mobi/base.html:98
+#: project/templates/app/mobi/base.html:190
+msgid "Search:"
+msgstr "recherche:"
+
+#: project/templates/app/mobi/base.html:101
+#: project/templates/app/mobi/app/login.html:52
+msgid "Submit"
+msgstr "soumettre"
+
+#: project/templates/app/mobi/base.html:111
+msgid "About"
+msgstr "environ"
+
+#: project/templates/app/mobi/base.html:112
+msgid "Terms"
+msgstr "termes"
+
+#: project/templates/app/mobi/base.html:113
+msgid "Site Language:"
+msgstr "Langue du site:"
+
+#: project/templates/app/mobi/base.html:116
+msgid "All rights reserved."
+msgstr "Tous droits réservés."
+
+#: project/templates/app/mobi/base.html:134
+#: project/templates/app/mobi/base.html:202
+#: project/templates/app/mobi/app/inclusion_tags/page_header.html:11
+msgid "Sign In"
+msgstr "S'inscrire"
+
+#: project/templates/app/mobi/base.html:135
+msgid "Enter your username and 4-digit PIN"
+msgstr "Entrez votre nom d'utilisateur et un code PIN à 4 chiffres"
+
+#: project/templates/app/mobi/base.html:136
+#: project/templates/app/mobi/base.html:162
+#: project/templates/app/mobi/app/login.html:34
+#: project/templates/app/mobi/registration/registration_form.html:27
+msgid "Username"
+msgstr "Nom d'utilisateur"
+
+#: project/templates/app/mobi/base.html:139
+msgid "PIN"
+msgstr "PIN"
+
+#: project/templates/app/mobi/base.html:144
+msgid "Remember me"
+msgstr "souviens-toi de moi"
+
+#: project/templates/app/mobi/base.html:149
+#: project/templates/app/mobi/app/login.html:56
+msgid "I forgot my password"
+msgstr "J'ai oublié mon mot de passe"
+
+#: project/templates/app/mobi/base.html:152
+#: project/templates/app/mobi/app/login.html:60
+msgid "Don't have an account?"
+msgstr "Vous n'avez pas de compte?"
+
+#: project/templates/app/mobi/base.html:153
+#: project/templates/app/mobi/app/login.html:61
+msgid "Sign up here to get started"
+msgstr "Inscrivez-vous ici pour commencer"
+
+#: project/templates/app/mobi/base.html:160
+#: project/templates/app/mobi/base.html:203
+#: project/templates/app/mobi/registration/registration_form.html:16
+#: project/templates/app/mobi/registration/registration_form.html:71
+msgid "Register"
+msgstr "Inscription"
+
+#: project/templates/app/mobi/base.html:166
+#: project/templates/app/mobi/registration/registration_form.html:36
+msgid "Email"
+msgstr "email"
+
+# msgid "Username"
+# msgstr "Username"
+#: project/templates/app/mobi/base.html:170
+#: project/templates/app/mobi/app/login.html:43
+#: project/templates/app/mobi/registration/registration_form.html:45
+msgid "Password"
+msgstr "mot de passe"
+
+#: project/templates/app/mobi/base.html:174
+msgid "Mobile Number"
+msgstr "Numéro De Téléphone"
+
+#: project/templates/app/mobi/base.html:178
+msgid "I accept the"
+msgstr "Je accepte la"
+
+#: project/templates/app/mobi/base.html:178
+msgid "terms and conditions"
+msgstr "termes et conditions"
+
+#: project/templates/app/mobi/base.html:178
+msgid "of use"
+msgstr "utile"
+
+#: project/templates/app/mobi/base.html:205
+msgid "View Profile"
+msgstr "Voir Le Profil"
+
+#: project/templates/app/mobi/base.html:206
+msgid "Logout"
+msgstr "Se Déconnecter"
+
+#: project/templates/app/mobi/base.html:209
+msgid "Stories"
+msgstr "histoires"
+
+#: project/templates/app/mobi/base.html:210
+msgid "Celebrities"
+msgstr "célébrités"
+
+#: project/templates/app/mobi/base.html:211
+msgid "Facts"
+msgstr "réalités"
+
+#: project/templates/app/mobi/base.html:212
+msgid "Support"
+msgstr "soutien"
+
+#: project/templates/app/mobi/base.html:213
+msgid "FAQs"
+msgstr "FAQs"
 
 #: project/templates/app/mobi/admin/base_site.html:4
 msgid "site admin"
@@ -57,6 +201,342 @@ msgstr ""
 
 #: project/templates/app/mobi/admin/base_site.html:7
 msgid "Administration"
+msgstr ""
+
+#: project/templates/app/mobi/app/editprofile.html:5
+#, fuzzy
+msgid "My Profile"
+msgstr "Voir Le Profil"
+
+#: project/templates/app/mobi/app/editprofile.html:8
+#: project/templates/app/mobi/app/login.html:27
+#: project/templates/app/mobi/app/password_reset.html:8
+#: project/templates/app/mobi/app/password_reset_confirm.html:8
+#: project/templates/app/mobi/app/password_reset_email.html:9
+msgid "Oops, please make sure of the following:"
+msgstr "Oops , s'il vous plaît assurez-vous de ce qui suit :"
+
+#: project/templates/app/mobi/app/editprofile.html:27
+#, fuzzy
+msgid "Edit your Profile"
+msgstr "Voir Le Profil"
+
+#: project/templates/app/mobi/app/editprofile.html:81
+msgid "Upload your picture:"
+msgstr ""
+
+#: project/templates/app/mobi/app/editprofile.html:92
+msgid "Choose an avatar:"
+msgstr ""
+
+#: project/templates/app/mobi/app/editprofile.html:103
+#, fuzzy
+msgid "Update profile"
+msgstr "Voir Le Profil"
+
+#: project/templates/app/mobi/app/login.html:17
+#, fuzzy
+msgid "Sign in"
+msgstr "S'inscrire"
+
+#: project/templates/app/mobi/app/login.html:21
+#: project/templates/app/mobi/app/password_reset_complete.html:7
+#: project/templates/app/mobi/app/password_reset_done.html:7
+msgid "Thanks!"
+msgstr ""
+
+#: project/templates/app/mobi/app/login.html:22
+msgid "You are now signed in."
+msgstr "Vous êtes maintenant connecté ."
+
+#: project/templates/app/mobi/app/login.html:22
+msgid "Click here to continue to the homepage."
+msgstr "Cliquez ici pour continuer à la page d'accueil ."
+
+#: project/templates/app/mobi/app/login.html:29
+msgid "Your username and password didn't match. Please try again."
+msgstr ""
+"Votre nom d'utilisateur et mot de passe ne correspondent pas. S'il vous "
+"plaît essayer à nouveau."
+
+# msgid "Username"
+# msgstr "Username"
+#: project/templates/app/mobi/app/password_reset.html:5
+#: project/templates/app/mobi/app/password_reset_email.html:6
+#, fuzzy
+msgid "Reset Password"
+msgstr "mot de passe"
+
+#: project/templates/app/mobi/app/password_reset.html:17
+msgid "Please enter your mobile number and we will send you a new password."
+msgstr ""
+
+#: project/templates/app/mobi/app/password_reset.html:27
+#: project/templates/app/mobi/app/password_reset_email.html:28
+msgid "Send"
+msgstr ""
+
+#: project/templates/app/mobi/app/password_reset_complete.html:6
+msgid "Password Reset Complete"
+msgstr ""
+
+#: project/templates/app/mobi/app/password_reset_complete.html:8
+msgid "Your password has been set."
+msgstr ""
+
+#: project/templates/app/mobi/app/password_reset_complete.html:8
+#, fuzzy
+msgid "Click here to sign in."
+msgstr "Vous êtes maintenant connecté ."
+
+# msgid "Username"
+# msgstr "Username"
+#: project/templates/app/mobi/app/password_reset_confirm.html:5
+#, fuzzy
+msgid "Enter New Password"
+msgstr "mot de passe"
+
+#: project/templates/app/mobi/app/password_reset_confirm.html:18
+msgid ""
+"Please enter your new password twice so we can verify you typed it in "
+"correctly."
+msgstr ""
+
+#: project/templates/app/mobi/app/password_reset_confirm.html:37
+msgid "Reset"
+msgstr ""
+
+#: project/templates/app/mobi/app/password_reset_confirm.html:41
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used."
+msgstr ""
+
+#: project/templates/app/mobi/app/password_reset_confirm.html:41
+msgid "Please request a new password reset."
+msgstr ""
+
+#: project/templates/app/mobi/app/password_reset_done.html:6
+msgid "Password Reset Instructions Sent"
+msgstr ""
+
+#: project/templates/app/mobi/app/password_reset_done.html:8
+msgid ""
+"You should receive an email containing details on resetting your password "
+"shortly."
+msgstr ""
+
+#: project/templates/app/mobi/app/password_reset_email.html:17
+msgid "Please enter your email and we will send you a new password."
+msgstr ""
+
+#: project/templates/app/mobi/app/public_comments_view.html:7
+msgid "Comments by"
+msgstr ""
+
+#: project/templates/app/mobi/app/public_profile_view.html:6
+#, fuzzy
+msgid "Profile"
+msgstr "Voir Le Profil"
+
+#: project/templates/app/mobi/app/public_profile_view.html:16
+#: project/templates/app/mobi/app/includes/comments_include.html:7
+msgid "Comments"
+msgstr ""
+
+#: project/templates/app/mobi/app/public_profile_view.html:17
+msgid "Made"
+msgstr ""
+
+#: project/templates/app/mobi/app/story_comments_list.html:12
+msgid "More comments for"
+msgstr ""
+
+#: project/templates/app/mobi/app/story_comments_list.html:27
+#: project/templates/app/mobi/app/includes/comments_include_no_likes.html:27
+msgid ""
+"This comment has been reported by the community and the user has been banned"
+msgstr ""
+
+#: project/templates/app/mobi/app/story_comments_list.html:28
+#: project/templates/app/mobi/app/story_comments_list.html:31
+#: project/templates/app/mobi/app/includes/comments_include_no_likes.html:28
+#: project/templates/app/mobi/app/includes/comments_include_no_likes.html:31
+#: project/templates/app/mobi/app/includes/comments_new_system.html:27
+msgid "Don't know the commenting rules?"
+msgstr ""
+
+#: project/templates/app/mobi/app/story_comments_list.html:28
+#: project/templates/app/mobi/app/story_comments_list.html:31
+#: project/templates/app/mobi/app/includes/comments_include_no_likes.html:28
+#: project/templates/app/mobi/app/includes/comments_include_no_likes.html:31
+#: project/templates/app/mobi/app/includes/comments_new_system.html:14
+#: project/templates/app/mobi/app/includes/comments_new_system.html:27
+msgid "Read them here"
+msgstr ""
+
+#: project/templates/app/mobi/app/story_comments_list.html:30
+#: project/templates/app/mobi/app/includes/comments_include_no_likes.html:30
+msgid "This comment has been removed"
+msgstr ""
+
+#: project/templates/app/mobi/app/story_comments_list.html:39
+#: project/templates/app/mobi/app/includes/comments_include_no_likes.html:39
+#, fuzzy
+msgid "Report"
+msgstr "soutien"
+
+#: project/templates/app/mobi/app/story_comments_list.html:58
+#: project/templates/app/mobi/app/includes/comments_include.html:26
+#: project/templates/app/mobi/app/includes/comments_include_no_likes.html:58
+msgid "No comments yet."
+msgstr ""
+
+#: project/templates/app/mobi/app/story_comments_list.html:67
+msgid "Back to"
+msgstr ""
+
+#: project/templates/app/mobi/app/terms.html:6
+msgid "Terms of Use"
+msgstr ""
+
+#: project/templates/app/mobi/app/viewprofile.html:18
+msgid "Profile details"
+msgstr ""
+
+#: project/templates/app/mobi/app/viewprofile.html:20
+#, fuzzy
+msgid "Mobile Number:"
+msgstr "Numéro De Téléphone"
+
+#: project/templates/app/mobi/app/viewprofile.html:24
+#, fuzzy
+msgid "Surname:"
+msgstr "Nom d'utilisateur"
+
+#: project/templates/app/mobi/app/viewprofile.html:27
+#, fuzzy
+msgid "Edit My Profile"
+msgstr "Voir Le Profil"
+
+# msgid "Username"
+# msgstr "Username"
+#: project/templates/app/mobi/app/viewprofile.html:29
+#, fuzzy
+msgid "Reset My Password"
+msgstr "mot de passe"
+
+#: project/templates/app/mobi/app/includes/comment_terms.html:6
+#: project/templates/app/mobi/app/includes/comments_new_system.html:33
+msgid "Commenting Rules"
+msgstr ""
+
+#: project/templates/app/mobi/app/includes/comments_include.html:38
+#: project/templates/app/mobi/app/includes/comments_include_no_likes.html:64
+msgid "More Comments"
+msgstr ""
+
+#: project/templates/app/mobi/app/includes/comments_include_no_likes.html:11
+msgid "Add Yours"
+msgstr ""
+
+#: project/templates/app/mobi/app/includes/comments_new_system.html:8
+msgid ""
+"You are banned from commenting for the rest of the day because a comment you "
+"made was reported by the community. You will be able to comment again "
+"tomorrow"
+msgstr ""
+
+#: project/templates/app/mobi/app/includes/comments_new_system.html:10
+#: project/templates/app/mobi/app/includes/comments_new_system.html:14
+msgid "Don't know why your comment was reported?"
+msgstr ""
+
+#: project/templates/app/mobi/app/includes/comments_new_system.html:13
+msgid "You are banned from commenting for"
+msgstr ""
+
+#: project/templates/app/mobi/app/includes/comments_new_system.html:13
+msgid "days because a comment you made was reported by a MAMA Moderator"
+msgstr ""
+
+#: project/templates/app/mobi/app/includes/comments_new_system.html:21
+msgid "You must be registered to comment"
+msgstr ""
+
+#: project/templates/app/mobi/app/includes/comments_new_system.html:21
+#, fuzzy
+msgid "Sign in here"
+msgstr "S'inscrire"
+
+#: project/templates/app/mobi/app/includes/comments_new_system.html:32
+msgid ""
+"Want to comment? You will need to accept our new commenting rules first."
+msgstr ""
+
+#: project/templates/app/mobi/app/includes/comments_new_system.html:34
+msgid ""
+"The A4W community likes comments that show you’re as serious about yourself "
+"and your family’s future as we are.  But there are comments that we don’t "
+"like: swear words, dirty words, sexy-talk, pick-ups, come-ons, rudeness, "
+"abusiveness, racism, sexism, forcing your religious beliefs on others and "
+"posting your phone number or email address in the comments stream."
+msgstr ""
+
+#: project/templates/app/mobi/app/includes/comments_new_system.html:35
+msgid ""
+"A4W operates on a zero tolerance basis when it comes to inappropriate use of "
+"our site. This means:"
+msgstr ""
+
+#: project/templates/app/mobi/app/includes/comments_new_system.html:36
+msgid ""
+"1. Moderators will remove the comments we don’t like. If your comment is "
+"removed by a moderator you will be banned from commenting on A4W for 3 days."
+msgstr ""
+
+#: project/templates/app/mobi/app/includes/comments_new_system.html:37
+msgid ""
+"2. Any A4W user (yourself included) can remove comments that are offensive "
+"by clicking ‘Report’. If your comment is reported by another community "
+"member you will be banned from commenting on A4W for 1 day."
+msgstr ""
+
+#: project/templates/app/mobi/app/includes/comments_new_system.html:38
+msgid ""
+"Help keep A4W clean by abiding by the rules and reporting any inappropriate "
+"behaviour."
+msgstr ""
+
+#: project/templates/app/mobi/app/includes/comments_new_system.html:40
+msgid "Accept"
+msgstr ""
+
+#: project/templates/app/mobi/app/inclusion_tags/pagination.html:7
+#: project/templates/app/mobi/app/inclusion_tags/pagination.html:9
+msgid "Prev"
+msgstr ""
+
+#: project/templates/app/mobi/app/inclusion_tags/pagination.html:21
+#: project/templates/app/mobi/app/inclusion_tags/pagination.html:23
+msgid "Next"
+msgstr ""
+
+#: project/templates/app/mobi/app/inclusion_tags/stories_listing.html:8
+#, fuzzy
+msgid "See more stories"
+msgstr "histoires"
+
+#: project/templates/app/mobi/comments/form.html:4
+msgid "Comments are currently closed."
+msgstr ""
+
+#: project/templates/app/mobi/comments/form.html:26
+msgid "Add your comment"
+msgstr ""
+
+#: project/templates/app/mobi/comments/form.html:29
+msgid "Post"
 msgstr ""
 
 #: project/templates/app/mobi/poll/inclusion_tags/poll_widget.html:12
@@ -67,155 +547,25 @@ msgstr ""
 msgid "See results"
 msgstr ""
 
-#: project/templates/app/mobi/poll/inclusion_tags/poll_widget.html:41
+#: project/templates/app/mobi/poll/inclusion_tags/poll_widget.html:44
 msgid "You must be signed in to vote"
 msgstr ""
 
-#: project/templates/app/mobi/base.html:213
-msgid "This is a translation"
-msgstr "French Angielski"
-
-
-#: project/templates/app/mobi/base.html:111
-msgid "About"
-msgstr "environ"
-
-#: project/templates/app/mobi/base.html:111
-msgid "Terms"
-msgstr "termes"
-
-#: project/templates/app/mobi/base.html:111
-msgid "Site Language:"
-msgstr "Langue du site:"
-
-#: project/templates/app/mobi/base.html:114
-msgid "All rights reserved."
-msgstr "Tous droits réservés."
-
-#: project/templates/app/mobi/base.html:160
-msgid "Username"
-msgstr "Nom d'utilisateur"
-
-#: project/templates/app/mobi/base.html:183, 181
-msgid "Search:"
-msgstr "recherche:"
-
-#: project/templates/app/mobi/base.html:195
-msgid "Sign In"
-msgstr "S'inscrire"
-
-#: project/templates/app/mobi/base.html:198
-msgid "View Profile"
-msgstr "Voir Le Profil"
-
-#: project/templates/app/mobi/base.html:199
-msgid "Logout"
-msgstr "Se Déconnecter"
-
-#: project/templates/app/mobi/base.html:201
-msgid "Search"
-msgstr "recherche"
-
-#: project/templates/app/mobi/base.html:202
-msgid "Stories"
-msgstr "histoires"
-
-#: project/templates/app/mobi/base.html:203
-msgid "Celebrities"
-msgstr "célébrités"
-
-#: project/templates/app/mobi/base.html:204
-msgid "Facts"
-msgstr "réalités"
-
-#: project/templates/app/mobi/base.html:205
-msgid "Support"
-msgstr "soutien"
-
-#: project/templates/app/mobi/base.html:206
-msgid "FAQs"
-msgstr "FAQs"
-
-
-#: project/templates/app/mobi/base.html:133
-msgid "Enter your username and 4-digit PIN"
-msgstr "Entrez votre nom d'utilisateur et un code PIN à 4 chiffres"
-
-
-#: project/templates/app/mobi/base.html:137
-msgid "PIN"
-msgstr "PIN"
-
-#: project/templates/app/mobi/base.html:142
-msgid "Remember me"
-msgstr "souviens-toi de moi"
-
-#: project/templates/app/mobi/base.html:147
-msgid "I forgot my password"
-msgstr "J'ai oublié mon mot de passe"
-
-#: project/templates/app/mobi/base.html:150
-msgid "Don't have an account?"
-msgstr "Vous n'avez pas de compte?"
-
-#: project/templates/app/mobi/base.html:151
-msgid "Sign up here to get started"
-msgstr "Inscrivez-vous ici pour commencer"
-
-#: project/templates/app/mobi/base.html:158
-msgid "Register"
-msgstr "Inscription"
-
-#: project/templates/app/mobi/base.html:160
-#msgid "Username"
-#msgstr "Username"
-
-#: project/templates/app/mobi/base.html:163
-msgid "Password"
-msgstr "mot de passe"
-
-#: project/templates/app/mobi/base.html:167
-msgid "Mobile Number"
-msgstr "Numéro De Téléphone"
-
-#: project/templates/app/mobi/base.html:171
-msgid "I accept the"
-msgstr "Je accepte la"
-
-#: project/templates/app/mobi/base.html:171
-msgid "terms and conditions"
-msgstr "termes et conditions"
-
-#: project/templates/app/mobi/base.html:171
-msgid "of use"
-msgstr "utile"
-
-msgid "Mobile number"
-msgstr "numéro de téléphone"
-
-msgid "Email"
-msgstr "email"
-
-msgid "Submit"
-msgstr "soumettre"
-
+#: project/templates/app/mobi/registration/done.html:13
 msgid "Sign Up"
 msgstr "signer"
 
+#: project/templates/app/mobi/registration/done.html:15
 msgid "Thank you for joining A4W!"
 msgstr "Merci de vous joindre A4W !"
 
+#: project/templates/app/mobi/registration/done.html:17
 msgid "Take me to the home page"
 msgstr "Aller à la page d'accueil"
 
-msgid "Your username and password didn't match. Please try again."
-msgstr "Votre nom d'utilisateur et mot de passe ne correspondent pas. S'il vous plaît essayer à nouveau."
+#: project/templates/app/mobi/registration/registration_form.html:54
+msgid "Mobile number"
+msgstr "numéro de téléphone"
 
-msgid "Oops, please make sure of the following:"
-msgstr "Oops , s'il vous plaît assurez-vous de ce qui suit :"
-
-msgid "You are now signed in."
-msgstr "Vous êtes maintenant connecté ."
-
-msgid "Click here to continue to the homepage."
-msgstr "Cliquez ici pour continuer à la page d'accueil ."
+#~ msgid "This is a translation"
+#~ msgstr "French Angielski"
