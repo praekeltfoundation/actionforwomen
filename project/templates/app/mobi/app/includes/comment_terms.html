@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
-
+{% load i18n%}
 {% block content %}
 <div class="over over-poll">
   <a href="#" class="over-text">
-    <h3 class="article-title">Commenting Rules</h3>
+    <h3 class="article-title">{% trans "Commenting Rules" %}</h3>
   </a>
 </div>
 {{ preferences.SitePreferences.comment_terms|safe }}
