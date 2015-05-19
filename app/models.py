@@ -161,6 +161,10 @@ class SitePreferences(Preferences):
         blank=True,
         null=True
     )
+    comment_report_confirm = RichTextField(
+        blank=True,
+        null=True
+    )
     contact_email_recipients = models.ManyToManyField(
         'auth.User',
         blank=True,
