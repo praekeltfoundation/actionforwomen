@@ -233,7 +233,7 @@ class EditProfileForm(RegistrationForm):
         widget=forms.HiddenInput()
     )
     first_name = forms.CharField(
-        label="First name",
+        label="Name",
         required=False
     )
     last_name = forms.CharField(

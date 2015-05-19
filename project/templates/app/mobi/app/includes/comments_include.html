@@ -10,7 +10,7 @@
       {% for comment in comments %}
           <div class="item comment no-pic">
               <div class="meta">
-                  <div class="title">{{ comment.name }}</div>
+                  <div class="title">{% if comment.user.profile.engage_anonymously %}{{ comment.name }} {% else %} {{comment.user.username}}{%endif%}</div>
                   <div class="stamp">{{ comment.submit_date }}
                     {% if not comment.user.is_staff %}
                       | {% likes comment %} {% report_comment_abuse comment %}
