@@ -232,10 +232,18 @@ class EditProfileForm(RegistrationForm):
         required=False,
         widget=forms.HiddenInput()
     )
+    first_name = forms.CharField(
+        label="First name",
+        required=False
+    )
     last_name = forms.CharField(
         max_length=100,
         label="Surname",
         required=False
+    )
+    alias = forms.CharField(
+       label="Alias",
+       required=False
     )
     engage_anonymously = forms.BooleanField(
         label="Engage Anonymously",
@@ -248,7 +256,9 @@ class EditProfileForm(RegistrationForm):
             'username',
             'mobile_number',
             'avatar',
+            'first_name',
             'last_name',
+            'alias',
             'engage_anonymously',
         ]
         self.fields['username'].label = "Username"
