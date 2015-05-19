@@ -7,7 +7,7 @@
 <div class="padded-page">
     <h3>{% trans "Report Comment" %}</h3>
     {{ preferences.SitePreferences.comment_report_confirm|safe }}
-    Don't know the commenting rules? <a href="{% url comment-terms %}">Read them here</a><br><br/>
+    {% trans "Don't know the commenting rules?" %} <a href="{% url comment-terms %}">{% trans "Read them here" %}</a><br><br/>
 
     {% report_comment_abuse comment %}
 </div>
