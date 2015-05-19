@@ -85,11 +85,11 @@
 
         {% block footer %}
             {% block footer_search_form %}
-            <form action="" class="form-search highlight-primary hidden" id="search">
+            <form action="{% url haystack_search %}" class="form-search highlight-primary hidden" id="search">
               <fieldset>
                 <legend>{% trans "Search" %}</legend>
                 <label for="input-search"><span class="visuallyhidden">{% trans "Search:" %}</span>
-                  <input type="search" id="input-search" name="input-search" placeholder="e.g. women" class="input-wide" />
+                  <input type="search" id="input-search" name="q" placeholder="e.g. women" class="input-wide" />
                 </label>
                 <input type="submit" value='{% trans "Submit" %}' class="btn btn-wide" />
               </fieldset>
@@ -174,14 +174,14 @@
       </fieldset>
     </form>
 
-    <form action="" class="form-search highlight-primary hidden" id="search">
+    <form action="{% url haystack_search %}" class="form-search highlight-primary hidden" id="search">
     {% csrf_token %}
 
       <fieldset>
         <legend>{% trans "Search" %}</legend>
 
         <label for="input-search"><span class="visuallyhidden">{% trans "Search:" %}</span>
-          <input type="search" id="input-search" name="input-search" placeholder="e.g. women" class="input-wide" />
+          <input type="search" id="input-search" name="q" placeholder="e.g. women" class="input-wide" />
         </label>
         <input type="submit" value="Submit" class="btn btn-wide" />
       </fieldset>

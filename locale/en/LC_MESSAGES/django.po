@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-19 14:16+0200\n"
+"POT-Creation-Date: 2015-05-19 14:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -580,6 +580,22 @@ msgstr "Take me to the home page"
 #: project/templates/app/mobi/registration/registration_form.html:54
 msgid "Mobile number"
 msgstr "Mobile number"
+
+#: project/templates/app/mobi/search/search.html:7
+msgid "Search Results for"
+msgstr ""
+
+#: project/templates/app/mobi/search/search.html:17
+msgid "Try Again"
+msgstr ""
+
+#: project/templates/app/mobi/search/search.html:19
+msgid "Unfortunately no results were found for"
+msgstr ""
+
+#: project/templates/app/mobi/search/search.html:20
+msgid "Please try again with a different query."
+msgstr ""
 
 #~ msgid "Post"
 #~ msgstr "Post"
