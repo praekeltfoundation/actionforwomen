@@ -1,9 +1,0 @@
-{% load jmbo_inclusion_tags %}
-{% load i18n %}
-
-{% if object_list %}
-  {% for object in object_list %}
-      {% render_object object "block_home" %}
-  {% endfor %}
-  <p class="cta"><a href="{{ category.get_absolute_url }}">+ {% trans "See more featured posts" %}</a></p>
-{% endif %}
