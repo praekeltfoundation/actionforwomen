@@ -24,12 +24,10 @@
         <img src="{{ STATIC_URL }}img/user.jpg" width="44" height="44" />
       {% endif %}
     </span>
-    <div class="profile-details-name">{% trans "Edit your Profile" %}</div><!-- 
-    <div class="profile-details-name">Surname</div> -->
+    <div class="profile-details-name">{% trans "Edit your Profile" %}</div>
   </div>
   
   {{ form.username }}
-  
   {% if form.username.errors %}
     <div class="errors">
         {% for error in form.username.errors %}
@@ -38,8 +36,18 @@
     </div>
   {% endif %}
 
+  <label for="first_name" class="label-wide">{{ form.first_name.label_tag }}
+    {{ form.first_name }}
+  </label>
+  {% if form.first_name.errors %}
+    <div class="errors">
+        {% for error in form.first_name.errors %}
+            <p>{{ error }}</p>
+        {% endfor %}
+    </div>
+  {% endif %}
+
   <label for="last_name" class="label-wide">{{ form.last_name.label_tag }}
-    <!-- <input type="text" class="input-wide" name="surname" id="surname" /> -->
     {{ form.last_name }}
   </label>
   {% if form.last_name.errors %}
@@ -50,8 +58,18 @@
     </div>
   {% endif %}
 
+    <label for="alias" class="label-wide">{{ form.alias.label_tag }}
+    {{ form.alias }}
+  </label>
+  {% if form.alias.errors %}
+    <div class="errors">
+        {% for error in form.alias.errors %}
+            <p>{{ error }}</p>
+        {% endfor %}
+    </div>
+  {% endif %}
+
   <label for="surname" class="label-wide">{{ form.mobile_number.label_tag }}
-    <!-- <input type="text" class="input-wide" name="surname" id="surname" /> -->
     {{ form.mobile_number }}
     e.g. 14034228916
   </label>
@@ -65,7 +83,6 @@
 
 
   <label for="surname" class="label-wide">{{ form.engage_anonymously.label_tag }}
-    <!-- <input type="text" class="input-wide" name="surname" id="surname" /> -->
     {{ form.engage_anonymously }}
   </label>
   {% if form.engage_anonymously.errors %}

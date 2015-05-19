@@ -514,6 +514,8 @@ class MyProfileView(TemplateView):
         profile = user.profile
         context['username'] = user.username
         context['last_name'] = user.last_name
+        context['first_name'] = user.first_name
+        context['alias'] = profile.alias
         if profile.avatar:
             context['avatar'] = profile.avatar.url
         context['mobile_number'] = profile.mobile_number
@@ -580,6 +582,8 @@ class MyProfileEdit(FormView):
         initial['engage_anonymously'] = profile.engage_anonymously
         initial['avatar'] = profile.avatar
         initial['mobile_number'] = profile.mobile_number
+        initial['alias'] = profile.alias
+        initial['first_name'] = user.first_name
         return initial
 
     def get_form(self, form_class):
@@ -597,7 +601,8 @@ class MyProfileEdit(FormView):
         user = self.request.user
         profile = user.profile
         profile.mobile_number = form.cleaned_data['mobile_number']
-
+        profile.alias = form.cleaned_data['alias']
+        user.first_name = form.cleaned_data['first_name']
         user.last_name = form.cleaned_data['last_name']
         profile.avatar = form.cleaned_data['avatar']
         profile.engage_anonymously = form.cleaned_data['engage_anonymously']
