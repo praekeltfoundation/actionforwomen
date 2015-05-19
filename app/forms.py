@@ -114,7 +114,7 @@ class PasswordResetEmailForm(forms.Form):
         try:
             email = self.cleaned_data["email"]
             self.user = User.objects.get(email__iexact=email)
-        except app.models.UserProfile.DoesNotExist:
+        except User.DoesNotExist:
             raise forms.ValidationError("Unable to find an account for the "
                                         "provided email. Please try "
                                         "again.")
