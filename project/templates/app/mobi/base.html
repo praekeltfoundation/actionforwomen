@@ -121,6 +121,7 @@
     </div>
 
     {% block menu_forms %}
+    {% if not user.is_authenticated %}
     <form method="post" id="signin" action="{% url login %}" class="form-sign-in highlight-primary">
       {% csrf_token %}
       <fieldset>
@@ -173,6 +174,7 @@
         <input type="submit" value="Submit" class="btn btn-wide" />
       </fieldset>
     </form>
+    {% endif %}
 
     <form action="{% url haystack_search %}" class="form-search highlight-primary hidden" id="search">
     {% csrf_token %}
@@ -198,7 +200,7 @@
         <li><a href="{% url view_my_profile %}">{% trans "View Profile" %}</a></li>
         <li><a href="{% url logout %}">{% trans "Logout" %}</a></li>
         {% endif %}
-        <li><a href="#search" id="show-search">{% trans "Search" %}</a></li>
+        <li><a href="{% url haystack_search %}" id="show-search">{% trans "Search" %}</a></li>
         <li><a href="{% url category_object_list 'stories' %}">{% trans "Stories" %}</a></li>
         <li><a href="{% url category_object_list 'celebrity' %}">{% trans "Celebrities" %}</a></li>
         <li><a href="{% url category_object_list 'fact' %}">{% trans "Facts" %}</a></li>
