@@ -569,3 +569,7 @@ msgstr "numéro de téléphone"
 
 #~ msgid "This is a translation"
 #~ msgstr "French Angielski"
+
+
+msgid "Report Comment"
+msgstr "Rapport Commentaire"

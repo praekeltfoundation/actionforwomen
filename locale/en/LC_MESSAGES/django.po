@@ -582,3 +582,6 @@ msgstr "Mobile number"
 
 #~ msgid "Back to sign up page"
 #~ msgstr "Back to sign up page"
+
+msgid "Report Comment"
+msgstr "Report Comment"

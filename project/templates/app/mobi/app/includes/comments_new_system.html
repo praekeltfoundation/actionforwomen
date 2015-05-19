@@ -7,7 +7,7 @@
 {% if user.profile.ban_duration == 1 %}
     <b>{% trans "You are banned from commenting for the rest of the day because a comment you made was reported by the community. You will be able to comment again tomorrow" %}</b><br><br/>
 
-    {% trans "Don't know why your comment was reported?" %} <a href="{% url comment-terms %}">{% trans "Read them here" 5}</a>
+    {% trans "Don't know why your comment was reported?" %} <a href="{% url comment-terms %}">{% trans "Read them here" %}</a>
 
 {% else %}
     <b>{% trans "You are banned from commenting for" %} {{ user.profile.ban_duration }} {% trans "days because a comment you made was reported by a MAMA Moderator" %}</b><br><br/>
