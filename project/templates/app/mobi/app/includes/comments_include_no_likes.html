@@ -17,9 +17,9 @@
   <li class="comment">
     <span class="avatar">
     {% if comment.user.profile.avatar %}
-      <img src="{{ comment.user.profile.avatar }}" alt="{{ comment.name }}" width="44" height="44" />
+      <img src="{{ comment.user.profile.avatar }}" width="44" height="44" />
     {% else %}
-      <img src="{{ STATIC_URL }}img/user.jpg" alt="{{ comment.name }}" width="44" height="44" />
+      <img src="{{ STATIC_URL }}img/user.jpg" width="44" height="44" />
     {% endif %}
     </span>
 
@@ -50,9 +50,9 @@
       <li class="comment">
         <span class="avatar">
           {% if commentreply.user.profile.avatar %}
-            <img src="{{ commentreply.user.profile.avatar }}" alt="{{ commentreply.user.first_name }}" width="44" height="44" />
+            <img src="{{ commentreply.user.profile.avatar }}" width="44" height="44" />
           {% else %}
-            <img src="{{ STATIC_URL }}img/user.jpg" alt="{{ commentreply.user.first_name }}" width="44" height="44" />
+            <img src="{{ STATIC_URL }}img/user.jpg" width="44" height="44" />
           {% endif %}
         </span>
 
