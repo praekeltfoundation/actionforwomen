@@ -93,6 +93,8 @@
     </div>
   {% endif %}
 
+
+    <p>
     <label for="id_avatar">{% trans "Upload your picture:" %}</label>
     {% if form.avatar.errors %}
         <div class="errors">
@@ -111,7 +113,8 @@
         <img src="{{ avatar.image.url }}" width="32" height="32" />
         {% endfor %}
     {% endif %}
-  <br/>
+    </p>
+
   <input type="submit" value='{% trans "Update profile" %}' class="btn btn-wide">
 </form>
 
