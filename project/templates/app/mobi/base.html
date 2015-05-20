@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width; initial-scale=1.0;" />
     <meta name="description" content="{% if object %}{{ object.description }}{% endif %}">
     <meta name="keywords" content="woman,women">
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css?v=20150520-1">
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css?v=20150520-2">
 
     {% if SITE_ID == 1 %}
     <link rel="stylesheet" media="screen and (min-width: 20em)" href="{{ STATIC_URL }}css/enhanced.css?v=20150520">
@@ -58,7 +58,7 @@
 <body>
     {% block nav %}
     <nav class="nav-main highlight-primary">
-      <a href="/" id="logo"><img src="{{ STATIC_URL }}img/a4w-live.png" alt="A4W Live"></a>
+      <a href="/" id="logo" class="logo"><img src="{{ STATIC_URL }}img/a4w-live.png" srcset="{{ STATIC_URL }}img/a4w-live-2x.png 320w" sizes="100vw" alt="A4W Live"></a>
       <a href="#menu" id="jump"><i class="i i-hamburger"></i><span class="visuallyhidden">menu</span></a>
       <a href="#main" id="close" class="hidden"><i class="i i-close" aria-label="close"></i><span class="visuallyhidden">close</span></a>
       <a href="#main" id="back" class="hidden"><i class="i i-back" aria-label="back"></i><span class="visuallyhidden">back</span></a>
