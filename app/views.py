@@ -766,9 +766,9 @@ def post_comment(request, next=None, using=None):
     data["name"] = 'anonymous'
     if request.user.is_authenticated():
         profile = request.user.profile
-        if profile.alias:
-            data['name'] = profile.alias
-
+        if not profile.engage_anonymously:
+            if profile.alias:
+                data['name'] = profile.alias
     data["email"] = 'commentor@askapp.mobi'
     data["url"] = request.META.get('HTTP_REFERER', None)
 
@@ -780,7 +780,6 @@ def post_comment(request, next=None, using=None):
         chat_id = data['object_pk']
         chat = LiveChat.objects.get(pk=chat_id)
         chat.check_max_comments()
-
     request.POST = data
 
     # Reject comments if commenting is closed

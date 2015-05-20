@@ -24,7 +24,7 @@
     </span>
 
     <span class="comment-meta">
-      <span class="comment-author">{{ comment.name }}</span> - {{ comment.submit_date }}
+      <span class="comment-author">{{ comment.user_name }} </span> - {{ comment.submit_date }}
     </span>
 
     {% if comment.is_removed and comment.user.profile.banned %}

@@ -320,8 +320,7 @@ class UserProfile(AbstractProfileBase):
                                blank=True, null=True)
     engage_anonymously = models.BooleanField(
         help_text='Whether engage_anonymously or not.',
-        default=False,
-        blank=True,
+        default=True,
     )
 
     def relation_description(self):
