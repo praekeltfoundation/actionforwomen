@@ -130,7 +130,7 @@
     <form method="post" id="signin" action="{% url login %}" class="form-sign-in highlight-primary">
       {% csrf_token %}
       <fieldset>
-        <legend>{% trans "Sign In" %}</legend>
+        <legend>{% trans "Sign in" %}</legend>
         <p>{% trans "Enter your username and 4-digit PIN" %}</p>
         <label for="username">{% trans "Username" %}
           <input type="text" id="username" name="username" class="input-wide" />
@@ -198,7 +198,7 @@
     <nav class="nav-menu highlight-primary" id="menu">
       <ul class="nav list-block" role="navigation">
         {% if not user.is_authenticated %}
-        <li><a href="{% url login %}" id="show-signin">{% trans "Sign In" %}</a></li>
+        <li><a href="{% url login %}" id="show-signin">{% trans "Sign in" %}</a></li>
         <li><a href="{% url registration_register %}" id="show-register">{% trans "Register" %}</a></li>
         {% else %}
         <li><a href="{% url view_my_profile %}">{% trans "View Profile" %}</a></li>
