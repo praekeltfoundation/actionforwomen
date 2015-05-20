@@ -329,7 +329,7 @@ msgstr "My Profile"
 #: project/templates/app/mobi/app/public_profile_view.html:16
 #: project/templates/app/mobi/app/includes/comments_include.html:7
 msgid "Comments"
-msgstr "Comments"
+msgstr ""
 
 #: project/templates/app/mobi/app/public_profile_view.html:17
 msgid "Made"
@@ -400,11 +400,11 @@ msgstr "Mobile Number"
 
 #: project/templates/app/mobi/app/viewprofile.html:24
 msgid "Name:"
-msgstr "Username"
+msgstr ""
 
 #: project/templates/app/mobi/app/viewprofile.html:27
 msgid "Surname:"
-msgstr "Username"
+msgstr ""
 
 #: project/templates/app/mobi/app/viewprofile.html:30
 msgid "Alias:"
@@ -550,7 +550,7 @@ msgstr "Add your comment"
 
 #: project/templates/app/mobi/comments/form.html:29
 msgid "Comment"
-msgstr "Comments"
+msgstr ""
 
 #: project/templates/app/mobi/moderator/inclusion_tags/confirm_report_comment.html:8
 msgid "Report Comment"
