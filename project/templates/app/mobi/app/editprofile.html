@@ -26,7 +26,7 @@
     </span>
     <div class="profile-details-name">{% trans "Edit your Profile" %}</div>
   </div>
-  
+
   {{ form.username }}
   {% if form.username.errors %}
     <div class="errors">
@@ -94,28 +94,26 @@
   {% endif %}
 
 
-    <div class="row">
-        <label for="id_avatar">{% trans "Upload your picture:" %}</label>
-        {% if form.avatar.errors %}
-            <div class="errors">
-                {% for error in form.avatar.errors %}
-                    <p>{{ error|safe }}</p>
-                {% endfor %}
-            </div>
-        {% endif %}
-        {{ form.avatar }}
-        {% if form.default_avatars %}
-        <div style="float: left">
-            <label for="id_avatar">{% trans "Choose an avatar:" %}</label>
-            {% for avatar in form.default_avatars %}
-            <input type="radio"
-                   name="default_avatar_id"
-                   value="{{ avatar.id }}" />
-            <img src="{{ avatar.image.url }}" width="32" height="32" />
+    <p>
+    <label for="id_avatar">{% trans "Upload your picture:" %}</label>
+    {% if form.avatar.errors %}
+        <div class="errors">
+            {% for error in form.avatar.errors %}
+                <p>{{ error|safe }}</p>
             {% endfor %}
         </div>
-        {% endif %}
-    </div>
+    {% endif %}
+    {{ form.avatar }}
+    {% if form.default_avatars %}
+        <label for="id_avatar">{% trans "Choose an avatar:" %}</label>
+        {% for avatar in form.default_avatars %}
+        <input type="radio"
+               name="default_avatar_id"
+               value="{{ avatar.id }}" />
+        <img src="{{ avatar.image.url }}" width="32" height="32" />
+        {% endfor %}
+    {% endif %}
+    </p>
 
   <input type="submit" value='{% trans "Update profile" %}' class="btn btn-wide">
 </form>

@@ -8,8 +8,13 @@
     <meta name="viewport" content="width=device-width; initial-scale=1.0;" />
     <meta name="description" content="{% if object %}{{ object.description }}{% endif %}">
     <meta name="keywords" content="woman,women">
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css?v=20150519-2">
-    <link rel="stylesheet" media="screen and (min-width: 20em)" href="{{ STATIC_URL }}css/enhanced.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css?v=20150520">
+
+    {% if SITE_ID == 1 %}
+    <link rel="stylesheet" media="screen and (min-width: 20em)" href="{{ STATIC_URL }}css/enhanced.css?v=20150520">
+    {% else %}
+    <link rel="stylesheet" media="screen and (min-width: 20em)" href="{{ STATIC_URL }}css/fr.enhanced.css?v=20150520">
+    {% endif %}
 
     <script type="text/javascript">
         WebFontConfig = {
@@ -70,6 +75,7 @@
 
         {% block messages %}
         {% if messages %}
+            <br/><br/><br/>
             <form>
             <fieldset>
                 {% for message in messages %}
@@ -198,7 +204,7 @@
         <li><a href="{% url view_my_profile %}">{% trans "View Profile" %}</a></li>
         <li><a href="{% url logout %}">{% trans "Logout" %}</a></li>
         {% endif %}
-        <li><a href="#search" id="show-search">{% trans "Search" %}</a></li>
+        <li><a href="{% url haystack_search %}" id="show-search">{% trans "Search" %}</a></li>
         <li><a href="{% url category_object_list 'stories' %}">{% trans "Stories" %}</a></li>
         <li><a href="{% url category_object_list 'celebrity' %}">{% trans "Celebrities" %}</a></li>
         <li><a href="{% url category_object_list 'fact' %}">{% trans "Facts" %}</a></li>

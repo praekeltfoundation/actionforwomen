@@ -4,7 +4,12 @@
 
 {% block content %}
 <div class="padded-page">
+    {% if query %}
     <h3>{% trans "Search Results for" %} '{{ query }}'</h3>
+    {% else %}
+    <h3>{% trans "Search" %}</h3>
+    {% endif %}
+
     {% if page.object_list %}
     <ul class="list-block list-article-teasers">
     {% for object in page.object_list %}
@@ -14,12 +19,25 @@
     {% endfor %}
     </ul>
     {% else %}
+        {% if query %}
         <p><strong>{% trans "Try Again" %}...</strong></p>
         <p>
         {% trans "Unfortunately no results were found for" %} '{{ query }}'.
         {% trans "Please try again with a different query." %}</p>
+        {% endif %}
     {% endif %}
 
     {% pagination page %}
+
+    <form action="{% url haystack_search %}">
+    {% csrf_token %}
+
+      <fieldset>
+        <label for="input-search-1"><span class="visuallyhidden">{% trans "Search:" %}</span>
+          <input type="search" id="input-search-1" name="q" placeholder="e.g. women" class="input-wide" {%if query%}value="{{query}}"{%endif%}/>
+        </label>
+        <input type="submit" value="Submit" class="btn btn-wide"/>
+      </fieldset>
+    </form>
 </div>
 {% endblock %}
