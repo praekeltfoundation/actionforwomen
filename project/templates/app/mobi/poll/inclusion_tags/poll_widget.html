@@ -16,21 +16,21 @@
     {% endif %}
 
     <div class="poll-results" id="poll-widget-results-{{ object.id }}" {% if can_vote_on_poll %}style="display: none;"{% endif %}>
-    <h3 class="article-title">{{ object.title }}</h3>    
+    <h3 class="article-title">{{ object.title }}</h3>
     {% for obj in object.polloption_set.all %}
         <div class="poll-result">
             <span class="poll-result-answer">{{ obj.title }}</span>
 
         {% if obj.percentage|floatformat == "100" %}
-            <div class="poll-result-bar poll-results-bar-large" style="width: {{ obj.percentage|floatformat }}%" data-percent="{{ obj.percentage|floatformat }}%"></div>
+            <div class="poll-result-bar poll-results-bar-large" style="width: {{ obj.percentage|floatformat:0 }}%" data-percent="{{ obj.percentage|floatformat:0 }}%"></div>
         {% elif obj.percentage|floatformat > "75" %}
-            <div class="poll-result-bar rightAfter" style="width: {{ obj.percentage|floatformat }}%" data-percent="{{ obj.percentage|floatformat }}%"></div>
+            <div class="poll-result-bar rightAfter" style="width: {{ obj.percentage|floatformat:0 }}%" data-percent="{{ obj.percentage|floatformat:0 }}%"></div>
         {% else %}
-            <div class="poll-result-bar"  style="width: {{ obj.percentage|floatformat }}%" data-percent="{{ obj.percentage|floatformat }}%"></div>
+            <div class="poll-result-bar"  style="width: {{ obj.percentage|floatformat:0 }}%" data-percent="{{ obj.percentage|floatformat:0 }}%"></div>
         {% endif %}
-            
+
         </div>
-    {% endfor %}  
+    {% endfor %}
 
     {% if can_vote_on_poll and not READ_ONLY_MODE %}
         <div class="row">
