@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-20 14:12+0200\n"
+"POT-Creation-Date: 2015-05-20 16:43+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -92,8 +92,8 @@ msgstr "All rights reserved."
 
 #: project/templates/app/mobi/base.html:133
 #: project/templates/app/mobi/base.html:201
-#: project/templates/app/mobi/app/inclusion_tags/page_header.html:11
-msgid "Sign In"
+#: project/templates/app/mobi/app/login.html:17
+msgid "Sign in"
 msgstr "Sign In"
 
 #: project/templates/app/mobi/base.html:134
@@ -229,10 +229,6 @@ msgstr "Choose an avatar:"
 #: project/templates/app/mobi/app/editprofile.html:118
 msgid "Update profile"
 msgstr "Update profile"
-
-#: project/templates/app/mobi/app/login.html:17
-msgid "Sign in"
-msgstr "Sign In"
 
 #: project/templates/app/mobi/app/login.html:21
 #: project/templates/app/mobi/app/password_reset_complete.html:7
@@ -525,6 +521,10 @@ msgstr ""
 msgid "Accept"
 msgstr "Accept"
 
+#: project/templates/app/mobi/app/inclusion_tags/page_header.html:11
+msgid "Sign In"
+msgstr "Sign In"
+
 #: project/templates/app/mobi/app/inclusion_tags/pagination.html:7
 #: project/templates/app/mobi/app/inclusion_tags/pagination.html:9
 msgid "Prev"
@@ -568,15 +568,11 @@ msgstr ""
 msgid "You must be signed in to vote"
 msgstr ""
 
-#: project/templates/app/mobi/registration/done.html:13
-msgid "Sign Up"
-msgstr "Sign Up"
-
-#: project/templates/app/mobi/registration/done.html:15
+#: project/templates/app/mobi/registration/done.html:14
 msgid "Thank you for joining A4W!"
 msgstr "Thank you for joining A4W!"
 
-#: project/templates/app/mobi/registration/done.html:17
+#: project/templates/app/mobi/registration/done.html:16
 msgid "Take me to the home page"
 msgstr "Take me to the home page"
 
@@ -599,6 +595,9 @@ msgstr ""
 #: project/templates/app/mobi/search/search.html:26
 msgid "Please try again with a different query."
 msgstr ""
+
+#~ msgid "Sign Up"
+#~ msgstr "Sign Up"
 
 #~ msgid "Post"
 #~ msgstr "Post"
