@@ -12,7 +12,7 @@
         <img src="{{ STATIC_URL }}img/user.jpg" width="44" height="44" />
       {% endif %}
     </span>
-    <div class="profile-details-name">{{ username }}</div><!-- 
+    <div class="profile-details-name">{{ username }}</div><!--
     <div class="profile-details-name">Surname</div> -->
   </div>
   <p>{% trans "Profile details" %}</p>
@@ -32,7 +32,7 @@
   </label>
   <a href="{% url edit_my_profile %}" class="btn btn-wide"><input type="button" value='{% trans "Edit My Profile" %}' class="btn btn-wide" /></a>
   <br/>
-  <a href="{% url reset_password_email %}" class="btn btn-wide"><input type="button" value='{% trans "Reset My Password" %}' class="btn btn-wide" /></a>
+  <a href="{% url reset_password_email %}" class="btn btn-wide"><input type="button" value='{% trans "Reset My PIN" %}' class="btn btn-wide" /></a>
 </form>
 
 {% endblock %}

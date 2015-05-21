@@ -60,15 +60,15 @@ class PasswordResetForm(PasswordResetForm):
             )
             self.user = self.profile.user
         except app.models.UserProfile.DoesNotExist:
-            raise forms.ValidationError("Unable to find an account for the "
+            raise forms.ValidationError(_("Unable to find an account for the "
                                         "provided mobile number. Please try "
-                                        "again.")
+                                        "again."))
         # Fail if user has already reset password today more than once.
         if self.profile.last_reset_date == date.today() \
                 and self.profile.reset_count >= 2:
-            raise forms.ValidationError("You have already tried to reset "
-                                        "your password today. Please wait "
-                                        "for your SMS or try again tomorrow.")
+            raise forms.ValidationError(_("You have already tried to reset "
+                                        "your PIN today. Please wait "
+                                        "for your SMS or try again tomorrow."))
         return mobile_number
 
     def save(self, *args, **kwargs):
@@ -89,14 +89,16 @@ class PasswordResetForm(PasswordResetForm):
         token = default_token_generator.make_token(self.profile.user)
         current_site = get_current_site(kwargs['request'])
 
-        message = "Hi %s. Follow this link to reset your pin: http://%s%s" % (
-            self.user.username,
-            current_site.domain,
-            reverse(
+        message = _(
+            "Hi %(name)s. "
+            "Follow this link to reset your PIN: http://%(domain)s%(url)s") % {
+            'name': self.user.username,
+            'domain': current_site.domain,
+            'url': reverse(
                 'password_reset_confirm',
                 kwargs={'uidb36': uid, 'token': token}
             )
-        )
+        }
 
         send_sms.delay(self.profile.mobile_number, message)
 
@@ -115,9 +117,9 @@ class PasswordResetEmailForm(forms.Form):
             email = self.cleaned_data["email"]
             self.user = User.objects.get(email__iexact=email)
         except User.DoesNotExist:
-            raise forms.ValidationError("Unable to find an account for the "
+            raise forms.ValidationError(_("Unable to find an account for the "
                                         "provided email. Please try "
-                                        "again.")
+                                        "again."))
         return email
     def save(self, *args, **kwargs):
         """
@@ -129,17 +131,19 @@ class PasswordResetEmailForm(forms.Form):
         token = default_token_generator.make_token(self.user)
         current_site = get_current_site(kwargs['request'])
 
-        message = "Hi %s. Follow this link to reset your pin: http://%s%s" % (
-            self.user.username,
-            current_site.domain,
-            reverse(
+        message = _(
+            "Hi %(name)s. "
+            "Follow this link to reset your PIN: http://%(domain)s%(url)s") % {
+            'name': self.user.username,
+            'domain': current_site.domain,
+            'url': reverse(
                 'password_reset_confirm',
                 kwargs={'uidb36': uid, 'token': token}
             )
-        )
+        }
 
-        subject = "Password Reset"
-        recipients= [self.user.email]
+        subject = _("[A4W] Reset your PIN")
+        recipients = [self.user.email]
         from_address = settings.FROM_EMAIL_ADDRESS
         mail = EmailMessage(
             subject,
@@ -172,7 +176,7 @@ class RegistrationForm(RegistrationFormTermsOfService):
         ]
         self.fields['username'].label = "Choose a username"
         self.fields['email'].label = "Choose email"
-        self.fields['password1'].label = "Choose a password"
+        self.fields['password1'].label = "Choose a PIN"
 
         self.fields['tos'].label = mark_safe('I accept the <a href="%s">terms '
                                              'and conditions</a> of use.'
@@ -180,15 +184,17 @@ class RegistrationForm(RegistrationFormTermsOfService):
 
     def clean_mobile_number(self):
         mobile_number = self.cleaned_data['mobile_number']
-        RegexValidator('^\d{11}$', message="Enter a valid mobile number in "
-                       "the form 14034228916")(mobile_number)
+        RegexValidator('^\d{11}$', message=_("Enter a valid mobile number in "
+                       "the form 14034228916"))(mobile_number)
         try:
             app.models.UserProfile.objects.get(
                 mobile_number__exact=mobile_number
             )
-            raise ValidationError('A user with that mobile number already '
-                                  'exists. <a href="%s">Forgotten your '
-                                  'password?</a>' % reverse("reset_password_email"))
+            error_msg_1 = _('A user with that mobile number already exists.')
+            error_msg_2 = _('Forgotten your PIN?')
+            raise ValidationError(error_msg_1 + ' <a href="%s">%s</a>' % (
+                reverse("reset_password_email"),
+                error_msg_2))
         except app.models.UserProfile.DoesNotExist:
             return mobile_number
 
@@ -198,8 +204,7 @@ class RegistrationForm(RegistrationFormTermsOfService):
             User.objects.get(
                 email__exact=email
             )
-            raise ValidationError('A user with that email already '
-                                  'exists')
+            raise ValidationError(_('A user with that email already exists'))
         except User.DoesNotExist:
             return email
 
