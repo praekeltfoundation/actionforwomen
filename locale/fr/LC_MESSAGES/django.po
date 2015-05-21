@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-21 13:47+0200\n"
+"POT-Creation-Date: 2015-05-21 14:15+0200\n"
 "PO-Revision-Date: 2015-05-20 14:54+0000\n"
 "Last-Translator: Milton <milton@praekelt.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -293,12 +293,14 @@ msgstr ""
 # msgstr "Username"
 #: project/templates/app/mobi/app/password_reset.html:5
 #: project/templates/app/mobi/app/password_reset_email.html:6
-msgid "Reset Password"
+msgid "Reset PIN"
 msgstr "mot de passe"
 
 #: project/templates/app/mobi/app/password_reset.html:17
-msgid "Please enter your mobile number and we will send you a new password."
+msgid "Please enter your mobile number and we will send you a new PIN."
 msgstr ""
+"Entrez le courriel que vous avez utilisé pour vous inscrire et nous vous "
+"enverrons un lien pour réinitialiser votre mot de passe"
 
 #: project/templates/app/mobi/app/password_reset.html:27
 #: project/templates/app/mobi/app/password_reset_email.html:28
@@ -306,11 +308,11 @@ msgid "Send"
 msgstr ""
 
 #: project/templates/app/mobi/app/password_reset_complete.html:6
-msgid "Password Reset Complete"
+msgid "PIN Reset Complete"
 msgstr ""
 
 #: project/templates/app/mobi/app/password_reset_complete.html:8
-msgid "Your password has been set."
+msgid "Your PIN has been set."
 msgstr ""
 
 #: project/templates/app/mobi/app/password_reset_complete.html:8
@@ -320,13 +322,12 @@ msgstr "Vous êtes maintenant connecté ."
 # msgid "Username"
 # msgstr "Username"
 #: project/templates/app/mobi/app/password_reset_confirm.html:5
-msgid "Enter New Password"
+msgid "Enter New PIN"
 msgstr "mot de passe"
 
 #: project/templates/app/mobi/app/password_reset_confirm.html:18
 msgid ""
-"Please enter your new password twice so we can verify you typed it in "
-"correctly."
+"Please enter your new PIN twice so we can verify you typed it in correctly."
 msgstr ""
 
 #: project/templates/app/mobi/app/password_reset_confirm.html:37
@@ -335,26 +336,24 @@ msgstr ""
 
 #: project/templates/app/mobi/app/password_reset_confirm.html:41
 msgid ""
-"The password reset link was invalid, possibly because it has already been "
-"used."
+"The PIN reset link was invalid, possibly because it has already been used."
 msgstr ""
 
 #: project/templates/app/mobi/app/password_reset_confirm.html:41
-msgid "Please request a new password reset."
+msgid "Please request a new PIN reset."
 msgstr ""
 
 #: project/templates/app/mobi/app/password_reset_done.html:6
-msgid "Password Reset Instructions Sent"
+msgid "PIN Reset Instructions Sent"
 msgstr ""
 
 #: project/templates/app/mobi/app/password_reset_done.html:8
 msgid ""
-"You should receive an email containing details on resetting your password "
-"shortly."
+"You should receive an email containing details on resetting your PIN shortly."
 msgstr ""
 
 #: project/templates/app/mobi/app/password_reset_email.html:17
-msgid "Please enter your email and we will send you a new password."
+msgid "Please enter your email and we will send you a PIN reset link."
 msgstr ""
 "Entrez le courriel que vous avez utilisé pour vous inscrire et nous vous "
 "enverrons un lien pour réinitialiser votre mot de passe"
@@ -618,6 +617,11 @@ msgstr ""
 #: project/templates/app/mobi/search/search.html:26
 msgid "Please try again with a different query."
 msgstr ""
+
+# msgid "Username"
+# msgstr "Username"
+#~ msgid "Reset Password"
+#~ msgstr "mot de passe"
 
 # msgid "Username"
 # msgstr "Username"
