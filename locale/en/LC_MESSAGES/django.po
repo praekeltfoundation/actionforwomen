@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-21 14:15+0200\n"
+"POT-Creation-Date: 2015-05-25 13:46-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -99,8 +99,9 @@ msgstr ""
 
 #: project/templates/app/mobi/base.html:96
 #: project/templates/app/mobi/base.html:187
-#: project/templates/app/mobi/base.html:207
+#: project/templates/app/mobi/base.html:212
 #: project/templates/app/mobi/search/search.html:10
+#: project/templates/app/mobi/search/search.html:39
 msgid "Search"
 msgstr ""
 
@@ -210,23 +211,23 @@ msgstr ""
 msgid "Logout"
 msgstr ""
 
-#: project/templates/app/mobi/base.html:208
+#: project/templates/app/mobi/base.html:207
 msgid "Stories"
 msgstr ""
 
-#: project/templates/app/mobi/base.html:209
+#: project/templates/app/mobi/base.html:208
 msgid "Celebrities"
 msgstr ""
 
-#: project/templates/app/mobi/base.html:210
+#: project/templates/app/mobi/base.html:209
 msgid "Facts"
 msgstr ""
 
-#: project/templates/app/mobi/base.html:211
+#: project/templates/app/mobi/base.html:210
 msgid "Support"
 msgstr ""
 
-#: project/templates/app/mobi/base.html:212
+#: project/templates/app/mobi/base.html:211
 msgid "FAQs"
 msgstr ""
 
@@ -238,11 +239,11 @@ msgstr ""
 msgid "Administration"
 msgstr ""
 
-#: project/templates/app/mobi/app/editprofile.html:5
-msgid "My Profile"
+#: project/templates/app/mobi/app/editprofile.html:15
+msgid "Edit your Profile"
 msgstr ""
 
-#: project/templates/app/mobi/app/editprofile.html:8
+#: project/templates/app/mobi/app/editprofile.html:19
 #: project/templates/app/mobi/app/login.html:27
 #: project/templates/app/mobi/app/password_reset.html:8
 #: project/templates/app/mobi/app/password_reset_confirm.html:8
@@ -250,19 +251,15 @@ msgstr ""
 msgid "Oops, please make sure of the following:"
 msgstr ""
 
-#: project/templates/app/mobi/app/editprofile.html:27
-msgid "Edit your Profile"
-msgstr ""
-
-#: project/templates/app/mobi/app/editprofile.html:98
+#: project/templates/app/mobi/app/editprofile.html:95
 msgid "Upload your picture:"
 msgstr ""
 
-#: project/templates/app/mobi/app/editprofile.html:108
+#: project/templates/app/mobi/app/editprofile.html:105
 msgid "Choose an avatar:"
 msgstr ""
 
-#: project/templates/app/mobi/app/editprofile.html:118
+#: project/templates/app/mobi/app/editprofile.html:115
 msgid "Update profile"
 msgstr ""
 
@@ -399,7 +396,7 @@ msgstr ""
 
 #: project/templates/app/mobi/app/story_comments_list.html:39
 #: project/templates/app/mobi/app/includes/comments_include_no_likes.html:43
-msgid "Report"
+msgid "Flag"
 msgstr ""
 
 #: project/templates/app/mobi/app/story_comments_list.html:58

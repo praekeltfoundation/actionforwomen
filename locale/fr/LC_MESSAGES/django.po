@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-21 14:15+0200\n"
+"POT-Creation-Date: 2015-05-25 13:46-0400\n"
 "PO-Revision-Date: 2015-05-20 14:54+0000\n"
 "Last-Translator: Milton <milton@praekelt.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -102,8 +102,9 @@ msgstr "Numéro De Téléphone"
 
 #: project/templates/app/mobi/base.html:96
 #: project/templates/app/mobi/base.html:187
-#: project/templates/app/mobi/base.html:207
+#: project/templates/app/mobi/base.html:212
 #: project/templates/app/mobi/search/search.html:10
+#: project/templates/app/mobi/search/search.html:39
 msgid "Search"
 msgstr "recherche"
 
@@ -213,23 +214,23 @@ msgstr "Voir Le Profil"
 msgid "Logout"
 msgstr "Déconnexion"
 
-#: project/templates/app/mobi/base.html:208
+#: project/templates/app/mobi/base.html:207
 msgid "Stories"
 msgstr "Témoignages"
 
-#: project/templates/app/mobi/base.html:209
+#: project/templates/app/mobi/base.html:208
 msgid "Celebrities"
 msgstr "célébrités"
 
-#: project/templates/app/mobi/base.html:210
+#: project/templates/app/mobi/base.html:209
 msgid "Facts"
 msgstr "Faits"
 
-#: project/templates/app/mobi/base.html:211
+#: project/templates/app/mobi/base.html:210
 msgid "Support"
 msgstr "Support"
 
-#: project/templates/app/mobi/base.html:212
+#: project/templates/app/mobi/base.html:211
 msgid "FAQs"
 msgstr "Questions fréquentes"
 
@@ -241,11 +242,11 @@ msgstr ""
 msgid "Administration"
 msgstr ""
 
-#: project/templates/app/mobi/app/editprofile.html:5
-msgid "My Profile"
+#: project/templates/app/mobi/app/editprofile.html:15
+msgid "Edit your Profile"
 msgstr "Voir Le Profil"
 
-#: project/templates/app/mobi/app/editprofile.html:8
+#: project/templates/app/mobi/app/editprofile.html:19
 #: project/templates/app/mobi/app/login.html:27
 #: project/templates/app/mobi/app/password_reset.html:8
 #: project/templates/app/mobi/app/password_reset_confirm.html:8
@@ -253,19 +254,15 @@ msgstr "Voir Le Profil"
 msgid "Oops, please make sure of the following:"
 msgstr "S'il vous plaît assurez-vous de ce qui suit"
 
-#: project/templates/app/mobi/app/editprofile.html:27
-msgid "Edit your Profile"
-msgstr "Voir Le Profil"
-
-#: project/templates/app/mobi/app/editprofile.html:98
+#: project/templates/app/mobi/app/editprofile.html:95
 msgid "Upload your picture:"
 msgstr ""
 
-#: project/templates/app/mobi/app/editprofile.html:108
+#: project/templates/app/mobi/app/editprofile.html:105
 msgid "Choose an avatar:"
 msgstr ""
 
-#: project/templates/app/mobi/app/editprofile.html:118
+#: project/templates/app/mobi/app/editprofile.html:115
 msgid "Update profile"
 msgstr "Voir Le Profil"
 
@@ -412,8 +409,8 @@ msgstr ""
 
 #: project/templates/app/mobi/app/story_comments_list.html:39
 #: project/templates/app/mobi/app/includes/comments_include_no_likes.html:43
-msgid "Report"
-msgstr "soutien"
+msgid "Flag"
+msgstr ""
 
 #: project/templates/app/mobi/app/story_comments_list.html:58
 #: project/templates/app/mobi/app/includes/comments_include.html:26
@@ -617,6 +614,12 @@ msgstr ""
 #: project/templates/app/mobi/search/search.html:26
 msgid "Please try again with a different query."
 msgstr ""
+
+#~ msgid "My Profile"
+#~ msgstr "Voir Le Profil"
+
+#~ msgid "Report"
+#~ msgstr "soutien"
 
 # msgid "Username"
 # msgstr "Username"
