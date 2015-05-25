@@ -9,13 +9,11 @@
 
 {% block content %}
 <div class="over">
-  {% if '<img' not in object.content %}
     {% if object.image %}
       <img src="{{ object.get_large_url }}" />
     {% else %}
       <img src="{{ STATIC_URL }}img/img_holder.png" alt="{{ object.title }}"/>
     {% endif %}
-  {% endif %}
   <a href="#" class="over-text">
     <h3 class="article-title">{{ object.title }}</h3>
     {% if object.subtitle %}
