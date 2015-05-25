@@ -15,7 +15,7 @@
         {% endif %}
   </a>
   {% if object.comments_enabled %}
-  <a href="#" class="link-comments">
+  <a href="{{ object.get_absolute_category_url }}#comments" class="link-comments">
     <i class="i i-comment"></i>{{object.comment_count}}</a>
   {% endif %}
 </div>
