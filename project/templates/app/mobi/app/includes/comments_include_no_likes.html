@@ -40,7 +40,7 @@
       {% if not comment.user.is_staff and comment.user != request.user and request.user.is_authenticated %}
           {% if not comment.is_removed %}
             <ul class="comment-actions nav list-inline">
-              <li><a href="{% url confirm_comment comment.content_type comment.id %}?next={{request.path}}">{% trans "Report" %}</a></li>
+              <li><a href="{% url confirm_comment comment.content_type comment.id %}?next={{request.path}}">{% trans "Flag" %}</a></li>
             </ul>
           {% endif %}
       {% endif %}
