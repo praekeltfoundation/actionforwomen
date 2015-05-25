@@ -184,7 +184,7 @@ class RegistrationForm(RegistrationFormTermsOfService):
 
     def clean_mobile_number(self):
         mobile_number = self.cleaned_data['mobile_number']
-        RegexValidator('^\d{11}$', message=_("Enter a valid mobile number in "
+        RegexValidator('^\d{10,11}$', message=_("Enter a valid mobile number in "
                        "the form 14034228916"))(mobile_number)
         try:
             app.models.UserProfile.objects.get(
@@ -275,7 +275,7 @@ class EditProfileForm(RegistrationForm):
 
     def clean_mobile_number(self):
         mobile_number = self.cleaned_data['mobile_number']
-        RegexValidator('^\d{11}$', message="Enter a valid mobile number in "
+        RegexValidator('^\d{10,11}$', message="Enter a valid mobile number in "
                        "the form 14034228916")(mobile_number)
 
         return mobile_number
