@@ -2,18 +2,6 @@
 {% load i18n %}
 
 {% block content %}
-<div class="h1">{% trans "My Profile" %}</div>
-{% if form.errors or form.non_field_errors %}
-<div class="errors">
-    <p>{% trans "Oops, please make sure of the following:" %}</p>
-    {% if form.non_field_errors %}
-        {% for error in form.non_field_errors %}
-            <p>{{ error }}</p>
-        {% endfor %}
-    {% endif %}
-</div>
-{% endif %}
-
 <form method="post" id="frmProfileEdit" action="" class="profile" enctype="multipart/form-data">
 {% csrf_token %}
   <div class="profile-details">
@@ -26,6 +14,15 @@
     </span>
     <div class="profile-details-name">{% trans "Edit your Profile" %}</div>
   </div>
+
+  {% if form.errors or form.non_field_errors %}
+    <p>{% trans "Oops, please make sure of the following:" %}</p>
+    {% if form.non_field_errors %}
+        {% for error in form.non_field_errors %}
+            <p>{{ error }}</p>
+        {% endfor %}
+    {% endif %}
+  {% endif %}
 
   {{ form.username }}
   {% if form.username.errors %}
