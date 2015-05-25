@@ -379,7 +379,6 @@ def mama_object_comments(context, obj):
             content_type=ctype,
             object_pk=obj.pk,
             is_public=True,
-            user__is_staff=False,
             site__pk=settings.SITE_ID
         ).order_by('-submit_date')
 
