@@ -204,18 +204,18 @@
         <li><a href="{% url view_my_profile %}">{% trans "View Profile" %}</a></li>
         <li><a href="{% url logout %}">{% trans "Logout" %}</a></li>
         {% endif %}
-        <li><a href="{% url haystack_search %}" id="show-search">{% trans "Search" %}</a></li>
         <li><a href="{% url category_object_list 'stories' %}">{% trans "Stories" %}</a></li>
         <li><a href="{% url category_object_list 'celebrity' %}">{% trans "Celebrities" %}</a></li>
         <li><a href="{% url category_object_list 'fact' %}">{% trans "Facts" %}</a></li>
         <li><a href="{% url category_object_list 'support' %}">{% trans "Support" %}</a></li>
         <li><a href="{% url category_object_list 'faq' %}">{% trans "FAQs" %}</a></li>
+        <li><a href="{% url haystack_search %}" id="show-search">{% trans "Search" %}</a></li>
       </ul>
       {% if SITE_ID == 1 %}
-      <p><a href="{{french_url}}" class="lang-change">Changer de langue à Français</a></p>
+      <p><a href="{{french_url}}" class="lang-change">Français</a></p>
       {% endif %}
       {% if SITE_ID == 2 %}
-      <p><a href="{{english_url}}" class="lang-change">Change language to English</a></p>
+      <p><a href="{{english_url}}" class="lang-change">English</a></p>
       {% endif %}
     </nav>
     <a href="#main" id="nav-close" class="hidden">main</a>
