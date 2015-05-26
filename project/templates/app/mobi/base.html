@@ -109,6 +109,7 @@
               <ul class="nav nav-legal-lang list-inline" role="navigation">
               <li><a href="{% url about %}">{% trans "About" %}</a></li>
               <li><a href="{% url terms %}">{% trans "Terms" %}</a></li>
+              <li><a href="{% url feedback %}">{% trans "Site Support" %}</a></li>
               <li>{% trans "Site Language:" %} <a href="{{english_url}}" {% if SITE_ID == 1 %}class="active"{%endif%}>English</a> <a href="{{french_url}}" {% if SITE_ID == 2 %}class="active"{%endif%}>Française</a></li>
             </ul>
             <ul class="nav nav-legal-lang list-inline">

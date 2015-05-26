@@ -36,7 +36,8 @@ from app.forms import (
     ProfileForm,
     VLiveProfileEditForm,
     EditProfileForm,
-    MomsStoryEntryForm
+    MomsStoryEntryForm,
+    FeedbackForm
 )
 from app.view_modifiers import PopularViewModifier
 from app.models import Banner, DefaultAvatar
@@ -72,6 +73,9 @@ URL_REGEX = re.compile(
 )
 
 from django.utils import translation
+from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from django.utils.translation import ugettext as _
 
 def set_language(request):
     next = request.REQUEST.get('next', None)
@@ -858,3 +862,32 @@ class ConfirmReportView(TemplateView):
         })
 
         return context
+
+def sendfeedback(request):
+    if request.method == 'POST': # If the form has been submitted...
+        form = FeedbackForm(request.POST)
+        data = request.POST.dict()
+        message = _(
+            "From %(name)s. "
+            "%(message)s") % {
+            'name': data['name'],
+            'message': data['message'],
+        }
+
+        subject = _("[A4W] User Feedback")
+        recipients = [settings.INFO_EMAIL_ADDRESS]
+        from_address = data['email']
+        mail = EmailMessage(
+            subject,
+            message,
+            from_address,
+            recipients,
+            headers={'From': from_address, 'Reply-To': from_address}
+        )
+        mail.send(fail_silently=True)
+        return render_to_response('app/feedback_thanks.html', context_instance=RequestContext(request))
+    else:
+        form = FeedbackForm()
+    return render(request, 'app/feedback.html', {
+        'form': form,
+    })

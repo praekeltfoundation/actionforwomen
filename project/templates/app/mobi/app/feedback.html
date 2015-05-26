@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+<div class="padded-page">
+    <h1>{% trans "Site Support" %}</h1>
+</div>
+<form method="post" id="frmContact" action="{% url feedback %}">
+{% csrf_token %}
+<label class="label-wide"> {% trans "Name" %}:
+    {{ form.name }}
+</label>
+<label class="label-wide"> {% trans "Email" %}:
+{{ form.email }}
+</label>
+<label class="label-wide"> {% trans "Comment" %}:
+{{ form.message }}
+</label>
+ <input type="submit" name="submit" value='{% trans "Submit" %}' class="btn" /></form>
+{% endblock %}

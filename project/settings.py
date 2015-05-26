@@ -350,3 +350,4 @@ LANGUAGES = (
     ('en', ugettext('English')),
     ('fr', ugettext('French')),
 )
+INFO_EMAIL_ADDRESS = "info@a4w.ca"
