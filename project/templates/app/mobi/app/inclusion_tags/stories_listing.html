@@ -5,5 +5,7 @@
   {% for object in object_list %}
       {% render_object object "block_home" %}
   {% endfor %}
+  {% comment %}
   <p class="cta"><a href="{{ category.get_absolute_url }}">+ {% trans "See more stories" %}</a></p>
+  {% endcomment %}
 {% endif %}
