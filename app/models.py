@@ -157,6 +157,10 @@ class SitePreferences(Preferences):
         blank=True,
         null=True
     )
+    faqs = RichTextField(
+        blank=True,
+        null=True
+    )
     comment_terms = RichTextField(
         blank=True,
         null=True

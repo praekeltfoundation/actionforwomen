@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
-
+{% load i18n %}
 {% block content %}
 <div class="padded-page">
-    <h1>About</h1>
+    <h1>{% trans "About" %}</h1>
     {{ preferences.SitePreferences.about|safe }}
 </div>
 {% endblock %}
