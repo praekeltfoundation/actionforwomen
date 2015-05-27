@@ -305,8 +305,8 @@ class EditProfileForm(RegistrationForm):
             main, sub = image.content_type.split('/')
             if not (main == 'image' and sub.lower() in ['jpeg', 'pjpeg', 'png', 'jpg']):
                 raise forms.ValidationError(_('Please use a JPEG or PNG image.'))
-            if len(image) > (1 * 1024 * 1024):
-                raise forms.ValidationError(_('Image file too large ( maximum 1mb )'))
+            if len(image) > (500 * 1024):
+                raise forms.ValidationError(_('Image file too large ( maximum 500KB )'))
         except AttributeError:
             pass
         return image
@@ -421,7 +421,7 @@ class MomsStoryEntryForm(forms.ModelForm):
 
     def clean_terms(self):
         return True
-        
+
 class FeedbackForm(forms.Form):
     name = forms.CharField(max_length=64)
     email = forms.EmailField()
