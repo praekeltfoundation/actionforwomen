@@ -51,6 +51,11 @@ urlpatterns = patterns('',
         name='about'
     ),
     url(
+        r'^faqs/$',
+        TemplateView.as_view(template_name="app/faqs.html"),
+        name='faqs'
+    ),
+    url(
         r'^contact/$',
         ContactView.as_view(),
         name='contact'

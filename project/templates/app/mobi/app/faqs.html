@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+<div class="padded-page">
+    <h1>{% trans "FAQs" %}</h1>
+    {{ preferences.SitePreferences.faqs|safe }}
+</div>
+{% endblock %}
