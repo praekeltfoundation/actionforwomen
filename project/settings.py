@@ -351,3 +351,4 @@ LANGUAGES = (
     ('fr', ugettext('French')),
 )
 INFO_EMAIL_ADDRESS = "info@a4w.ca"
+AUTHENTICATION_BACKENDS = ('app.login_backend.CaseInsensitiveModelBackend',)
