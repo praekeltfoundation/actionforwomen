@@ -235,7 +235,7 @@ var fufu = (function () {
 
   // menu forms
 
-  if(fufu.menu && fufu.signin) {
+  if(fufu.menu && fufu.signin && fufu.showSignin) {
 
     fufu.bindEvent(fufu.showSignin, "click", function (ev) {
       fufu.preventActions(ev);
@@ -247,7 +247,7 @@ var fufu = (function () {
 
   }
 
-  if(fufu.menu && fufu.register) {
+  if(fufu.menu && fufu.register && fufu.showRegister) {
 
     fufu.bindEvent(fufu.showRegister, "click", function (ev) {
       fufu.preventActions(ev);
