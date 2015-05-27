@@ -18,3 +18,4 @@ tags
 /src/
 /static/
 dev.sh
+.coverage
