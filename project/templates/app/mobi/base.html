@@ -111,7 +111,7 @@
               <li><a href="{% url terms %}">{% trans "Terms" %}</a></li>
               <li><a href="{% url faqs %}">{% trans "Site FAQs" %}</a></li>
               <li><a href="{% url feedback %}">{% trans "Site Support" %}</a></li>
-              <li>{% trans "Site Language:" %} <a href="{{english_url}}" {% if SITE_ID == 1 %}class="active"{%endif%}>English</a> <a href="{{french_url}}" {% if SITE_ID == 2 %}class="active"{%endif%}>Française</a></li>
+              <li>{% trans "Site Language:" %} <a href="{{english_url}}" {% if SITE_ID == 1 %}class="active"{%endif%}>English</a> <a href="{{french_url}}" {% if SITE_ID == 2 %}class="active"{%endif%}>Français</a></li>
             </ul>
               <div class="copyright">
               <p>&copy; {% now "Y" %} National Association of Friendship Centres.<br />{% trans "All rights reserved." %}</p>
