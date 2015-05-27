@@ -421,3 +421,10 @@ class MomsStoryEntryForm(forms.ModelForm):
 
     def clean_terms(self):
         return True
+        
+class FeedbackForm(forms.Form):
+    name = forms.CharField(max_length=64)
+    email = forms.EmailField()
+    message = forms.CharField(
+        widget=forms.Textarea,
+    )

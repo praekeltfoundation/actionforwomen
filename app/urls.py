@@ -56,6 +56,11 @@ urlpatterns = patterns('',
         name='contact'
     ),
     url(
+        r'^feedback/$',
+        'app.views.sendfeedback',
+        name='feedback'
+    ),
+    url(
         r'^help/$',
         TemplateView.as_view(template_name="app/help.html"),
         name='help'
