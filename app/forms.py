@@ -210,8 +210,12 @@ class RegistrationForm(RegistrationFormTermsOfService):
 
     def clean_mobile_number(self):
         mobile_number = self.cleaned_data['mobile_number']
-        RegexValidator('^\d{10,11}$', message=_("Enter a valid mobile number in "
-                       "the form 14034228916"))(mobile_number)
+        if mobile_number[0] == '1':
+            RegexValidator('^\d{11}$', message=_("Enter a valid mobile number in "
+               "the form 14034228916"))(mobile_number)
+        else:
+            RegexValidator('^\d{10}$', message=_("Enter a valid mobile number in "
+                   "the form 14034228916"))(mobile_number)
         try:
             app.models.UserProfile.objects.get(
                 mobile_number__exact=mobile_number

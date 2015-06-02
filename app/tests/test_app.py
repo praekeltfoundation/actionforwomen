@@ -64,10 +64,14 @@ class ProfileTestCase(TestCase):
         self.client.logout()
 
         post_data = {
-            'username': 'test_birth',
+            'username': 'an@email.com',
             'password1': '1234',
             'mobile_number': '0712341113',
             'email': 'an@email.com',
+            'alias': '',
+            'gender': '',
+            'year_of_birth': '',
+            'identity' : '',
             'tos': True
         }
         resp = self.client.post(reverse('registration_register'),
