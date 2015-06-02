@@ -70,7 +70,7 @@
     {{ form.gender }}
   </label>
 
-  <label for="alias" class="label-wide">{{ form.year_of_birth.label_tag }}
+  <label for="id_year_of_birth" class="label-wide">{{ form.year_of_birth.label_tag }}
     {{ form.year_of_birth }}
   </label>
   {% if form.year_of_birth.errors %}
@@ -80,7 +80,7 @@
         {% endfor %}
     </div>
   {% endif %}
-  <label for="alias" class="label-wide">{{ form.identity.label_tag }}
+  <label for="id_identity" class="label-wide">{{ form.identity.label_tag }}
     {{ form.identity }}
   </label>
 

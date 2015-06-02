@@ -70,7 +70,7 @@ class ProfileTestCase(TestCase):
             'email': 'an@email.com',
             'alias': '',
             'gender': '',
-            'year_of_birth': '',
+            'year_of_birth': '1989',
             'identity' : '',
             'tos': True
         }

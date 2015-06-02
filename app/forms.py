@@ -174,7 +174,7 @@ class RegistrationForm(RegistrationFormTermsOfService):
         label="Your mobile number"
     )
     alias = forms.CharField(
-       label="Alias",
+       label="Display Name",
        required=False
     )
     gender = forms.ChoiceField(choices=GENDER_CHOICES, widget=forms.RadioSelect(), required=False)
