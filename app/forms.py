@@ -33,17 +33,17 @@ from app.constants import (
 )
 
 GENDER_CHOICES=[
-    ('Male','Male'),
-    ('Female','Female'),
-    ('Other', 'Other')
+    ('male','Male'),
+    ('female','Female'),
+    ('other', 'Other')
     ]
 IDENTITY_CHOICES = [
     ('', 'Select Identity'),
-    ('First Nations Status', 'First Nations Status'),
-    ('First Nations Non-Status', 'First Nations Non-Status'),
-    ('Inuit', 'Inuit'),
-    ('Metis', 'Metis'),
-    ('Non-Aboriginal', 'Non-Aboriginal'),
+    ('first_nations_status', 'First Nations Status'),
+    ('first_nations_non_status', 'First Nations Non-Status'),
+    ('inuit', 'Inuit'),
+    ('metis', 'Metis'),
+    ('non_aboriginal', 'Non-Aboriginal'),
 ]
 class ContactForm(forms.Form):
     mobile_number = forms.CharField(max_length=64)
