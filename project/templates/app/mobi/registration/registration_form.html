@@ -24,7 +24,7 @@
     {% endif %}
 {% endif %}
 
-<label for="id_username">{% trans "Username" %}
+<label for="id_username">{% trans "Email" %}
   {% if form.username.errors %}
               {% for error in form.username.errors %}
                   <p>{{ error }}</p>
@@ -33,14 +33,14 @@
 <input id="id_username" name="username" maxlength="30" type="text" class="input-wide" value="{{form.username.value|default:""}}">
 </label>
 
-<label for="id_email">{% trans "Email" %}
+<!-- <label for="id_email">{% trans "Email" %}
   {% if form.email.errors %}
               {% for error in form.email.errors %}
                   <p>{{ error }}</p>
               {% endfor %}
       {% endif %}
 <input id="id_email" name="email" type="text" class="input-wide" value="{{form.email.value|default:""}}">
-</label>
+</label> -->
 
 <label for="id_password1">{% trans "PIN" %}
   {% if form.password1.errors %}
@@ -60,6 +60,34 @@
 <input name="mobile_number" id="id_mobile_number" type="text" class="input-wide">
 </label>
 
+<label for="display_name">{% trans "Display Name" %}
+<input type="text" id="display_name" name="alias" class="input-wide" />
+</label>
+<label for="id_gender">{% trans "Gender" %}
+<input type="radio" name="gender" value="Male">Male
+<input type="radio" name="gender" value="Female" checked>Female
+<input type="radio" name="gender" value="Other">Other
+</label>
+
+<label for="id_year_of_birth">{% trans "Year of Birth" %}
+  {% if form.year_of_birth.errors %}
+    {% for error in form.year_of_birth.errors %}
+        <p>{{ error }}.</p>
+    {% endfor %}
+  {% endif %}
+<input name="year_of_birth" id="id_year_of_birth" type="text" class="input-wide">
+</label>
+
+<label for="id_identity">{% trans "Identity" %}
+<select name="identity">
+  <option value="">Select Identity</option>
+  <option value="First Nations Status">First Nations Status</option>
+  <option value="First Nations Non-Status">First Nations Non-Status</option>
+  <option value="Inuit">Inuit</option> 
+  <option value="Metis">Metis</option>
+  <option value="Non-Aboriginal">Non-Aboriginal</option>
+</select>
+</label>
 <label for="id_tos">
 {% if form.tos.errors %}
         {% for error in form.tos.errors %}

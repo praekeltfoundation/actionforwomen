@@ -27,8 +27,17 @@
   <label for="name" class="label-wide">{% trans "Surname:" %}
     {{ last_name }}
   </label>
-    <label for="name" class="label-wide">{% trans "Alias:" %}
+  <label for="name" class="label-wide">{% trans "Alias:" %}
     {{ alias }}
+  </label>
+  <label for="name" class="label-wide">{% trans "Gender:" %}
+    {{ gender }}
+  </label>
+  <label for="name" class="label-wide">{% trans "Year of Birth:" %}
+    {{ year_of_birth }}
+  </label>
+      <label for="name" class="label-wide">{% trans "Identity:" %}
+    {{ identity }}
   </label>
   <a href="{% url edit_my_profile %}" class="btn btn-wide"><input type="button" value='{% trans "Edit My Profile" %}' class="btn btn-wide" /></a>
   <br/>

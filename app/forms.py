@@ -1,6 +1,6 @@
 import uuid
 from datetime import date
-
+import time
 import ambient
 from dateutil import parser
 from django import forms
@@ -32,7 +32,19 @@ from app.constants import (
     DATE_QUALIFIER_CHOICES
 )
 
-
+GENDER_CHOICES=[
+    ('Male','Male'),
+    ('Female','Female'),
+    ('Other', 'Other')
+    ]
+IDENTITY_CHOICES = [
+    ('', 'Select Identity'),
+    ('First Nations Status', 'First Nations Status'),
+    ('First Nations Non-Status', 'First Nations Non-Status'),
+    ('Inuit', 'Inuit'),
+    ('Metis', 'Metis'),
+    ('Non-Aboriginal', 'Non-Aboriginal'),
+]
 class ContactForm(forms.Form):
     mobile_number = forms.CharField(max_length=64)
     message = forms.CharField(
@@ -158,9 +170,19 @@ class PasswordResetEmailForm(forms.Form):
 class RegistrationForm(RegistrationFormTermsOfService):
     mobile_number = forms.CharField(
         max_length=64,
-        required=True,
+        required=False,
         label="Your mobile number"
     )
+    alias = forms.CharField(
+       label="Alias",
+       required=False
+    )
+    gender = forms.ChoiceField(choices=GENDER_CHOICES, widget=forms.RadioSelect(), required=False)
+    year_of_birth = forms.IntegerField(
+        label="Year of birth",
+        required=False
+    )
+    identity = forms.ChoiceField(choices=IDENTITY_CHOICES, widget=forms.Select(), required=False)
 
     def __init__(self, *args, **kwargs):
         super(RegistrationForm, self).__init__(*args, **kwargs)
@@ -169,10 +191,14 @@ class RegistrationForm(RegistrationFormTermsOfService):
         del self.fields['password2']
         self.fields.keyOrder = [
             'username',
-            'email',
+            #'email',
             'password1',
             'mobile_number',
             'tos',
+            'gender',
+            'alias',
+            'year_of_birth',
+            'identity',
         ]
         self.fields['username'].label = "Choose a username"
         self.fields['email'].label = "Choose email"
@@ -198,8 +224,9 @@ class RegistrationForm(RegistrationFormTermsOfService):
         except app.models.UserProfile.DoesNotExist:
             return mobile_number
 
-    def clean_email(self):
-        email = self.cleaned_data['email']
+    def clean_username(self):
+        email = self.cleaned_data['username']
+        RegexValidator('\w[\w\.-]*@\w[\w\.-]+\.\w+', message=_("Enter a valid email address."))(email)
         try:
             User.objects.get(
                 email__exact=email
@@ -208,6 +235,20 @@ class RegistrationForm(RegistrationFormTermsOfService):
         except User.DoesNotExist:
             return email
 
+    def clean_gender(self):
+        gender = self.cleaned_data['gender']
+        return gender
+
+    def clean_year_of_birth(self):
+        year_of_birth = self.cleaned_data['year_of_birth']
+        thisyear = time.localtime()[0]
+        if year_of_birth > thisyear:
+            raise ValidationError(u'Please enter a valid year')
+        return year_of_birth
+
+    def clean_identity(self):
+        identity = self.cleaned_data['identity']
+        return identity
 
 class EditProfileForm(RegistrationForm):
     """
@@ -250,6 +291,12 @@ class EditProfileForm(RegistrationForm):
        label="Alias",
        required=False
     )
+    gender = forms.ChoiceField(choices=GENDER_CHOICES, widget=forms.RadioSelect(), required=False)
+    year_of_birth = forms.IntegerField(
+        label="Year of birth",
+        required=False,
+    )
+    identity = forms.ChoiceField(choices=IDENTITY_CHOICES, widget=forms.Select(), required=False)
     engage_anonymously = forms.BooleanField(
         label="Engage Anonymously",
         required=False
@@ -264,11 +311,15 @@ class EditProfileForm(RegistrationForm):
             'first_name',
             'last_name',
             'alias',
+            'gender',
+            'year_of_birth',
+            'identity',
             'engage_anonymously',
         ]
         self.fields['username'].label = "Username"
         self.fields['last_name'].label = "Surname"
         self.fields['mobile_number'].label = "Mobile Number"
+        self.fields['gender'].label = "Gender"
 
         # sort out some form display logic
         initial = kwargs['initial']
@@ -316,6 +367,12 @@ class EditProfileForm(RegistrationForm):
         Validate that the username is alphanumeric and already exists
         """
         return self.cleaned_data['last_name']
+    def clean_year_of_birth(self):
+        year_of_birth = self.cleaned_data['year_of_birth']
+        thisyear = time.localtime()[0]
+        if year_of_birth > thisyear:
+            raise ValidationError(u'Please enter a valid year')
+        return year_of_birth
 
     def clean(self):
         """

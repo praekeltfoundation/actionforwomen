@@ -269,6 +269,20 @@ class UserProfile(AbstractProfileBase):
         blank=True,
         null=True,
     )
+    gender = models.CharField(
+        max_length=128,
+        blank=True,
+        null=True,
+    )
+    year_of_birth = models.IntegerField(
+        blank=True,
+        null=True
+    )
+    identity = models.CharField(
+        max_length=128,
+        blank=True,
+        null=True,
+    )
     banned = models.BooleanField(
         help_text='Whether or not user is banned from posting comments.',
         default=False,

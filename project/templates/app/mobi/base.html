@@ -133,8 +133,8 @@
       {% csrf_token %}
       <fieldset>
         <legend>{% trans "Sign in" %}</legend>
-        <p>{% trans "Enter your username and 4-digit PIN" %}</p>
-        <label for="username">{% trans "Username" %}
+        <p>{% trans "Enter your Email and 4-digit PIN" %}</p>
+        <label for="username">{% trans "Email" %}
           <input type="text" id="username" name="username" class="input-wide" />
         </label>
             <label for="pin">{% trans "PIN" %}
@@ -160,21 +160,50 @@
       <fieldset>
         <legend>{% trans "Register" %}</legend>
 
-        <label for="username">{% trans "Username" %}
+        <label for="username">{% trans "Email" %}
           <input type="text" id="username" name="username" class="input-wide" />
         </label>
-
+<!-- 
         <label for="id_email">{% trans "Email" %}
         <input id="email" name="email" type="text" class="input-wide">
-        </label>
+        </label> -->
 
         <label for="id_password1">{% trans "PIN" %}
         <input name="password1" id="id_password1" type="password" class="input-wide" maxlength="4">
         </label>
 
-            <label for="mobile-number">{% trans "Mobile Number" %}
+        <label for="mobile-number">{% trans "Mobile Number" %}
           <input type="tel" id="mobile-number" name="mobile_number" class="input-wide" />
         </label>
+        <label for="display_name">{% trans "Display Name" %}
+          <input type="text" id="display_name" name="alias" class="input-wide" />
+        </label>
+        <label for="id_gender">{% trans "Gender" %}
+            <input type="radio" name="gender" value="Male">Male
+            <input type="radio" name="gender" value="Female" checked>Female
+            <input type="radio" name="gender" value="Other">Other
+        </label>
+
+        <label for="id_year_of_birth">{% trans "Year of Birth" %}
+        {% if form.year_of_birth.errors %}
+          {% for error in form.year_of_birth.errors %}
+              <p>{{ error }}.</p>
+          {% endfor %}
+        {% endif %}
+        <input name="year_of_birth" id="id_year_of_birth" type="text" class="input-wide">
+        </label>
+
+        <label for="id_identity">{% trans "Identity" %}
+        <select name="identity">
+          <option value="">Select Identity</option>
+          <option value="First Nations Status">First Nations Status</option>
+          <option value="First Nations Non-Status">First Nations Non-Status</option>
+          <option value="Inuit">Inuit</option> 
+          <option value="Metis">Metis</option>
+          <option value="Non-Aboriginal">Non-Aboriginal</option>
+        </select>
+        </label>
+
         <label for="id_tos">
         <input id="id_tos" class="required" name="tos" type="checkbox"> {% trans "I accept the" %} <a href="/terms/">{% trans "terms and conditions" %}</a> {% trans "of use" %}.
         </label>
