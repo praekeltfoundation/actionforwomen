@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-27 11:50-0400\n"
+"POT-Creation-Date: 2015-06-02 08:15-0400\n"
 "PO-Revision-Date: 2015-05-20 14:54+0000\n"
 "Last-Translator: Milton <milton@praekelt.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,65 +31,69 @@ msgstr ""
 msgid "older"
 msgstr ""
 
-#: app/forms.py:63
+#: app/forms.py:75
 msgid ""
 "Unable to find an account for the provided mobile number. Please try again."
 msgstr ""
 
-#: app/forms.py:69
+#: app/forms.py:81
 msgid ""
 "You have already tried to reset your PIN today. Please wait for your SMS or "
 "try again tomorrow."
 msgstr ""
 
-#: app/forms.py:93 app/forms.py:135
+#: app/forms.py:105 app/forms.py:147
 #, python-format
 msgid ""
 "Hi %(name)s. Follow this link to reset your PIN: http://%(domain)s%(url)s"
 msgstr ""
 
-#: app/forms.py:120
+#: app/forms.py:132
 msgid "Unable to find an account for the provided email. Please try again."
 msgstr ""
 
-#: app/forms.py:145
+#: app/forms.py:157
 msgid "[A4W] Reset your PIN"
 msgstr ""
 
-#: app/forms.py:187
+#: app/forms.py:213
 msgid "Enter a valid mobile number in the form 14034228916"
 msgstr ""
 
-#: app/forms.py:193
+#: app/forms.py:219
 msgid "A user with that mobile number already exists."
 msgstr ""
 
-#: app/forms.py:194
+#: app/forms.py:220
 msgid "Forgotten your PIN?"
 msgstr "J'ai oublié mon mot de passe"
 
-#: app/forms.py:207
+#: app/forms.py:229
+msgid "Enter a valid email address."
+msgstr ""
+
+#: app/forms.py:234
 msgid "A user with that email already exists"
 msgstr ""
 
-#: app/forms.py:303
+#: app/forms.py:354
 msgid "Please use an image that is smaller or equal to 500 x 500 pixels."
 msgstr ""
 
-#: app/forms.py:307
+#: app/forms.py:358
 msgid "Please use a JPEG or PNG image."
 msgstr ""
 
-#: app/forms.py:309
+#: app/forms.py:360
 msgid "Image file too large ( maximum 500KB )"
 msgstr ""
 
-#: app/views.py:871
+#: app/views.py:880
 #, python-format
 msgid "From %(name)s. %(message)s"
 msgstr ""
 
-#: app/views.py:877
+#: app/views.py:886
 msgid "[A4W] User Feedback"
 msgstr ""
 
@@ -110,15 +114,15 @@ msgid "Mobile"
 msgstr "Numéro De Téléphone"
 
 #: project/templates/app/mobi/base.html:96
-#: project/templates/app/mobi/base.html:189
-#: project/templates/app/mobi/base.html:213
+#: project/templates/app/mobi/base.html:218
+#: project/templates/app/mobi/base.html:242
 #: project/templates/app/mobi/search/search.html:10
 #: project/templates/app/mobi/search/search.html:39
 msgid "Search"
 msgstr "recherche"
 
 #: project/templates/app/mobi/base.html:97
-#: project/templates/app/mobi/base.html:191
+#: project/templates/app/mobi/base.html:220
 #: project/templates/app/mobi/search/search.html:36
 msgid "Search:"
 msgstr "recherche:"
@@ -158,21 +162,24 @@ msgid "All rights reserved."
 msgstr "Tous droits réservés."
 
 #: project/templates/app/mobi/base.html:135
-#: project/templates/app/mobi/base.html:203
+#: project/templates/app/mobi/base.html:232
 #: project/templates/app/mobi/app/login.html:17
 msgid "Sign in"
 msgstr "Connexion"
 
 #: project/templates/app/mobi/base.html:136
-msgid "Enter your username and 4-digit PIN"
+#, fuzzy
+msgid "Enter your Email and 4-digit PIN"
 msgstr "Entrez votre nom d'utilisateur et un code PIN à 4 chiffres"
 
 #: project/templates/app/mobi/base.html:137
 #: project/templates/app/mobi/base.html:163
-#: project/templates/app/mobi/app/login.html:34
+#: project/templates/app/mobi/base.html:167
+#: project/templates/app/mobi/app/feedback.html:13
 #: project/templates/app/mobi/registration/registration_form.html:27
-msgid "Username"
-msgstr "Nom d'utilisateur"
+#: project/templates/app/mobi/registration/registration_form.html:36
+msgid "Email"
+msgstr "email"
 
 #: project/templates/app/mobi/base.html:140
 #: project/templates/app/mobi/base.html:171
@@ -201,55 +208,70 @@ msgid "Sign up here to get started"
 msgstr "Inscription"
 
 #: project/templates/app/mobi/base.html:161
-#: project/templates/app/mobi/base.html:204
+#: project/templates/app/mobi/base.html:233
 #: project/templates/app/mobi/registration/registration_form.html:16
-#: project/templates/app/mobi/registration/registration_form.html:71
+#: project/templates/app/mobi/registration/registration_form.html:99
 msgid "Register"
 msgstr "S'inscrire"
-
-#: project/templates/app/mobi/base.html:167
-#: project/templates/app/mobi/app/feedback.html:13
-#: project/templates/app/mobi/registration/registration_form.html:36
-msgid "Email"
-msgstr "email"
 
 #: project/templates/app/mobi/base.html:175
 msgid "Mobile Number"
 msgstr "Numéro De Téléphone"
 
-#: project/templates/app/mobi/base.html:179
+#: project/templates/app/mobi/base.html:178
+#: project/templates/app/mobi/registration/registration_form.html:63
+msgid "Display Name"
+msgstr ""
+
+#: project/templates/app/mobi/base.html:181
+#: project/templates/app/mobi/app/editprofile.html:69
+#: project/templates/app/mobi/registration/registration_form.html:66
+msgid "Gender"
+msgstr "sexe"
+
+#: project/templates/app/mobi/base.html:187
+#: project/templates/app/mobi/registration/registration_form.html:72
+msgid "Year of Birth"
+msgstr "Année de naissance"
+
+#: project/templates/app/mobi/base.html:196
+#: project/templates/app/mobi/registration/registration_form.html:81
+msgid "Identity"
+msgstr "identité"
+
+#: project/templates/app/mobi/base.html:208
 msgid "I accept the"
 msgstr "J'accepte les"
 
-#: project/templates/app/mobi/base.html:179
+#: project/templates/app/mobi/base.html:208
 msgid "terms and conditions"
 msgstr "termes et les conditions"
 
-#: project/templates/app/mobi/base.html:179
+#: project/templates/app/mobi/base.html:208
 msgid "of use"
 msgstr "utile"
 
-#: project/templates/app/mobi/base.html:206
+#: project/templates/app/mobi/base.html:235
 msgid "View Profile"
 msgstr "Voir Le Profil"
 
-#: project/templates/app/mobi/base.html:207
+#: project/templates/app/mobi/base.html:236
 msgid "Logout"
 msgstr "Déconnexion"
 
-#: project/templates/app/mobi/base.html:209
+#: project/templates/app/mobi/base.html:238
 msgid "Stories"
 msgstr "Témoignages"
 
-#: project/templates/app/mobi/base.html:210
+#: project/templates/app/mobi/base.html:239
 msgid "Celebrities"
 msgstr "célébrités"
 
-#: project/templates/app/mobi/base.html:211
+#: project/templates/app/mobi/base.html:240
 msgid "Facts"
 msgstr "Faits"
 
-#: project/templates/app/mobi/base.html:212
+#: project/templates/app/mobi/base.html:241
 #: project/templates/app/mobi/app/faqs.html:6
 msgid "FAQs"
 msgstr "Questions fréquentes"
@@ -274,15 +296,15 @@ msgstr "Voir Le Profil"
 msgid "Oops, please make sure of the following:"
 msgstr "S'il vous plaît assurez-vous de ce qui suit"
 
-#: project/templates/app/mobi/app/editprofile.html:95
+#: project/templates/app/mobi/app/editprofile.html:113
 msgid "Upload your picture:"
 msgstr ""
 
-#: project/templates/app/mobi/app/editprofile.html:105
+#: project/templates/app/mobi/app/editprofile.html:123
 msgid "Choose an avatar:"
 msgstr ""
 
-#: project/templates/app/mobi/app/editprofile.html:115
+#: project/templates/app/mobi/app/editprofile.html:133
 msgid "Update profile"
 msgstr "Voir Le Profil"
 
@@ -315,10 +337,15 @@ msgid "Click here to continue to the homepage."
 msgstr "Cliquez ici pour continuer à la page d'accueil ."
 
 #: project/templates/app/mobi/app/login.html:29
-msgid "Your username and PIN didn't match. Please try again."
+#, fuzzy
+msgid "Your Email and PIN didn't match. Please try again."
 msgstr ""
 "Votre nom d'utilisateur et mot de passe ne correspondent pas. S'il vous "
 "plaît essayer à nouveau."
+
+#: project/templates/app/mobi/app/login.html:34
+msgid "Username"
+msgstr "Nom d'utilisateur"
 
 # msgid "Username"
 # msgstr "Username"
@@ -481,12 +508,24 @@ msgid "Alias:"
 msgstr ""
 
 #: project/templates/app/mobi/app/viewprofile.html:33
+msgid "Gender:"
+msgstr ""
+
+#: project/templates/app/mobi/app/viewprofile.html:36
+msgid "Year of Birth:"
+msgstr ""
+
+#: project/templates/app/mobi/app/viewprofile.html:39
+msgid "Identity:"
+msgstr ""
+
+#: project/templates/app/mobi/app/viewprofile.html:42
 msgid "Edit My Profile"
 msgstr "Voir Le Profil"
 
 # msgid "Username"
 # msgstr "Username"
-#: project/templates/app/mobi/app/viewprofile.html:35
+#: project/templates/app/mobi/app/viewprofile.html:44
 msgid "Reset My PIN"
 msgstr "mot de passe"
 

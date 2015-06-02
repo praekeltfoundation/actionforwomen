@@ -520,6 +520,9 @@ class MyProfileView(TemplateView):
         context['last_name'] = user.last_name
         context['first_name'] = user.first_name
         context['alias'] = profile.alias
+        context['gender'] = profile.gender
+        context['year_of_birth'] = profile.year_of_birth
+        context['identity'] = profile.identity
         if profile.avatar:
             context['avatar'] = profile.avatar.url
         context['mobile_number'] = profile.mobile_number
@@ -587,6 +590,9 @@ class MyProfileEdit(FormView):
         initial['avatar'] = profile.avatar
         initial['mobile_number'] = profile.mobile_number
         initial['alias'] = profile.alias
+        initial['gender'] = profile.gender
+        initial['year_of_birth'] = profile.year_of_birth
+        initial['identity'] = profile.identity
         initial['first_name'] = user.first_name
         return initial
 
@@ -606,6 +612,9 @@ class MyProfileEdit(FormView):
         profile = user.profile
         profile.mobile_number = form.cleaned_data['mobile_number']
         profile.alias = form.cleaned_data['alias']
+        profile.gender = form.cleaned_data['gender']
+        profile.year_of_birth = form.cleaned_data['year_of_birth']
+        profile.identity = form.cleaned_data['identity']
         user.first_name = form.cleaned_data['first_name']
         user.last_name = form.cleaned_data['last_name']
         profile.avatar = form.cleaned_data['avatar']
