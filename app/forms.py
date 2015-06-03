@@ -33,18 +33,21 @@ from app.constants import (
 )
 
 GENDER_CHOICES=[
-    ('male','Male'),
-    ('female','Female'),
-    ('other', 'Other')
+    ('', _('Select Gender')),
+    (_('male'),_('Male')),
+    (_('female'),_('Female')),
+    (_('other'),_('Other'))
     ]
 IDENTITY_CHOICES = [
-    ('', 'Select Identity'),
-    ('first_nations_status', 'First Nations Status'),
-    ('first_nations_non_status', 'First Nations Non-Status'),
-    ('inuit', 'Inuit'),
-    ('metis', 'Metis'),
-    ('non_aboriginal', 'Non-Aboriginal'),
-]
+    ('', _('Select Identity')),
+    (_('first_nations_status'), _('First Nations Status')),
+    (_('first_nations_non_status'), _('First Nations Non-Status')),
+    (_('inuit'), _('Inuit')),
+    (_('metis'), _('Metis')),
+    (_('non_aboriginal'), _('Non-Aboriginal'))
+    ]
+
+
 class ContactForm(forms.Form):
     mobile_number = forms.CharField(max_length=64)
     message = forms.CharField(
@@ -177,7 +180,7 @@ class RegistrationForm(RegistrationFormTermsOfService):
        label="Display Name",
        required=False
     )
-    gender = forms.ChoiceField(choices=GENDER_CHOICES, widget=forms.RadioSelect(), required=False)
+    gender = forms.ChoiceField(choices=GENDER_CHOICES, widget=forms.Select(), required=False)
     year_of_birth = forms.IntegerField(
         label="Year of birth",
         required=False
@@ -295,7 +298,7 @@ class EditProfileForm(RegistrationForm):
        label="Alias",
        required=False
     )
-    gender = forms.ChoiceField(choices=GENDER_CHOICES, widget=forms.RadioSelect(), required=False)
+    gender = forms.ChoiceField(choices=GENDER_CHOICES, widget=forms.Select(), required=False)
     year_of_birth = forms.IntegerField(
         label="Year of birth",
         required=False,

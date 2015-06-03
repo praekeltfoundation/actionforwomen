@@ -25,10 +25,10 @@
 {% endif %}
 
 <label for="id_username">{% trans "Email" %}
-  {% if form.username.errors %}
-              {% for error in form.username.errors %}
-                  <p>{{ error }}</p>
-              {% endfor %}
+      {% if form.username.errors %}
+        {% for error in form.username.errors %}
+            <p>{{ error }}</p>
+        {% endfor %}
       {% endif %}
 <input id="id_username" name="username" maxlength="30" type="text" class="input-wide" value="{{form.username.value|default:""}}">
 </label>
@@ -64,9 +64,11 @@
 <input type="text" id="display_name" name="alias" class="input-wide" />
 </label>
 <label for="id_gender">{% trans "Gender" %}
-<input type="radio" name="gender" value="male">Male
-<input type="radio" name="gender" value="female" checked>Female
-<input type="radio" name="gender" value="other">Other
+  <select name="gender">
+  {% for key, value in form.gender.field.choices %}
+    <option value="{{key}}">{{value}}</option>
+  {% endfor %}
+  </select>
 </label>
 
 <label for="id_year_of_birth">{% trans "Year of Birth" %}
@@ -80,12 +82,9 @@
 
 <label for="id_identity">{% trans "Identity" %}
 <select name="identity">
-  <option value="">Select Identity</option>
-  <option value="first_nations_status">First Nations Status</option>
-  <option value="first_nations_non_status">First Nations Non-Status</option>
-  <option value="inuit">Inuit</option> 
-  <option value="metis">Metis</option>
-  <option value="non_aboriginal">Non-Aboriginal</option>
+  {% for key, value in form.identity.field.choices %}
+    <option value="{{key}}">{{value}}</option>
+  {% endfor %}
 </select>
 </label>
 <label for="id_tos">

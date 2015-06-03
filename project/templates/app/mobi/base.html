@@ -179,9 +179,12 @@
           <input type="text" id="display_name" name="alias" class="input-wide" />
         </label>
         <label for="id_gender">{% trans "Gender" %}
-            <input type="radio" name="gender" value="male">Male
-            <input type="radio" name="gender" value="female" checked>Female
-            <input type="radio" name="gender" value="other">Other
+            <select name="gender">
+              <option value="">Select Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
         </label>
 
         <label for="id_year_of_birth">{% trans "Year of Birth" %}

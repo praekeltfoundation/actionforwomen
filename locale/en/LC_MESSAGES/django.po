@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-02 11:35-0400\n"
+"POT-Creation-Date: 2015-06-03 05:19-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,60 +28,132 @@ msgstr ""
 msgid "older"
 msgstr ""
 
-#: app/forms.py:75
+#: app/forms.py:36
+msgid "Select Gender"
+msgstr ""
+
+#: app/forms.py:37
+msgid "male"
+msgstr ""
+
+#: app/forms.py:37
+msgid "Male"
+msgstr ""
+
+#: app/forms.py:38
+msgid "female"
+msgstr ""
+
+#: app/forms.py:38
+msgid "Female"
+msgstr ""
+
+#: app/forms.py:39
+msgid "other"
+msgstr ""
+
+#: app/forms.py:39
+msgid "Other"
+msgstr ""
+
+#: app/forms.py:42
+msgid "Select Identity"
+msgstr ""
+
+#: app/forms.py:43
+msgid "first_nations_status"
+msgstr ""
+
+#: app/forms.py:43
+msgid "First Nations Status"
+msgstr ""
+
+#: app/forms.py:44
+msgid "first_nations_non_status"
+msgstr ""
+
+#: app/forms.py:44
+msgid "First Nations Non-Status"
+msgstr ""
+
+#: app/forms.py:45
+msgid "inuit"
+msgstr ""
+
+#: app/forms.py:45
+msgid "Inuit"
+msgstr ""
+
+#: app/forms.py:46
+msgid "metis"
+msgstr ""
+
+#: app/forms.py:46
+msgid "Metis"
+msgstr ""
+
+#: app/forms.py:47
+msgid "non_aboriginal"
+msgstr ""
+
+#: app/forms.py:47
+msgid "Non-Aboriginal"
+msgstr ""
+
+#: app/forms.py:78
 msgid ""
 "Unable to find an account for the provided mobile number. Please try again."
 msgstr ""
 
-#: app/forms.py:81
+#: app/forms.py:84
 msgid ""
 "You have already tried to reset your PIN today. Please wait for your SMS or "
 "try again tomorrow."
 msgstr ""
 
-#: app/forms.py:105 app/forms.py:147
+#: app/forms.py:108 app/forms.py:150
 #, python-format
 msgid ""
 "Hi %(name)s. Follow this link to reset your PIN: http://%(domain)s%(url)s"
 msgstr ""
 
-#: app/forms.py:132
+#: app/forms.py:135
 msgid "Unable to find an account for the provided email. Please try again."
 msgstr ""
 
-#: app/forms.py:157
+#: app/forms.py:160
 msgid "[A4W] Reset your PIN"
 msgstr ""
 
-#: app/forms.py:214 app/forms.py:217
+#: app/forms.py:217 app/forms.py:220
 msgid "Enter a valid mobile number in the form 14034228916"
 msgstr ""
 
-#: app/forms.py:223
+#: app/forms.py:226
 msgid "A user with that mobile number already exists."
 msgstr ""
 
-#: app/forms.py:224
+#: app/forms.py:227
 msgid "Forgotten your PIN?"
 msgstr ""
 
-#: app/forms.py:233
+#: app/forms.py:236
 msgid "Enter a valid email address."
 msgstr ""
 
-#: app/forms.py:238
+#: app/forms.py:241
 msgid "A user with that email already exists"
 msgstr ""
 
-#: app/forms.py:358
+#: app/forms.py:361
 msgid "Please use an image that is smaller or equal to 500 x 500 pixels."
 msgstr ""
 
-#: app/forms.py:362
+#: app/forms.py:365
 msgid "Please use a JPEG or PNG image."
 msgstr ""
 
-#: app/forms.py:364
+#: app/forms.py:367
 msgid "Image file too large ( maximum 500KB )"
 msgstr ""
 
@@ -111,15 +183,15 @@ msgid "Mobile"
 msgstr ""
 
 #: project/templates/app/mobi/base.html:96
-#: project/templates/app/mobi/base.html:218
-#: project/templates/app/mobi/base.html:242
+#: project/templates/app/mobi/base.html:221
+#: project/templates/app/mobi/base.html:245
 #: project/templates/app/mobi/search/search.html:10
 #: project/templates/app/mobi/search/search.html:39
 msgid "Search"
 msgstr ""
 
 #: project/templates/app/mobi/base.html:97
-#: project/templates/app/mobi/base.html:220
+#: project/templates/app/mobi/base.html:223
 #: project/templates/app/mobi/search/search.html:36
 msgid "Search:"
 msgstr ""
@@ -157,7 +229,7 @@ msgid "All rights reserved."
 msgstr ""
 
 #: project/templates/app/mobi/base.html:135
-#: project/templates/app/mobi/base.html:232
+#: project/templates/app/mobi/base.html:235
 #: project/templates/app/mobi/app/login.html:17
 msgid "Sign in"
 msgstr ""
@@ -203,9 +275,9 @@ msgid "Sign up here to get started"
 msgstr ""
 
 #: project/templates/app/mobi/base.html:161
-#: project/templates/app/mobi/base.html:233
+#: project/templates/app/mobi/base.html:236
 #: project/templates/app/mobi/registration/registration_form.html:16
-#: project/templates/app/mobi/registration/registration_form.html:99
+#: project/templates/app/mobi/registration/registration_form.html:98
 msgid "Register"
 msgstr ""
 
@@ -224,49 +296,49 @@ msgstr ""
 msgid "Gender"
 msgstr ""
 
-#: project/templates/app/mobi/base.html:187
-#: project/templates/app/mobi/registration/registration_form.html:72
+#: project/templates/app/mobi/base.html:190
+#: project/templates/app/mobi/registration/registration_form.html:74
 msgid "Year of Birth"
 msgstr ""
 
-#: project/templates/app/mobi/base.html:196
-#: project/templates/app/mobi/registration/registration_form.html:81
+#: project/templates/app/mobi/base.html:199
+#: project/templates/app/mobi/registration/registration_form.html:83
 msgid "Identity"
 msgstr ""
 
-#: project/templates/app/mobi/base.html:208
+#: project/templates/app/mobi/base.html:211
 msgid "I accept the"
 msgstr ""
 
-#: project/templates/app/mobi/base.html:208
+#: project/templates/app/mobi/base.html:211
 msgid "terms and conditions"
 msgstr ""
 
-#: project/templates/app/mobi/base.html:208
+#: project/templates/app/mobi/base.html:211
 msgid "of use"
 msgstr ""
 
-#: project/templates/app/mobi/base.html:235
+#: project/templates/app/mobi/base.html:238
 msgid "View Profile"
 msgstr ""
 
-#: project/templates/app/mobi/base.html:236
+#: project/templates/app/mobi/base.html:239
 msgid "Logout"
 msgstr ""
 
-#: project/templates/app/mobi/base.html:238
+#: project/templates/app/mobi/base.html:241
 msgid "Stories"
 msgstr ""
 
-#: project/templates/app/mobi/base.html:239
+#: project/templates/app/mobi/base.html:242
 msgid "Celebrities"
 msgstr ""
 
-#: project/templates/app/mobi/base.html:240
+#: project/templates/app/mobi/base.html:243
 msgid "Facts"
 msgstr ""
 
-#: project/templates/app/mobi/base.html:241
+#: project/templates/app/mobi/base.html:244
 #: project/templates/app/mobi/app/faqs.html:6
 msgid "FAQs"
 msgstr ""
