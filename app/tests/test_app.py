@@ -25,7 +25,7 @@ from app.models import SitePreferences
 from preferences import preferences
 from post.models import Post
 from category.models import Category
-
+from app.forms import RegistrationForm
 
 def generate_security_hash(content_type, object_pk, timestamp):
     info = (content_type, str(object_pk), str(timestamp))
@@ -64,12 +64,17 @@ class ProfileTestCase(TestCase):
         self.client.logout()
 
         post_data = {
-            'username': 'test_birth',
+            'username': 'an@email.com',
             'password1': '1234',
             'mobile_number': '0712341113',
             'email': 'an@email.com',
+            'alias': '',
+            'gender': '',
+            'year_of_birth': '1989',
+            'identity' : '',
             'tos': True
         }
+
         resp = self.client.post(reverse('registration_register'),
                                 post_data,
                                 follow=True)
@@ -84,7 +89,79 @@ class ProfileTestCase(TestCase):
 
         self.client.logout()
 
+    def test_register_form_email_incorrect(self):
+        form_data = {
+            'username': 'an',
+            'password1': '1234',
+            'mobile_number': '0712341113',
+            'email': 'an',
+            'alias': '',
+            'gender': '',
+            'year_of_birth': '1989',
+            'identity' : '',
+            'tos': True
+        }
+        form = RegistrationForm(data=form_data)
+        self.assertEqual(form.is_valid(), False)
+    def test_register_form_email_correct(self):
+        form_data = {
+            'username': 'an@email.com',
+            'password1': '1234',
+            'mobile_number': '0712341113',
+            'email': 'an@email.com',
+            'alias': '',
+            'gender': '',
+            'year_of_birth': '1989',
+            'identity' : '',
+            'tos': True
+        }
+        form = RegistrationForm(data=form_data)
+        self.assertEqual(form.is_valid(), True)
 
+    def test_register_form_mobile_number_incorrect(self):
+        form_data = {
+            'username': 'an@email.com',
+            'password1': '1234',
+            'mobile_number': '27123411132',
+            'email': 'an@email.com',
+            'alias': '',
+            'gender': '',
+            'year_of_birth': '1989',
+            'identity' : '',
+            'tos': True
+        }
+        form = RegistrationForm(data=form_data)
+        self.assertEqual(form.is_valid(), False)
+
+    def test_register_form_mobile_number_correct(self):
+        form_data = {
+            'username': 'an@email.com',
+            'password1': '1234',
+            'mobile_number': '17123411134',
+            'email': 'an@email.com',
+            'alias': '',
+            'gender': '',
+            'year_of_birth': '1989',
+            'identity' : '',
+            'tos': True
+        }
+        form = RegistrationForm(data=form_data)
+        self.assertEqual(form.is_valid(), True)
+
+    def test_register_form_year_of_birth_incorrect(self):
+        form_data = {
+            'username': 'an@email.com',
+            'password1': '1234',
+            'mobile_number': '17123411134',
+            'email': 'an@email.com',
+            'alias': '',
+            'gender': '',
+            'year_of_birth': '2989',
+            'identity' : '',
+            'tos': True
+        }
+        form = RegistrationForm(data=form_data)
+        self.assertEqual(form.is_valid(), False)
 
 class TrackOriginMiddlewareTestCase(TestCase):
 

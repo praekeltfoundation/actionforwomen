@@ -66,6 +66,24 @@
     </div>
   {% endif %}
 
+  <label for="id_gender">{% trans "Gender" %}
+    {{ form.gender }}
+  </label>
+
+  <label for="id_year_of_birth" class="label-wide">{{ form.year_of_birth.label_tag }}
+    {{ form.year_of_birth }}
+  </label>
+  {% if form.year_of_birth.errors %}
+    <div class="errors">
+        {% for error in form.year_of_birth.errors %}
+            <p>{{ error }}</p>
+        {% endfor %}
+    </div>
+  {% endif %}
+  <label for="id_identity" class="label-wide">{{ form.identity.label_tag }}
+    {{ form.identity }}
+  </label>
+
   <label for="surname" class="label-wide">{{ form.mobile_number.label_tag }}
     {{ form.mobile_number }}
     <br />e.g. 14034228916
