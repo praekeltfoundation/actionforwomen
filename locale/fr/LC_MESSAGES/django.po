@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-03 05:19-0400\n"
+"POT-Creation-Date: 2015-06-03 06:42-0400\n"
 "PO-Revision-Date: 2015-05-20 14:54+0000\n"
 "Last-Translator: Milton <milton@praekelt.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,24 +37,12 @@ msgid "Select Gender"
 msgstr "Sélectionnez Sexe"
 
 #: app/forms.py:37
-msgid "male"
-msgstr "mâle"
-
-#: app/forms.py:37
 msgid "Male"
 msgstr "mâle"
 
 #: app/forms.py:38
-msgid "female"
-msgstr "femelle"
-
-#: app/forms.py:38
 msgid "Female"
 msgstr "femelle"
-
-#: app/forms.py:39
-msgid "other"
-msgstr "autre"
 
 #: app/forms.py:39
 msgid "Other"
@@ -66,15 +54,7 @@ msgid "Select Identity"
 msgstr "identité"
 
 #: app/forms.py:43
-msgid "first_nations_status"
-msgstr ""
-
-#: app/forms.py:43
 msgid "First Nations Status"
-msgstr ""
-
-#: app/forms.py:44
-msgid "first_nations_non_status"
 msgstr ""
 
 #: app/forms.py:44
@@ -82,24 +62,12 @@ msgid "First Nations Non-Status"
 msgstr "Premières nations non inscrits"
 
 #: app/forms.py:45
-msgid "inuit"
-msgstr ""
-
-#: app/forms.py:45
 msgid "Inuit"
 msgstr "Inuits"
 
 #: app/forms.py:46
-msgid "metis"
-msgstr "métis"
-
-#: app/forms.py:46
 msgid "Metis"
 msgstr "métis"
-
-#: app/forms.py:47
-msgid "non_aboriginal"
-msgstr ""
 
 #: app/forms.py:47
 msgid "Non-Aboriginal"
@@ -1180,6 +1148,18 @@ msgstr ""
 #: src/django-photologue/photologue/models.py:744
 msgid "photo sizes"
 msgstr ""
+
+#~ msgid "male"
+#~ msgstr "mâle"
+
+#~ msgid "female"
+#~ msgstr "femelle"
+
+#~ msgid "other"
+#~ msgstr "autre"
+
+#~ msgid "metis"
+#~ msgstr "métis"
 
 #~ msgid "See more stories"
 #~ msgstr "Voir plus d'histoires"

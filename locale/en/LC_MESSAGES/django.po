@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-03 05:19-0400\n"
+"POT-Creation-Date: 2015-06-03 06:42-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,23 +33,11 @@ msgid "Select Gender"
 msgstr ""
 
 #: app/forms.py:37
-msgid "male"
-msgstr ""
-
-#: app/forms.py:37
 msgid "Male"
 msgstr ""
 
 #: app/forms.py:38
-msgid "female"
-msgstr ""
-
-#: app/forms.py:38
 msgid "Female"
-msgstr ""
-
-#: app/forms.py:39
-msgid "other"
 msgstr ""
 
 #: app/forms.py:39
@@ -61,15 +49,7 @@ msgid "Select Identity"
 msgstr ""
 
 #: app/forms.py:43
-msgid "first_nations_status"
-msgstr ""
-
-#: app/forms.py:43
 msgid "First Nations Status"
-msgstr ""
-
-#: app/forms.py:44
-msgid "first_nations_non_status"
 msgstr ""
 
 #: app/forms.py:44
@@ -77,23 +57,11 @@ msgid "First Nations Non-Status"
 msgstr ""
 
 #: app/forms.py:45
-msgid "inuit"
-msgstr ""
-
-#: app/forms.py:45
 msgid "Inuit"
 msgstr ""
 
 #: app/forms.py:46
-msgid "metis"
-msgstr ""
-
-#: app/forms.py:46
 msgid "Metis"
-msgstr ""
-
-#: app/forms.py:47
-msgid "non_aboriginal"
 msgstr ""
 
 #: app/forms.py:47

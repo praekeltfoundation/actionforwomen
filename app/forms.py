@@ -34,17 +34,17 @@ from app.constants import (
 
 GENDER_CHOICES=[
     ('', _('Select Gender')),
-    (_('male'),_('Male')),
-    (_('female'),_('Female')),
-    (_('other'),_('Other'))
+    ('male',_('Male')),
+    ('female',_('Female')),
+    ('other',_('Other'))
     ]
 IDENTITY_CHOICES = [
     ('', _('Select Identity')),
-    (_('first_nations_status'), _('First Nations Status')),
-    (_('first_nations_non_status'), _('First Nations Non-Status')),
-    (_('inuit'), _('Inuit')),
-    (_('metis'), _('Metis')),
-    (_('non_aboriginal'), _('Non-Aboriginal'))
+    ('first_nations_status', _('First Nations Status')),
+    ('first_nations_non_status', _('First Nations Non-Status')),
+    ('inuit', _('Inuit')),
+    ('metis', _('Metis')),
+    ('non_aboriginal', _('Non-Aboriginal'))
     ]
 
 
