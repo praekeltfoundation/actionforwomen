@@ -20,7 +20,9 @@ from category.models import Category
 
 from app.constants import (
     RELATION_TO_BABY_CHOICES,
-    FULL_DATE_QUALIFIER_CHOICES
+    FULL_DATE_QUALIFIER_CHOICES,
+    IMAGE_HEADING_STYLE,
+
 )
 
 
@@ -125,6 +127,22 @@ class Link(models.Model):
 
     class Meta:
         ordering = ['id', ]
+
+class ImageHeading(models.Model):
+    image_heading_style = models.CharField(
+        max_length=30,
+        choices=IMAGE_HEADING_STYLE,
+        default='light'
+    )
+    source = models.ForeignKey(
+        'jmbo.ModelBase',
+        related_name="image_heading_target_set"
+    )
+    target = models.ForeignKey(
+        'jmbo.ModelBase',
+        related_name="image_heading_source_set"
+    )
+
 
 
 class NavigationLink(models.Model):

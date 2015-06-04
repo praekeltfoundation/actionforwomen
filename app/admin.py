@@ -52,7 +52,8 @@ from app.models import (
     FAQPost,
     FactPost,
     CelebrityPost,
-    BanAudit
+    BanAudit,
+    ImageHeading
 )
 
 
@@ -65,6 +66,12 @@ class LinkInline(admin.TabularInline):
     fk_name = 'source'
     extra = 1
     raw_id_fields = ('target', )
+
+class ImageHeadingInline(admin.TabularInline):
+    model = ImageHeading
+    extra = 0
+    max_num = 1
+    fk_name = 'source'
 
 
 class NavigationLinkInline(admin.TabularInline):
@@ -79,6 +86,7 @@ class ContentQuizInline(admin.TabularInline):
 
 class PostAdmin(ActonforwomenModelbaseAdmin):
     inlines = ModelBaseAdmin.inlines + [
+        ImageHeadingInline,
         LinkInline,
         NavigationLinkInline,
         ContentQuizInline

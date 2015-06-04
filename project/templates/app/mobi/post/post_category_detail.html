@@ -14,12 +14,24 @@
     {% else %}
       <img src="{{ STATIC_URL }}img/img_holder.png" alt="{{ object.title }}"/>
     {% endif %}
-  <a href="#" class="over-text">
-    <h3 class="article-title">{{ object.title }}</h3>
+    {% if heading_style == 'light' %}
+      <a href="#" class="over-text post-heading-overlay-light">
+      <h3 class="article-title post-heading-title-color-light">{{ object.title }} </h3>
+      {% elif heading_style == 'dark'%}
+        <a href="#" class="over-text post-heading-overlay-dark">
+        <h3 class="article-title post-heading-title-color-dark">{{ object.title }} </h3>
+      {% else %}
+        <a href="#" class="over-text">
+        <h3 class="article-title">{{ object.title }}</h3>
+    {% endif %}
     {% if object.subtitle %}
-    <p>
-      {{ object.subtitle }}
-    </p>
+      {% if heading_style == 'light' %}
+        <p class="post-heading-category-light">{{ object.subtitle }} </p>
+      {% elif heading_style == 'dark'%}
+        <p class="post-heading-category-dark">{{ object.subtitle }} </p>
+      {% else %}
+        <p>{{ object.subtitle }}</p>
+      {% endif %}
     {% endif %}
   </a>
 </div>

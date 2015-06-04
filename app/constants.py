@@ -26,3 +26,8 @@ DATE_QUALIFIER_CHOICES = (
     ('due_date', 'Due Date'),
     ('birth_date', 'Birth Date'),
 )
+
+IMAGE_HEADING_STYLE = (
+    ('light', 'Light'),
+    ('dark', 'Dark'),
+)
