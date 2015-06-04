@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width; initial-scale=1.0;" />
     <meta name="description" content="{% if object %}{{ object.description }}{% endif %}">
     <meta name="keywords" content="woman,women">
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css?v=20150527-2">
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css?v=20150604-1">
 
     {% if SITE_ID == 1 %}
     <link rel="stylesheet" media="screen and (min-width: 20em)" href="{{ STATIC_URL }}css/enhanced.css?v=20150527-1">
@@ -163,7 +163,7 @@
         <label for="username">{% trans "Email" %}
           <input type="text" id="username" name="username" class="input-wide" />
         </label>
-<!-- 
+<!--
         <label for="id_email">{% trans "Email" %}
         <input id="email" name="email" type="text" class="input-wide">
         </label> -->
@@ -201,7 +201,7 @@
           <option value="">{% trans "Select Identity" %}</option>
           <option value="first_nations_status">{% trans "First Nations Status" %}</option>
           <option value="first_nations_non_status">{% trans "First Nations Non-Status" %}</option>
-          <option value="inuit">{% trans "Inuit" %}</option> 
+          <option value="inuit">{% trans "Inuit" %}</option>
           <option value="metis">{% trans "Metis" %}</option>
           <option value="non_aboriginal">{% trans "Non-Aboriginal" %}</option>
         </select>
