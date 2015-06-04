@@ -4,8 +4,8 @@
     {% if can_vote_on_poll and not READ_ONLY_MODE %}
         <form action="{% url poll_vote object.slug %}" method="POST" id="poll-widget-form-{{ object.id }}" class="poll highlight-quaternary">
         {% csrf_token %}
-            <h3 class="article-title">{{ object.title }}</h3>
-            <div class="poll-options">
+            <h3 class="article-title poll-article-heading-text">{{ object.title }}</h3>
+            <div class="poll-options" style="font-size:1em;">
                 {{ form.as_div }}
             </div>
             <div class="poll-view-results">
@@ -16,7 +16,7 @@
     {% endif %}
 
     <div class="poll-results" id="poll-widget-results-{{ object.id }}" {% if can_vote_on_poll %}style="display: none;"{% endif %}>
-    <h3 class="article-title">{{ object.title }}</h3>
+    <h3 class="article-title poll-article-heading-text">{{ object.title }}</h3>
     {% for obj in object.polloption_set.all %}
         <div class="poll-result">
             <span class="poll-result-answer">{{ obj.title }}</span>
