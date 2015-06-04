@@ -40,7 +40,7 @@ from app.forms import (
     FeedbackForm
 )
 from app.view_modifiers import PopularViewModifier
-from app.models import Banner, DefaultAvatar
+from app.models import Banner, DefaultAvatar, ImageHeading
 from category.models import Category
 from livechat.models import LiveChat
 from poll.forms import PollVoteForm
@@ -105,7 +105,14 @@ class CategoryDetailView(DetailView):
 
         # Get the comments linked to the post
         post = kwargs['object']
-
+        try:
+            heading_object = ImageHeading.objects.get(target_id=post.id)
+        except ImageHeading.DoesNotExist:
+            heading_object = None
+        if heading_object:
+            context.update({
+                'heading_style' : heading_object.image_heading_style
+            })
         # check if we can comment. we need to be authenticated, at least
         can_comment, code = post.can_comment(self.request)
         context.update({
