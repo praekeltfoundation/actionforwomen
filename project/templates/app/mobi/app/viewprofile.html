@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<form action="" class="profile">
+<div class="padded-page">
   <div class="profile-details">
     <span class="avatar">
       {% if avatar %}
@@ -12,37 +12,35 @@
         <img src="{{ STATIC_URL }}img/user.jpg" width="44" height="44" />
       {% endif %}
     </span>
-    <div class="profile-details-name">{{ username }}</div><!--
-    <div class="profile-details-name">Surname</div> -->
   </div>
-  <p>{% trans "Profile details" %}</p>
+  <h4>{{ username }}</h4>
   {% if mobile_number %}
-  <label for="name" class="label-wide">{% trans "Mobile Number:" %}
+  <label class="label-wide">{% trans "Mobile Number:" %}
     {{ mobile_number }}
   </label>
   {% endif %}
-    <label for="name" class="label-wide">{% trans "Name:" %}
+    <label class="label-wide">{% trans "Name:" %}
     {{ first_name }}
   </label>
-  <label for="name" class="label-wide">{% trans "Surname:" %}
+  <label class="label-wide">{% trans "Surname:" %}
     {{ last_name }}
   </label>
-  <label for="name" class="label-wide">{% trans "Display Name:" %}
+  <label class="label-wide">{% trans "Display Name:" %}
     {{ alias }}
   </label>
-  <label for="name" class="label-wide">{% trans "Gender:" %}
+  <label class="label-wide">{% trans "Gender:" %}
     {{ gender }}
   </label>
-  <label for="name" class="label-wide">{% trans "Year of Birth:" %}
+  <label class="label-wide">{% trans "Year of Birth:" %}
     {{ year_of_birth }}
   </label>
-      <label for="name" class="label-wide">{% trans "Identity:" %}
+  <label class="label-wide">{% trans "Identity:" %}
     {{ identity }}
   </label>
   <a href="{% url edit_my_profile %}" class="btn btn-wide"><input type="button" value='{% trans "Edit My Profile" %}' class="btn btn-wide" /></a>
   <br/>
   <a href="{% url reset_password_email %}" class="btn btn-wide"><input type="button" value='{% trans "Reset My PIN" %}' class="btn btn-wide" /></a>
-</form>
+</div>
 
 {% endblock %}
 
