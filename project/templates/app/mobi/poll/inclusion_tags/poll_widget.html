@@ -5,7 +5,7 @@
         <form action="{% url poll_vote object.slug %}" method="POST" id="poll-widget-form-{{ object.id }}" class="poll highlight-quaternary">
         {% csrf_token %}
             <h3 class="article-title poll-article-heading-text">{{ object.title }}</h3>
-            <div class="poll-options" style="font-size:1em;">
+            <div class="poll-options">
                 {{ form.as_div }}
             </div>
             <div class="poll-view-results">

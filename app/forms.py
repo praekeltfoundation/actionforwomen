@@ -207,7 +207,7 @@ class RegistrationForm(RegistrationFormTermsOfService):
         self.fields['email'].label = "Choose email"
         self.fields['password1'].label = "Choose a PIN"
 
-        self.fields['tos'].label = mark_safe('I accept the <a href="%s" style="text-decoration:underline;">terms '
+        self.fields['tos'].label = mark_safe('I accept the <a href="%s">terms '
                                              'and conditions</a> of use.'
                                              % reverse("terms"))
 
