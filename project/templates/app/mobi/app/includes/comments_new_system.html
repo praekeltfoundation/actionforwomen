@@ -10,7 +10,7 @@
     {% trans "Don't know why your comment was reported?" %} <a href="{% url comment-terms %}">{% trans "Read them here" %}</a>
 
 {% else %}
-    <b>{% trans "You are banned from commenting for" %} {{ user.profile.ban_duration }} {% trans "days because a comment you made was reported by a MAMA Moderator" %}</b><br><br/>
+    <b>{% trans "You are banned from commenting for" %} {{ user.profile.ban_duration }} {% trans "days because a comment you made was reported by a Moderator" %}</b><br><br/>
     {% trans "Don't know why your comment was reported?" %} <a href="{% url comment-terms %}">{% trans "Read them here" %}</a>
 {% endif %}
 </div>
