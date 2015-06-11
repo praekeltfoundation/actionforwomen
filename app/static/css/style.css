@@ -804,3 +804,9 @@ html {
 .poll .poll-options label {
     font-size: 0.8em;
 }
+.avatar-upload a{
+    display: block;
+}
+.avatar-upload label{
+    display: inline;
+}
