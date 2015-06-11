@@ -6,8 +6,8 @@
 {% csrf_token %}
   <div class="profile-details">
     <span class="avatar">
-      {% if avatar %}
-        <img src="{{ avatar }}" width="44" height="44" />
+      {% if form.avatar.value %}
+        <img src="{{ MEDIA_URL }}{{ form.avatar.value }}" width="44" height="44" />
       {% else %}
         <img src="{{ STATIC_URL }}img/user.jpg" width="44" height="44" />
       {% endif %}
