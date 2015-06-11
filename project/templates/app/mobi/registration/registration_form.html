@@ -57,16 +57,16 @@
               <p>{{ error|safe }}</p>
           {% endfor %}
   {% endif %}
-<input name="mobile_number" id="id_mobile_number" type="text" class="input-wide">
+<input name="mobile_number" id="id_mobile_number" type="text" class="input-wide" value="{{form.mobile_number.value|default:""}}">
 </label>
 
 <label for="display_name">{% trans "Display Name" %}
-<input type="text" id="display_name" name="alias" class="input-wide" />
+<input type="text" id="display_name" name="alias" class="input-wide"  value="{{form.alias.value|default:""}}"/>
 </label>
 <label for="id_gender">{% trans "Gender" %}
   <select name="gender">
   {% for key, value in form.gender.field.choices %}
-    <option value="{{key}}">{{value}}</option>
+    <option value="{{key}}" {% if form.gender.value == key %}selected="selected"{% endif %}>{{value}}</option>
   {% endfor %}
   </select>
 </label>
@@ -77,13 +77,13 @@
         <p>{{ error }}.</p>
     {% endfor %}
   {% endif %}
-<input name="year_of_birth" id="id_year_of_birth" type="text" class="input-wide">
+<input name="year_of_birth" id="id_year_of_birth" type="text" class="input-wide" value="{{form.year_of_birth.value|default:""}}">
 </label>
 
 <label for="id_identity">{% trans "Identity" %}
 <select name="identity">
   {% for key, value in form.identity.field.choices %}
-    <option value="{{key}}">{{value}}</option>
+    <option value="{{key}}" {% if form.identity.value == key %}selected="selected"{% endif %}>{{value}}</option>
   {% endfor %}
 </select>
 </label>
