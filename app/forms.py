@@ -213,6 +213,10 @@ class RegistrationForm(RegistrationFormTermsOfService):
 
     def clean_mobile_number(self):
         mobile_number = self.cleaned_data['mobile_number']
+
+        if not mobile_number:
+            return
+
         if mobile_number.startswith('1'):
             RegexValidator('^\d{11}$', message=_("Enter a valid mobile number in "
                "the form 14034228916"))(mobile_number)

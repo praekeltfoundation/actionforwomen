@@ -148,6 +148,21 @@ class ProfileTestCase(TestCase):
         form = RegistrationForm(data=form_data)
         self.assertEqual(form.is_valid(), True)
 
+    def test_register_form_mobile_number_missing(self):
+        form_data = {
+            'username': 'an@email.com',
+            'password1': '1234',
+            'mobile_number': '',
+            'email': 'an@email.com',
+            'alias': '',
+            'gender': '',
+            'year_of_birth': '1989',
+            'identity': '',
+            'tos': True
+        }
+        form = RegistrationForm(data=form_data)
+        self.assertEqual(form.is_valid(), True)
+
     def test_register_form_year_of_birth_incorrect(self):
         form_data = {
             'username': 'an@email.com',
