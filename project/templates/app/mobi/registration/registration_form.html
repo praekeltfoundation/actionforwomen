@@ -64,7 +64,7 @@
 <input type="text" id="display_name" name="alias" class="input-wide"  value="{{form.alias.value|default:""}}"/>
 </label>
 <label for="id_gender">{% trans "Gender" %}
-  <select name="gender">
+  <select name="gender" class="input-wide">
   {% for key, value in form.gender.field.choices %}
     <option value="{{key}}" {% if form.gender.value == key %}selected="selected"{% endif %}>{{value}}</option>
   {% endfor %}
@@ -81,7 +81,7 @@
 </label>
 
 <label for="id_identity">{% trans "Identity" %}
-<select name="identity">
+<select name="identity" class="input-wide">
   {% for key, value in form.identity.field.choices %}
     <option value="{{key}}" {% if form.identity.value == key %}selected="selected"{% endif %}>{{value}}</option>
   {% endfor %}

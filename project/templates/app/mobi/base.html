@@ -10,7 +10,7 @@
     <meta name="keywords" content="woman,women">
     <link rel="icon" href="{{ STATIC_URL }}img/a4wfavicon16.png" sizes="16x16">
     <link rel="icon" href="{{ STATIC_URL }}img/a4wfavicon32.png" sizes="32x32">
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/style.min.css?v=201506011-1">
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/style.min.css?v=201506011-2">
 
     {% if SITE_ID == 1 %}
     <link rel="stylesheet" media="screen and (min-width: 20em)" href="{{ STATIC_URL }}css/enhanced.css?v=20150527-1">
@@ -181,7 +181,7 @@
           <input type="text" id="display_name" name="alias" class="input-wide" />
         </label>
         <label for="id_gender">{% trans "Gender" %}
-            <select name="gender">
+            <select name="gender" class="input-wide">
               <option value="">{% trans "Select Gender" %}</option>
               <option value="male">{% trans "Male" %} </option>
               <option value="female">{% trans "Female" %}</option>
@@ -199,7 +199,7 @@
         </label>
 
         <label for="id_identity">{% trans "Identity" %}
-        <select name="identity">
+        <select name="identity" class="input-wide">
           <option value="">{% trans "Select Identity" %}</option>
           <option value="first_nations_status">{% trans "First Nations Status" %}</option>
           <option value="first_nations_non_status">{% trans "First Nations Non-Status" %}</option>

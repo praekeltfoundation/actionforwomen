@@ -148,12 +148,14 @@ h1, h2, h3, h4 {
 .l-half:last-child {
     float: right;
 }
-input {
+input, select {
     padding: 0.5em;
     font-size: 0.9em;
 }
 input[type="search"] {
     -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+    appearance: textfield;
 }
 .error {
     color: red;
@@ -392,7 +394,7 @@ a {
 a:hover {
     text-decoration: underline;
 }
-body, input, textarea {
+body, input, textarea, select {
     font-family: "Exo 2", sans-serif;
     color: #888888;
 }
@@ -613,6 +615,11 @@ a.btn:hover, a.btn:visited {
 textarea {
     margin: 1em 0 0.5em 0;
 }
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
 [role="contentinfo"] {
     background: #27262b;
     text-align: center;
@@ -720,10 +727,10 @@ form legend {
     font-weight: bold;
     margin-bottom: 0.5em;
 }
-form label>input {
+form label>input, form label>select {
     margin-top: 0.5em;
 }
-form input[type="text"], form input[type="number"], form input[type="search"], form input[type="checkbox"], form input[type="tel"], form input[type="password"] {
+form input[type="text"], form input[type="number"], form input[type="search"], form input[type="checkbox"], form input[type="tel"], form input[type="password"], form select {
     background-color: transparent;
     border: solid 1px #888888;
 }
@@ -753,7 +760,7 @@ form input[type="text"], form input[type="number"], form input[type="search"], f
     display: table;
     clear: both;
 }
-.form-sign-in input {
+.form-sign-in input,.form-sign-in select {
     color: #ebebeb;
 }
 .rightAfter:after {
