@@ -334,9 +334,6 @@ class EditProfileForm(RegistrationForm):
         self.fields['mobile_number'].label = "Mobile Number"
         self.fields['gender'].label = "Gender"
 
-        # sort out some form display logic
-        initial = kwargs['initial']
-
     def clean_mobile_number(self):
         mobile_number = self.cleaned_data['mobile_number']
         RegexValidator('^\d{10,11}$', message="Enter a valid mobile number in "
