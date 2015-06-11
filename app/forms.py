@@ -284,9 +284,8 @@ class EditProfileForm(RegistrationForm):
     )
 
     username = forms.CharField(
-        max_length=100,
-        label="Username",
-        required=True,
+        label="Email",
+        required=True
     )
     email = forms.CharField(
         max_length=100,
@@ -332,7 +331,7 @@ class EditProfileForm(RegistrationForm):
             'identity',
             'engage_anonymously',
         ]
-        self.fields['username'].label = "Username"
+        self.fields['username'].label = "Email"
         self.fields['email'].label = "Email"
         self.fields['last_name'].label = "Surname"
         self.fields['mobile_number'].label = "Mobile Number"
@@ -389,6 +388,9 @@ class EditProfileForm(RegistrationForm):
         Check whether the user has edited the email field or not. If user edit the email field, we should check the email is present already or not. Otherwise we can allow the data to update.
         """
         cleaned_data = super(EditProfileForm, self).clean()
+
+        if not cleaned_data.get('username'):
+            raise ValidationError(_('Email is required.'))
 
         if cleaned_data['username'] == cleaned_data['email'] :
             return cleaned_data

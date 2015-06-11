@@ -217,6 +217,23 @@ class ProfileTestCase(TestCase):
         form = EditProfileForm(data=edit_profile_form)
         self.assertEqual(form.is_valid(), False)
 
+    def test_edit_profile_email_missing(self):
+        edit_profile_form = {
+            'first_name': 'testsdgsdg',
+            'last_name': 'sgfsdgdgdg',
+            'engage_anonymously': True,
+            'gender': 'female',
+            'alias': 'sdgsdgsdgdg',
+            'year_of_birth': 1989,
+            'avatar': None,
+            'mobile_number': '8767564444',
+            'email': 'gggdf@ggg.com',
+            'identity': ''
+        }
+        form = EditProfileForm(data=edit_profile_form)
+        self.assertEqual(form.is_valid(), False)
+
+
 class TrackOriginMiddlewareTestCase(TestCase):
 
     def setUp(self):

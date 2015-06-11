@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-09 09:59-0400\n"
+"POT-Creation-Date: 2015-06-11 09:25-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -93,44 +93,48 @@ msgstr ""
 msgid "[A4W] Reset your PIN"
 msgstr ""
 
-#: app/forms.py:217 app/forms.py:220
+#: app/forms.py:221 app/forms.py:224
 msgid "Enter a valid mobile number in the form 14034228916"
 msgstr ""
 
-#: app/forms.py:226
+#: app/forms.py:230
 msgid "A user with that mobile number already exists."
 msgstr ""
 
-#: app/forms.py:227
+#: app/forms.py:231
 msgid "Forgotten your PIN?"
 msgstr ""
 
-#: app/forms.py:236
+#: app/forms.py:240 app/forms.py:349
 msgid "Enter a valid email address."
 msgstr ""
 
-#: app/forms.py:241
+#: app/forms.py:245 app/forms.py:402
 msgid "A user with that email already exists"
 msgstr ""
 
-#: app/forms.py:361
+#: app/forms.py:363
 msgid "Please use an image that is smaller or equal to 500 x 500 pixels."
 msgstr ""
 
-#: app/forms.py:365
+#: app/forms.py:367
 msgid "Please use a JPEG or PNG image."
 msgstr ""
 
-#: app/forms.py:367
+#: app/forms.py:369
 msgid "Image file too large ( maximum 500KB )"
 msgstr ""
 
-#: app/views.py:887
+#: app/forms.py:393
+msgid "Email is required."
+msgstr ""
+
+#: app/views.py:890
 #, python-format
 msgid "From %(name)s. %(message)s"
 msgstr ""
 
-#: app/views.py:893
+#: app/views.py:896
 msgid "[A4W] User Feedback"
 msgstr ""
 
@@ -143,7 +147,7 @@ msgid "French"
 msgstr ""
 
 #: project/templates/app/mobi/base.html:7
-msgid "Action for Women"
+msgid "A4W Live"
 msgstr ""
 
 #: project/templates/app/mobi/base.html:7
@@ -259,7 +263,6 @@ msgid "Display Name"
 msgstr ""
 
 #: project/templates/app/mobi/base.html:183
-#: project/templates/app/mobi/app/editprofile.html:69
 #: project/templates/app/mobi/registration/registration_form.html:66
 msgid "Gender"
 msgstr ""
@@ -331,15 +334,15 @@ msgstr ""
 msgid "Oops, please make sure of the following:"
 msgstr ""
 
-#: project/templates/app/mobi/app/editprofile.html:113
+#: project/templates/app/mobi/app/editprofile.html:115
 msgid "Upload your picture:"
 msgstr ""
 
-#: project/templates/app/mobi/app/editprofile.html:123
+#: project/templates/app/mobi/app/editprofile.html:126
 msgid "Choose an avatar:"
 msgstr ""
 
-#: project/templates/app/mobi/app/editprofile.html:133
+#: project/templates/app/mobi/app/editprofile.html:135
 msgid "Update profile"
 msgstr ""
 
