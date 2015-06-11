@@ -23,8 +23,10 @@
         {% endfor %}
     {% endif %}
   {% endif %}
-
-  {{ form.username }}
+  <label for="user_name" class="label-wide">{{ form.username.label_tag }}
+    {{ form.username }}
+  </label>
+  {{ form.email }}
   {% if form.username.errors %}
     <div class="errors">
         {% for error in form.username.errors %}

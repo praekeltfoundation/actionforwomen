@@ -286,7 +286,11 @@ class EditProfileForm(RegistrationForm):
     username = forms.CharField(
         max_length=100,
         label="Username",
-        required=False,
+        required=True,
+    )
+    email = forms.CharField(
+        max_length=100,
+        label="Email",
         widget=forms.HiddenInput()
     )
     first_name = forms.CharField(
@@ -317,6 +321,7 @@ class EditProfileForm(RegistrationForm):
         super(EditProfileForm, self).__init__(*args, **kwargs)
         self.fields.keyOrder = [
             'username',
+            'email',
             'mobile_number',
             'avatar',
             'first_name',
@@ -328,12 +333,10 @@ class EditProfileForm(RegistrationForm):
             'engage_anonymously',
         ]
         self.fields['username'].label = "Username"
+        self.fields['email'].label = "Email"
         self.fields['last_name'].label = "Surname"
         self.fields['mobile_number'].label = "Mobile Number"
         self.fields['gender'].label = "Gender"
-
-        # sort out some form display logic
-        initial = kwargs['initial']
 
     def clean_mobile_number(self):
         mobile_number = self.cleaned_data['mobile_number']
@@ -343,16 +346,9 @@ class EditProfileForm(RegistrationForm):
         return mobile_number
 
     def clean_username(self):
-        """
-        Validate that the username is alphanumeric and already exists
-        """
-        try:
-            user = User.objects.get(
-                username__iexact=self.cleaned_data['username'])
-        except User.DoesNotExist:
-            raise forms.ValidationError(
-                "Could not find a user with this username.")
-        return self.cleaned_data['username']
+        email = self.cleaned_data['username']
+        RegexValidator('\w[\w\.-]*@\w[\w\.-]+\.\w+', message=_("Enter a valid email address."))(email)
+        return email
 
     def clean_avatar(self):
         image = self.cleaned_data.get('avatar')
@@ -390,15 +386,20 @@ class EditProfileForm(RegistrationForm):
 
     def clean(self):
         """
-        Check that the birth date is provided, if the person selected birth
-        date as the date type, of if she indicated that the baby has been
-        born.
-        Check that the due date is provided or the unknown check box is checked
-        if due date is selected as the date type. If they checked the baby has
-        been born checkbox, check that a birth date was provided.
+        Check whether the user has edited the email field or not. If user edit the email field, we should check the email is present already or not. Otherwise we can allow the data to update.
         """
         cleaned_data = super(EditProfileForm, self).clean()
-        return cleaned_data
+
+        if cleaned_data['username'] == cleaned_data['email'] :
+            return cleaned_data
+        else:
+            try:
+                User.objects.get(
+                    email__exact=cleaned_data['username']
+                )
+                raise ValidationError(_('A user with that email already exists'))
+            except User.DoesNotExist:
+                return cleaned_data
 
     @property
     def default_avatars(self):

@@ -25,7 +25,7 @@ from app.models import SitePreferences
 from preferences import preferences
 from post.models import Post
 from category.models import Category
-from app.forms import RegistrationForm
+from app.forms import RegistrationForm, EditProfileForm
 
 def generate_security_hash(content_type, object_pk, timestamp):
     info = (content_type, str(object_pk), str(timestamp))
@@ -59,6 +59,7 @@ class ProfileTestCase(TestCase):
         #self.client = Client(HTTP_X_UP_CALLING_LINE_ID=self.msisdn)
         # self.client.login(remote_user=self.msisdn)
         Site.objects.create(id=2, name='french', domain='fr.site.com')
+        self.user = User.objects.create_user('test@email.com', 'test@email.com', '1234')
 
     def test_mobi_register(self):
         self.client.logout()
@@ -103,6 +104,7 @@ class ProfileTestCase(TestCase):
         }
         form = RegistrationForm(data=form_data)
         self.assertEqual(form.is_valid(), False)
+
     def test_register_form_email_correct(self):
         form_data = {
             'username': 'an@email.com',
@@ -176,6 +178,43 @@ class ProfileTestCase(TestCase):
             'tos': True
         }
         form = RegistrationForm(data=form_data)
+        self.assertEqual(form.is_valid(), False)
+
+    #This testcase used for when user did not edit the email field on the page.
+    def test_edit_profile(self):
+        edit_profile_form = {
+            'username': 'gggdf@ggg.com',
+            'first_name': 'testsdgsdg',
+            'last_name': 'sgfsdgdgdg',
+            'engage_anonymously': True,
+            'gender': 'female',
+            'alias': 'sdgsdgsdgdg',
+            'year_of_birth': 1989,
+            'avatar': None,
+            'mobile_number': '8767564444',
+            'email': 'gggdf@ggg.com',
+            'identity': ''
+        }
+        form = EditProfileForm(data=edit_profile_form)
+        self.assertEqual(form.is_valid(), True)
+
+    # This testcase used for find out the email already exists or not.
+    def test_edit_profile_email_already_exist(self):
+        # This beloe email address has already been set to user in setup() call.
+        edit_profile_form = {
+            'username': 'test@email.com', # New edited email address
+            'first_name': 'testsdgsdg',
+            'last_name': 'sgfsdgdgdg',
+            'engage_anonymously': True,
+            'gender': 'female',
+            'alias': 'sdgsdgsdgdg',
+            'year_of_birth': 1989,
+            'avatar': None,
+            'mobile_number': '8767564444',
+            'email': 'gggdf@ggg.com', # Current user email address
+            'identity': ''
+        }
+        form = EditProfileForm(data=edit_profile_form)
         self.assertEqual(form.is_valid(), False)
 
 class TrackOriginMiddlewareTestCase(TestCase):

@@ -592,6 +592,7 @@ class MyProfileEdit(FormView):
         user = self.request.user
         profile = user.profile
         initial['username'] = user.username
+        initial['email'] = user.email
         initial['last_name'] = user.last_name
         initial['engage_anonymously'] = profile.engage_anonymously
         initial['avatar'] = profile.avatar
@@ -617,6 +618,8 @@ class MyProfileEdit(FormView):
         """
         user = self.request.user
         profile = user.profile
+        user.email = form.cleaned_data['username']
+        user.username = form.cleaned_data['username']
         profile.mobile_number = form.cleaned_data['mobile_number']
         profile.alias = form.cleaned_data['alias']
         profile.gender = form.cleaned_data['gender']
