@@ -203,9 +203,8 @@ msgid "Sign in"
 msgstr ""
 
 #: project/templates/app/mobi/base.html:138
-#, fuzzy
 msgid "Enter your Email and 4-digit PIN"
-msgstr "Enter your username and 4-digit PIN"
+msgstr ""
 
 #: project/templates/app/mobi/base.html:139
 #: project/templates/app/mobi/base.html:165
