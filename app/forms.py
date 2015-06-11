@@ -351,7 +351,10 @@ class EditProfileForm(RegistrationForm):
         return self.cleaned_data['username']
 
     def clean_avatar(self):
-        image = self.cleaned_data.get('avatar', False)
+        image = self.cleaned_data.get('avatar')
+        if not image:
+            image = None
+
         try:
             img = Image.open(image)
             w, h = img.size
