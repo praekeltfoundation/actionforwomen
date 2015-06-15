@@ -82,7 +82,7 @@ class PasswordResetForm(PasswordResetForm):
         if self.profile.last_reset_date == date.today() \
                 and self.profile.reset_count >= 2:
             raise forms.ValidationError(_("You have already tried to reset "
-                                        "your PIN today. Please wait "
+                                        "your PASSWORD today. Please wait "
                                         "for your SMS or try again tomorrow."))
         return mobile_number
 
@@ -106,7 +106,7 @@ class PasswordResetForm(PasswordResetForm):
 
         message = _(
             "Hi %(name)s. "
-            "Follow this link to reset your PIN: http://%(domain)s%(url)s") % {
+            "Follow this link to reset your PASSWORD: http://%(domain)s%(url)s") % {
             'name': self.user.username,
             'domain': current_site.domain,
             'url': reverse(
@@ -148,7 +148,7 @@ class PasswordResetEmailForm(forms.Form):
 
         message = _(
             "Hi %(name)s. "
-            "Follow this link to reset your PIN: http://%(domain)s%(url)s") % {
+            "Follow this link to reset your PASSWORD: http://%(domain)s%(url)s") % {
             'name': self.user.username,
             'domain': current_site.domain,
             'url': reverse(
@@ -157,7 +157,7 @@ class PasswordResetEmailForm(forms.Form):
             )
         }
 
-        subject = _("[A4W] Reset your PIN")
+        subject = _("[A4W] Reset your PASSWORD")
         recipients = [self.user.email]
         from_address = settings.FROM_EMAIL_ADDRESS
         mail = EmailMessage(
@@ -205,7 +205,7 @@ class RegistrationForm(RegistrationFormTermsOfService):
         ]
         self.fields['username'].label = "Choose a username"
         self.fields['email'].label = "Choose email"
-        self.fields['password1'].label = "Choose a PIN"
+        self.fields['password1'].label = "Choose a PASSWORD"
 
         self.fields['tos'].label = mark_safe('I accept the <a href="%s">terms '
                                              'and conditions</a> of use.'
@@ -228,7 +228,7 @@ class RegistrationForm(RegistrationFormTermsOfService):
                 mobile_number__exact=mobile_number
             )
             error_msg_1 = _('A user with that mobile number already exists.')
-            error_msg_2 = _('Forgotten your PIN?')
+            error_msg_2 = _('Forgotten your PASSWORD?')
             raise ValidationError(error_msg_1 + ' <a href="%s">%s</a>' % (
                 reverse("reset_password_email"),
                 error_msg_2))

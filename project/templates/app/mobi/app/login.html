@@ -26,7 +26,7 @@
 <div class="errors">
 	<p>{% trans "Oops, please make sure of the following:" %}</p>
 	{% if form.non_field_errors %}
-		<p>{% trans "Your Email and PIN didn't match. Please try again." %}</p>
+		<p>{% trans "Your Email and PASSWORD didn't match. Please try again." %}</p>
 	{% endif %}
 </div>
 {% endif %}
@@ -40,7 +40,7 @@
   <input id="id_username" name="username" maxlength="30" type="text" class="input-wide">
 </label>
 
-<label for="id_password">{% trans "PIN" %}
+<label for="id_password">{% trans "PASSWORD" %}
 	{% if form.password.errors %}
 			{% for error in form.password.errors %}
 				<p>{{ error }}</p>
@@ -53,7 +53,7 @@
 
   </fieldset>
 
-<a href="{% url reset_password_email %}">{% trans "I forgot my PIN" %}</a>
+<a href="{% url reset_password_email %}">{% trans "I forgot my PASSWORD" %}</a>
 
 
 <div class="sign-up">
