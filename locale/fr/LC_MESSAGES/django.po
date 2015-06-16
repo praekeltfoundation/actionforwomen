@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-16 11:16-0400\n"
+"POT-Creation-Date: 2015-06-16 12:21-0400\n"
 "PO-Revision-Date: 2015-06-15 11:39+0000\n"
 "Last-Translator: lorraine <>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -113,27 +113,64 @@ msgstr "Un compte d’utilisateur correspondant à ce numéro existe déjà."
 msgid "Forgotten your PIN?"
 msgstr "J'ai oublié mon mot de passe"
 
-#: app/forms.py:240 app/forms.py:349
+#: app/forms.py:240 app/forms.py:345
 msgid "Enter a valid email address."
 msgstr ""
 
-#: app/forms.py:245 app/forms.py:402
+#: app/forms.py:245 app/forms.py:398
 msgid "A user with that email already exists"
 msgstr "Un compte d’utilisateur correspondant à ce courriel existe déjà."
 
-#: app/forms.py:363
+#: app/forms.py:282
+#, fuzzy
+msgid "Upload Picture"
+msgstr "Ajoute ta photo"
+
+#: app/forms.py:287 app/forms.py:292 project/templates/app/mobi/base.html:139
+#: project/templates/app/mobi/base.html:165
+#: project/templates/app/mobi/base.html:169
+#: project/templates/app/mobi/app/feedback.html:13
+#: project/templates/app/mobi/app/login.html:34
+#: project/templates/app/mobi/registration/registration_form.html:27
+#: project/templates/app/mobi/registration/registration_form.html:36
+msgid "Email"
+msgstr "email"
+
+#: app/forms.py:296 project/templates/app/mobi/app/feedback.html:10
+msgid "Name"
+msgstr "Nom d'utilisateur"
+
+#: app/forms.py:301
+#, fuzzy
+msgid "Surname"
+msgstr "Nom d'utilisateur"
+
+#: app/forms.py:305 project/templates/app/mobi/base.html:180
+#: project/templates/app/mobi/registration/registration_form.html:63
+msgid "Display Name"
+msgstr ""
+
+#: app/forms.py:310
+msgid "Year of birth"
+msgstr ""
+
+#: app/forms.py:315
+msgid "Engage Anonymously"
+msgstr ""
+
+#: app/forms.py:359
 msgid "Please use an image that is smaller or equal to 500 x 500 pixels."
 msgstr ""
 
-#: app/forms.py:367
+#: app/forms.py:363
 msgid "Please use a JPEG or PNG image."
 msgstr "SVP choisir un fichier JPEG ou PNG"
 
-#: app/forms.py:369
+#: app/forms.py:365
 msgid "Image file too large ( maximum 500KB )"
 msgstr "Le fichier est trop gros (max. 500 KB)"
 
-#: app/forms.py:393
+#: app/forms.py:389
 msgid "Email is required."
 msgstr ""
 
@@ -218,16 +255,6 @@ msgstr "Connexion"
 msgid "Enter your Email and 4-digit PIN"
 msgstr "Inscris ton nom d’utilisateur et ton NIP à 4 chiffres"
 
-#: project/templates/app/mobi/base.html:139
-#: project/templates/app/mobi/base.html:165
-#: project/templates/app/mobi/base.html:169
-#: project/templates/app/mobi/app/feedback.html:13
-#: project/templates/app/mobi/app/login.html:34
-#: project/templates/app/mobi/registration/registration_form.html:27
-#: project/templates/app/mobi/registration/registration_form.html:36
-msgid "Email"
-msgstr "email"
-
 #: project/templates/app/mobi/base.html:142
 #: project/templates/app/mobi/base.html:173
 #: project/templates/app/mobi/app/login.html:43
@@ -264,11 +291,6 @@ msgstr "S'inscrire"
 #: project/templates/app/mobi/base.html:177
 msgid "Mobile Number"
 msgstr "Numéro De Téléphone"
-
-#: project/templates/app/mobi/base.html:180
-#: project/templates/app/mobi/registration/registration_form.html:63
-msgid "Display Name"
-msgstr ""
 
 #: project/templates/app/mobi/base.html:183
 #: project/templates/app/mobi/registration/registration_form.html:66
@@ -353,10 +375,6 @@ msgstr "Choisis un avatar"
 #: project/templates/app/mobi/app/editprofile.html:135
 msgid "Update profile"
 msgstr "Voir Le Profil"
-
-#: project/templates/app/mobi/app/feedback.html:10
-msgid "Name"
-msgstr "Nom d'utilisateur"
 
 #: project/templates/app/mobi/app/feedback.html:16
 #: project/templates/app/mobi/comments/form.html:29
