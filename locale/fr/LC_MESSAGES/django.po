@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-16 12:28-0400\n"
-"PO-Revision-Date: 2015-06-15 11:39+0000\n"
+"POT-Creation-Date: 2015-06-16 14:09-0400\n"
+"PO-Revision-Date: 2015-06-16 18:03+0000\n"
 "Last-Translator: lorraine <>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: fr\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Pootle 2.5.1.1\n"
-"X-POOTLE-MTIME: 1434368394.767770\n"
+"X-POOTLE-MTIME: 1434477789.324395\n"
 
 #: app/admin.py:196
 msgid "this week"
@@ -74,6 +74,8 @@ msgstr ""
 msgid ""
 "Unable to find an account for the provided mobile number. Please try again."
 msgstr ""
+"Aucun compte ne correspond au numéro de cellulaire fourni. SVP essaie de "
+"nouveau."
 
 #: app/forms.py:84
 msgid ""
@@ -89,10 +91,6 @@ msgid ""
 "Hi %(name)s. Follow this link to reset your PIN: http://%(domain)s%(url)s"
 msgstr ""
 
-# "Nous avons reçu une demande de modification de mot de passe sur le site A4W."
-# "ca, associée à cette adresse. Si tu as bien fait cette demande, clique sur "
-# "le lien ci-dessous. Si tu n’as pas fait cette demande, ne tiens pas compte "
-# "de ce message."
 #: app/forms.py:135
 msgid "Unable to find an account for the provided email. Please try again."
 msgstr "Aucun compte ne correspond au courriel fourni. SVP essaie de nouveau."
@@ -122,7 +120,6 @@ msgid "A user with that email already exists"
 msgstr "Un compte d’utilisateur correspondant à ce courriel existe déjà."
 
 #: app/forms.py:282
-#, fuzzy
 msgid "Upload Picture"
 msgstr "Ajoute ta photo"
 
@@ -138,10 +135,9 @@ msgstr "email"
 
 #: app/forms.py:296 project/templates/app/mobi/app/feedback.html:10
 msgid "Name"
-msgstr "Nom d'utilisateur"
+msgstr "Nom"
 
 #: app/forms.py:301
-#, fuzzy
 msgid "Surname"
 msgstr "Nom d'utilisateur"
 
@@ -160,7 +156,7 @@ msgstr ""
 
 #: app/forms.py:359
 msgid "Please use an image that is smaller or equal to 500 x 500 pixels."
-msgstr ""
+msgstr "SVP utilise une image de 500x500 pixels maximum."
 
 #: app/forms.py:363
 msgid "Please use a JPEG or PNG image."
@@ -233,12 +229,12 @@ msgstr "Termes"
 
 #: project/templates/app/mobi/base.html:114
 msgid "Site FAQs"
-msgstr ""
+msgstr "FAQ du site"
 
 #: project/templates/app/mobi/base.html:115
 #: project/templates/app/mobi/app/feedback.html:6
 msgid "Site Support"
-msgstr ""
+msgstr "Soutien technique"
 
 #: project/templates/app/mobi/base.html:116
 msgid "Site Language:"
@@ -466,7 +462,7 @@ msgstr ""
 
 #: project/templates/app/mobi/app/password_reset_done.html:6
 msgid "PIN Reset Instructions Sent"
-msgstr ""
+msgstr "Les instructions de modification du code NIP ont été envoyées"
 
 #: project/templates/app/mobi/app/password_reset_done.html:8
 msgid ""
@@ -492,11 +488,11 @@ msgstr "Voir Le Profil"
 #: project/templates/app/mobi/app/public_profile_view.html:16
 #: project/templates/app/mobi/app/includes/comments_include.html:7
 msgid "Comments"
-msgstr "Rapport Commentaire"
+msgstr "Commentaires"
 
 #: project/templates/app/mobi/app/public_profile_view.html:17
 msgid "Made"
-msgstr ""
+msgstr "Fait"
 
 #: project/templates/app/mobi/app/story_comments_list.html:12
 msgid "More comments for"
@@ -537,7 +533,7 @@ msgstr "Ce commentaire a été supprimé"
 #: project/templates/app/mobi/app/story_comments_list.html:39
 #: project/templates/app/mobi/app/includes/comments_include_no_likes.html:43
 msgid "Flag"
-msgstr ""
+msgstr "Alerter"
 
 #: project/templates/app/mobi/app/story_comments_list.html:58
 #: project/templates/app/mobi/app/includes/comments_include.html:26
@@ -599,7 +595,7 @@ msgstr "Règles pour laisser un commentaire"
 #: project/templates/app/mobi/app/includes/comments_include.html:38
 #: project/templates/app/mobi/app/includes/comments_include_no_likes.html:72
 msgid "More Comments"
-msgstr ""
+msgstr "Plus de commentaires"
 
 #: project/templates/app/mobi/app/includes/comments_include_no_likes.html:11
 msgid "Add Yours"
@@ -688,7 +684,7 @@ msgstr ""
 #: project/templates/app/mobi/app/inclusion_tags/pagination.html:21
 #: project/templates/app/mobi/app/inclusion_tags/pagination.html:23
 msgid "Next"
-msgstr ""
+msgstr "Suivant"
 
 #: project/templates/app/mobi/comments/form.html:4
 msgid "Comments are currently closed."
@@ -728,19 +724,19 @@ msgstr "numéro de téléphone"
 
 #: project/templates/app/mobi/search/search.html:8
 msgid "Search Results for"
-msgstr ""
+msgstr "Résultats de la recherche"
 
 #: project/templates/app/mobi/search/search.html:23
 msgid "Try Again"
-msgstr ""
+msgstr "Essaie à nouveau"
 
 #: project/templates/app/mobi/search/search.html:25
 msgid "Unfortunately no results were found for"
-msgstr ""
+msgstr "Malheureusement, nous n’avons trouvé aucun résultat pour"
 
 #: project/templates/app/mobi/search/search.html:26
 msgid "Please try again with a different query."
-msgstr ""
+msgstr "Essaie une autre recherche"
 
 #~ msgid "image_validation"
 #~ msgstr "Validation_image"
@@ -810,6 +806,9 @@ msgstr ""
 #~ "The password reset link was invalid, possibly because it has already been "
 #~ "used."
 
+#~ msgid "Please request a new password reset."
+#~ msgstr "Please request a new password reset."
+
 #~ msgid "Enter New Password"
 #~ msgstr "Enter New Password"
 
@@ -819,6 +818,9 @@ msgstr ""
 #~ msgstr ""
 #~ "You should receive an email containing details on resetting your password "
 #~ "shortly."
+
+#~ msgid "Password Reset Instructions Sent"
+#~ msgstr "Password Reset Instructions Sent"
 
 #~ msgid "Report"
 #~ msgstr "Report"
