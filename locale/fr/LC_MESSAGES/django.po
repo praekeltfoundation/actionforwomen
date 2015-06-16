@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-16 14:09-0400\n"
-"PO-Revision-Date: 2015-06-16 18:03+0000\n"
+"POT-Creation-Date: 2015-06-16 14:15-0400\n"
+"PO-Revision-Date: 2015-06-16 18:15+0000\n"
 "Last-Translator: lorraine <>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: fr\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Pootle 2.5.1.1\n"
-"X-POOTLE-MTIME: 1434477789.324395\n"
+"X-POOTLE-MTIME: 1434478501.069394\n"
 
 #: app/admin.py:196
 msgid "this week"
@@ -599,7 +599,7 @@ msgstr "Plus de commentaires"
 
 #: project/templates/app/mobi/app/includes/comments_include_no_likes.html:11
 msgid "Add Yours"
-msgstr ""
+msgstr "Ajoute le tien / Ajoute la tienne"
 
 #: project/templates/app/mobi/app/includes/comments_new_system.html:8
 msgid ""
