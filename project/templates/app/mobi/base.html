@@ -146,7 +146,7 @@
           <input type="checkbox" id="remember-me" name="remember-me"/>
           {% trans "Remember me" %}
         </label>
-        <input type="submit" value="Submit" class="btn btn-wide" />
+        <input type="submit" value="{% trans "Submit" %}" class="btn btn-wide" />
       </fieldset>
 
       <a href="{% url reset_password_email %}">{% trans "I forgot my PIN" %}</a>
@@ -212,7 +212,7 @@
         <label for="id_tos">
         <input id="id_tos" class="required" name="tos" type="checkbox"> {% trans "I accept the" %} <a href="/terms/">{% trans "terms and conditions" %}</a> {% trans "of use" %}.
         </label>
-        <input type="submit" value="Submit" class="btn btn-wide" />
+        <input type="submit" value="{% trans "Submit" %}" class="btn btn-wide" />
       </fieldset>
     </form>
 
@@ -225,7 +225,7 @@
         <label for="input-search"><span class="visuallyhidden">{% trans "Search:" %}</span>
           <input type="search" id="input-search" name="q" placeholder="e.g. women" class="input-wide" />
         </label>
-        <input type="submit" value="Submit" class="btn btn-wide" />
+        <input type="submit" value="{% trans "Submit" %}" class="btn btn-wide" />
       </fieldset>
     </form>
     {% endblock %}
