@@ -198,6 +198,23 @@ class ProfileTestCase(TestCase):
         form = EditProfileForm(data=edit_profile_form)
         self.assertEqual(form.is_valid(), True)
 
+    def test_edit_profile_mobile_number_missing(self):
+        edit_profile_form = {
+            'username': 'gggdf@ggg.com',
+            'first_name': 'testsdgsdg',
+            'last_name': 'sgfsdgdgdg',
+            'engage_anonymously': True,
+            'gender': 'female',
+            'alias': 'sdgsdgsdgdg',
+            'year_of_birth': 1989,
+            'avatar': None,
+            'mobile_number': '',
+            'email': 'gggdf@ggg.com',
+            'identity': ''
+        }
+        form = EditProfileForm(data=edit_profile_form)
+        self.assertEqual(form.is_valid(), True)
+
     # This testcase used for find out the email already exists or not.
     def test_edit_profile_email_already_exist(self):
         # This beloe email address has already been set to user in setup() call.

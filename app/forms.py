@@ -279,40 +279,40 @@ class EditProfileForm(RegistrationForm):
         required=False
     )
     avatar = forms.ImageField(
-        label="Upload Picture",
+        label=_("Upload Picture"),
         required=False
     )
 
     username = forms.CharField(
-        label="Email",
+        label=_("Email"),
         required=True
     )
     email = forms.CharField(
         max_length=100,
-        label="Email",
+        label=_("Email"),
         widget=forms.HiddenInput()
     )
     first_name = forms.CharField(
-        label="Name",
+        label=_("Name"),
         required=False
     )
     last_name = forms.CharField(
         max_length=100,
-        label="Surname",
+        label=_("Surname"),
         required=False
     )
     alias = forms.CharField(
-       label="Display Name",
+       label=_("Display Name"),
        required=False
     )
     gender = forms.ChoiceField(choices=GENDER_CHOICES, widget=forms.Select(), required=False)
     year_of_birth = forms.IntegerField(
-        label="Year of birth",
+        label=_("Year of birth"),
         required=False,
     )
     identity = forms.ChoiceField(choices=IDENTITY_CHOICES, widget=forms.Select(), required=False)
     engage_anonymously = forms.BooleanField(
-        label="Engage Anonymously",
+        label=_("Engage Anonymously"),
         required=False
     )
 
@@ -338,11 +338,7 @@ class EditProfileForm(RegistrationForm):
         self.fields['gender'].label = "Gender"
 
     def clean_mobile_number(self):
-        mobile_number = self.cleaned_data['mobile_number']
-        RegexValidator('^\d{10,11}$', message="Enter a valid mobile number in "
-                       "the form 14034228916")(mobile_number)
-
-        return mobile_number
+        return super(EditProfileForm, self).clean_mobile_number()
 
     def clean_username(self):
         email = self.cleaned_data['username']
