@@ -13,9 +13,9 @@
     <link rel="stylesheet" href="{{ STATIC_URL }}css/style.min.css?v=201506011-2">
 
     {% if SITE_ID == 1 %}
-    <link rel="stylesheet" media="screen and (min-width: 20em)" href="{{ STATIC_URL }}css/enhanced.css?v=20150527-1">
+    <link rel="stylesheet" media="screen and (min-width: 20em)" href="{{ STATIC_URL }}css/enhanced.css?v=20150615-2">
     {% else %}
-    <link rel="stylesheet" media="screen and (min-width: 20em)" href="{{ STATIC_URL }}css/fr.enhanced.css?v=20150527-1">
+    <link rel="stylesheet" media="screen and (min-width: 20em)" href="{{ STATIC_URL }}css/fr.enhanced.css?v=20150615-2">
     {% endif %}
 
     <script type="text/javascript">
@@ -146,7 +146,7 @@
           <input type="checkbox" id="remember-me" name="remember-me"/>
           {% trans "Remember me" %}
         </label>
-        <input type="submit" value="Submit" class="btn btn-wide" />
+        <input type="submit" value="{% trans "Submit" %}" class="btn btn-wide" />
       </fieldset>
 
       <a href="{% url reset_password_email %}">{% trans "I forgot my PASSWORD" %}</a>
@@ -212,7 +212,7 @@
         <label for="id_tos">
         <input id="id_tos" class="required" name="tos" type="checkbox"> {% trans "I accept the" %} <a href="/terms/">{% trans "terms and conditions" %}</a> {% trans "of use" %}.
         </label>
-        <input type="submit" value="Submit" class="btn btn-wide" />
+        <input type="submit" value="{% trans "Submit" %}" class="btn btn-wide" />
       </fieldset>
     </form>
 
@@ -225,7 +225,7 @@
         <label for="input-search"><span class="visuallyhidden">{% trans "Search:" %}</span>
           <input type="search" id="input-search" name="q" placeholder="e.g. women" class="input-wide" />
         </label>
-        <input type="submit" value="Submit" class="btn btn-wide" />
+        <input type="submit" value="{% trans "Submit" %}" class="btn btn-wide" />
       </fieldset>
     </form>
     {% endblock %}

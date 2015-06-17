@@ -2,12 +2,11 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-15 06:00-0400\n"
+"POT-Creation-Date: 2015-06-17 08:41-0400\n"
 "PO-Revision-Date: 2015-05-20 14:54+0000\n"
 "Last-Translator: Milton <milton@praekelt.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,41 +16,39 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Pootle 2.5.1.1\n"
-"X-POOTLE-MTIME: 1432133644.481447\n"
+"X-POOTLE-MTIME: 1434478501.069394\n"
 
 #: app/admin.py:196
 msgid "this week"
-msgstr ""
+msgstr "Cette semaine"
 
 #: app/admin.py:197
 msgid "last week"
-msgstr ""
+msgstr "La semaine dernière"
 
 #: app/admin.py:198
 msgid "older"
-msgstr ""
+msgstr "Avant"
 
 #: app/forms.py:36 project/templates/app/mobi/base.html:185
-#, fuzzy
 msgid "Select Gender"
-msgstr "Sélectionnez Sexe"
+msgstr ""
 
 #: app/forms.py:37 project/templates/app/mobi/base.html:186
 msgid "Male"
-msgstr "mâle"
+msgstr ""
 
 #: app/forms.py:38 project/templates/app/mobi/base.html:187
 msgid "Female"
-msgstr "femelle"
+msgstr ""
 
 #: app/forms.py:39 project/templates/app/mobi/base.html:188
 msgid "Other"
-msgstr "autre"
+msgstr ""
 
 #: app/forms.py:42 project/templates/app/mobi/base.html:203
-#, fuzzy
 msgid "Select Identity"
-msgstr "identité"
+msgstr ""
 
 #: app/forms.py:43 project/templates/app/mobi/base.html:204
 msgid "First Nations Status"
@@ -59,30 +56,34 @@ msgstr ""
 
 #: app/forms.py:44 project/templates/app/mobi/base.html:205
 msgid "First Nations Non-Status"
-msgstr "Premières nations non inscrits"
+msgstr ""
 
 #: app/forms.py:45 project/templates/app/mobi/base.html:206
 msgid "Inuit"
-msgstr "Inuits"
+msgstr ""
 
 #: app/forms.py:46 project/templates/app/mobi/base.html:207
 msgid "Metis"
-msgstr "métis"
+msgstr ""
 
 #: app/forms.py:47 project/templates/app/mobi/base.html:208
 msgid "Non-Aboriginal"
-msgstr "Non-Autochtones"
+msgstr ""
 
 #: app/forms.py:78
 msgid ""
 "Unable to find an account for the provided mobile number. Please try again."
 msgstr ""
+"Aucun compte ne correspond au numéro de cellulaire fourni. SVP essaie de "
+"nouveau."
 
 #: app/forms.py:84
 msgid ""
 "You have already tried to reset your PASSWORD today. Please wait for your "
 "SMS or try again tomorrow."
 msgstr ""
+"Tu as déjà tenté de modifier ton code NIP aujourd’hui. SVP attends ton SMS "
+"ou essaie de nouveau demain."
 
 #: app/forms.py:108 app/forms.py:150
 #, python-format
@@ -93,46 +94,80 @@ msgstr ""
 
 #: app/forms.py:135
 msgid "Unable to find an account for the provided email. Please try again."
-msgstr ""
+msgstr "Aucun compte ne correspond au courriel fourni. SVP essaie de nouveau."
 
 #: app/forms.py:160
 msgid "[A4W] Reset your PASSWORD"
-msgstr ""
+msgstr "[A4W] Modifier ton code NIP."
 
 #: app/forms.py:221 app/forms.py:224
 msgid "Enter a valid mobile number in the form 14034228916"
-msgstr ""
+msgstr "Saisis un numéro de cellulaire valide comme ceci : 14034228916"
 
 #: app/forms.py:230
 msgid "A user with that mobile number already exists."
-msgstr ""
+msgstr "Un compte d’utilisateur correspondant à ce numéro existe déjà."
 
 #: app/forms.py:231
-#, fuzzy
 msgid "Forgotten your PASSWORD?"
 msgstr "J'ai oublié mon mot de passe"
 
-#: app/forms.py:240 app/forms.py:349
+#: app/forms.py:240 app/forms.py:345
 msgid "Enter a valid email address."
 msgstr ""
 
-#: app/forms.py:245 app/forms.py:402
+#: app/forms.py:245 app/forms.py:398
 msgid "A user with that email already exists"
+msgstr "Un compte d’utilisateur correspondant à ce courriel existe déjà."
+
+#: app/forms.py:282
+msgid "Upload Picture"
+msgstr "Ajoute ta photo"
+
+#: app/forms.py:287 app/forms.py:292 project/templates/app/mobi/base.html:139
+#: project/templates/app/mobi/base.html:165
+#: project/templates/app/mobi/base.html:169
+#: project/templates/app/mobi/app/feedback.html:13
+#: project/templates/app/mobi/app/login.html:34
+#: project/templates/app/mobi/registration/registration_form.html:27
+#: project/templates/app/mobi/registration/registration_form.html:36
+msgid "Email"
+msgstr "email"
+
+#: app/forms.py:296 project/templates/app/mobi/app/feedback.html:10
+msgid "Name"
+msgstr "Nom"
+
+#: app/forms.py:301
+msgid "Surname"
+msgstr "Nom d'utilisateur"
+
+#: app/forms.py:305 project/templates/app/mobi/base.html:180
+#: project/templates/app/mobi/registration/registration_form.html:63
+msgid "Display Name"
 msgstr ""
+
+#: app/forms.py:310
+msgid "Year of birth"
+msgstr ""
+
+#: app/forms.py:315
+msgid "Engage Anonymously"
+msgstr ""
+
+#: app/forms.py:359
+msgid "Please use an image that is smaller or equal to 500 x 500 pixels."
+msgstr "SVP utilise une image de 500x500 pixels maximum."
 
 #: app/forms.py:363
-msgid "Please use an image that is smaller or equal to 500 x 500 pixels."
-msgstr ""
-
-#: app/forms.py:367
 msgid "Please use a JPEG or PNG image."
-msgstr ""
+msgstr "SVP choisir un fichier JPEG ou PNG"
 
-#: app/forms.py:369
+#: app/forms.py:365
 msgid "Image file too large ( maximum 500KB )"
-msgstr ""
+msgstr "Le fichier est trop gros (max. 500 KB)"
 
-#: app/forms.py:393
+#: app/forms.py:389
 msgid "Email is required."
 msgstr ""
 
@@ -143,15 +178,15 @@ msgstr ""
 
 #: app/views.py:896
 msgid "[A4W] User Feedback"
-msgstr ""
+msgstr "[A4W] Opinion d’utilisateur"
 
 #: project/settings.py:350
 msgid "English"
-msgstr "Angielski"
+msgstr "English"
 
 #: project/settings.py:351
 msgid "French"
-msgstr ""
+msgstr "Français"
 
 #: project/templates/app/mobi/base.html:7
 msgid "A4W Live"
@@ -167,15 +202,18 @@ msgstr "Numéro De Téléphone"
 #: project/templates/app/mobi/search/search.html:10
 #: project/templates/app/mobi/search/search.html:39
 msgid "Search"
-msgstr "recherche"
+msgstr "Recherche"
 
 #: project/templates/app/mobi/base.html:99
 #: project/templates/app/mobi/base.html:225
 #: project/templates/app/mobi/search/search.html:36
 msgid "Search:"
-msgstr "recherche:"
+msgstr "Recherche:"
 
 #: project/templates/app/mobi/base.html:102
+#: project/templates/app/mobi/base.html:149
+#: project/templates/app/mobi/base.html:215
+#: project/templates/app/mobi/base.html:228
 #: project/templates/app/mobi/app/feedback.html:19
 #: project/templates/app/mobi/app/login.html:52
 msgid "Submit"
@@ -184,22 +222,20 @@ msgstr "soumettre"
 #: project/templates/app/mobi/base.html:112
 #: project/templates/app/mobi/app/about.html:5
 msgid "About"
-msgstr "environ"
+msgstr "A propos de"
 
 #: project/templates/app/mobi/base.html:113
 msgid "Terms"
-msgstr "termes"
+msgstr "Termes"
 
 #: project/templates/app/mobi/base.html:114
-#, fuzzy
 msgid "Site FAQs"
-msgstr "Questions fréquentes"
+msgstr "FAQ du site"
 
 #: project/templates/app/mobi/base.html:115
 #: project/templates/app/mobi/app/feedback.html:6
-#, fuzzy
 msgid "Site Support"
-msgstr "Support"
+msgstr "Soutien technique"
 
 #: project/templates/app/mobi/base.html:116
 msgid "Site Language:"
@@ -216,19 +252,8 @@ msgid "Sign in"
 msgstr "Connexion"
 
 #: project/templates/app/mobi/base.html:138
-#, fuzzy
 msgid "Enter your Email and 4-digit PASSWORD"
-msgstr "Entrez votre nom d'utilisateur et un code PIN à 4 chiffres"
-
-#: project/templates/app/mobi/base.html:139
-#: project/templates/app/mobi/base.html:165
-#: project/templates/app/mobi/base.html:169
-#: project/templates/app/mobi/app/feedback.html:13
-#: project/templates/app/mobi/app/login.html:34
-#: project/templates/app/mobi/registration/registration_form.html:27
-#: project/templates/app/mobi/registration/registration_form.html:36
-msgid "Email"
-msgstr "email"
+msgstr "Inscris ton nom d’utilisateur et ton NIP à 4 chiffres"
 
 #: project/templates/app/mobi/base.html:142
 #: project/templates/app/mobi/base.html:173
@@ -243,7 +268,6 @@ msgstr "souviens-toi de moi"
 
 #: project/templates/app/mobi/base.html:152
 #: project/templates/app/mobi/app/login.html:56
-#, fuzzy
 msgid "I forgot my PASSWORD"
 msgstr "J'ai oublié mon mot de passe"
 
@@ -268,25 +292,20 @@ msgstr "S'inscrire"
 msgid "Mobile Number"
 msgstr "Numéro De Téléphone"
 
-#: project/templates/app/mobi/base.html:180
-#: project/templates/app/mobi/registration/registration_form.html:63
-msgid "Display Name"
-msgstr ""
-
 #: project/templates/app/mobi/base.html:183
 #: project/templates/app/mobi/registration/registration_form.html:66
 msgid "Gender"
-msgstr "sexe"
+msgstr ""
 
 #: project/templates/app/mobi/base.html:192
 #: project/templates/app/mobi/registration/registration_form.html:74
 msgid "Year of Birth"
-msgstr "Année de naissance"
+msgstr ""
 
 #: project/templates/app/mobi/base.html:201
 #: project/templates/app/mobi/registration/registration_form.html:83
 msgid "Identity"
-msgstr "identité"
+msgstr ""
 
 #: project/templates/app/mobi/base.html:213
 msgid "I accept the"
@@ -327,11 +346,11 @@ msgstr "Questions fréquentes"
 
 #: project/templates/app/mobi/admin/base_site.html:4
 msgid "site admin"
-msgstr ""
+msgstr "Administrateur du site"
 
 #: project/templates/app/mobi/admin/base_site.html:7
 msgid "Administration"
-msgstr ""
+msgstr "Administration"
 
 #: project/templates/app/mobi/app/editprofile.html:15
 msgid "Edit your Profile"
@@ -347,20 +366,15 @@ msgstr "S'il vous plaît assurez-vous de ce qui suit"
 
 #: project/templates/app/mobi/app/editprofile.html:115
 msgid "Upload your picture:"
-msgstr ""
+msgstr "Ajoute ta photo"
 
 #: project/templates/app/mobi/app/editprofile.html:126
 msgid "Choose an avatar:"
-msgstr ""
+msgstr "Choisis un avatar"
 
 #: project/templates/app/mobi/app/editprofile.html:135
 msgid "Update profile"
 msgstr "Voir Le Profil"
-
-#: project/templates/app/mobi/app/feedback.html:10
-#, fuzzy
-msgid "Name"
-msgstr "Nom d'utilisateur"
 
 #: project/templates/app/mobi/app/feedback.html:16
 #: project/templates/app/mobi/comments/form.html:29
@@ -369,13 +383,13 @@ msgstr "Rapport Commentaire"
 
 #: project/templates/app/mobi/app/feedback_thanks.html:6
 msgid "Thanks for your feedback"
-msgstr "Merci pour votre avis"
+msgstr "Merci d’avoir donné ton avis"
 
 #: project/templates/app/mobi/app/login.html:21
 #: project/templates/app/mobi/app/password_reset_complete.html:7
 #: project/templates/app/mobi/app/password_reset_done.html:7
 msgid "Thanks!"
-msgstr ""
+msgstr "Merci!"
 
 #: project/templates/app/mobi/app/login.html:22
 msgid "You are now signed in."
@@ -386,7 +400,6 @@ msgid "Click here to continue to the homepage."
 msgstr "Cliquez ici pour continuer à la page d'accueil ."
 
 #: project/templates/app/mobi/app/login.html:29
-#, fuzzy
 msgid "Your Email and PASSWORD didn't match. Please try again."
 msgstr ""
 "Votre nom d'utilisateur et mot de passe ne correspondent pas. S'il vous "
@@ -396,12 +409,10 @@ msgstr ""
 # msgstr "Username"
 #: project/templates/app/mobi/app/password_reset.html:5
 #: project/templates/app/mobi/app/password_reset_email.html:6
-#, fuzzy
 msgid "Reset PASSWORD"
 msgstr "mot de passe"
 
 #: project/templates/app/mobi/app/password_reset.html:17
-#, fuzzy
 msgid "Please enter your mobile number and we will send you a new PASSWORD."
 msgstr ""
 "Entrez le courriel que vous avez utilisé pour vous inscrire et nous vous "
@@ -410,15 +421,15 @@ msgstr ""
 #: project/templates/app/mobi/app/password_reset.html:27
 #: project/templates/app/mobi/app/password_reset_email.html:28
 msgid "Send"
-msgstr ""
+msgstr "Envoyer"
 
 #: project/templates/app/mobi/app/password_reset_complete.html:6
 msgid "PASSWORD Reset Complete"
-msgstr ""
+msgstr "Code NIP modifié avec succès"
 
 #: project/templates/app/mobi/app/password_reset_complete.html:8
 msgid "Your PASSWORD has been set."
-msgstr ""
+msgstr "Ton code NIP a été créé."
 
 #: project/templates/app/mobi/app/password_reset_complete.html:8
 msgid "Click here to sign in."
@@ -427,7 +438,6 @@ msgstr "Vous êtes maintenant connecté ."
 # msgid "Username"
 # msgstr "Username"
 #: project/templates/app/mobi/app/password_reset_confirm.html:5
-#, fuzzy
 msgid "Enter New PASSWORD"
 msgstr "mot de passe"
 
@@ -435,34 +445,37 @@ msgstr "mot de passe"
 msgid ""
 "Please enter your new PASSWORD twice so we can verify you typed it in "
 "correctly."
-msgstr ""
+msgstr "Saisis ton code NIP deux fois pour vérifier qu’il n’y a pas d’erreur."
 
 #: project/templates/app/mobi/app/password_reset_confirm.html:37
 msgid "Reset"
-msgstr ""
+msgstr "Tout effacer"
 
 #: project/templates/app/mobi/app/password_reset_confirm.html:41
 msgid ""
 "The PASSWORD reset link was invalid, possibly because it has already been "
 "used."
 msgstr ""
+"Le lien de modification du NIP était invalide, peut-être parce qu’il a déjà "
+"été utilisé."
 
 #: project/templates/app/mobi/app/password_reset_confirm.html:41
 msgid "Please request a new PASSWORD reset."
-msgstr ""
+msgstr "Please request a new password reset."
 
 #: project/templates/app/mobi/app/password_reset_done.html:6
 msgid "PASSWORD Reset Instructions Sent"
-msgstr ""
+msgstr "Les instructions de modification du code NIP ont été envoyées"
 
 #: project/templates/app/mobi/app/password_reset_done.html:8
 msgid ""
 "You should receive an email containing details on resetting your PASSWORD "
 "shortly."
 msgstr ""
+"Tu devrais recevoir bientôt un courriel contenant les instructions à suivre "
+"pour modifier ton NIP."
 
 #: project/templates/app/mobi/app/password_reset_email.html:17
-#, fuzzy
 msgid "Please enter your email and we will send you a PASSWORD reset link."
 msgstr ""
 "Entrez le courriel que vous avez utilisé pour vous inscrire et nous vous "
@@ -470,7 +483,7 @@ msgstr ""
 
 #: project/templates/app/mobi/app/public_comments_view.html:7
 msgid "Comments by"
-msgstr ""
+msgstr "Commentaires de"
 
 #: project/templates/app/mobi/app/public_profile_view.html:6
 msgid "Profile"
@@ -479,21 +492,22 @@ msgstr "Voir Le Profil"
 #: project/templates/app/mobi/app/public_profile_view.html:16
 #: project/templates/app/mobi/app/includes/comments_include.html:7
 msgid "Comments"
-msgstr ""
+msgstr "Commentaires"
 
 #: project/templates/app/mobi/app/public_profile_view.html:17
 msgid "Made"
-msgstr ""
+msgstr "Fait"
 
 #: project/templates/app/mobi/app/story_comments_list.html:12
 msgid "More comments for"
-msgstr ""
+msgstr "Plus de commentaires sur "
 
 #: project/templates/app/mobi/app/story_comments_list.html:27
 #: project/templates/app/mobi/app/includes/comments_include_no_likes.html:31
 msgid ""
 "This comment has been reported by the community and the user has been banned"
 msgstr ""
+"Ce commentaire a été signalé à la communauté et son auteur(e) bloqué(e)."
 
 #: project/templates/app/mobi/app/story_comments_list.html:28
 #: project/templates/app/mobi/app/story_comments_list.html:31
@@ -502,7 +516,7 @@ msgstr ""
 #: project/templates/app/mobi/app/includes/comments_new_system.html:27
 #: project/templates/app/mobi/moderator/inclusion_tags/confirm_report_comment.html:10
 msgid "Don't know the commenting rules?"
-msgstr ""
+msgstr "Tu ne connais pas les règles à suivre pour laisser un commentaire?"
 
 #: project/templates/app/mobi/app/story_comments_list.html:28
 #: project/templates/app/mobi/app/story_comments_list.html:31
@@ -513,31 +527,31 @@ msgstr ""
 #: project/templates/app/mobi/app/includes/comments_new_system.html:27
 #: project/templates/app/mobi/moderator/inclusion_tags/confirm_report_comment.html:10
 msgid "Read them here"
-msgstr ""
+msgstr "Lisez-les ici"
 
 #: project/templates/app/mobi/app/story_comments_list.html:30
 #: project/templates/app/mobi/app/includes/comments_include_no_likes.html:34
 msgid "This comment has been removed"
-msgstr ""
+msgstr "Ce commentaire a été supprimé"
 
 #: project/templates/app/mobi/app/story_comments_list.html:39
 #: project/templates/app/mobi/app/includes/comments_include_no_likes.html:43
 msgid "Flag"
-msgstr ""
+msgstr "Alerter"
 
 #: project/templates/app/mobi/app/story_comments_list.html:58
 #: project/templates/app/mobi/app/includes/comments_include.html:26
 #: project/templates/app/mobi/app/includes/comments_include_no_likes.html:66
 msgid "No comments yet."
-msgstr ""
+msgstr "Aucun commentaire pour l’instant."
 
 #: project/templates/app/mobi/app/story_comments_list.html:67
 msgid "Back to"
-msgstr ""
+msgstr "Retour à"
 
 #: project/templates/app/mobi/app/terms.html:6
 msgid "Terms of Use"
-msgstr ""
+msgstr "Conditions d'utilisation"
 
 #: project/templates/app/mobi/app/viewprofile.html:18
 msgid "Mobile Number:"
@@ -580,16 +594,16 @@ msgstr "mot de passe"
 #: project/templates/app/mobi/app/includes/comment_terms.html:6
 #: project/templates/app/mobi/app/includes/comments_new_system.html:33
 msgid "Commenting Rules"
-msgstr ""
+msgstr "Règles pour laisser un commentaire"
 
 #: project/templates/app/mobi/app/includes/comments_include.html:38
 #: project/templates/app/mobi/app/includes/comments_include_no_likes.html:72
 msgid "More Comments"
-msgstr ""
+msgstr "Plus de commentaires"
 
 #: project/templates/app/mobi/app/includes/comments_include_no_likes.html:11
 msgid "Add Yours"
-msgstr ""
+msgstr "Ajoute le tien / Ajoute la tienne"
 
 #: project/templates/app/mobi/app/includes/comments_new_system.html:8
 msgid ""
@@ -660,7 +674,7 @@ msgstr ""
 
 #: project/templates/app/mobi/app/includes/comments_new_system.html:40
 msgid "Accept"
-msgstr ""
+msgstr "Accepter"
 
 #: project/templates/app/mobi/app/inclusion_tags/page_header.html:11
 msgid "Sign In"
@@ -674,15 +688,15 @@ msgstr ""
 #: project/templates/app/mobi/app/inclusion_tags/pagination.html:21
 #: project/templates/app/mobi/app/inclusion_tags/pagination.html:23
 msgid "Next"
-msgstr ""
+msgstr "Suivant"
 
 #: project/templates/app/mobi/comments/form.html:4
 msgid "Comments are currently closed."
-msgstr ""
+msgstr "La fonction « commentaires » est actuellement inactive."
 
 #: project/templates/app/mobi/comments/form.html:26
 msgid "Add your comment"
-msgstr ""
+msgstr "Ajoute un commentaire"
 
 #: project/templates/app/mobi/moderator/inclusion_tags/confirm_report_comment.html:8
 msgid "Report Comment"
@@ -698,7 +712,7 @@ msgstr "Voir les résultats"
 
 #: project/templates/app/mobi/poll/inclusion_tags/poll_widget.html:44
 msgid "You must be signed in to vote"
-msgstr ""
+msgstr "Ouvre une session pour pouvoir voter"
 
 #: project/templates/app/mobi/registration/done.html:14
 msgid "Thank you for joining A4W!"
@@ -714,489 +728,127 @@ msgstr "numéro de téléphone"
 
 #: project/templates/app/mobi/search/search.html:8
 msgid "Search Results for"
-msgstr ""
+msgstr "Résultats de la recherche"
 
 #: project/templates/app/mobi/search/search.html:23
 msgid "Try Again"
-msgstr ""
+msgstr "Essaie à nouveau"
 
 #: project/templates/app/mobi/search/search.html:25
 msgid "Unfortunately no results were found for"
-msgstr ""
+msgstr "Malheureusement, nous n’avons trouvé aucun résultat pour"
 
 #: project/templates/app/mobi/search/search.html:26
 msgid "Please try again with a different query."
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:43
-msgid "Separate tags with spaces, put quotes around multiple-word tags."
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:52
-msgid "Django-tagging was not found, tags will be treated as plain text."
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:90
-msgid "Very Low"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:91
-msgid "Low"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:92
-msgid "Medium-Low"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:93
-msgid "Medium"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:94
-msgid "Medium-High"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:95
-msgid "High"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:96
-msgid "Very High"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:101
-msgid "Top"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:102
-msgid "Right"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:103
-msgid "Bottom"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:104
-msgid "Left"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:105
-msgid "Center (Default)"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:109
-msgid "Flip left to right"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:110
-msgid "Flip top to bottom"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:111
-msgid "Rotate 90 degrees counter-clockwise"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:112
-msgid "Rotate 90 degrees clockwise"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:113
-msgid "Rotate 180 degrees"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:117
-msgid "Tile"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:118
-msgid "Scale"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:128
-#, python-format
-msgid ""
-"Chain multiple filters using the following pattern \"FILTER_ONE->FILTER_TWO-"
-">FILTER_THREE\". Image filters will be applied in order. The following "
-"filters are available: %s."
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:136
-msgid "date published"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:137
-#: src/django-photologue/photologue/models.py:194
-#: src/django-photologue/photologue/models.py:556
-msgid "title"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:138
-msgid "title slug"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:139
-msgid "A \"slug\" is a unique URL-friendly title for an object."
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:140
-#: src/django-photologue/photologue/models.py:196
-#: src/django-photologue/photologue/models.py:605
-msgid "description"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:141
-#: src/django-photologue/photologue/models.py:197
-#: src/django-photologue/photologue/models.py:561
-msgid "is public"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:142
-msgid "Public galleries will be displayed in the default views."
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:143
-#: src/django-photologue/photologue/models.py:568
-msgid "photos"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:145
-#: src/django-photologue/photologue/models.py:198
-#: src/django-photologue/photologue/models.py:562
-msgid "tags"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:150
-msgid "gallery"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:151
-msgid "galleries"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:184
-msgid "count"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:191
-msgid "images file (.zip)"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:192
-msgid "Select a .zip file of images to upload into a new Gallery."
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:193
-msgid ""
-"Select a gallery to add these images to. leave this empty to create a new "
-"gallery from the supplied title."
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:194
-msgid ""
-"All photos in the gallery will be given a title made up of the gallery title "
-"+ a sequential number."
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:195
-#: src/django-photologue/photologue/models.py:559
-msgid "caption"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:195
-msgid "Caption will be added to all photos."
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:196
-msgid "A description of this Gallery."
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:197
-msgid ""
-"Uncheck this to make the uploaded gallery and included photographs private."
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:201
-msgid "gallery upload"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:202
-msgid "gallery uploads"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:266
-#: src/django-photologue/photologue/models.py:716
-msgid "image"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:268
-msgid "date taken"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:270
-msgid "crop from"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:271
-msgid "effect"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:289
-msgid "An \"admin_thumbnail\" photo size has not been defined."
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:297
-msgid "Thumbnail"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:557
-msgid "slug"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:560
-msgid "date added"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:561
-msgid "Public photographs will be displayed in the default views."
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:567
-msgid "photo"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:604
-#: src/django-photologue/photologue/models.py:730
-#, fuzzy
-msgid "name"
-msgstr "Nom d'utilisateur"
-
-#: src/django-photologue/photologue/models.py:676
-msgid "rotate or flip"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:677
-#: src/django-photologue/photologue/models.py:684
-msgid "color"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:677
-msgid ""
-"A factor of 0.0 gives a black and white image, a factor of 1.0 gives the "
-"original image."
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:678
-msgid "brightness"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:678
-msgid ""
-"A factor of 0.0 gives a black image, a factor of 1.0 gives the original "
-"image."
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:679
-msgid "contrast"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:679
-msgid ""
-"A factor of 0.0 gives a solid grey image, a factor of 1.0 gives the original "
-"image."
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:680
-msgid "sharpness"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:680
-msgid ""
-"A factor of 0.0 gives a blurred image, a factor of 1.0 gives the original "
-"image."
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:681
-msgid "filters"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:682
-msgid "size"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:682
-msgid ""
-"The height of the reflection as a percentage of the orignal image. A factor "
-"of 0.0 adds no reflection, a factor of 1.0 adds a reflection equal to the "
-"height of the orignal image."
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:683
-msgid "strength"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:683
-msgid "The initial opacity of the reflection gradient."
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:684
-msgid ""
-"The background color of the reflection gradient. Set this to match the "
-"background color of your page."
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:687
-#: src/django-photologue/photologue/models.py:738
-msgid "photo effect"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:688
-msgid "photo effects"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:717
-msgid "style"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:718
-msgid "opacity"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:718
-msgid "The opacity of the overlay."
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:721
-msgid "watermark"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:722
-msgid "watermarks"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:730
-msgid ""
-"Photo size name should contain only letters, numbers and underscores. "
-"Examples: \"thumbnail\", \"display\", \"small\", \"main_page_widget\"."
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:731
-msgid "width"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:731
-msgid ""
-"If width is set to \"0\" the image will be scaled to the supplied height."
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:732
-msgid "height"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:732
-msgid ""
-"If height is set to \"0\" the image will be scaled to the supplied width"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:733
-msgid "quality"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:733
-msgid "JPEG image quality."
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:734
-msgid "upscale images?"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:734
-msgid ""
-"If selected the image will be scaled up if necessary to fit the supplied "
-"dimensions. Cropped sizes will be upscaled regardless of this setting."
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:735
-msgid "crop to fit?"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:735
-msgid ""
-"If selected the image will be scaled and cropped to fit the supplied "
-"dimensions."
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:736
-msgid "pre-cache?"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:736
-msgid "If selected this photo size will be pre-cached as photos are added."
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:737
-msgid "increment view count?"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:737
-msgid ""
-"If selected the image's \"view_count\" will be incremented when this photo "
-"size is displayed."
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:739
-msgid "watermark image"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:743
-msgid "photo size"
-msgstr ""
-
-#: src/django-photologue/photologue/models.py:744
-msgid "photo sizes"
-msgstr ""
+msgstr "Essaie une autre recherche"
 
 #~ msgid "PIN"
 #~ msgstr "Code d'accès"
 
+#~ msgid "image_validation"
+#~ msgstr "Validation_image"
+
+#~ msgid "Image file too large ( maximum 1mb )"
+#~ msgstr "Le fichier est trop gros (max. 1MB)"
+
+#~ msgid "Polish"
+#~ msgstr "Polonais"
+
+#~ msgid "This is a translation"
+#~ msgstr "This is a translation"
+
 #~ msgid "Username"
 #~ msgstr "Nom d'utilisateur"
 
-#~ msgid "male"
-#~ msgstr "mâle"
+#~ msgid "name"
+#~ msgstr "Nom d'utilisateur"
 
-#~ msgid "female"
-#~ msgstr "femelle"
+#~ msgid "Enter your username and 4-digit PIN"
+#~ msgstr "Enter your username and 4-digit PIN"
 
-#~ msgid "other"
-#~ msgstr "autre"
-
-#~ msgid "metis"
-#~ msgstr "métis"
-
-#~ msgid "See more stories"
-#~ msgstr "Voir plus d'histoires"
-
-#~ msgid "My Profile"
-#~ msgstr "Voir Le Profil"
-
-#~ msgid "Report"
-#~ msgstr "soutien"
-
-# msgid "Username"
-# msgstr "Username"
-#~ msgid "Reset Password"
-#~ msgstr "mot de passe"
+#~ msgid "I forgot my password"
+#~ msgstr "I forgot my password"
 
 # msgid "Username"
 # msgstr "Username"
 #~ msgid "Password"
-#~ msgstr "mot de passe"
-
-#~ msgid "I forgot my password"
-#~ msgstr "J'ai oublié mon mot de passe"
+#~ msgstr "Password"
 
 #~ msgid "Sign Up"
-#~ msgstr "signer"
+#~ msgstr "Sign Up"
 
-#~ msgid "This is a translation"
-#~ msgstr "French Angielski"
+#~ msgid "Your username and password didn't match. Please try again."
+#~ msgstr "Your username and password didn't match. Please try again."
+
+#~ msgid "Post"
+#~ msgstr "Post"
+
+#~ msgid "My Profile"
+#~ msgstr "My Profile"
+
+#~ msgid "Please enter your mobile number and we will send you a new password."
+#~ msgstr ""
+#~ "Please enter your mobile number and we will send you a new password."
+
+#~ msgid "Reset Password"
+#~ msgstr "Reset Password"
+
+#~ msgid "Password Reset Complete"
+#~ msgstr "Password Reset Complete"
+
+#~ msgid "Your password has been set."
+#~ msgstr "Your password has been set."
+
+#~ msgid ""
+#~ "Please enter your new password twice so we can verify you typed it in "
+#~ "correctly."
+#~ msgstr ""
+#~ "Please enter your new password twice so we can verify you typed it in "
+#~ "correctly."
+
+#~ msgid ""
+#~ "The password reset link was invalid, possibly because it has already been "
+#~ "used."
+#~ msgstr ""
+#~ "The password reset link was invalid, possibly because it has already been "
+#~ "used."
+
+#~ msgid "Enter New Password"
+#~ msgstr "Enter New Password"
+
+#~ msgid ""
+#~ "You should receive an email containing details on resetting your password "
+#~ "shortly."
+#~ msgstr ""
+#~ "You should receive an email containing details on resetting your password "
+#~ "shortly."
+
+#~ msgid "Password Reset Instructions Sent"
+#~ msgstr "Password Reset Instructions Sent"
+
+#~ msgid "Report"
+#~ msgstr "Report"
+
+#~ msgid "Back to sign up page"
+#~ msgstr "Back to sign up page"
+
+#~ msgid "Profile details"
+#~ msgstr "Renseignements détaillés"
+
+#~ msgid "Reset My Password"
+#~ msgstr "Reset My Password"
+
+#~ msgid "See more stories"
+#~ msgstr "Voir plus d'histoires"
+
+#~ msgid "Please enter your email and we will send you a new password."
+#~ msgstr ""
+#~ "Please enter your mobile number and we will send you a new password."
+
+#~ msgid "Your username and PIN didn't match. Please try again."
+#~ msgstr ""
+#~ "Votre nom d'utilisateur et mot de passe ne correspondent pas. S'il vous "
+#~ "plaît essayer à nouveau."
+
+#~ msgid "Alias:"
+#~ msgstr "Pseudonyme :"
