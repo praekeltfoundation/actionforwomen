@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-16 14:15-0400\n"
+"POT-Creation-Date: 2015-06-17 08:49-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -75,14 +75,15 @@ msgstr ""
 
 #: app/forms.py:84
 msgid ""
-"You have already tried to reset your PIN today. Please wait for your SMS or "
-"try again tomorrow."
+"You have already tried to reset your PASSWORD today. Please wait for your "
+"SMS or try again tomorrow."
 msgstr ""
 
 #: app/forms.py:108 app/forms.py:150
 #, python-format
 msgid ""
-"Hi %(name)s. Follow this link to reset your PIN: http://%(domain)s%(url)s"
+"Hi %(name)s. Follow this link to reset your PASSWORD: http://%(domain)s"
+"%(url)s"
 msgstr ""
 
 #: app/forms.py:135
@@ -90,7 +91,7 @@ msgid "Unable to find an account for the provided email. Please try again."
 msgstr ""
 
 #: app/forms.py:160
-msgid "[A4W] Reset your PIN"
+msgid "[A4W] Reset your PASSWORD"
 msgstr ""
 
 #: app/forms.py:221 app/forms.py:224
@@ -102,7 +103,7 @@ msgid "A user with that mobile number already exists."
 msgstr ""
 
 #: app/forms.py:231
-msgid "Forgotten your PIN?"
+msgid "Forgotten your PASSWORD?"
 msgstr ""
 
 #: app/forms.py:240 app/forms.py:345
@@ -245,14 +246,14 @@ msgid "Sign in"
 msgstr ""
 
 #: project/templates/app/mobi/base.html:138
-msgid "Enter your Email and 4-digit PIN"
+msgid "Enter your Email and 4-digit PASSWORD"
 msgstr ""
 
 #: project/templates/app/mobi/base.html:142
 #: project/templates/app/mobi/base.html:173
 #: project/templates/app/mobi/app/login.html:43
 #: project/templates/app/mobi/registration/registration_form.html:45
-msgid "PIN"
+msgid "PASSWORD"
 msgstr ""
 
 #: project/templates/app/mobi/base.html:147
@@ -261,7 +262,7 @@ msgstr ""
 
 #: project/templates/app/mobi/base.html:152
 #: project/templates/app/mobi/app/login.html:56
-msgid "I forgot my PIN"
+msgid "I forgot my PASSWORD"
 msgstr ""
 
 #: project/templates/app/mobi/base.html:155
@@ -393,16 +394,16 @@ msgid "Click here to continue to the homepage."
 msgstr ""
 
 #: project/templates/app/mobi/app/login.html:29
-msgid "Your Email and PIN didn't match. Please try again."
+msgid "Your Email and PASSWORD didn't match. Please try again."
 msgstr ""
 
 #: project/templates/app/mobi/app/password_reset.html:5
 #: project/templates/app/mobi/app/password_reset_email.html:6
-msgid "Reset PIN"
+msgid "Reset PASSWORD"
 msgstr ""
 
 #: project/templates/app/mobi/app/password_reset.html:17
-msgid "Please enter your mobile number and we will send you a new PIN."
+msgid "Please enter your mobile number and we will send you a new PASSWORD."
 msgstr ""
 
 #: project/templates/app/mobi/app/password_reset.html:27
@@ -411,11 +412,11 @@ msgid "Send"
 msgstr ""
 
 #: project/templates/app/mobi/app/password_reset_complete.html:6
-msgid "PIN Reset Complete"
+msgid "PASSWORD Reset Complete"
 msgstr ""
 
 #: project/templates/app/mobi/app/password_reset_complete.html:8
-msgid "Your PIN has been set."
+msgid "Your PASSWORD has been set."
 msgstr ""
 
 #: project/templates/app/mobi/app/password_reset_complete.html:8
@@ -423,12 +424,13 @@ msgid "Click here to sign in."
 msgstr ""
 
 #: project/templates/app/mobi/app/password_reset_confirm.html:5
-msgid "Enter New PIN"
+msgid "Enter New PASSWORD"
 msgstr ""
 
 #: project/templates/app/mobi/app/password_reset_confirm.html:18
 msgid ""
-"Please enter your new PIN twice so we can verify you typed it in correctly."
+"Please enter your new PASSWORD twice so we can verify you typed it in "
+"correctly."
 msgstr ""
 
 #: project/templates/app/mobi/app/password_reset_confirm.html:37
@@ -437,24 +439,26 @@ msgstr ""
 
 #: project/templates/app/mobi/app/password_reset_confirm.html:41
 msgid ""
-"The PIN reset link was invalid, possibly because it has already been used."
+"The PASSWORD reset link was invalid, possibly because it has already been "
+"used."
 msgstr ""
 
 #: project/templates/app/mobi/app/password_reset_confirm.html:41
-msgid "Please request a new PIN reset."
+msgid "Please request a new PASSWORD reset."
 msgstr ""
 
 #: project/templates/app/mobi/app/password_reset_done.html:6
-msgid "PIN Reset Instructions Sent"
+msgid "PASSWORD Reset Instructions Sent"
 msgstr ""
 
 #: project/templates/app/mobi/app/password_reset_done.html:8
 msgid ""
-"You should receive an email containing details on resetting your PIN shortly."
+"You should receive an email containing details on resetting your PASSWORD "
+"shortly."
 msgstr ""
 
 #: project/templates/app/mobi/app/password_reset_email.html:17
-msgid "Please enter your email and we will send you a PIN reset link."
+msgid "Please enter your email and we will send you a PASSWORD reset link."
 msgstr ""
 
 #: project/templates/app/mobi/app/public_comments_view.html:7
@@ -561,7 +565,7 @@ msgid "Edit My Profile"
 msgstr ""
 
 #: project/templates/app/mobi/app/viewprofile.html:42
-msgid "Reset My PIN"
+msgid "Reset My Password"
 msgstr ""
 
 #: project/templates/app/mobi/app/includes/comment_terms.html:6

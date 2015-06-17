@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-16 14:15-0400\n"
-"PO-Revision-Date: 2015-06-16 18:15+0000\n"
-"Last-Translator: lorraine <>\n"
+"POT-Creation-Date: 2015-06-17 08:49-0400\n"
+"PO-Revision-Date: 2015-05-20 14:54+0000\n"
+"Last-Translator: Milton <milton@praekelt.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -79,8 +79,8 @@ msgstr ""
 
 #: app/forms.py:84
 msgid ""
-"You have already tried to reset your PIN today. Please wait for your SMS or "
-"try again tomorrow."
+"You have already tried to reset your PASSWORD today. Please wait for your "
+"SMS or try again tomorrow."
 msgstr ""
 "Tu as déjà tenté de modifier ton code NIP aujourd’hui. SVP attends ton SMS "
 "ou essaie de nouveau demain."
@@ -88,7 +88,8 @@ msgstr ""
 #: app/forms.py:108 app/forms.py:150
 #, python-format
 msgid ""
-"Hi %(name)s. Follow this link to reset your PIN: http://%(domain)s%(url)s"
+"Hi %(name)s. Follow this link to reset your PASSWORD: http://%(domain)s"
+"%(url)s"
 msgstr ""
 
 #: app/forms.py:135
@@ -96,7 +97,7 @@ msgid "Unable to find an account for the provided email. Please try again."
 msgstr "Aucun compte ne correspond au courriel fourni. SVP essaie de nouveau."
 
 #: app/forms.py:160
-msgid "[A4W] Reset your PIN"
+msgid "[A4W] Reset your PASSWORD"
 msgstr "[A4W] Modifier ton code NIP."
 
 #: app/forms.py:221 app/forms.py:224
@@ -108,7 +109,7 @@ msgid "A user with that mobile number already exists."
 msgstr "Un compte d’utilisateur correspondant à ce numéro existe déjà."
 
 #: app/forms.py:231
-msgid "Forgotten your PIN?"
+msgid "Forgotten your PASSWORD?"
 msgstr "J'ai oublié mon mot de passe"
 
 #: app/forms.py:240 app/forms.py:345
@@ -251,15 +252,15 @@ msgid "Sign in"
 msgstr "Connexion"
 
 #: project/templates/app/mobi/base.html:138
-msgid "Enter your Email and 4-digit PIN"
+msgid "Enter your Email and 4-digit PASSWORD"
 msgstr "Inscris ton nom d’utilisateur et ton NIP à 4 chiffres"
 
 #: project/templates/app/mobi/base.html:142
 #: project/templates/app/mobi/base.html:173
 #: project/templates/app/mobi/app/login.html:43
 #: project/templates/app/mobi/registration/registration_form.html:45
-msgid "PIN"
-msgstr "Code d'accès"
+msgid "PASSWORD"
+msgstr ""
 
 #: project/templates/app/mobi/base.html:147
 msgid "Remember me"
@@ -267,7 +268,7 @@ msgstr "souviens-toi de moi"
 
 #: project/templates/app/mobi/base.html:152
 #: project/templates/app/mobi/app/login.html:56
-msgid "I forgot my PIN"
+msgid "I forgot my PASSWORD"
 msgstr "J'ai oublié mon mot de passe"
 
 #: project/templates/app/mobi/base.html:155
@@ -399,7 +400,7 @@ msgid "Click here to continue to the homepage."
 msgstr "Cliquez ici pour continuer à la page d'accueil ."
 
 #: project/templates/app/mobi/app/login.html:29
-msgid "Your Email and PIN didn't match. Please try again."
+msgid "Your Email and PASSWORD didn't match. Please try again."
 msgstr ""
 "Votre nom d'utilisateur et mot de passe ne correspondent pas. S'il vous "
 "plaît essayer à nouveau."
@@ -408,11 +409,11 @@ msgstr ""
 # msgstr "Username"
 #: project/templates/app/mobi/app/password_reset.html:5
 #: project/templates/app/mobi/app/password_reset_email.html:6
-msgid "Reset PIN"
+msgid "Reset PASSWORD"
 msgstr "mot de passe"
 
 #: project/templates/app/mobi/app/password_reset.html:17
-msgid "Please enter your mobile number and we will send you a new PIN."
+msgid "Please enter your mobile number and we will send you a new PASSWORD."
 msgstr ""
 "Entrez le courriel que vous avez utilisé pour vous inscrire et nous vous "
 "enverrons un lien pour réinitialiser votre mot de passe"
@@ -423,11 +424,11 @@ msgid "Send"
 msgstr "Envoyer"
 
 #: project/templates/app/mobi/app/password_reset_complete.html:6
-msgid "PIN Reset Complete"
+msgid "PASSWORD Reset Complete"
 msgstr "Code NIP modifié avec succès"
 
 #: project/templates/app/mobi/app/password_reset_complete.html:8
-msgid "Your PIN has been set."
+msgid "Your PASSWORD has been set."
 msgstr "Ton code NIP a été créé."
 
 #: project/templates/app/mobi/app/password_reset_complete.html:8
@@ -437,12 +438,13 @@ msgstr "Vous êtes maintenant connecté ."
 # msgid "Username"
 # msgstr "Username"
 #: project/templates/app/mobi/app/password_reset_confirm.html:5
-msgid "Enter New PIN"
+msgid "Enter New PASSWORD"
 msgstr "mot de passe"
 
 #: project/templates/app/mobi/app/password_reset_confirm.html:18
 msgid ""
-"Please enter your new PIN twice so we can verify you typed it in correctly."
+"Please enter your new PASSWORD twice so we can verify you typed it in "
+"correctly."
 msgstr "Saisis ton code NIP deux fois pour vérifier qu’il n’y a pas d’erreur."
 
 #: project/templates/app/mobi/app/password_reset_confirm.html:37
@@ -451,28 +453,30 @@ msgstr "Tout effacer"
 
 #: project/templates/app/mobi/app/password_reset_confirm.html:41
 msgid ""
-"The PIN reset link was invalid, possibly because it has already been used."
+"The PASSWORD reset link was invalid, possibly because it has already been "
+"used."
 msgstr ""
 "Le lien de modification du NIP était invalide, peut-être parce qu’il a déjà "
 "été utilisé."
 
 #: project/templates/app/mobi/app/password_reset_confirm.html:41
-msgid "Please request a new PIN reset."
-msgstr ""
+msgid "Please request a new PASSWORD reset."
+msgstr "Please request a new password reset."
 
 #: project/templates/app/mobi/app/password_reset_done.html:6
-msgid "PIN Reset Instructions Sent"
+msgid "PASSWORD Reset Instructions Sent"
 msgstr "Les instructions de modification du code NIP ont été envoyées"
 
 #: project/templates/app/mobi/app/password_reset_done.html:8
 msgid ""
-"You should receive an email containing details on resetting your PIN shortly."
+"You should receive an email containing details on resetting your PASSWORD "
+"shortly."
 msgstr ""
 "Tu devrais recevoir bientôt un courriel contenant les instructions à suivre "
 "pour modifier ton NIP."
 
 #: project/templates/app/mobi/app/password_reset_email.html:17
-msgid "Please enter your email and we will send you a PIN reset link."
+msgid "Please enter your email and we will send you a PASSWORD reset link."
 msgstr ""
 "Entrez le courriel que vous avez utilisé pour vous inscrire et nous vous "
 "enverrons un lien pour réinitialiser votre mot de passe"
@@ -581,10 +585,8 @@ msgstr ""
 msgid "Edit My Profile"
 msgstr "Voir Le Profil"
 
-# msgid "Username"
-# msgstr "Username"
 #: project/templates/app/mobi/app/viewprofile.html:42
-msgid "Reset My PIN"
+msgid "Reset My Password"
 msgstr "mot de passe"
 
 #: project/templates/app/mobi/app/includes/comment_terms.html:6
@@ -738,6 +740,14 @@ msgstr "Malheureusement, nous n’avons trouvé aucun résultat pour"
 msgid "Please try again with a different query."
 msgstr "Essaie une autre recherche"
 
+# msgid "Username"
+# msgstr "Username"
+#~ msgid "Reset My PIN"
+#~ msgstr "mot de passe"
+
+#~ msgid "PIN"
+#~ msgstr "Code d'accès"
+
 #~ msgid "image_validation"
 #~ msgstr "Validation_image"
 
@@ -753,8 +763,8 @@ msgstr "Essaie une autre recherche"
 #~ msgid "Username"
 #~ msgstr "Nom d'utilisateur"
 
-#~ msgid "Support"
-#~ msgstr "Support"
+#~ msgid "name"
+#~ msgstr "Nom d'utilisateur"
 
 #~ msgid "Enter your username and 4-digit PIN"
 #~ msgstr "Enter your username and 4-digit PIN"
@@ -806,9 +816,6 @@ msgstr "Essaie une autre recherche"
 #~ "The password reset link was invalid, possibly because it has already been "
 #~ "used."
 
-#~ msgid "Please request a new password reset."
-#~ msgstr "Please request a new password reset."
-
 #~ msgid "Enter New Password"
 #~ msgstr "Enter New Password"
 
@@ -830,9 +837,6 @@ msgstr "Essaie une autre recherche"
 
 #~ msgid "Profile details"
 #~ msgstr "Renseignements détaillés"
-
-#~ msgid "Reset My Password"
-#~ msgstr "Reset My Password"
 
 #~ msgid "See more stories"
 #~ msgstr "Voir plus d'histoires"
