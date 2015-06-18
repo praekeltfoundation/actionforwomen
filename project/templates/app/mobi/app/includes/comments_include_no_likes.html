@@ -28,10 +28,10 @@
     </span>
 
     {% if comment.is_removed and comment.user.profile.banned %}
-    <p>{% trans "This comment has been reported by the community and the user has been banned" %}<br><br/>
+    <p>{% trans "Your comment has been flagged by a community member. You will not be able to comment again until tomorrow." %}<br><br/>
       {% trans "Don't know the commenting rules?" %} <a href="{% url comment-terms %}">{% trans "Read them here" %}</a></p>
     {% elif comment.is_removed and not comment.user.profile.banned %}
-     <p>{% trans "This comment has been removed" %}<br><br/>
+     <p>{% trans "This comment has been removed by a moderator." %}<br><br/>
       {% trans "Don't know the commenting rules?" %} <a href="{% url comment-terms %}">{% trans "Read them here" %}</a></p>
     {% else %}
     <p>{{ comment.comment|linebreaks }}</p>
