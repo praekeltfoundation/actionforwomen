@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-18 07:21-0400\n"
+"POT-Creation-Date: 2015-06-18 09:02-0400\n"
 "PO-Revision-Date: 2015-06-18 10:57+0000\n"
 "Last-Translator: Milton <milton@praekelt.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -503,9 +503,10 @@ msgid "More comments for"
 msgstr "Plus de commentaires sur"
 
 #: project/templates/app/mobi/app/story_comments_list.html:27
-#: project/templates/app/mobi/app/includes/comments_include_no_likes.html:31
+#, fuzzy
 msgid ""
-"This comment has been reported by the community and the user has been banned"
+"This comment has been removed by a moderator and the user has been banned "
+"from commenting for 3 days"
 msgstr ""
 "Ce commentaire a été signalé à la communauté et son auteur(e) bloqué(e)."
 
@@ -530,8 +531,8 @@ msgid "Read them here"
 msgstr "Lisez-les ici"
 
 #: project/templates/app/mobi/app/story_comments_list.html:30
-#: project/templates/app/mobi/app/includes/comments_include_no_likes.html:34
-msgid "This comment has been removed"
+#, fuzzy
+msgid "This comment has been removed by a moderator"
 msgstr "Ce commentaire a été supprimé"
 
 #: project/templates/app/mobi/app/story_comments_list.html:39
@@ -603,11 +604,24 @@ msgstr "Plus de commentaires"
 msgid "Add Yours"
 msgstr "Ajoute le tien / Ajoute la tienne"
 
-#: project/templates/app/mobi/app/includes/comments_new_system.html:8
+#: project/templates/app/mobi/app/includes/comments_include_no_likes.html:31
+#, fuzzy
 msgid ""
-"You are banned from commenting for the rest of the day because a comment you "
-"made was reported by the community. You will be able to comment again "
-"tomorrow"
+"This comment has been removed by a moderator and the user has been banned "
+"from commenting for 3 days."
+msgstr ""
+"Ce commentaire a été signalé à la communauté et son auteur(e) bloqué(e)."
+
+#: project/templates/app/mobi/app/includes/comments_include_no_likes.html:34
+#, fuzzy
+msgid "This comment has been removed by a moderator."
+msgstr "Ce commentaire a été supprimé"
+
+#: project/templates/app/mobi/app/includes/comments_new_system.html:8
+#, fuzzy
+msgid ""
+"Your comment has been flagged by a community member. You will not be able to "
+"comment again until tomorrow."
 msgstr ""
 "Tu ne peux plus faire de commentaire aujourd'hui, car un de tes commentaires "
 "a été signalé par la communauté. Tu pourras de nouveau faire des "
@@ -760,6 +774,433 @@ msgstr "Malheureusement, nous n’avons trouvé aucun résultat pour"
 #: project/templates/app/mobi/search/search.html:26
 msgid "Please try again with a different query."
 msgstr "Essaie une autre recherche"
+
+#: src/django-photologue/photologue/models.py:43
+msgid "Separate tags with spaces, put quotes around multiple-word tags."
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:52
+msgid "Django-tagging was not found, tags will be treated as plain text."
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:90
+msgid "Very Low"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:91
+msgid "Low"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:92
+msgid "Medium-Low"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:93
+msgid "Medium"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:94
+msgid "Medium-High"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:95
+msgid "High"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:96
+msgid "Very High"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:101
+msgid "Top"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:102
+msgid "Right"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:103
+msgid "Bottom"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:104
+msgid "Left"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:105
+msgid "Center (Default)"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:109
+msgid "Flip left to right"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:110
+msgid "Flip top to bottom"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:111
+msgid "Rotate 90 degrees counter-clockwise"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:112
+msgid "Rotate 90 degrees clockwise"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:113
+msgid "Rotate 180 degrees"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:117
+msgid "Tile"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:118
+msgid "Scale"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:128
+#, python-format
+msgid ""
+"Chain multiple filters using the following pattern \"FILTER_ONE->FILTER_TWO-"
+">FILTER_THREE\". Image filters will be applied in order. The following "
+"filters are available: %s."
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:136
+msgid "date published"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:137
+#: src/django-photologue/photologue/models.py:194
+#: src/django-photologue/photologue/models.py:556
+msgid "title"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:138
+msgid "title slug"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:139
+msgid "A \"slug\" is a unique URL-friendly title for an object."
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:140
+#: src/django-photologue/photologue/models.py:196
+#: src/django-photologue/photologue/models.py:605
+msgid "description"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:141
+#: src/django-photologue/photologue/models.py:197
+#: src/django-photologue/photologue/models.py:561
+msgid "is public"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:142
+msgid "Public galleries will be displayed in the default views."
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:143
+#: src/django-photologue/photologue/models.py:568
+msgid "photos"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:145
+#: src/django-photologue/photologue/models.py:198
+#: src/django-photologue/photologue/models.py:562
+msgid "tags"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:150
+msgid "gallery"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:151
+msgid "galleries"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:184
+msgid "count"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:191
+msgid "images file (.zip)"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:192
+msgid "Select a .zip file of images to upload into a new Gallery."
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:193
+msgid ""
+"Select a gallery to add these images to. leave this empty to create a new "
+"gallery from the supplied title."
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:194
+msgid ""
+"All photos in the gallery will be given a title made up of the gallery title "
+"+ a sequential number."
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:195
+#: src/django-photologue/photologue/models.py:559
+msgid "caption"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:195
+msgid "Caption will be added to all photos."
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:196
+msgid "A description of this Gallery."
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:197
+msgid ""
+"Uncheck this to make the uploaded gallery and included photographs private."
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:201
+msgid "gallery upload"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:202
+msgid "gallery uploads"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:266
+#: src/django-photologue/photologue/models.py:716
+msgid "image"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:268
+msgid "date taken"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:270
+msgid "crop from"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:271
+msgid "effect"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:289
+msgid "An \"admin_thumbnail\" photo size has not been defined."
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:297
+msgid "Thumbnail"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:557
+msgid "slug"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:560
+msgid "date added"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:561
+msgid "Public photographs will be displayed in the default views."
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:567
+msgid "photo"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:604
+#: src/django-photologue/photologue/models.py:730
+#, fuzzy
+msgid "name"
+msgstr "Nom d'utilisateur"
+
+#: src/django-photologue/photologue/models.py:676
+msgid "rotate or flip"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:677
+#: src/django-photologue/photologue/models.py:684
+msgid "color"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:677
+msgid ""
+"A factor of 0.0 gives a black and white image, a factor of 1.0 gives the "
+"original image."
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:678
+msgid "brightness"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:678
+msgid ""
+"A factor of 0.0 gives a black image, a factor of 1.0 gives the original "
+"image."
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:679
+msgid "contrast"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:679
+msgid ""
+"A factor of 0.0 gives a solid grey image, a factor of 1.0 gives the original "
+"image."
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:680
+msgid "sharpness"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:680
+msgid ""
+"A factor of 0.0 gives a blurred image, a factor of 1.0 gives the original "
+"image."
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:681
+msgid "filters"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:682
+msgid "size"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:682
+msgid ""
+"The height of the reflection as a percentage of the orignal image. A factor "
+"of 0.0 adds no reflection, a factor of 1.0 adds a reflection equal to the "
+"height of the orignal image."
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:683
+msgid "strength"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:683
+msgid "The initial opacity of the reflection gradient."
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:684
+msgid ""
+"The background color of the reflection gradient. Set this to match the "
+"background color of your page."
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:687
+#: src/django-photologue/photologue/models.py:738
+msgid "photo effect"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:688
+msgid "photo effects"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:717
+msgid "style"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:718
+msgid "opacity"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:718
+msgid "The opacity of the overlay."
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:721
+msgid "watermark"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:722
+msgid "watermarks"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:730
+msgid ""
+"Photo size name should contain only letters, numbers and underscores. "
+"Examples: \"thumbnail\", \"display\", \"small\", \"main_page_widget\"."
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:731
+msgid "width"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:731
+msgid ""
+"If width is set to \"0\" the image will be scaled to the supplied height."
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:732
+msgid "height"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:732
+msgid ""
+"If height is set to \"0\" the image will be scaled to the supplied width"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:733
+msgid "quality"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:733
+msgid "JPEG image quality."
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:734
+msgid "upscale images?"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:734
+msgid ""
+"If selected the image will be scaled up if necessary to fit the supplied "
+"dimensions. Cropped sizes will be upscaled regardless of this setting."
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:735
+msgid "crop to fit?"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:735
+msgid ""
+"If selected the image will be scaled and cropped to fit the supplied "
+"dimensions."
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:736
+msgid "pre-cache?"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:736
+msgid "If selected this photo size will be pre-cached as photos are added."
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:737
+msgid "increment view count?"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:737
+msgid ""
+"If selected the image's \"view_count\" will be incremented when this photo "
+"size is displayed."
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:739
+msgid "watermark image"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:743
+msgid "photo size"
+msgstr ""
+
+#: src/django-photologue/photologue/models.py:744
+msgid "photo sizes"
+msgstr ""
 
 #~ msgid "Enter your Email and 4-digit PASSWORD"
 #~ msgstr "Inscris ton nom d’utilisateur et ton code d'accès à 4 chiffres"
