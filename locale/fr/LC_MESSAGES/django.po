@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-18 06:40-0400\n"
-"PO-Revision-Date: 2015-06-18 10:38+0000\n"
-"Last-Translator: lorraine <>\n"
+"POT-Creation-Date: 2015-06-18 06:58-0400\n"
+"PO-Revision-Date: 2015-06-18 10:57+0000\n"
+"Last-Translator: Milton <milton@praekelt.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Pootle 2.5.1.1\n"
-"X-POOTLE-MTIME: 1434623931.867309\n"
+"X-POOTLE-MTIME: 1434625073.911814\n"
 
 #: app/admin.py:196
 msgid "this week"
@@ -82,18 +82,19 @@ msgid ""
 "You have already tried to reset your PASSWORD today. Please wait for your "
 "SMS or try again tomorrow."
 msgstr ""
-"Tu as déjà tenté de modifier ton code NIP aujourd’hui. SVP attends ton SMS "
-"ou essaie de nouveau demain."
+"Tu as déjà tenté de modifier ton code d'accès aujourd’hui. SVP attends ton "
+"SMS ou essaie de nouveau demain."
 
 #: app/forms.py:108 app/forms.py:150
+#, python-format
 msgid ""
 "Hi %(name)s. Follow this link to reset your PASSWORD: http://%(domain)s"
 "%(url)s"
 msgstr ""
-"Nous avons reçu une demande de modification de mot de passe sur le site A4W."
-"ca, associée à cette adresse. Si tu as bien fait cette demande, clique sur "
-"le lien ci-dessous. Si tu n’as pas fait cette demande, ne tiens pas compte "
-"de ce message. http://%(domain)s%(url)s"
+"Hi %(name)s. Nous avons reçu une demande de modification de mot de passe sur "
+"le site A4W.ca, associée à cette adresse. Si tu as bien fait cette demande, "
+"clique sur le lien ci-dessous. Si tu n’as pas fait cette demande, ne tiens "
+"pas compte de ce message. http://%(domain)s%(url)s"
 
 #: app/forms.py:135
 msgid "Unable to find an account for the provided email. Please try again."
@@ -101,7 +102,7 @@ msgstr "Aucun compte ne correspond au courriel fourni. SVP essaie de nouveau."
 
 #: app/forms.py:160
 msgid "[A4W] Reset your PASSWORD"
-msgstr "[A4W] Modifier ton code NIP."
+msgstr "[A4W] Modifier ton code d'accès."
 
 #: app/forms.py:221 app/forms.py:224
 msgid "Enter a valid mobile number in the form 14034228916"
@@ -113,7 +114,7 @@ msgstr "Un compte d’utilisateur correspondant à ce numéro existe déjà."
 
 #: app/forms.py:231
 msgid "Forgotten your PASSWORD?"
-msgstr "J'ai oublié mon mot de passe "
+msgstr "J'ai oublié mon mot de passe"
 
 #: app/forms.py:240 app/forms.py:345
 msgid "Enter a valid email address."
@@ -156,7 +157,7 @@ msgstr "Année de naissance"
 
 #: app/forms.py:315
 msgid "Engage Anonymously"
-msgstr "Participer de façon anonyme "
+msgstr "Participer de façon anonyme"
 
 #: app/forms.py:359
 msgid "Please use an image that is smaller or equal to 500 x 500 pixels."
@@ -193,7 +194,7 @@ msgstr "Français"
 
 #: project/templates/app/mobi/base.html:7
 msgid "A4W Live"
-msgstr "A4W Live "
+msgstr "A4W Live"
 
 #: project/templates/app/mobi/base.html:7
 msgid "Mobile"
@@ -263,7 +264,7 @@ msgstr "Inscris ton nom d’utilisateur et ton code d'accès à 4 chiffres"
 #: project/templates/app/mobi/app/login.html:43
 #: project/templates/app/mobi/registration/registration_form.html:45
 msgid "PASSWORD"
-msgstr " Code d'accès "
+msgstr "Code d'accès"
 
 #: project/templates/app/mobi/base.html:147
 msgid "Remember me"
@@ -272,7 +273,7 @@ msgstr "souviens-toi de moi"
 #: project/templates/app/mobi/base.html:152
 #: project/templates/app/mobi/app/login.html:56
 msgid "I forgot my PASSWORD"
-msgstr "J'ai oublié mon mot de passe "
+msgstr "J'ai oublié mon mot de passe"
 
 #: project/templates/app/mobi/base.html:155
 #: project/templates/app/mobi/app/login.html:60
@@ -308,7 +309,7 @@ msgstr "Année de naissance"
 #: project/templates/app/mobi/base.html:201
 #: project/templates/app/mobi/registration/registration_form.html:83
 msgid "Identity"
-msgstr "Identité "
+msgstr "Identité"
 
 #: project/templates/app/mobi/base.html:213
 msgid "I accept the"
@@ -409,7 +410,7 @@ msgstr "Ton courriel ou ton code d'accès est incorrect. SVP réessaie."
 #: project/templates/app/mobi/app/password_reset.html:5
 #: project/templates/app/mobi/app/password_reset_email.html:6
 msgid "Reset PASSWORD"
-msgstr "mot de passe "
+msgstr "mot de passe"
 
 #: project/templates/app/mobi/app/password_reset.html:17
 msgid "Please enter your mobile number and we will send you a new PASSWORD."
@@ -424,11 +425,11 @@ msgstr "Envoyer"
 
 #: project/templates/app/mobi/app/password_reset_complete.html:6
 msgid "PASSWORD Reset Complete"
-msgstr "Code NIP modifié avec succès "
+msgstr "Code d'accès modifié avec succès"
 
 #: project/templates/app/mobi/app/password_reset_complete.html:8
 msgid "Your PASSWORD has been set."
-msgstr "Ton code NIP a été créé. "
+msgstr "Ton code d'accès a été créé."
 
 #: project/templates/app/mobi/app/password_reset_complete.html:8
 msgid "Click here to sign in."
@@ -436,13 +437,15 @@ msgstr "Vous êtes maintenant connecté ."
 
 #: project/templates/app/mobi/app/password_reset_confirm.html:5
 msgid "Enter New PASSWORD"
-msgstr " mot de passe"
+msgstr "mot de passe"
 
 #: project/templates/app/mobi/app/password_reset_confirm.html:18
 msgid ""
 "Please enter your new PASSWORD twice so we can verify you typed it in "
 "correctly."
-msgstr "Saisis ton code NIP deux fois pour vérifier qu’il n’y a pas d’erreur. "
+msgstr ""
+"Saisis ton code code d'accès deux fois pour vérifier qu’il n’y a pas "
+"d’erreur."
 
 #: project/templates/app/mobi/app/password_reset_confirm.html:37
 msgid "Reset"
@@ -453,8 +456,8 @@ msgid ""
 "The PASSWORD reset link was invalid, possibly because it has already been "
 "used."
 msgstr ""
-"Le lien de modification du NIP était invalide, peut-être parce qu’il a déjà "
-"été utilisé. "
+"Le lien de modification du code d'accès était invalide, peut-être parce "
+"qu’il a déjà été utilisé."
 
 #: project/templates/app/mobi/app/password_reset_confirm.html:41
 msgid "Please request a new PASSWORD reset."
@@ -470,7 +473,7 @@ msgid ""
 "shortly."
 msgstr ""
 "Tu devrais recevoir bientôt un courriel contenant les instructions à suivre "
-"pour modifier ton NIP."
+"pour modifier ton code d'accès."
 
 #: project/templates/app/mobi/app/password_reset_email.html:17
 msgid "Please enter your email and we will send you a PASSWORD reset link."
@@ -497,7 +500,7 @@ msgstr "Fait"
 
 #: project/templates/app/mobi/app/story_comments_list.html:12
 msgid "More comments for"
-msgstr "Plus de commentaires sur "
+msgstr "Plus de commentaires sur"
 
 #: project/templates/app/mobi/app/story_comments_list.html:27
 #: project/templates/app/mobi/app/includes/comments_include_no_likes.html:31
@@ -732,7 +735,7 @@ msgstr "Ouvre une session pour pouvoir voter"
 
 #: project/templates/app/mobi/registration/done.html:14
 msgid "Thank you for joining A4W!"
-msgstr "Merci de vous joindre A4W !"
+msgstr "Merci de vous joindre A4W!"
 
 #: project/templates/app/mobi/registration/done.html:16
 msgid "Take me to the home page"
