@@ -625,8 +625,8 @@ class CommentingRulesTestCase(TestCase):
             kwargs={'category_slug': 'articles', 'slug': self.post.slug}))
         self.assertContains(
             resp,
-            'This comment has been reported by the community and '
-            'the user has been banned')
+            'This comment has been removed by a moderator and '
+            'the user has been banned from commenting for 3 days')
         self.assertTrue(
             BanAudit.objects.filter(banned_by=self.control_user).exists())
 
@@ -647,7 +647,7 @@ class CommentingRulesTestCase(TestCase):
             resp,
             'Want to comment? You will need to accept our new '
             'commenting rules first.')
-        self.assertNotContains(resp, 'You are banned from commenting')
+        self.assertNotContains(resp, 'Your comment has been flagged by a community member.')
 
         # ban user
         utils.ban_user(user, 1, self.control_user)
@@ -656,7 +656,7 @@ class CommentingRulesTestCase(TestCase):
         resp = c.get(reverse(
             'category_object_detail',
             kwargs={'category_slug': 'articles', 'slug': self.post.slug}))
-        self.assertContains(resp, 'You are banned from commenting')
+        self.assertContains(resp, 'Your comment has been flagged by a community member.')
         self.assertTrue(
             BanAudit.objects.filter(banned_by=self.control_user).exists())
 
@@ -676,7 +676,7 @@ class CommentingRulesTestCase(TestCase):
         resp = c.get(reverse(
             'category_object_detail',
             kwargs={'category_slug': 'articles', 'slug': self.post.slug}))
-        self.assertContains(resp, 'You are banned from commenting')
+        self.assertContains(resp, 'Your comment has been flagged by a community member.')
 
         # unban user
         tasks.unban_users()
@@ -685,7 +685,7 @@ class CommentingRulesTestCase(TestCase):
         resp = c.get(reverse(
             'category_object_detail',
             kwargs={'category_slug': 'articles', 'slug': self.post.slug}))
-        self.assertNotContains(resp, 'You are banned from commenting')
+        self.assertNotContains(resp, 'Your comment has been flagged by a community member.')
 
     def test_unban_user_date(self):
         # Create banned and login user
