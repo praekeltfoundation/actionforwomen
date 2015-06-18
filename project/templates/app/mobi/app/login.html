@@ -46,7 +46,7 @@
 				<p>{{ error }}</p>
 			{% endfor %}
 	{% endif %}
-  <input name="password" id="id_password" type="password" class="input-wide">
+<input name="password" id="id_password" pattern="[0-9]{4}" type="password" class="input-wide" maxlength="4">
 </label>
 
 	<input value='{% trans "Submit"%}' class="btn btn-wide" type="submit">
