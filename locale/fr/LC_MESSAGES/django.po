@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-17 08:49-0400\n"
-"PO-Revision-Date: 2015-05-20 14:54+0000\n"
-"Last-Translator: Milton <milton@praekelt.com>\n"
+"POT-Creation-Date: 2015-06-18 06:40-0400\n"
+"PO-Revision-Date: 2015-06-18 10:38+0000\n"
+"Last-Translator: lorraine <>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Pootle 2.5.1.1\n"
-"X-POOTLE-MTIME: 1434478501.069394\n"
+"X-POOTLE-MTIME: 1434623931.867309\n"
 
 #: app/admin.py:196
 msgid "this week"
@@ -32,43 +32,43 @@ msgstr "Avant"
 
 #: app/forms.py:36 project/templates/app/mobi/base.html:185
 msgid "Select Gender"
-msgstr ""
+msgstr "Choisir un sexe"
 
 #: app/forms.py:37 project/templates/app/mobi/base.html:186
 msgid "Male"
-msgstr ""
+msgstr "Fait"
 
 #: app/forms.py:38 project/templates/app/mobi/base.html:187
 msgid "Female"
-msgstr ""
+msgstr "Femme"
 
 #: app/forms.py:39 project/templates/app/mobi/base.html:188
 msgid "Other"
-msgstr ""
+msgstr "Autre"
 
 #: app/forms.py:42 project/templates/app/mobi/base.html:203
 msgid "Select Identity"
-msgstr ""
+msgstr "Choisir une identité"
 
 #: app/forms.py:43 project/templates/app/mobi/base.html:204
 msgid "First Nations Status"
-msgstr ""
+msgstr "Première Nation (membre inscrit)"
 
 #: app/forms.py:44 project/templates/app/mobi/base.html:205
 msgid "First Nations Non-Status"
-msgstr ""
+msgstr "Première Nation (membre non inscrit)"
 
 #: app/forms.py:45 project/templates/app/mobi/base.html:206
 msgid "Inuit"
-msgstr ""
+msgstr "Inuit"
 
 #: app/forms.py:46 project/templates/app/mobi/base.html:207
 msgid "Metis"
-msgstr ""
+msgstr "Métis"
 
 #: app/forms.py:47 project/templates/app/mobi/base.html:208
 msgid "Non-Aboriginal"
-msgstr ""
+msgstr "Non-autochtone"
 
 #: app/forms.py:78
 msgid ""
@@ -86,11 +86,14 @@ msgstr ""
 "ou essaie de nouveau demain."
 
 #: app/forms.py:108 app/forms.py:150
-#, python-format
 msgid ""
 "Hi %(name)s. Follow this link to reset your PASSWORD: http://%(domain)s"
 "%(url)s"
 msgstr ""
+"Nous avons reçu une demande de modification de mot de passe sur le site A4W."
+"ca, associée à cette adresse. Si tu as bien fait cette demande, clique sur "
+"le lien ci-dessous. Si tu n’as pas fait cette demande, ne tiens pas compte "
+"de ce message. http://%(domain)s%(url)s"
 
 #: app/forms.py:135
 msgid "Unable to find an account for the provided email. Please try again."
@@ -110,11 +113,11 @@ msgstr "Un compte d’utilisateur correspondant à ce numéro existe déjà."
 
 #: app/forms.py:231
 msgid "Forgotten your PASSWORD?"
-msgstr "J'ai oublié mon mot de passe"
+msgstr "J'ai oublié mon mot de passe "
 
 #: app/forms.py:240 app/forms.py:345
 msgid "Enter a valid email address."
-msgstr ""
+msgstr "SVP inscrire une adresse courriel valide."
 
 #: app/forms.py:245 app/forms.py:398
 msgid "A user with that email already exists"
@@ -145,15 +148,15 @@ msgstr "Nom d'utilisateur"
 #: app/forms.py:305 project/templates/app/mobi/base.html:180
 #: project/templates/app/mobi/registration/registration_form.html:63
 msgid "Display Name"
-msgstr ""
+msgstr "Pseudonyme"
 
 #: app/forms.py:310
 msgid "Year of birth"
-msgstr ""
+msgstr "Année de naissance"
 
 #: app/forms.py:315
 msgid "Engage Anonymously"
-msgstr ""
+msgstr "Participer de façon anonyme "
 
 #: app/forms.py:359
 msgid "Please use an image that is smaller or equal to 500 x 500 pixels."
@@ -169,12 +172,12 @@ msgstr "Le fichier est trop gros (max. 500 KB)"
 
 #: app/forms.py:389
 msgid "Email is required."
-msgstr ""
+msgstr "Une adresse courriel est requise."
 
 #: app/views.py:890
 #, python-format
 msgid "From %(name)s. %(message)s"
-msgstr ""
+msgstr "De : %(name)s. %(message)s"
 
 #: app/views.py:896
 msgid "[A4W] User Feedback"
@@ -190,7 +193,7 @@ msgstr "Français"
 
 #: project/templates/app/mobi/base.html:7
 msgid "A4W Live"
-msgstr ""
+msgstr "A4W Live "
 
 #: project/templates/app/mobi/base.html:7
 msgid "Mobile"
@@ -253,14 +256,14 @@ msgstr "Connexion"
 
 #: project/templates/app/mobi/base.html:138
 msgid "Enter your Email and 4-digit PASSWORD"
-msgstr "Inscris ton nom d’utilisateur et ton NIP à 4 chiffres"
+msgstr "Inscris ton nom d’utilisateur et ton code d'accès à 4 chiffres"
 
 #: project/templates/app/mobi/base.html:142
 #: project/templates/app/mobi/base.html:173
 #: project/templates/app/mobi/app/login.html:43
 #: project/templates/app/mobi/registration/registration_form.html:45
 msgid "PASSWORD"
-msgstr ""
+msgstr " Code d'accès "
 
 #: project/templates/app/mobi/base.html:147
 msgid "Remember me"
@@ -269,7 +272,7 @@ msgstr "souviens-toi de moi"
 #: project/templates/app/mobi/base.html:152
 #: project/templates/app/mobi/app/login.html:56
 msgid "I forgot my PASSWORD"
-msgstr "J'ai oublié mon mot de passe"
+msgstr "J'ai oublié mon mot de passe "
 
 #: project/templates/app/mobi/base.html:155
 #: project/templates/app/mobi/app/login.html:60
@@ -295,17 +298,17 @@ msgstr "Numéro De Téléphone"
 #: project/templates/app/mobi/base.html:183
 #: project/templates/app/mobi/registration/registration_form.html:66
 msgid "Gender"
-msgstr ""
+msgstr "Sexe"
 
 #: project/templates/app/mobi/base.html:192
 #: project/templates/app/mobi/registration/registration_form.html:74
 msgid "Year of Birth"
-msgstr ""
+msgstr "Année de naissance"
 
 #: project/templates/app/mobi/base.html:201
 #: project/templates/app/mobi/registration/registration_form.html:83
 msgid "Identity"
-msgstr ""
+msgstr "Identité "
 
 #: project/templates/app/mobi/base.html:213
 msgid "I accept the"
@@ -401,16 +404,12 @@ msgstr "Cliquez ici pour continuer à la page d'accueil ."
 
 #: project/templates/app/mobi/app/login.html:29
 msgid "Your Email and PASSWORD didn't match. Please try again."
-msgstr ""
-"Votre nom d'utilisateur et mot de passe ne correspondent pas. S'il vous "
-"plaît essayer à nouveau."
+msgstr "Ton courriel ou ton code d'accès est incorrect. SVP réessaie."
 
-# msgid "Username"
-# msgstr "Username"
 #: project/templates/app/mobi/app/password_reset.html:5
 #: project/templates/app/mobi/app/password_reset_email.html:6
 msgid "Reset PASSWORD"
-msgstr "mot de passe"
+msgstr "mot de passe "
 
 #: project/templates/app/mobi/app/password_reset.html:17
 msgid "Please enter your mobile number and we will send you a new PASSWORD."
@@ -425,27 +424,25 @@ msgstr "Envoyer"
 
 #: project/templates/app/mobi/app/password_reset_complete.html:6
 msgid "PASSWORD Reset Complete"
-msgstr "Code NIP modifié avec succès"
+msgstr "Code NIP modifié avec succès "
 
 #: project/templates/app/mobi/app/password_reset_complete.html:8
 msgid "Your PASSWORD has been set."
-msgstr "Ton code NIP a été créé."
+msgstr "Ton code NIP a été créé. "
 
 #: project/templates/app/mobi/app/password_reset_complete.html:8
 msgid "Click here to sign in."
 msgstr "Vous êtes maintenant connecté ."
 
-# msgid "Username"
-# msgstr "Username"
 #: project/templates/app/mobi/app/password_reset_confirm.html:5
 msgid "Enter New PASSWORD"
-msgstr "mot de passe"
+msgstr " mot de passe"
 
 #: project/templates/app/mobi/app/password_reset_confirm.html:18
 msgid ""
 "Please enter your new PASSWORD twice so we can verify you typed it in "
 "correctly."
-msgstr "Saisis ton code NIP deux fois pour vérifier qu’il n’y a pas d’erreur."
+msgstr "Saisis ton code NIP deux fois pour vérifier qu’il n’y a pas d’erreur. "
 
 #: project/templates/app/mobi/app/password_reset_confirm.html:37
 msgid "Reset"
@@ -457,15 +454,15 @@ msgid ""
 "used."
 msgstr ""
 "Le lien de modification du NIP était invalide, peut-être parce qu’il a déjà "
-"été utilisé."
+"été utilisé. "
 
 #: project/templates/app/mobi/app/password_reset_confirm.html:41
 msgid "Please request a new PASSWORD reset."
-msgstr "Please request a new password reset."
+msgstr "STP fais une nouvelle demande de modification de ton code d'accès."
 
 #: project/templates/app/mobi/app/password_reset_done.html:6
 msgid "PASSWORD Reset Instructions Sent"
-msgstr "Les instructions de modification du code NIP ont été envoyées"
+msgstr "Les instructions de modification de ton code d'accès ont été envoyées"
 
 #: project/templates/app/mobi/app/password_reset_done.html:8
 msgid ""
@@ -567,19 +564,19 @@ msgstr "Nom d'utilisateur"
 
 #: project/templates/app/mobi/app/viewprofile.html:28
 msgid "Display Name:"
-msgstr ""
+msgstr "Pseudonyme:"
 
 #: project/templates/app/mobi/app/viewprofile.html:31
 msgid "Gender:"
-msgstr ""
+msgstr "Sexe"
 
 #: project/templates/app/mobi/app/viewprofile.html:34
 msgid "Year of Birth:"
-msgstr ""
+msgstr "Année de naissance"
 
 #: project/templates/app/mobi/app/viewprofile.html:37
 msgid "Identity:"
-msgstr ""
+msgstr "Identité"
 
 #: project/templates/app/mobi/app/viewprofile.html:40
 msgid "Edit My Profile"
@@ -587,7 +584,7 @@ msgstr "Voir Le Profil"
 
 #: project/templates/app/mobi/app/viewprofile.html:42
 msgid "Reset My Password"
-msgstr "mot de passe"
+msgstr "Reset My Password"
 
 #: project/templates/app/mobi/app/includes/comment_terms.html:6
 #: project/templates/app/mobi/app/includes/comments_new_system.html:33
@@ -609,23 +606,26 @@ msgid ""
 "made was reported by the community. You will be able to comment again "
 "tomorrow"
 msgstr ""
+"Tu ne peux plus faire de commentaire aujourd'hui, car un de tes commentaires "
+"a été signalé par la communauté. Tu pourras de nouveau faire des "
+"commentaires demain."
 
 #: project/templates/app/mobi/app/includes/comments_new_system.html:10
 #: project/templates/app/mobi/app/includes/comments_new_system.html:14
 msgid "Don't know why your comment was reported?"
-msgstr ""
+msgstr "Tu ne sais pas pourquoi ton commentaire a été signalé?"
 
 #: project/templates/app/mobi/app/includes/comments_new_system.html:13
 msgid "You are banned from commenting for"
-msgstr ""
+msgstr "Tu ne peux pas faire de commentaire pendant"
 
 #: project/templates/app/mobi/app/includes/comments_new_system.html:13
 msgid "days because a comment you made was reported by a Moderator"
-msgstr ""
+msgstr "jours parce qu'un de tes commentaires a été signalé par un modérateur."
 
 #: project/templates/app/mobi/app/includes/comments_new_system.html:21
 msgid "You must be registered to comment"
-msgstr ""
+msgstr "Tu dois être inscrit(e) pour faire un commentaire."
 
 #: project/templates/app/mobi/app/includes/comments_new_system.html:21
 msgid "Sign in here"
@@ -635,6 +635,8 @@ msgstr "S'inscrire"
 msgid ""
 "Want to comment? You will need to accept our new commenting rules first."
 msgstr ""
+"Tu veux faire un commentaire? Tu dois d'abord lire et approuver les règles à "
+"suivre."
 
 #: project/templates/app/mobi/app/includes/comments_new_system.html:34
 msgid ""
@@ -644,18 +646,29 @@ msgid ""
 "abusiveness, racism, sexism, forcing your religious beliefs on others and "
 "posting your phone number or email address in the comments stream."
 msgstr ""
+"La communauté de A4W aime les commentaires qui montrent que tu te soucies "
+"autant de ton avenir et de celui de ta famille que nous. Mais il y a des "
+"commentaires que nous n'aimons pas : jurons, gros mots, commentaires \"sexy"
+"\", tentatives de drague et de flirt, grossièretés, méchancetés, racisme, "
+"sexisme, tentatives d'imposer tes convictions religieuses ou renseignements "
+"personnels comme un numéro de téléphone ou une adresse courriel."
 
 #: project/templates/app/mobi/app/includes/comments_new_system.html:35
 msgid ""
 "A4W operates on a zero tolerance basis when it comes to inappropriate use of "
 "our site. This means:"
 msgstr ""
+"A4W applique la tolérance zéro en ce qui concerne l'utilisation de son site. "
+"Cela signifie que :"
 
 #: project/templates/app/mobi/app/includes/comments_new_system.html:36
 msgid ""
 "1. Moderators will remove the comments we don’t like. If your comment is "
 "removed by a moderator you will be banned from commenting on A4W for 3 days."
 msgstr ""
+"1. Les modérateurs supprimeront tout commentaire douteux. Si ton commentaire "
+"est supprimé par un modérateur, tu ne pourras pas faire d'autre commentaire "
+"pendant 3 jours"
 
 #: project/templates/app/mobi/app/includes/comments_new_system.html:37
 msgid ""
@@ -663,12 +676,17 @@ msgid ""
 "by clicking ‘Report’. If your comment is reported by another community "
 "member you will be banned from commenting on A4W for 1 day."
 msgstr ""
+"2. Tout utilisateur (y compris toi) peut retirer un commentaire en cliquant "
+"sur \"signaler\". Si un autre utilisateur signale ton commentaire, tu ne "
+"pourras plus faire de commentaire pendant une journée."
 
 #: project/templates/app/mobi/app/includes/comments_new_system.html:38
 msgid ""
 "Help keep A4W clean by abiding by the rules and reporting any inappropriate "
 "behaviour."
 msgstr ""
+"Aide-nous à maintenir la qualité de A4W en respectant les règles et en "
+"signalant tout comportement inaproprié."
 
 #: project/templates/app/mobi/app/includes/comments_new_system.html:40
 msgid "Accept"
@@ -681,7 +699,7 @@ msgstr "S'inscrire"
 #: project/templates/app/mobi/app/inclusion_tags/pagination.html:7
 #: project/templates/app/mobi/app/inclusion_tags/pagination.html:9
 msgid "Prev"
-msgstr ""
+msgstr "Précédent"
 
 #: project/templates/app/mobi/app/inclusion_tags/pagination.html:21
 #: project/templates/app/mobi/app/inclusion_tags/pagination.html:23
@@ -740,14 +758,6 @@ msgstr "Malheureusement, nous n’avons trouvé aucun résultat pour"
 msgid "Please try again with a different query."
 msgstr "Essaie une autre recherche"
 
-# msgid "Username"
-# msgstr "Username"
-#~ msgid "Reset My PIN"
-#~ msgstr "mot de passe"
-
-#~ msgid "PIN"
-#~ msgstr "Code d'accès"
-
 #~ msgid "image_validation"
 #~ msgstr "Validation_image"
 
@@ -763,11 +773,14 @@ msgstr "Essaie une autre recherche"
 #~ msgid "Username"
 #~ msgstr "Nom d'utilisateur"
 
-#~ msgid "name"
-#~ msgstr "Nom d'utilisateur"
+#~ msgid "Support"
+#~ msgstr "Support"
 
 #~ msgid "Enter your username and 4-digit PIN"
 #~ msgstr "Enter your username and 4-digit PIN"
+
+#~ msgid "PIN"
+#~ msgstr "Code d'accès"
 
 #~ msgid "I forgot my password"
 #~ msgstr "I forgot my password"
@@ -816,6 +829,9 @@ msgstr "Essaie une autre recherche"
 #~ "The password reset link was invalid, possibly because it has already been "
 #~ "used."
 
+#~ msgid "Please request a new password reset."
+#~ msgstr "Please request a new password reset."
+
 #~ msgid "Enter New Password"
 #~ msgstr "Enter New Password"
 
@@ -841,9 +857,40 @@ msgstr "Essaie une autre recherche"
 #~ msgid "See more stories"
 #~ msgstr "Voir plus d'histoires"
 
+#~ msgid "days because a comment you made was reported by a MAMA Moderator"
+#~ msgstr ""
+#~ "jours parce qu'un de tes commentaires a été signalé par un modérateur"
+
+#~ msgid "Action for Women"
+#~ msgstr "En action pour les femmes"
+
 #~ msgid "Please enter your email and we will send you a new password."
 #~ msgstr ""
 #~ "Please enter your mobile number and we will send you a new password."
+
+#~ msgid ""
+#~ "You have already tried to reset your PIN today. Please wait for your SMS "
+#~ "or try again tomorrow."
+#~ msgstr ""
+#~ "Tu as déjà tenté de modifier ton code d'accès aujourd’hui. SVP attends "
+#~ "ton SMS ou essaie de nouveau demain."
+
+#~ msgid ""
+#~ "Hi %(name)s. Follow this link to reset your PIN: http://%(domain)s%(url)s"
+#~ msgstr ""
+#~ "Nous avons reçu une demande de modification de mot de passe sur le site "
+#~ "A4W.ca, associée à cette adresse. Si tu as bien fait cette demande, "
+#~ "clique sur le lien ci-dessous. Si tu n’as pas fait cette demande, ne "
+#~ "tiens pas compte de ce message."
+
+#~ msgid "[A4W] Reset your PIN"
+#~ msgstr "[A4W] Modifier ton code d'accès"
+
+#~ msgid "Forgotten your PIN?"
+#~ msgstr "J'ai oublié mon mot de passe"
+
+#~ msgid "I forgot my PIN"
+#~ msgstr "J'ai oublié mon mot de passe"
 
 #~ msgid "Your username and PIN didn't match. Please try again."
 #~ msgstr ""
@@ -852,3 +899,69 @@ msgstr "Essaie une autre recherche"
 
 #~ msgid "Alias:"
 #~ msgstr "Pseudonyme :"
+
+# msgid "Username"
+# msgstr "Username"
+#~ msgid "Reset My PIN"
+#~ msgstr "mot de passe"
+
+# msgid "Username"
+# msgstr "Username"
+#~ msgid "Reset PIN"
+#~ msgstr "mot de passe"
+
+#~ msgid "Please enter your mobile number and we will send you a new PIN."
+#~ msgstr ""
+#~ "Entrez le courriel que vous avez utilisé pour vous inscrire et nous vous "
+#~ "enverrons un lien pour réinitialiser votre mot de passe"
+
+#~ msgid "PIN Reset Complete"
+#~ msgstr "Code d'accès modifié avec succès"
+
+#~ msgid "Your PIN has been set."
+#~ msgstr "Ton code d'accès a été créé."
+
+# msgid "Username"
+# msgstr "Username"
+#~ msgid "Enter New PIN"
+#~ msgstr "mot de passe"
+
+#~ msgid ""
+#~ "Please enter your new PIN twice so we can verify you typed it in "
+#~ "correctly."
+#~ msgstr ""
+#~ "Saisis ton code code d'accès deux fois pour vérifier qu’il n’y a pas "
+#~ "d’erreur."
+
+#~ msgid ""
+#~ "The PIN reset link was invalid, possibly because it has already been used."
+#~ msgstr ""
+#~ "Le lien de modification du NIP était invalide, peut-être parce qu’il a "
+#~ "déjà été utilisé."
+
+#~ msgid "Please request a new PIN reset."
+#~ msgstr "STP fais une nouvelle demande de modification de ton code d'accès."
+
+#, fuzzy
+#~ msgid "PIN Reset Instructions Sent"
+#~ msgstr ""
+#~ "Les instructions de modification de ton code d'accès ont été envoyées"
+
+#~ msgid ""
+#~ "You should receive an email containing details on resetting your PIN "
+#~ "shortly."
+#~ msgstr ""
+#~ "Tu devrais recevoir bientôt un courriel contenant les instructions à "
+#~ "suivre pour modifier ton NIP."
+
+#~ msgid "Please enter your email and we will send you a PIN reset link."
+#~ msgstr ""
+#~ "Entrez le courriel que vous avez utilisé pour vous inscrire et nous vous "
+#~ "enverrons un lien pour réinitialiser votre mot de passe"
+
+#~ msgid "Enter your Email and 4-digit PIN"
+#~ msgstr "Inscris ton nom d’utilisateur et ton NIP à 4 chiffres"
+
+#, fuzzy
+#~ msgid "Your Email and PIN didn't match. Please try again."
+#~ msgstr "Ton courriel ou ton code d'accès est incorrect. SVP réessaie."
