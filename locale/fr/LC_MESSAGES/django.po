@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-18 06:58-0400\n"
+"POT-Creation-Date: 2015-06-18 07:21-0400\n"
 "PO-Revision-Date: 2015-06-18 10:57+0000\n"
 "Last-Translator: Milton <milton@praekelt.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -256,8 +256,8 @@ msgid "Sign in"
 msgstr "Connexion"
 
 #: project/templates/app/mobi/base.html:138
-msgid "Enter your Email and 4-digit PASSWORD"
-msgstr "Inscris ton nom d’utilisateur et ton code d'accès à 4 chiffres"
+msgid "Enter your Email and 4-digit password (numbers only)"
+msgstr "Inscris ton nom d’utilisateur et ton NIP à 4 chiffres"
 
 #: project/templates/app/mobi/base.html:142
 #: project/templates/app/mobi/base.html:173
@@ -761,6 +761,9 @@ msgstr "Malheureusement, nous n’avons trouvé aucun résultat pour"
 msgid "Please try again with a different query."
 msgstr "Essaie une autre recherche"
 
+#~ msgid "Enter your Email and 4-digit PASSWORD"
+#~ msgstr "Inscris ton nom d’utilisateur et ton code d'accès à 4 chiffres"
+
 #~ msgid "image_validation"
 #~ msgstr "Validation_image"
 
@@ -961,9 +964,6 @@ msgstr "Essaie une autre recherche"
 #~ msgstr ""
 #~ "Entrez le courriel que vous avez utilisé pour vous inscrire et nous vous "
 #~ "enverrons un lien pour réinitialiser votre mot de passe"
-
-#~ msgid "Enter your Email and 4-digit PIN"
-#~ msgstr "Inscris ton nom d’utilisateur et ton NIP à 4 chiffres"
 
 #, fuzzy
 #~ msgid "Your Email and PIN didn't match. Please try again."
