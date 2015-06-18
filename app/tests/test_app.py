@@ -625,8 +625,8 @@ class CommentingRulesTestCase(TestCase):
             kwargs={'category_slug': 'articles', 'slug': self.post.slug}))
         self.assertContains(
             resp,
-            'This comment has been removed by a moderator and '
-            'the user has been banned from commenting for 3 days')
+            'Your comment has been flagged by a community member. '
+            'You will not be able to comment again until tomorrow.')
         self.assertTrue(
             BanAudit.objects.filter(banned_by=self.control_user).exists())
 

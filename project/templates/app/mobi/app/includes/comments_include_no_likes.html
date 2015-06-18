@@ -28,7 +28,7 @@
     </span>
 
     {% if comment.is_removed and comment.user.profile.banned %}
-    <p>{% trans "This comment has been removed by a moderator and the user has been banned from commenting for 3 days." %}<br><br/>
+    <p>{% trans "Your comment has been flagged by a community member. You will not be able to comment again until tomorrow." %}<br><br/>
       {% trans "Don't know the commenting rules?" %} <a href="{% url comment-terms %}">{% trans "Read them here" %}</a></p>
     {% elif comment.is_removed and not comment.user.profile.banned %}
      <p>{% trans "This comment has been removed by a moderator." %}<br><br/>
