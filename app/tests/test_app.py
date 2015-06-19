@@ -662,6 +662,39 @@ class CommentingRulesTestCase(TestCase):
         self.assertTrue(
             BanAudit.objects.filter(banned_by=self.control_user).exists())
 
+    def test_banned_user_comment_by_moderator(self):
+        # Create and login user
+        user = User.objects.create_user('foo', 'foo@foo.com', 'foo')
+        profile = UserProfile.objects.create(user=user)
+        profile.accepted_commenting_terms = True
+        profile.save()
+        c = Client()
+        c.login(username='foo', password='foo')
+
+        # check user can comment
+        resp = c.get(reverse(
+            'category_object_detail',
+            kwargs={'category_slug': 'articles', 'slug': self.post.slug}))
+        self.assertNotContains(
+            resp,
+            'Want to comment? You will need to accept our new '
+            'commenting rules first.')
+        self.assertNotContains(resp, 'Your comment has been flagged')
+
+        # ban user
+        utils.ban_user(user, 3, self.control_user)
+
+        # check user cannot comment
+        resp = c.get(reverse(
+            'category_object_detail',
+            kwargs={'category_slug': 'articles', 'slug': self.post.slug}))
+        self.assertContains(
+            resp,
+            'Your comment has been reported by a moderator '
+            'and you are unable to comment for 3 days')
+        self.assertTrue(
+            BanAudit.objects.filter(banned_by=self.control_user).exists())
+
     def test_unban_user(self):
         # Create banned and login user
         user = User.objects.create_user('foo', 'foo@foo.com', 'foo')
