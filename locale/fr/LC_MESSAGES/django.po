@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-18 07:21-0400\n"
-"PO-Revision-Date: 2015-06-18 10:57+0000\n"
-"Last-Translator: Milton <milton@praekelt.com>\n"
+"POT-Creation-Date: 2015-06-19 08:50-0400\n"
+"PO-Revision-Date: 2015-06-19 11:58+0000\n"
+"Last-Translator: lorraine <>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Pootle 2.5.1.1\n"
-"X-POOTLE-MTIME: 1434625073.911814\n"
+"X-POOTLE-MTIME: 1434715080.681019\n"
 
 #: app/admin.py:196
 msgid "this week"
@@ -36,7 +36,7 @@ msgstr "Choisir un sexe"
 
 #: app/forms.py:37 project/templates/app/mobi/base.html:186
 msgid "Male"
-msgstr "Fait"
+msgstr "Homme"
 
 #: app/forms.py:38 project/templates/app/mobi/base.html:187
 msgid "Female"
@@ -104,31 +104,35 @@ msgstr "Aucun compte ne correspond au courriel fourni. SVP essaie de nouveau."
 msgid "[A4W] Reset your PASSWORD"
 msgstr "[A4W] Modifier ton code d'accès."
 
-#: app/forms.py:221 app/forms.py:224
-msgid "Enter a valid mobile number in the form 14034228916"
-msgstr "Saisis un numéro de cellulaire valide comme ceci : 14034228916"
+#: app/forms.py:177
+msgid "Your mobile number"
+msgstr "Numéro de cellulaire"
 
-#: app/forms.py:230
-msgid "A user with that mobile number already exists."
-msgstr "Un compte d’utilisateur correspondant à ce numéro existe déjà."
+#: app/forms.py:180 app/forms.py:313 project/templates/app/mobi/base.html:180
+#: project/templates/app/mobi/registration/registration_form.html:63
+msgid "Display Name"
+msgstr "Pseudonyme"
 
-#: app/forms.py:231
-msgid "Forgotten your PASSWORD?"
-msgstr "J'ai oublié mon mot de passe"
+#: app/forms.py:184 app/forms.py:317 project/templates/app/mobi/base.html:183
+#: project/templates/app/mobi/registration/registration_form.html:66
+msgid "Gender"
+msgstr "Sexe"
 
-#: app/forms.py:240 app/forms.py:345
-msgid "Enter a valid email address."
-msgstr "SVP inscrire une adresse courriel valide."
+#: app/forms.py:189 app/forms.py:322
+msgid "Year of birth"
+msgstr "Année de naissance"
 
-#: app/forms.py:245 app/forms.py:398
-msgid "A user with that email already exists"
-msgstr "Un compte d’utilisateur correspondant à ce courriel existe déjà."
+#: app/forms.py:193 app/forms.py:326 project/templates/app/mobi/base.html:201
+#: project/templates/app/mobi/registration/registration_form.html:83
+msgid "Identity"
+msgstr "Identité"
 
-#: app/forms.py:282
-msgid "Upload Picture"
-msgstr "Ajoute ta photo"
+#: app/forms.py:214
+msgid "Username"
+msgstr "Nom d'utilisateur"
 
-#: app/forms.py:287 app/forms.py:292 project/templates/app/mobi/base.html:139
+#: app/forms.py:215 app/forms.py:295 app/forms.py:300 app/forms.py:350
+#: app/forms.py:351 project/templates/app/mobi/base.html:139
 #: project/templates/app/mobi/base.html:165
 #: project/templates/app/mobi/base.html:169
 #: project/templates/app/mobi/app/feedback.html:13
@@ -138,40 +142,65 @@ msgstr "Ajoute ta photo"
 msgid "Email"
 msgstr "email"
 
-#: app/forms.py:296 project/templates/app/mobi/app/feedback.html:10
+# msgid "Username"
+# msgstr "Username"
+#: app/forms.py:216
+msgid "Password"
+msgstr "Password"
+
+#: app/forms.py:229 app/forms.py:232
+msgid "Enter a valid mobile number in the form 14034228916"
+msgstr "Saisis un numéro de cellulaire valide comme ceci : 14034228916"
+
+#: app/forms.py:238
+msgid "A user with that mobile number already exists."
+msgstr "Un compte d’utilisateur correspondant à ce numéro existe déjà."
+
+#: app/forms.py:239
+msgid "Forgotten your PASSWORD?"
+msgstr "J'ai oublié mon mot de passe"
+
+#: app/forms.py:248 app/forms.py:360
+msgid "Enter a valid email address."
+msgstr "SVP inscrire une adresse courriel valide."
+
+#: app/forms.py:253 app/forms.py:413
+msgid "A user with that email already exists"
+msgstr "Un compte d’utilisateur correspondant à ce courriel existe déjà."
+
+#: app/forms.py:290
+msgid "Upload Picture"
+msgstr "Ajoute ta photo"
+
+#: app/forms.py:304 project/templates/app/mobi/app/feedback.html:10
 msgid "Name"
 msgstr "Nom"
 
-#: app/forms.py:301
+#: app/forms.py:309 app/forms.py:352
 msgid "Surname"
-msgstr "Nom d'utilisateur"
+msgstr "Nom De Famille"
 
-#: app/forms.py:305 project/templates/app/mobi/base.html:180
-#: project/templates/app/mobi/registration/registration_form.html:63
-msgid "Display Name"
-msgstr "Pseudonyme"
-
-#: app/forms.py:310
-msgid "Year of birth"
-msgstr "Année de naissance"
-
-#: app/forms.py:315
+#: app/forms.py:331
 msgid "Engage Anonymously"
 msgstr "Participer de façon anonyme"
 
-#: app/forms.py:359
+#: app/forms.py:353 project/templates/app/mobi/base.html:177
+msgid "Mobile Number"
+msgstr "Numéro de cellulaire"
+
+#: app/forms.py:374
 msgid "Please use an image that is smaller or equal to 500 x 500 pixels."
 msgstr "SVP utilise une image de 500x500 pixels maximum."
 
-#: app/forms.py:363
+#: app/forms.py:378
 msgid "Please use a JPEG or PNG image."
 msgstr "SVP choisir un fichier JPEG ou PNG"
 
-#: app/forms.py:365
+#: app/forms.py:380
 msgid "Image file too large ( maximum 500KB )"
 msgstr "Le fichier est trop gros (max. 500 KB)"
 
-#: app/forms.py:389
+#: app/forms.py:404
 msgid "Email is required."
 msgstr "Une adresse courriel est requise."
 
@@ -292,24 +321,10 @@ msgstr "Inscription"
 msgid "Register"
 msgstr "S'inscrire"
 
-#: project/templates/app/mobi/base.html:177
-msgid "Mobile Number"
-msgstr "Numéro De Téléphone"
-
-#: project/templates/app/mobi/base.html:183
-#: project/templates/app/mobi/registration/registration_form.html:66
-msgid "Gender"
-msgstr "Sexe"
-
 #: project/templates/app/mobi/base.html:192
 #: project/templates/app/mobi/registration/registration_form.html:74
 msgid "Year of Birth"
 msgstr "Année de naissance"
-
-#: project/templates/app/mobi/base.html:201
-#: project/templates/app/mobi/registration/registration_form.html:83
-msgid "Identity"
-msgstr "Identité"
 
 #: project/templates/app/mobi/base.html:213
 msgid "I accept the"
@@ -555,15 +570,15 @@ msgstr "Conditions d'utilisation"
 
 #: project/templates/app/mobi/app/viewprofile.html:18
 msgid "Mobile Number:"
-msgstr "Cellulaire"
+msgstr "Numéro de cellulaire"
 
 #: project/templates/app/mobi/app/viewprofile.html:22
 msgid "Name:"
-msgstr "Nom d'utilisateur"
+msgstr "Nom"
 
 #: project/templates/app/mobi/app/viewprofile.html:25
 msgid "Surname:"
-msgstr "Nom d'utilisateur"
+msgstr "Nom De Famille"
 
 #: project/templates/app/mobi/app/viewprofile.html:28
 msgid "Display Name:"
@@ -583,11 +598,11 @@ msgstr "Identité"
 
 #: project/templates/app/mobi/app/viewprofile.html:40
 msgid "Edit My Profile"
-msgstr "Voir Le Profil"
+msgstr "Modifier Mon Renseignements"
 
 #: project/templates/app/mobi/app/viewprofile.html:42
 msgid "Reset My Password"
-msgstr "Reset My Password"
+msgstr "Modifier ton code d'accès"
 
 #: project/templates/app/mobi/app/includes/comment_terms.html:6
 #: project/templates/app/mobi/app/includes/comments_new_system.html:33
@@ -743,7 +758,7 @@ msgstr "Aller à la page d'accueil"
 
 #: project/templates/app/mobi/registration/registration_form.html:54
 msgid "Mobile number"
-msgstr "numéro de téléphone"
+msgstr "Numéro de cellulaire"
 
 #: project/templates/app/mobi/search/search.html:8
 msgid "Search Results for"
@@ -761,6 +776,10 @@ msgstr "Malheureusement, nous n’avons trouvé aucun résultat pour"
 msgid "Please try again with a different query."
 msgstr "Essaie une autre recherche"
 
+#: project/templates/app/mobi/search/search.html:37
+msgid "women"
+msgstr "femmes"
+
 #~ msgid "Enter your Email and 4-digit PASSWORD"
 #~ msgstr "Inscris ton nom d’utilisateur et ton code d'accès à 4 chiffres"
 
@@ -776,9 +795,6 @@ msgstr "Essaie une autre recherche"
 #~ msgid "This is a translation"
 #~ msgstr "This is a translation"
 
-#~ msgid "Username"
-#~ msgstr "Nom d'utilisateur"
-
 #~ msgid "Support"
 #~ msgstr "Support"
 
@@ -790,11 +806,6 @@ msgstr "Essaie une autre recherche"
 
 #~ msgid "I forgot my password"
 #~ msgstr "I forgot my password"
-
-# msgid "Username"
-# msgstr "Username"
-#~ msgid "Password"
-#~ msgstr "Password"
 
 #~ msgid "Sign Up"
 #~ msgstr "Sign Up"

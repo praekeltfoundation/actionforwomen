@@ -34,7 +34,7 @@
 
       <fieldset>
         <label for="input-search-1"><span class="visuallyhidden">{% trans "Search:" %}</span>
-          <input type="search" id="input-search-1" name="q" placeholder="e.g. women" class="input-wide" {%if query%}value="{{query}}"{%endif%}/>
+          <input type="search" id="input-search-1" name="q" placeholder="e.g. {% trans "women" %}" class="input-wide" {%if query%}value="{{query}}"{%endif%}/>
         </label>
         <input type="submit" value="{% trans 'Search' %}" class="btn btn-wide"/>
       </fieldset>
