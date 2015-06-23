@@ -625,8 +625,7 @@ class CommentingRulesTestCase(TestCase):
             kwargs={'category_slug': 'articles', 'slug': self.post.slug}))
         self.assertContains(
             resp,
-            'This comment has been reported by the community and '
-            'the user has been banned')
+            'This comment has been flagged by a community member')
         self.assertTrue(
             BanAudit.objects.filter(banned_by=self.control_user).exists())
 
@@ -647,7 +646,7 @@ class CommentingRulesTestCase(TestCase):
             resp,
             'Want to comment? You will need to accept our new '
             'commenting rules first.')
-        self.assertNotContains(resp, 'You are banned from commenting')
+        self.assertNotContains(resp, 'Your comment has been flagged')
 
         # ban user
         utils.ban_user(user, 1, self.control_user)
@@ -656,7 +655,43 @@ class CommentingRulesTestCase(TestCase):
         resp = c.get(reverse(
             'category_object_detail',
             kwargs={'category_slug': 'articles', 'slug': self.post.slug}))
-        self.assertContains(resp, 'You are banned from commenting')
+        self.assertContains(
+            resp,
+            'Your comment has been flagged by a community member. '
+            'You will not be able to comment again until tomorrow.')
+        self.assertTrue(
+            BanAudit.objects.filter(banned_by=self.control_user).exists())
+
+    def test_banned_user_comment_by_moderator(self):
+        # Create and login user
+        user = User.objects.create_user('foo', 'foo@foo.com', 'foo')
+        profile = UserProfile.objects.create(user=user)
+        profile.accepted_commenting_terms = True
+        profile.save()
+        c = Client()
+        c.login(username='foo', password='foo')
+
+        # check user can comment
+        resp = c.get(reverse(
+            'category_object_detail',
+            kwargs={'category_slug': 'articles', 'slug': self.post.slug}))
+        self.assertNotContains(
+            resp,
+            'Want to comment? You will need to accept our new '
+            'commenting rules first.')
+        self.assertNotContains(resp, 'Your comment has been flagged')
+
+        # ban user
+        utils.ban_user(user, 3, self.control_user)
+
+        # check user cannot comment
+        resp = c.get(reverse(
+            'category_object_detail',
+            kwargs={'category_slug': 'articles', 'slug': self.post.slug}))
+        self.assertContains(
+            resp,
+            'Your comment has been reported by a moderator '
+            'and you are unable to comment for 3 days')
         self.assertTrue(
             BanAudit.objects.filter(banned_by=self.control_user).exists())
 
@@ -676,7 +711,7 @@ class CommentingRulesTestCase(TestCase):
         resp = c.get(reverse(
             'category_object_detail',
             kwargs={'category_slug': 'articles', 'slug': self.post.slug}))
-        self.assertContains(resp, 'You are banned from commenting')
+        self.assertContains(resp, 'Your comment has been flagged')
 
         # unban user
         tasks.unban_users()
@@ -685,7 +720,7 @@ class CommentingRulesTestCase(TestCase):
         resp = c.get(reverse(
             'category_object_detail',
             kwargs={'category_slug': 'articles', 'slug': self.post.slug}))
-        self.assertNotContains(resp, 'You are banned from commenting')
+        self.assertNotContains(resp, 'Your comment has been flagged')
 
     def test_unban_user_date(self):
         # Create banned and login user
