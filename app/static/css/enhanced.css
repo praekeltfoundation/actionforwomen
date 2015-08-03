@@ -33,7 +33,7 @@
     background: #1473ad url(img/zigzag.png) 0 0 repeat;
 }
 .highlight-quaternary {
-    color: #888888;
+    color: #888;
     background-color: #ebebeb;
 }
 .btn {
@@ -41,6 +41,9 @@
 }
 .over {
     position: relative;
+    max-height: 25em;
+    text-align: center;
+    overflow: hidden;
 }
 .over:after {
     content: "";
@@ -56,11 +59,101 @@
     background-repeat: repeat;
     z-index: 0;
 }
+@media (min-width: 85em) {
+    .over: nth-of-type(2n+3) {
+    float: left;
+    width: 49.8%;
+    clear: left;
+    margin-top: 0.25em;
+}
+.over:nth-of-type(2n) {
+    float: right;
+    width: 49.8%;
+    margin-top: 0.25em;
+}
+}
 .over:first-child .article-title {
     margin-bottom: 0.5em;
 }
+.over img {
+    position: absolute;
+    left: 0;
+    top: -5em;
+}
+@media (min-width: 40em) {
+    .over img {
+    top: -10em;
+}
+}
+@media (min-width: 50em) {
+    .over img {
+    top: -15em;
+}
+}
+@media (min-width: 60em) {
+    .over img {
+    top: -20em;
+}
+}
+@media (min-width: 70em) {
+    .over img {
+    top: -25em;
+}
+}
+@media (min-width: 80em) {
+    .over img {
+    top: -30em;
+}
+}
+.over .link-comments {
+    text-align: left;
+}
+@media (min-width: 48em) {
+    .over .link-comments {
+    right: 4em;
+}
+}
+.over-text {
+    text-align: left;
+}
+@media (min-width: 48em) {
+    .over-text {
+    left: 7em;
+    right: 11em;
+}
+}
+@media (min-width: 85em) {
+    .over-text {
+    right: 36em;
+}
+}
 .over-poll {
     background-color: #e52d47;
+}
+.cta {
+    clear: both;
+}
+@media (min-width: 48em) {
+    .poll, article {
+    padding-left: 7em;
+    padding-right: 20em;
+}
+}
+@media (min-width: 85em) {
+    .poll, article {
+    padding-right: 50em;
+}
+}
+@media (min-width: 48em) {
+    .comments {
+    margin-left: 7em;
+    margin-right: 20em;
+}
+}
+@media (min-width: 85em) {
+    .comments {
+    margin-right: 50em;
+}
 }
 .article-teaser-thumb {
     float: left;
@@ -80,10 +173,10 @@
     background: #27262b;
 }
 .nav-legal-lang li {
-    border-color: #888888;
+    border-color: #888;
 }
 .nav-legal-lang a {
-    color: #888888;
+    color: #888;
 }
 .nav-legal-lang a:hover {
     color: #ffffff;
@@ -95,10 +188,10 @@
     border: none;
 }
 .nav-menu li:nth-of-type(1) {
-    border-top: solid 1px #888888;
+    border-top: solid 1px #888;
 }
 .nav-menu li:nth-of-type(2) {
-    border-bottom: solid 1px #888888;
+    border-bottom: solid 1px #888;
     padding-bottom: 1em;
 }
 .nav-menu li:nth-of-type(3) {
@@ -106,6 +199,9 @@
 }
 .nav-menu li:last-child {
     margin-bottom: 1em;
+}
+.nav-menu .nav {
+    max-width: 30em;
 }
 .nav-menu .nav a {
     font-size: 2em;
@@ -127,15 +223,39 @@
     opacity: 0.8;
 }
 .js .nav-main-active {
-    width: 20em;
+    width: 11em;
     max-width: 100%}
 .js #menu {
     display: block;
     position: absolute;
     top: 4.5em;
+    right: 0;
+    left: 0;
     z-index: 3;
-    width: 20em;
     max-width: 100%}
+@media (min-width: 48em) {
+    .js #menu {
+    padding: 0 11em;
+}
+}
+@media (min-width: 48em) {
+    .js #menu .btn-wide {
+    width: 48%;
+    clear: left;
+}
+.js #menu [for="username"], .js #menu [for="mobile-number"], .js #menu [for="id_gender"], .js #menu [for="id_identity"] {
+    width: 48%;
+    float: left;
+    clear: left;
+}
+.js #menu [for="pin"], .js #menu [for="id_password1"], .js #menu [for="display_name"], .js #menu [for="id_year_of_birth"] {
+    width: 48%;
+    float: right;
+}
+.js #menu [for="remember-me"], .js #menu [for="id_tos"] {
+    clear: left;
+}
+}
 .js #close {
     position: absolute;
     top: 1em;
@@ -151,27 +271,29 @@
     display: block;
     position: absolute;
     top: 4.5em;
-    z-index: 3;
-    width: 20em;
-    max-width: 100%}
-@media (min-device-width: 50em) {
-    html {
-    padding-top: 2em;
-}
-html:before {
-    content: "This site is optimised for mobile viewing. Access this site on your mobile phone for the best user experience.";
-    position: absolute;
-    top: 0;
-    left: 0;
     right: 0;
-    background: #fff;
-    color: #27262b;
-    z-index: 1;
-    text-align: center;
-    line-height: 2;
+    left: 0;
+    z-index: 3;
+    max-width: 100%}
+@media (min-width: 48em) {
+    .js #signin, .js #search, .js #register {
+    padding: 0 11em;
 }
+}
+fieldset {
+    padding-bottom: 2em;
 }
 .logo img {
     width: 85px;
+}
+@media screen {
+    html {
+    max-width: none;
+}
+}
+@media screen and (min-device-width: 50em) {
+    html {
+    max-width: none;
+}
 }
 /*# sourceMappingURL=enhanced.css.map */

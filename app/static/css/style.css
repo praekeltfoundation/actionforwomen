@@ -1,5 +1,4 @@
-/*! HTML5 Boilerplate v4.3.0 | MIT License | http://h5bp.com/ */
-html {
+/*! HTML5 Boilerplate v4.3.0 | MIT License | http://h5bp.com/ */html {
     color: #222;
     background-color: #fff;
     font-size: 1em;
@@ -396,16 +395,16 @@ a:hover {
 }
 body, input, textarea, select {
     font-family: "Exo 2", sans-serif;
-    color: #888888;
+    color: #888;
 }
 .highlight-primary {
     color: #27262b;
 }
 .highlight-primary p {
-    color: #888888;
+    color: #888;
 }
 .highlight-secondary {
-    color: #888888;
+    color: #888;
 }
 .highlight-secondary li {
     border: none;
@@ -631,7 +630,7 @@ select {
     text-align: center;
     padding-top: 1em;
     margin-top: 1em;
-    border-top: solid 1px #888888;
+    border-top: solid 1px #888;
 }
 .nav-social {
     text-align: center;
@@ -642,11 +641,14 @@ select {
 .nav-social a {
     text-decoration: none;
 }
+.nav-social-share a {
+    display: inline-block;
+}
 .nav-legal-lang {
     text-align: center;
 }
 .nav-legal-lang li {
-    border-color: #888888;
+    border-color: #888;
 }
 .nav-legal-lang li:last-child {
     padding-left: 0.5em;
@@ -654,7 +656,7 @@ select {
 }
 .poll {
     padding: 1em;
-    border-top: solid 1px #888888;
+    border-top: solid 1px #888;
 }
 .poll .article-title {
     margin-bottom: 0.25em;
@@ -732,7 +734,7 @@ form label>input, form label>select {
 }
 form input[type="text"], form input[type="number"], form input[type="search"], form input[type="checkbox"], form input[type="tel"], form input[type="password"], form select {
     background-color: transparent;
-    border: solid 1px #888888;
+    border: solid 1px #888;
 }
 .form-sign-in input[type="submit"] {
     margin: 1em 0 2em 0;
@@ -760,25 +762,11 @@ form input[type="text"], form input[type="number"], form input[type="search"], f
     display: table;
     clear: both;
 }
-.form-sign-in input,.form-sign-in select {
+.form-sign-in input, .form-sign-in select {
     color: #ebebeb;
 }
 .rightAfter:after {
-    right: 0!important;
-}
-.i-facebook-share {
-    background-image: url(img/icon-facebook-share.png);
-    margin-right: 4em;
-}
-.i-twitter-share {
-    background-image: url(img/icon-twitter-share.png);
-}
-.i-email-share {
-    background-image: url(img/icon-email-share.png);
-    margin-left: 4em;
-}
-.nav-social-share a {
-    display: inline-block;
+    right: 0 !important;
 }
 html {
     -webkit-tap-highlight-color: transparent;
@@ -811,9 +799,10 @@ html {
 .poll .poll-options label {
     font-size: 0.8em;
 }
-.avatar-upload a{
+.avatar-upload a {
     display: block;
 }
-.avatar-upload label{
+.avatar-upload label {
     display: inline;
 }
+/*# sourceMappingURL=style.css.map */
