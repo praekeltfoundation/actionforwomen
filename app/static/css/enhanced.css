@@ -60,7 +60,7 @@
     z-index: 0;
 }
 @media (min-width: 85em) {
-    .over: nth-of-type(2n+3) {
+    .over:nth-of-type(2n+3) {
     float: left;
     width: 49.8%;
     clear: left;
