@@ -50,7 +50,7 @@
     background-position: 0 0;
     background-repeat: repeat;
     z-index: 0; }
-  @media (min-width: 85em) {
+  @media (min-width: 80em) {
     .over:nth-of-type(2n+3) {
       float: left;
       width: 49.8%;
@@ -60,22 +60,22 @@
         position: absolute;
         left: 0;
         top: -5em; } }
-    @media (min-width: 85em) and (min-width: 80em) {
+    @media (min-width: 80em) and (min-width: 80em) {
       .over:nth-of-type(2n+3) img {
         top: -10em; } }
-    @media (min-width: 85em) and (min-width: 100em) {
+    @media (min-width: 80em) and (min-width: 100em) {
       .over:nth-of-type(2n+3) img {
         top: -15em; } }
-    @media (min-width: 85em) and (min-width: 120em) {
+    @media (min-width: 80em) and (min-width: 120em) {
       .over:nth-of-type(2n+3) img {
         top: -20em; } }
-    @media (min-width: 85em) and (min-width: 140em) {
+    @media (min-width: 80em) and (min-width: 140em) {
       .over:nth-of-type(2n+3) img {
         top: -25em; } }
-    @media (min-width: 85em) and (min-width: 160em) {
+    @media (min-width: 80em) and (min-width: 160em) {
       .over:nth-of-type(2n+3) img {
         top: -30em; } }
-  @media (min-width: 85em) {
+  @media (min-width: 80em) {
     .over:nth-of-type(2n) {
       float: right;
       width: 49.8%;
@@ -84,19 +84,19 @@
         position: absolute;
         left: 0;
         top: -5em; } }
-    @media (min-width: 85em) and (min-width: 80em) {
+    @media (min-width: 80em) and (min-width: 80em) {
       .over:nth-of-type(2n) img {
         top: -10em; } }
-    @media (min-width: 85em) and (min-width: 100em) {
+    @media (min-width: 80em) and (min-width: 100em) {
       .over:nth-of-type(2n) img {
         top: -15em; } }
-    @media (min-width: 85em) and (min-width: 120em) {
+    @media (min-width: 80em) and (min-width: 120em) {
       .over:nth-of-type(2n) img {
         top: -20em; } }
-    @media (min-width: 85em) and (min-width: 140em) {
+    @media (min-width: 80em) and (min-width: 140em) {
       .over:nth-of-type(2n) img {
         top: -25em; } }
-    @media (min-width: 85em) and (min-width: 160em) {
+    @media (min-width: 80em) and (min-width: 160em) {
       .over:nth-of-type(2n) img {
         top: -30em; } }
 
@@ -133,11 +133,11 @@
     .over-text {
       left: 7em;
       right: 11em; } }
-  @media (min-width: 85em) {
+  @media (min-width: 80em) {
     .over-text {
       right: 36em; } }
 
-@media (min-width: 85em) {
+@media (min-width: 80em) {
   .over:nth-of-type(2n+3) .over-text {
     left: 1em;
     right: 1em; }
@@ -156,7 +156,7 @@
   article {
     padding-left: 7em;
     padding-right: 20em; } }
-@media (min-width: 85em) {
+@media (min-width: 80em) {
   .poll,
   article {
     padding-right: 50em; } }
@@ -165,7 +165,7 @@
   .comments {
     margin-left: 7em;
     margin-right: 20em; } }
-@media (min-width: 85em) {
+@media (min-width: 80em) {
   .comments {
     margin-right: 50em; } }
 
