@@ -56,71 +56,19 @@
       width: 49.8%;
       clear: left;
       margin-top: 0.25em; }
-      .over:nth-of-type(2n+3) img {
-        position: absolute;
-        left: 0;
-        top: -5em; } }
-    @media (min-width: 80em) and (min-width: 80em) {
-      .over:nth-of-type(2n+3) img {
-        top: -10em; } }
-    @media (min-width: 80em) and (min-width: 100em) {
-      .over:nth-of-type(2n+3) img {
-        top: -15em; } }
-    @media (min-width: 80em) and (min-width: 120em) {
-      .over:nth-of-type(2n+3) img {
-        top: -20em; } }
-    @media (min-width: 80em) and (min-width: 140em) {
-      .over:nth-of-type(2n+3) img {
-        top: -25em; } }
-    @media (min-width: 80em) and (min-width: 160em) {
-      .over:nth-of-type(2n+3) img {
-        top: -30em; } }
-  @media (min-width: 80em) {
     .over:nth-of-type(2n) {
       float: right;
       width: 49.8%;
-      margin-top: 0.25em; }
-      .over:nth-of-type(2n) img {
-        position: absolute;
-        left: 0;
-        top: -5em; } }
-    @media (min-width: 80em) and (min-width: 80em) {
-      .over:nth-of-type(2n) img {
-        top: -10em; } }
-    @media (min-width: 80em) and (min-width: 100em) {
-      .over:nth-of-type(2n) img {
-        top: -15em; } }
-    @media (min-width: 80em) and (min-width: 120em) {
-      .over:nth-of-type(2n) img {
-        top: -20em; } }
-    @media (min-width: 80em) and (min-width: 140em) {
-      .over:nth-of-type(2n) img {
-        top: -25em; } }
-    @media (min-width: 80em) and (min-width: 160em) {
-      .over:nth-of-type(2n) img {
-        top: -30em; } }
-
+      margin-top: 0.25em; } }
   .over:first-child .article-title {
     margin-bottom: 0.5em; }
   .over img {
+    width: 100%;
     position: absolute;
     left: 0;
-    top: -5em; }
-    @media (min-width: 40em) {
-      .over img {
-        top: -10em; } }
-    @media (min-width: 50em) {
-      .over img {
-        top: -15em; } }
-    @media (min-width: 60em) {
-      .over img {
-        top: -20em; } }
-    @media (min-width: 70em) {
-      .over img {
-        top: -25em; } }
-    @media (min-width: 80em) {
-      .over img {
-        top: -30em; } }
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%); }
   .over .link-comments {
     text-align: left; }
     @media (min-width: 48em) {
