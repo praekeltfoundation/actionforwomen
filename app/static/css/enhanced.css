@@ -53,13 +53,13 @@
   @media (min-width: 80em) {
     .over:nth-of-type(2n+3) {
       float: left;
-      width: 49.8%;
+      width: 50%;
       clear: left;
-      margin-top: 0.25em; }
+      margin-top: 0em; }
     .over:nth-of-type(2n) {
       float: right;
-      width: 49.8%;
-      margin-top: 0.25em; } }
+      width: 50%;
+      margin-top: 0em; } }
   .over:first-child .article-title {
     margin-bottom: 0.5em; }
   .over img {
@@ -83,7 +83,7 @@
       right: 11em; } }
   @media (min-width: 80em) {
     .over-text {
-      right: 36em; } }
+      right: 11em; } }
 
 @media (min-width: 80em) {
   .over:nth-of-type(2n+3) .over-text {
@@ -98,24 +98,116 @@
 
 .cta {
   clear: both; }
+  
+  .over h4, .over h3, .over p {
+	  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+  }
 
 @media (min-width: 48em) {
-  .poll,
-  article {
-    padding-left: 7em;
-    padding-right: 20em; } }
+  
+	article {
+		padding-left: 8em;
+		padding-right: 20em; 	  
+	}
+	    
+	.poll, .poll-results {
+		padding-left: 20em;
+		padding-right: 20em;
+		padding-bottom: 4em;
+	 }
+	
+	.article-title {
+	    padding-left: 0.4em;
+	    font-size: 2.5em;
+	}
+	
+	
+	.over-text p {
+	    padding-left: 1em;
+	}
+	
+	.article-date {
+		padding-left: 10em;
+		padding-top: 1em;
+	} 
+	
+	.article-header .link-comments {
+		padding-right: 8em;
+		padding-top: .75em;
+	}
+	
+	.category {
+		padding-left: 1.2em;
+	}
+	
+	.nav-menu .nav {
+		max-width: none!important;
+	}
+	
+	.over:nth-of-type(2n+3) .article-title, .over:nth-of-type(2n) .article-title { 
+		padding-left: 2.8em; 
+		padding-right: 2.8em; 
+		margin-bottom: 0.5em 
+	}
+	.over:nth-of-type(2n+3) .category, .over:nth-of-type(2n) .category { 
+		padding-left: 9em; 
+	}
+	.over:nth-of-type(2n+3) p, .over:nth-of-type(2n) p { 
+		padding-left: 7em; padding-right: 5em 
+	}	
+	.over:nth-of-type(2n+3) .over-text, .over:nth-of-type(2n) .over-text { 
+		top: 3em; 
+		bottom: auto; 
+	} 
+	    
+	.poll, .poll-results {
+		clear: left;
+	} 
+	.poll .article-title, .poll-results .article-title {
+		padding-left: 0em;
+		padding-bottom: 0.2em;
+		margin-top: 1em;
+	    font-size: 2.5em;
+	    text-transform: uppercase
+	}
+	
+	.poll-results .btn {
+		width: 100%;
+		margin-top: 1em;
+	}
+	
+	.article-teaser .category {
+		float: right;
+		width: 75%;
+		padding-left: 0;
+	}
+	
+	.article-teaser {
+		padding: 1em 1em 1em 8em;
+	}
+	
+	.article-teaser .article-teaser-text a {
+		text-transform: uppercase;
+		font-size: 1.6em;
+	}
+	
+	.article-teaser .article-teaser-text p {
+		
+	}
+}
+    
 @media (min-width: 80em) {
   .poll,
   article {
-    padding-right: 50em; } }
+    padding-right: 20em; } }
 
 @media (min-width: 48em) {
   .comments {
-    margin-left: 7em;
+    margin-left: 9em;
     margin-right: 20em; } }
 @media (min-width: 80em) {
   .comments {
-    margin-right: 50em; } }
+    margin-right: 20em; } }
 
 .article-teaser-thumb {
   float: left;
@@ -246,4 +338,5 @@ fieldset {
     html {
       max-width: none; } }
 
+a:hover { text-decoration: none; }
 /*# sourceMappingURL=enhanced.css.map */
