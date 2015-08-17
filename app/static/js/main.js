@@ -268,7 +268,7 @@ var fufu = (function () {
       fufu.removeClass(fufu.back, "hidden");
       fufu.removeClass(fufu.search, "hidden");
     });
-
+    
   }
 
 

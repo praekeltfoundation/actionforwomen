@@ -98,6 +98,7 @@
                   <input type="search" id="input-search" name="q" placeholder="e.g. {% trans "women" %}" class="input-wide" />
                 </label>
                 <input type="submit" value='{% trans "Submit" %}' class="btn btn-wide" />
+                <p><a href="#" id="search-cancel">Cancel</a></p>
               </fieldset>
             </form>
             {% endblock %}
@@ -245,10 +246,10 @@
         <li><a href="{% url haystack_search %}" id="show-search">{% trans "Search" %}</a></li>
       </ul>
       {% if SITE_ID == 1 %}
-      <p><a href="{{french_url}}" class="lang-change">Français</a></p>
+      <p><a href="{{french_url}}" class="lang-change">FR</a></p>
       {% endif %}
       {% if SITE_ID == 2 %}
-      <p><a href="{{english_url}}" class="lang-change">English</a></p>
+      <p><a href="{{english_url}}" class="lang-change">EN</a></p>
       {% endif %}
     </nav>
     <a href="#main" id="nav-close" class="hidden">main</a>
