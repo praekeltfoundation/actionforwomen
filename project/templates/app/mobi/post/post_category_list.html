@@ -9,12 +9,9 @@ Used for Articles and Guides
 {% block content %}
 
     {% if object_list %}
-        {% render_object object_list.0 "block_first" %}
-        <ul class="list-block list-article-teasers">
-            {% for object in object_list|slice:"1:" %}
-                {% render_object object "block" %}
-            {% endfor %}
-        </ul>
+        {% for object in object_list %}
+            {% render_object object "block_home" %}
+        {% endfor %}
     {% endif %}
 
     {% pagination page_obj %}
