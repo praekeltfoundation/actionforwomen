@@ -157,15 +157,15 @@
 	}
 
 	.over:nth-of-type(2n+3) .article-title, .over:nth-of-type(2n) .article-title {
-		padding-left: 2.8em;
-		padding-right: 2.8em;
+		padding-left: 0em;
+		padding-right: 0em;
 		margin-bottom: 0.5em
 	}
 	.over:nth-of-type(2n+3) .category, .over:nth-of-type(2n) .category {
-		padding-left: 9em;
+		padding-left: 0em;
 	}
 	.over:nth-of-type(2n+3) p, .over:nth-of-type(2n) p {
-		padding-left: 7em; padding-right: 5em
+		padding-left: 0em; padding-right: 0em
 	}
 	.over:nth-of-type(2n+3) .over-text, .over:nth-of-type(2n) .over-text {
 		top: 3em;
@@ -215,10 +215,7 @@
 		display: block!important;
 		visibility: visible!important;
 	}
-
-
-
-
+	
 	.list-block > li {
 		display: inline-block;
 	}
@@ -226,15 +223,30 @@
 	main {
 		padding-top: 72px
 	}
-
-
-
 }
 
 @media (min-width: 80em) {
   .poll,
   article {
-    padding-right: 20em; } }
+    padding-right: 20em; } 
+    
+    .over:nth-of-type(2n+3) .article-title, .over:nth-of-type(2n) .article-title { 
+		padding-left: 2.8em; 
+		padding-right: 2.8em; 
+		margin-bottom: 0.5em 
+	}
+	.over:nth-of-type(2n+3) .category, .over:nth-of-type(2n) .category { 
+		padding-left: 9em; 
+	}
+	.over:nth-of-type(2n+3) p, .over:nth-of-type(2n) p { 
+		padding-left: 7em; padding-right: 5em 
+	}	
+	.over:nth-of-type(2n+3) .over-text, .over:nth-of-type(2n) .over-text { 
+		top: 3em; 
+		bottom: auto; 
+	}
+    
+    }
 
 @media (min-width: 48em) {
   .comments {
@@ -413,7 +425,7 @@
   max-width: 100%; }
   @media (min-width: 48em) {
     .js #menu {
-      padding: 0 5.5em 0 0; margin-left: 7.8em; top: 0; height: 72px } }
+      padding: 0 5.5em 0 0; margin-left: 7.8em; top: 0; height: 72px; background-color: #27262b; } }
   @media (min-width: 48em) {
     .js #menu .btn-wide {
       width: 48%;
