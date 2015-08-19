@@ -95,7 +95,7 @@ def set_language(request):
         #         response.set_cookie(settings.LANGUAGE_COOKIE_NAME, lang_code)
         #     translation.activate(lang_code)
     return response
-    
+
 class CategoryDetailView(DetailView):
     template_name = "post/post_category_detail.html"
 
@@ -178,7 +178,7 @@ class StoryCommentsView(ListView):
 
 class CategoryListView(ListView):
     template_name = "post/post_category_list.html"
-    paginate_by = 10
+    paginate_by = 11
     heading_prefix = ""
 
     def get_context_data(self, **kwargs):
@@ -711,7 +711,7 @@ class VLiveEditProfile(FormView):
         """
         user = self.request.user
         profile = user.profile
-    
+
         # save the avatar from the raw form data
         if form.data.has_key('default_avatar_id'):
             obj = DefaultAvatar.objects.get(

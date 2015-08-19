@@ -31,8 +31,8 @@
 
 .btn {
   background: #e52d47 url(img/zigzag.png) 0 0 repeat; }
-  
-  
+
+
   nav p:before {
 			content: "Language: ";
 			color: #fff;
@@ -108,71 +108,73 @@
 
 .cta {
   clear: both; }
-  
+
   .over h4, .over h3, .over p {
 	  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
   }
 
+.footer{clear: both;}
+
 @media (min-width: 48em) {
-  
+
 	article {
 		padding-left: 8em;
-		padding-right: 20em; 	  
+		padding-right: 20em;
 	}
-	    
+
 	.poll, .poll-results {
 		padding-left: 20em;
 		padding-right: 20em;
 		padding-bottom: 4em;
 	 }
-	
+
 	.article-title {
 	    padding-left: 0.4em;
 	    font-size: 2.5em;
 	}
-	
-	
+
+
 	.over-text p {
 	    padding-left: 1em;
 	}
-	
+
 	.article-date {
 		padding-left: 10em;
 		padding-top: 1em;
-	} 
-	
+	}
+
 	.article-header .link-comments {
 		padding-right: 8em;
 		padding-top: .75em;
 	}
-	
+
 	.category {
 		padding-left: 1.2em;
 	}
-	
+
 	.nav-menu .nav {
 		max-width: none!important;
 	}
-	
-	.over:nth-of-type(2n+3) .article-title, .over:nth-of-type(2n) .article-title { 
-		padding-left: 2.8em; 
-		padding-right: 2.8em; 
-		margin-bottom: 0.5em 
+
+	.over:nth-of-type(2n+3) .article-title, .over:nth-of-type(2n) .article-title {
+		padding-left: 2.8em;
+		padding-right: 2.8em;
+		margin-bottom: 0.5em
 	}
-	.over:nth-of-type(2n+3) .category, .over:nth-of-type(2n) .category { 
-		padding-left: 9em; 
+	.over:nth-of-type(2n+3) .category, .over:nth-of-type(2n) .category {
+		padding-left: 9em;
 	}
-	.over:nth-of-type(2n+3) p, .over:nth-of-type(2n) p { 
-		padding-left: 7em; padding-right: 5em 
-	}	
-	.over:nth-of-type(2n+3) .over-text, .over:nth-of-type(2n) .over-text { 
-		top: 3em; 
-		bottom: auto; 
-	} 
-	    
+	.over:nth-of-type(2n+3) p, .over:nth-of-type(2n) p {
+		padding-left: 7em; padding-right: 5em
+	}
+	.over:nth-of-type(2n+3) .over-text, .over:nth-of-type(2n) .over-text {
+		top: 3em;
+		bottom: auto;
+	}
+
 	.poll, .poll-results {
 		clear: left;
-	} 
+	}
 	.poll .article-title, .poll-results .article-title {
 		padding-left: 0em;
 		padding-bottom: 0.2em;
@@ -180,55 +182,55 @@
 	    font-size: 2.5em;
 	    text-transform: uppercase
 	}
-	
+
 	.poll-results .btn {
 		width: 100%;
 		margin-top: 1em;
 	}
-	
+
 	.article-teaser .category {
 		float: right;
 		width: 75%;
 		padding-left: 0;
 	}
-	
+
 	.article-teaser {
 		padding: 1em 1em 1em 8em;
 	}
-	
+
 	.article-teaser .article-teaser-text a {
 		text-transform: uppercase;
 		font-size: 1.6em;
 	}
-	
+
 	.article-teaser .article-teaser-text p {
-		
+
 	}
-	
+
 	i.i-hamburger {
 		display: none;
 	}
-	
+
 	nav.hidden {
 		display: block!important;
 		visibility: visible!important;
 	}
 
-	
-	
-	
+
+
+
 	.list-block > li {
 		display: inline-block;
 	}
-	
+
 	main {
 		padding-top: 72px
 	}
-	
-	
-	
+
+
+
 }
-    
+
 @media (min-width: 80em) {
   .poll,
   article {
@@ -285,15 +287,15 @@
     text-transform: uppercase;
     font-weight: bold;
     text-decoration: none; }
-    
-    
+
+
     @media (min-width: 48em) {
-	    
-	    
+
+
 	    .nav-menu li {
 		margin-top: 1.5em;
 		}
-	    
+
 	    .nav-menu li:nth-of-type(1) {
 			border-top: none;
 			position: absolute;
@@ -302,8 +304,8 @@
 			font-size: 0.7em;
 			margin-top: 0;
 		}
-		
-		
+
+
 		.nav-menu li:nth-of-type(2) {
 			border-bottom: none;
 			padding-bottom: 0;
@@ -313,21 +315,21 @@
 			font-size: 0.7em;
 			margin-top: 0;
 		}
-		
+
 		.nav-menu .nav a {
 			font-size: 1.0em
 		}
-		
+
 		.nav-menu .nav a:hover {
 			color: #e52d47;
 		}
-		
+
 		nav .list-block a {
 			padding-top: 0;
 			padding-left: 0;
 			padding-right: 1em
 		}
-		
+
 		nav p {
 			margin: 0;
 			padding: 0;
@@ -335,13 +337,13 @@
 			top: 1.2em;
 			right: 1.2em;
 		}
-		
+
 		nav p:before {
 			display: none;
 		}
-		
-		
-		
+
+
+
 		nav p a.lang-change {
 			text-transform: uppercase;
 			display: inline-block;
@@ -352,38 +354,38 @@
 			font-weight: bold;
 			font-size: 0.8em;
 		}
-		
+
 		nav p a.lang-change-active {
 			background-color: #fff;
 			color: #27262b;
 		}
-		
+
 		nav p a.lang-change:hover {
 			background-color: #e52d47;
 			color: #fff;
 			border: 1px solid #e52d47;
 		}
-		
+
 		nav a#logo {
 			display: block!important;
 			visibility: visible!important;
 		}
-		
+
 		#search p {
 			text-align: center;
 			text-transform: uppercase;
 			font-size: 0.8em;
 			margin: 1em 0;
 		}
-		
+
 		#search legend {
 			display: none;
 		}
-		
+
 		.js #back {
 			top: -20em!important;
 		}
-	
+
 	}
 
 .lang-change {
