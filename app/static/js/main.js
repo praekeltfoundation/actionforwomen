@@ -242,7 +242,7 @@ var fufu = (function () {
       fufu.hideNonFormMenu();
       fufu.addClass(fufu.menu, "hidden");
       fufu.removeClass(fufu.back, "hidden");
-      fufu.removeClass(fufu.signin, "hidden");
+      fufu.toggleClass(fufu.signin, "hidden");
     });
 
   }
@@ -254,7 +254,7 @@ var fufu = (function () {
       fufu.hideNonFormMenu();
       fufu.addClass(fufu.menu, "hidden");
       fufu.removeClass(fufu.back, "hidden");
-      fufu.removeClass(fufu.register, "hidden");
+      fufu.toggleClass(fufu.register, "hidden");
     });
 
   }
@@ -266,9 +266,9 @@ var fufu = (function () {
       fufu.hideNonFormMenu();
       fufu.addClass(fufu.menu, "hidden");
       fufu.removeClass(fufu.back, "hidden");
-      fufu.removeClass(fufu.search, "hidden");
+      fufu.toggleClass(fufu.search, "hidden");
     });
-    
+
   }
 
 
