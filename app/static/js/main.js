@@ -241,6 +241,8 @@ var fufu = (function () {
       fufu.preventActions(ev);
       fufu.hideNonFormMenu();
       fufu.addClass(fufu.menu, "hidden");
+      fufu.addClass(fufu.register, "hidden");
+      fufu.addClass(fufu.search, "hidden");
       fufu.removeClass(fufu.back, "hidden");
       fufu.toggleClass(fufu.signin, "hidden");
     });
@@ -253,6 +255,8 @@ var fufu = (function () {
       fufu.preventActions(ev);
       fufu.hideNonFormMenu();
       fufu.addClass(fufu.menu, "hidden");
+      fufu.addClass(fufu.signin, "hidden");
+      fufu.addClass(fufu.search, "hidden");
       fufu.removeClass(fufu.back, "hidden");
       fufu.toggleClass(fufu.register, "hidden");
     });
@@ -265,6 +269,8 @@ var fufu = (function () {
       fufu.preventActions(ev);
       fufu.hideNonFormMenu();
       fufu.addClass(fufu.menu, "hidden");
+      fufu.addClass(fufu.signin, "hidden");
+      fufu.addClass(fufu.register, "hidden");
       fufu.removeClass(fufu.back, "hidden");
       fufu.toggleClass(fufu.search, "hidden");
     });
