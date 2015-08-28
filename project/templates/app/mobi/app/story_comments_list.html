@@ -33,7 +33,7 @@
             <p>{{ comment.comment|linebreaks }}</p>
             {% endif %}
 
-              {% if not comment.user.is_staff and comment.user != request.user and request.user.is_authenticated %}
+              {% if request.user.is_authenticated and request.user.is_staff %}
                   {% if not comment.is_removed %}
                     <ul class="comment-actions nav list-inline">
                       <li><a href="{% url confirm_comment comment.content_type comment.id %}?next={{request.path}}">{% trans "Flag" %}</a></li>
@@ -68,4 +68,3 @@
     </a>
 </div>
 {% endblock %}
-
