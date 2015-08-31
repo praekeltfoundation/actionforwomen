@@ -61,24 +61,25 @@ class ProfileTestCase(TestCase):
         Site.objects.create(id=2, name='french', domain='fr.site.com')
         self.user = User.objects.create_user('test@email.com', 'test@email.com', '1234')
 
-    def test_mobi_register(self):
+    def test_mobi_register_domestic_format(self):
         self.client.logout()
 
         post_data = {
             'username': 'an@email.com',
             'password1': '1234',
-            'mobile_number': '0712341113',
+            'mobile_number': '231-456-7890',
             'email': 'an@email.com',
             'alias': '',
             'gender': '',
             'year_of_birth': '1989',
-            'identity' : '',
+            'identity': '',
             'tos': True
         }
 
         resp = self.client.post(reverse('registration_register'),
                                 post_data,
                                 follow=True)
+        # print 'resp', resp
         self.assertRedirects(resp,
                              reverse('registration_done'),
                              status_code=302,
@@ -86,7 +87,37 @@ class ProfileTestCase(TestCase):
         self.assertContains(resp, 'Thank you for joining A4W')
         # check for the date on the profile page
         resp = self.client.get(reverse('view_my_profile'))
-        self.assertContains(resp, '0712341113')
+        self.assertContains(resp, '231-456-7890')
+
+        self.client.logout()
+
+    def test_mobi_register_international_format(self):
+        self.client.logout()
+
+        post_data = {
+            'username': 'an@email.com',
+            'password1': '1234',
+            'mobile_number': '1-123-456-7890',  # Canadian numbers start with 1
+            'email': 'an@email.com',
+            'alias': '',
+            'gender': '',
+            'year_of_birth': '1989',
+            'identity': '',
+            'tos': True
+        }
+
+        resp = self.client.post(reverse('registration_register'),
+                                post_data,
+                                follow=True)
+        # print 'resp', resp
+        self.assertRedirects(resp,
+                             reverse('registration_done'),
+                             status_code=302,
+                             target_status_code=200)
+        self.assertContains(resp, 'Thank you for joining A4W')
+        # check for the date on the profile page
+        resp = self.client.get(reverse('view_my_profile'))
+        self.assertContains(resp, '123-456-7890')
 
         self.client.logout()
 
@@ -109,7 +140,7 @@ class ProfileTestCase(TestCase):
         form_data = {
             'username': 'an@email.com',
             'password1': '1234',
-            'mobile_number': '0712341113',
+            'mobile_number': '071-234-1113',
             'email': 'an@email.com',
             'alias': '',
             'gender': '',
@@ -124,7 +155,7 @@ class ProfileTestCase(TestCase):
         form_data = {
             'username': 'an@email.com',
             'password1': '1234',
-            'mobile_number': '27123411132',
+            'mobile_number': '271-234-11132',
             'email': 'an@email.com',
             'alias': '',
             'gender': '',
@@ -139,7 +170,7 @@ class ProfileTestCase(TestCase):
         form_data = {
             'username': 'an@email.com',
             'password1': '1234',
-            'mobile_number': '17123411134',
+            'mobile_number': '1-712-341-1134',
             'email': 'an@email.com',
             'alias': '',
             'gender': '',
@@ -169,7 +200,7 @@ class ProfileTestCase(TestCase):
         form_data = {
             'username': 'an@email.com',
             'password1': '1234',
-            'mobile_number': '17123411134',
+            'mobile_number': '1-712-341-1134',
             'email': 'an@email.com',
             'alias': '',
             'gender': '',
@@ -191,7 +222,7 @@ class ProfileTestCase(TestCase):
             'alias': 'sdgsdgsdgdg',
             'year_of_birth': 1989,
             'avatar': None,
-            'mobile_number': '8767564444',
+            'mobile_number': '876-756-4444',
             'email': 'gggdf@ggg.com',
             'identity': ''
         }
@@ -227,7 +258,7 @@ class ProfileTestCase(TestCase):
             'alias': 'sdgsdgsdgdg',
             'year_of_birth': 1989,
             'avatar': None,
-            'mobile_number': '8767564444',
+            'mobile_number': '876-756-4444',
             'email': 'gggdf@ggg.com', # Current user email address
             'identity': ''
         }
@@ -243,7 +274,7 @@ class ProfileTestCase(TestCase):
             'alias': 'sdgsdgsdgdg',
             'year_of_birth': 1989,
             'avatar': None,
-            'mobile_number': '8767564444',
+            'mobile_number': '876-756-4444',
             'email': 'gggdf@ggg.com',
             'identity': ''
         }
