@@ -106,7 +106,7 @@
     </div>
 
     {% block menu_forms %}
-    <form method="post" id="signin" action="{% url login %}" class="form-sign-in highlight-primary">
+    <form method="post" id="signin" action="{% url login %}" class="form-sign-in highlight-primary hidden">
       {% csrf_token %}
       <fieldset>
         <legend>{% trans "Sign in" %}</legend>
@@ -132,7 +132,7 @@
       </div>
     </form>
 
-    <form method="post" id="register" action="{% url registration_register %}" class="form-register highlight-primary">
+    <form method="post" id="register" action="{% url registration_register %}" class="form-register highlight-primary hidden">
       {% csrf_token %}
       <fieldset>
         <legend>{% trans "Register" %}</legend>
