@@ -7,6 +7,17 @@
 {% load livechat_tags %}
 {% load survey_inclusion_tags %}
 
+{% block extra_script %}
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="og:title" content="{{ object.title }}" />
+{% if object.subtitle %}
+  <meta property="og:description" content="{{ object.subtitle }}" />
+{% endif %}
+{% if object.image %}
+  <meta property="og:image" content="{{ object.get_large_url }}" />
+{% endif %}
+{% endblock %}
+
 {% block content %}
 <div class="over">
     {% if object.image %}
