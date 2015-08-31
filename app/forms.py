@@ -399,14 +399,6 @@ class EditProfileForm(RegistrationForm):
         return app.models.DefaultAvatar.objects.all()
 
 
-class DueDateForm(forms.Form):
-    due_date = forms.DateField(
-        required = True,
-        label = "Due Date",
-        widget = SelectDateWidget()
-    )
-
-
 class ProfileForm(pml_forms.PMLForm):
     submit_text = "Register"
 
@@ -459,33 +451,6 @@ class VLiveProfileEditForm(pml_forms.PMLForm):
         cleaned_data = super(VLiveProfileEditForm, self).clean()
         return cleaned_data
 
-
-class VLiveDueDateForm(forms.Form):
-    due_date = pml_forms.PMLTextField(
-        label="What is your due date? (yyyy-mm-dd)",
-        required=False
-    )
-
-    def clean_due_date(self):
-        """
-        Check that the due date is provided and correct.
-        """
-        try:
-            due_date = self.cleaned_data['due_date']
-            due_date = parser.parse(due_date)
-        except (KeyError, ValueError):
-            raise forms.ValidationError(
-                    "The due date was entered incorrectly.")
-        return due_date
-
-
-class MomsStoryEntryForm(forms.ModelForm):
-    class Meta:
-        model = YourStoryEntry
-        exclude = ('user', 'your_story_competition', 'terms')
-
-    def clean_terms(self):
-        return True
 
 class FeedbackForm(forms.Form):
     name = forms.CharField(max_length=64)

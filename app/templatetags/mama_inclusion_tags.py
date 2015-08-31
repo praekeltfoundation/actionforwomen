@@ -13,75 +13,11 @@ from poll.models import Poll
 from post.models import Post
 from livechat.models import LiveChat
 
-from app.forms import DueDateForm, VLiveDueDateForm
-
 from app.templatetags.moms_stories_inclusion_tags \
     import your_story_competition
 
 
 register = template.Library()
-
-
-@register.inclusion_tag('app/inclusion_tags/ages_and_stages.html',
-                        takes_context=True)
-def ages_and_stages(context):
-    context = copy(context)
-    user = context['request'].user
-    if user.is_authenticated():
-        profile = user.profile
-        context.update({'profile': profile})
-
-        # Check if the due date is missing
-        if (profile.date_qualifier in (
-                'unspecified', 'due_date'
-            ) and profile.delivery_date is None) or profile.unknown_date:
-            context.update({'no_due_date':True})
-            context.update({'due_form': DueDateForm()})
-            return context
-
-        delivery_date = profile.delivery_date
-        if delivery_date:
-            now = datetime.now().date()
-            pre_post = 'pre' if profile.is_prenatal() else 'post'
-            week = 42 - ((delivery_date - now).days / 7) if profile.is_prenatal() else (now - delivery_date).days / 7
-        else:
-            # Defaults in case user does not have delivery date.
-            pre_post = 'pre'
-            week = 21
-
-        # Get the stage category based on the due due/delivery date
-        try:
-            category = Category.objects.get(slug="my-pregnancy" if profile.is_prenatal() else "my-baby")
-            context.update({
-                'category': category,
-            })
-        except Category.DoesNotExist:
-            return context
-
-        # Look for articles that fit the baby's current week.
-        try:
-            week_category = Category.objects.get(slug="%snatal-week-%s" % (pre_post, week))
-        except Category.DoesNotExist:
-            context.update({
-                'stages_object_list': [],
-            })
-            return context
-        object_list = Post.permitted.filter(Q(primary_category=week_category) |
-                                            Q(categories=week_category)).distinct()
-        context.update({
-            'stages_object_list': object_list,
-        })
-
-    return context
-
-
-@register.inclusion_tag('app/inclusion_tags/ages_and_stages.html',
-                        takes_context=True)
-def vlive_ages_and_stages(context):
-    context = ages_and_stages(context)
-    if context.has_key('due_form'):
-        context['due_form'] = VLiveDueDateForm()
-    return context
 
 
 @register.inclusion_tag('app/inclusion_tags/page_header.html', takes_context=True)
@@ -143,14 +79,14 @@ def pml_page_header(context):
     if context.has_key('live_chat'):
         chat = context['live_chat']['current_live_chat']
         links.append({
-            'title': 'Ask MAMA',
+            'title': 'Ask AFW',
             'url': reverse('livechat:show_livechat',
                            kwargs={'slug': chat.slug})
         })
     else:
         links.append({
-            'title': 'Ask MAMA',
-            'url': reverse('askmama_home')
+            'title': 'Ask AFW',
+            'url': reverse('home')
         })
     links.append({
         'title': "Guides",

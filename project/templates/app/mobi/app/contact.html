@@ -1,13 +1,14 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
-<div class="h1">Contact MAMA</div>
+<div class="h1">{% trans "Contact AFW" %}</div>
 <form method="post" id="frmContact" action="{% url contact %}">
 {% csrf_token %}
 
 {% if form.errors or form.non_field_errors %}
 <div class="errors">
-    <p>Oops, please make sure of the following:</p>
+    <p>{% trans "Oops, please make sure of the following:" %}</p>
     {% if form.non_field_errors %}
         <p>{{ form.non_field_errors }}</p>
     {% endif %}
@@ -41,7 +42,7 @@
         {{ form.message }}
     </div>
     <div class="row">
-        <input type="submit" name="submit" value="Send" class="btn" />
+        <input type="submit" name="submit" value='{% trans "Send"%}' class="btn" />
         {% if request.user.is_authenticated %}
             <input type="hidden" name="mobile_number" value="{{ request.user.profile.mobile_number }}" />
         {% endif %}
