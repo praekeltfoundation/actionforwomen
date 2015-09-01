@@ -8,14 +8,27 @@
 {% load survey_inclusion_tags %}
 
 {% block extra_script %}
+
+<!-- Twitter: Summary card with large image -->
 <meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="{{ object.title }}">
+<meta name="twitter:description" content="{{ object.subtitle }}">
+{% if object.image %}
+  <meta property="twitter:image" content="{{ object.get_large_url }}" />
+{% endif %}
+<!-- /Twitter -->
+
+<!-- Facebook: Open Graph tags -->
 <meta property="og:title" content="{{ object.title }}" />
+<meta property="og:url" content="{{ object.get_absolute_url }}">
 {% if object.subtitle %}
   <meta property="og:description" content="{{ object.subtitle }}" />
 {% endif %}
 {% if object.image %}
   <meta property="og:image" content="{{ object.get_large_url }}" />
 {% endif %}
+<!-- /Facebook -->
+
 {% endblock %}
 
 {% block content %}
