@@ -444,7 +444,7 @@ class GeneralPrefrencesTestCase(TestCase):
             '<meta property="og:title" content="Test" />')
         self.assertContains(
             response,
-            '<meta property="og:url" content="/content/detail/test/">')
+            '<meta property="og:url" content="http://testserver/content/detail/test/">')
         self.assertContains(
             response,
             '<meta property="og:description" content="the subtitle" />')
