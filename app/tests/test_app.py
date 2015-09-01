@@ -411,6 +411,44 @@ class GeneralPrefrencesTestCase(TestCase):
         resp = self.client.post(reverse('post_comment'), params)
         self.assertContains(resp, 'inappropriate content')
 
+    def test_twitter_meta_tags(self):
+        self.post.subtitle = 'the subtitle'
+        self.post.save()
+        article_url = reverse(
+            'category_object_detail',
+            kwargs={'category_slug': 'articles', 'slug': self.post.slug})
+        client = Client()
+        response = client.get(article_url)
+
+        self.assertContains(
+            response,
+            '<meta name="twitter:card" content="summary_large_image" />')
+        self.assertContains(
+            response,
+            '<meta name="twitter:title" content="Test">')
+        self.assertContains(
+            response,
+            '<meta name="twitter:description" content="the subtitle">')
+
+    def test_facebook_meta_tags(self):
+        self.post.subtitle = 'the subtitle'
+        self.post.save()
+        article_url = reverse(
+            'category_object_detail',
+            kwargs={'category_slug': 'articles', 'slug': self.post.slug})
+        client = Client()
+        response = client.get(article_url)
+
+        self.assertContains(
+            response,
+            '<meta property="og:title" content="Test" />')
+        self.assertContains(
+            response,
+            '<meta property="og:url" content="/content/detail/test/">')
+        self.assertContains(
+            response,
+            '<meta property="og:description" content="the subtitle" />')
+
     def test_silenced_words(self):
         article_url = reverse(
             'category_object_detail',
