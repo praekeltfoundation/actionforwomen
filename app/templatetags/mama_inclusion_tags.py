@@ -20,86 +20,6 @@ from app.templatetags.moms_stories_inclusion_tags \
 register = template.Library()
 
 
-@register.inclusion_tag('app/inclusion_tags/page_header.html', takes_context=True)
-def page_header(context):
-    context = copy(context)
-    help_post = Post.permitted.filter(slug='mama-help')
-    if help_post:
-        context.update({
-            'help_post': help_post[0],
-        })
-    return context
-
-
-@ register.inclusion_tag(
-    'app/inclusion_tags/random_guide_banner.html',
-    takes_context=True)
-def random_guide_banner(context):
-    context = copy(context)
-
-    # get the published, featured guides
-    qs = Post.permitted.filter(
-            primary_category__slug='life-guides',
-            categories__slug='featured').order_by('?')
-
-    # select a guide at random
-    random_guide = qs[0] if qs.exists() else None
-    if random_guide is not None:
-        context.update({
-            'random_guide': {
-                'title': random_guide.title,
-                'description': random_guide.description,
-                'url': random_guide.get_absolute_category_url()
-            }
-        })
-
-    return context
-
-
-@register.inclusion_tag('app/inclusion_tags/page_header.html', takes_context=True)
-def pml_page_header(context):
-    context = copy(context)
-
-    help_post = Post.permitted.filter(slug='mama-help')
-
-    links = []
-    links.append({
-        'title': 'Home',
-        'url': reverse('home'),
-    })
-    links.append({
-        'title': 'Articles',
-        'url': reverse('category_object_list',
-                       kwargs={'category_slug': 'articles'})
-    })
-    links.append({
-        'title': 'Stories',
-        'url': reverse('moms_stories_object_list')
-    })
-    if context.has_key('live_chat'):
-        chat = context['live_chat']['current_live_chat']
-        links.append({
-            'title': 'Ask AFW',
-            'url': reverse('livechat:show_livechat',
-                           kwargs={'slug': chat.slug})
-        })
-    else:
-        links.append({
-            'title': 'Ask AFW',
-            'url': reverse('home')
-        })
-    links.append({
-        'title': "Guides",
-        'url': reverse('guides_list')
-    })
-    links.append({
-        'title': 'My Profile',
-        'url': reverse('view_my_profile')
-    })
-    context['links'] = links
-    return context
-
-
 @register.inclusion_tag('app/inclusion_tags/topic_listing.html', takes_context=True)
 def topic_listing(context, category_slug, more, limit=0):
     context = copy(context)
@@ -200,25 +120,6 @@ def pagination(context, page_obj):
         context['next_url'] = Template("{% load jmbo_template_tags %}{% smart_query_string 'page' page_obj.next_page_number %}").render(Context(context))
 
     return context
-
-
-@register.inclusion_tag('app/inclusion_tags/babycenter_byline.html')
-def babycenter_byline(obj):
-    if obj.categories.filter(slug='bc-content'):
-        return {'display': True}
-    else:
-        return {}
-
-
-@register.inclusion_tag('app/inclusion_tags/babycenter_logo.html')
-def babycenter_logo(obj):
-    if obj.categories.filter(slug='bc-content'):
-        return {
-            'display': True,
-            'STATIC_URL': settings.STATIC_URL
-        }
-    else:
-        return {}
 
 
 @register.inclusion_tag('app/inclusion_tags/vlive_object_comments.html', takes_context=True)
@@ -346,7 +247,3 @@ def mama_object_comments(context, obj):
         'can_comment': can_comment(obj, request),
     })
     return context
-
-
-
-

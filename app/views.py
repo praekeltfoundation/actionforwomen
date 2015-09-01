@@ -47,8 +47,6 @@ from haystack.views import SearchView
 from haystack.query import SearchQuerySet
 from likes.views import like as likes_view
 
-from jmboyourwords.models import YourStoryEntry, YourStoryCompetition
-
 from preferences import preferences
 
 
@@ -206,7 +204,7 @@ class QuestionAnswerView(TemplateView):
         """
         context = super(QuestionAnswerView, self).get_context_data(**kwargs)
         context['category'] = get_object_or_404(Category,
-                                          slug__iexact='ask-mama')
+                                          slug__iexact='ask-chat')
         question_id = kwargs.get('question_id', None)
         question = Comment.objects.get(pk=question_id)
         context['question'] = question

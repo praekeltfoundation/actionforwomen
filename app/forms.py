@@ -22,7 +22,6 @@ from django.utils.translation import ugettext as _
 
 from pml import forms as pml_forms
 from registration.forms import RegistrationFormTermsOfService
-from jmboyourwords.models import YourStoryEntry
 from userprofile import utils
 import app
 
