@@ -471,7 +471,7 @@ class GeneralPrefrencesTestCase(TestCase):
         self.assertContains(resp, 'word ****** which is silenced')
 
 
-class AskMamaTestCase(TestCase):
+class AfwTestCase(TestCase):
 
     def test_times(self):
 
