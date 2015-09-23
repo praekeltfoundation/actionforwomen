@@ -5,12 +5,12 @@
 {% if user.profile.banned %}
 <div class="comments highlight-quaternary">
 {% if user.profile.ban_duration == 1 %}
-    <b>{% trans "You are banned from commenting for the rest of the day because a comment you made was reported by the community. You will be able to comment again tomorrow" %}</b><br><br/>
+    <b>{% trans "Your comment has been flagged by a community member. You will not be able to comment again until tomorrow." %}</b><br><br/>
 
     {% trans "Don't know why your comment was reported?" %} <a href="{% url comment-terms %}">{% trans "Read them here" %}</a>
 
 {% else %}
-    <b>{% trans "You are banned from commenting for" %} {{ user.profile.ban_duration }} {% trans "days because a comment you made was reported by a Moderator" %}</b><br><br/>
+    <b>{% trans "Your comment has been reported by a moderator and you are unable to comment for 3 days" %}.</b><br><br/>
     {% trans "Don't know why your comment was reported?" %} <a href="{% url comment-terms %}">{% trans "Read them here" %}</a>
 {% endif %}
 </div>

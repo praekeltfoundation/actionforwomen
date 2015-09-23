@@ -5,11 +5,22 @@ Action for Women
 Getting Started
 ===============
 
+Prerequisites
+-------------
+
+Make sure the following is already running on your server:
+
+- Postgresql
+- ElasticSearch
+
+Installation
+------------
+
 Create and install environment packages by executing the following commands::
 
     $ virtualenv ve
     $ . ve/bin/activate
-    $ pip install -r requirements.pip
+    $ pip install -r requirements.txt
 
 Initialize the database using::
 

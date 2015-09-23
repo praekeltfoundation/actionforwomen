@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-18 07:21-0400\n"
+"POT-Creation-Date: 2015-06-19 08:50-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -94,31 +94,35 @@ msgstr ""
 msgid "[A4W] Reset your PASSWORD"
 msgstr ""
 
-#: app/forms.py:221 app/forms.py:224
-msgid "Enter a valid mobile number in the form 14034228916"
+#: app/forms.py:177
+msgid "Your mobile number"
 msgstr ""
 
-#: app/forms.py:230
-msgid "A user with that mobile number already exists."
+#: app/forms.py:180 app/forms.py:313 project/templates/app/mobi/base.html:180
+#: project/templates/app/mobi/registration/registration_form.html:63
+msgid "Display Name"
 msgstr ""
 
-#: app/forms.py:231
-msgid "Forgotten your PASSWORD?"
+#: app/forms.py:184 app/forms.py:317 project/templates/app/mobi/base.html:183
+#: project/templates/app/mobi/registration/registration_form.html:66
+msgid "Gender"
 msgstr ""
 
-#: app/forms.py:240 app/forms.py:345
-msgid "Enter a valid email address."
+#: app/forms.py:189 app/forms.py:322
+msgid "Year of birth"
 msgstr ""
 
-#: app/forms.py:245 app/forms.py:398
-msgid "A user with that email already exists"
+#: app/forms.py:193 app/forms.py:326 project/templates/app/mobi/base.html:201
+#: project/templates/app/mobi/registration/registration_form.html:83
+msgid "Identity"
 msgstr ""
 
-#: app/forms.py:282
-msgid "Upload Picture"
+#: app/forms.py:214
+msgid "Username"
 msgstr ""
 
-#: app/forms.py:287 app/forms.py:292 project/templates/app/mobi/base.html:139
+#: app/forms.py:215 app/forms.py:295 app/forms.py:300 app/forms.py:350
+#: app/forms.py:351 project/templates/app/mobi/base.html:139
 #: project/templates/app/mobi/base.html:165
 #: project/templates/app/mobi/base.html:169
 #: project/templates/app/mobi/app/feedback.html:13
@@ -128,40 +132,63 @@ msgstr ""
 msgid "Email"
 msgstr ""
 
-#: app/forms.py:296 project/templates/app/mobi/app/feedback.html:10
+#: app/forms.py:216
+msgid "Password"
+msgstr ""
+
+#: app/forms.py:229 app/forms.py:232
+msgid "Enter a valid mobile number in the form 14034228916"
+msgstr ""
+
+#: app/forms.py:238
+msgid "A user with that mobile number already exists."
+msgstr ""
+
+#: app/forms.py:239
+msgid "Forgotten your PASSWORD?"
+msgstr ""
+
+#: app/forms.py:248 app/forms.py:360
+msgid "Enter a valid email address."
+msgstr ""
+
+#: app/forms.py:253 app/forms.py:413
+msgid "A user with that email already exists"
+msgstr ""
+
+#: app/forms.py:290
+msgid "Upload Picture"
+msgstr ""
+
+#: app/forms.py:304 project/templates/app/mobi/app/feedback.html:10
 msgid "Name"
 msgstr ""
 
-#: app/forms.py:301
+#: app/forms.py:309 app/forms.py:352
 msgid "Surname"
 msgstr ""
 
-#: app/forms.py:305 project/templates/app/mobi/base.html:180
-#: project/templates/app/mobi/registration/registration_form.html:63
-msgid "Display Name"
-msgstr ""
-
-#: app/forms.py:310
-msgid "Year of birth"
-msgstr ""
-
-#: app/forms.py:315
+#: app/forms.py:331
 msgid "Engage Anonymously"
 msgstr ""
 
-#: app/forms.py:359
+#: app/forms.py:353 project/templates/app/mobi/base.html:177
+msgid "Mobile Number"
+msgstr ""
+
+#: app/forms.py:374
 msgid "Please use an image that is smaller or equal to 500 x 500 pixels."
 msgstr ""
 
-#: app/forms.py:363
+#: app/forms.py:378
 msgid "Please use a JPEG or PNG image."
 msgstr ""
 
-#: app/forms.py:365
+#: app/forms.py:380
 msgid "Image file too large ( maximum 500KB )"
 msgstr ""
 
-#: app/forms.py:389
+#: app/forms.py:404
 msgid "Email is required."
 msgstr ""
 
@@ -282,23 +309,9 @@ msgstr ""
 msgid "Register"
 msgstr ""
 
-#: project/templates/app/mobi/base.html:177
-msgid "Mobile Number"
-msgstr ""
-
-#: project/templates/app/mobi/base.html:183
-#: project/templates/app/mobi/registration/registration_form.html:66
-msgid "Gender"
-msgstr ""
-
 #: project/templates/app/mobi/base.html:192
 #: project/templates/app/mobi/registration/registration_form.html:74
 msgid "Year of Birth"
-msgstr ""
-
-#: project/templates/app/mobi/base.html:201
-#: project/templates/app/mobi/registration/registration_form.html:83
-msgid "Identity"
 msgstr ""
 
 #: project/templates/app/mobi/base.html:213
@@ -717,4 +730,8 @@ msgstr ""
 
 #: project/templates/app/mobi/search/search.html:26
 msgid "Please try again with a different query."
+msgstr ""
+
+#: project/templates/app/mobi/search/search.html:37
+msgid "women"
 msgstr ""

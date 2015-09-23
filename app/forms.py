@@ -15,6 +15,7 @@ from django.core.validators import RegexValidator
 from django.forms.extras.widgets import SelectDateWidget
 from django.utils.http import int_to_base36
 from django.utils.safestring import mark_safe
+from django.contrib.localflavor.ca.forms import CAPhoneNumberField
 from django.core.mail import EmailMessage, mail_managers
 
 from PIL import Image
@@ -171,21 +172,28 @@ class PasswordResetEmailForm(forms.Form):
 
 
 class RegistrationForm(RegistrationFormTermsOfService):
-    mobile_number = forms.CharField(
-        max_length=64,
+    mobile_number = CAPhoneNumberField(
         required=False,
-        label="Your mobile number"
+        label=_("Your mobile number")
     )
     alias = forms.CharField(
-       label="Display Name",
+       label=_("Display Name"),
        required=False
     )
-    gender = forms.ChoiceField(choices=GENDER_CHOICES, widget=forms.Select(), required=False)
+    gender = forms.ChoiceField(
+        label=_("Gender"),
+        choices=GENDER_CHOICES,
+        widget=forms.Select(),
+        required=False)
     year_of_birth = forms.IntegerField(
-        label="Year of birth",
+        label=_("Year of birth"),
         required=False
     )
-    identity = forms.ChoiceField(choices=IDENTITY_CHOICES, widget=forms.Select(), required=False)
+    identity = forms.ChoiceField(
+        label=_("Identity"),
+        choices=IDENTITY_CHOICES,
+        widget=forms.Select(),
+        required=False)
 
     def __init__(self, *args, **kwargs):
         super(RegistrationForm, self).__init__(*args, **kwargs)
@@ -203,9 +211,9 @@ class RegistrationForm(RegistrationFormTermsOfService):
             'year_of_birth',
             'identity',
         ]
-        self.fields['username'].label = "Choose a username"
-        self.fields['email'].label = "Choose email"
-        self.fields['password1'].label = "Choose a PASSWORD"
+        self.fields['username'].label = _("Username")
+        self.fields['email'].label = _("Email")
+        self.fields['password1'].label = _("Password")
 
         self.fields['tos'].label = mark_safe('I accept the <a href="%s">terms '
                                              'and conditions</a> of use.'
@@ -217,12 +225,6 @@ class RegistrationForm(RegistrationFormTermsOfService):
         if not mobile_number:
             return
 
-        if mobile_number.startswith('1'):
-            RegexValidator('^\d{11}$', message=_("Enter a valid mobile number in "
-               "the form 14034228916"))(mobile_number)
-        else:
-            RegexValidator('^\d{10}$', message=_("Enter a valid mobile number in "
-                   "the form 14034228916"))(mobile_number)
         try:
             app.models.UserProfile.objects.get(
                 mobile_number__exact=mobile_number
@@ -305,12 +307,20 @@ class EditProfileForm(RegistrationForm):
        label=_("Display Name"),
        required=False
     )
-    gender = forms.ChoiceField(choices=GENDER_CHOICES, widget=forms.Select(), required=False)
+    gender = forms.ChoiceField(
+        label=_("Gender"),
+        choices=GENDER_CHOICES,
+        widget=forms.Select(),
+        required=False)
     year_of_birth = forms.IntegerField(
         label=_("Year of birth"),
         required=False,
     )
-    identity = forms.ChoiceField(choices=IDENTITY_CHOICES, widget=forms.Select(), required=False)
+    identity = forms.ChoiceField(
+        label=_("Identity"),
+        choices=IDENTITY_CHOICES,
+        widget=forms.Select(),
+        required=False)
     engage_anonymously = forms.BooleanField(
         label=_("Engage Anonymously"),
         required=False
@@ -331,11 +341,10 @@ class EditProfileForm(RegistrationForm):
             'identity',
             'engage_anonymously',
         ]
-        self.fields['username'].label = "Email"
-        self.fields['email'].label = "Email"
-        self.fields['last_name'].label = "Surname"
-        self.fields['mobile_number'].label = "Mobile Number"
-        self.fields['gender'].label = "Gender"
+        self.fields['username'].label = _("Email")
+        self.fields['email'].label = _("Email")
+        self.fields['last_name'].label = _("Surname")
+        self.fields['mobile_number'].label = _("Mobile Number")
 
     def clean_mobile_number(self):
         return super(EditProfileForm, self).clean_mobile_number()
