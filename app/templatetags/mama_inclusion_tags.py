@@ -13,155 +13,11 @@ from poll.models import Poll
 from post.models import Post
 from livechat.models import LiveChat
 
-from app.forms import DueDateForm, VLiveDueDateForm
-
 from app.templatetags.moms_stories_inclusion_tags \
     import your_story_competition
 
 
 register = template.Library()
-
-
-@register.inclusion_tag('app/inclusion_tags/ages_and_stages.html',
-                        takes_context=True)
-def ages_and_stages(context):
-    context = copy(context)
-    user = context['request'].user
-    if user.is_authenticated():
-        profile = user.profile
-        context.update({'profile': profile})
-
-        # Check if the due date is missing
-        if (profile.date_qualifier in (
-                'unspecified', 'due_date'
-            ) and profile.delivery_date is None) or profile.unknown_date:
-            context.update({'no_due_date':True})
-            context.update({'due_form': DueDateForm()})
-            return context
-
-        delivery_date = profile.delivery_date
-        if delivery_date:
-            now = datetime.now().date()
-            pre_post = 'pre' if profile.is_prenatal() else 'post'
-            week = 42 - ((delivery_date - now).days / 7) if profile.is_prenatal() else (now - delivery_date).days / 7
-        else:
-            # Defaults in case user does not have delivery date.
-            pre_post = 'pre'
-            week = 21
-
-        # Get the stage category based on the due due/delivery date
-        try:
-            category = Category.objects.get(slug="my-pregnancy" if profile.is_prenatal() else "my-baby")
-            context.update({
-                'category': category,
-            })
-        except Category.DoesNotExist:
-            return context
-
-        # Look for articles that fit the baby's current week.
-        try:
-            week_category = Category.objects.get(slug="%snatal-week-%s" % (pre_post, week))
-        except Category.DoesNotExist:
-            context.update({
-                'stages_object_list': [],
-            })
-            return context
-        object_list = Post.permitted.filter(Q(primary_category=week_category) |
-                                            Q(categories=week_category)).distinct()
-        context.update({
-            'stages_object_list': object_list,
-        })
-
-    return context
-
-
-@register.inclusion_tag('app/inclusion_tags/ages_and_stages.html',
-                        takes_context=True)
-def vlive_ages_and_stages(context):
-    context = ages_and_stages(context)
-    if context.has_key('due_form'):
-        context['due_form'] = VLiveDueDateForm()
-    return context
-
-
-@register.inclusion_tag('app/inclusion_tags/page_header.html', takes_context=True)
-def page_header(context):
-    context = copy(context)
-    help_post = Post.permitted.filter(slug='mama-help')
-    if help_post:
-        context.update({
-            'help_post': help_post[0],
-        })
-    return context
-
-
-@ register.inclusion_tag(
-    'app/inclusion_tags/random_guide_banner.html',
-    takes_context=True)
-def random_guide_banner(context):
-    context = copy(context)
-
-    # get the published, featured guides
-    qs = Post.permitted.filter(
-            primary_category__slug='life-guides',
-            categories__slug='featured').order_by('?')
-
-    # select a guide at random
-    random_guide = qs[0] if qs.exists() else None
-    if random_guide is not None:
-        context.update({
-            'random_guide': {
-                'title': random_guide.title,
-                'description': random_guide.description,
-                'url': random_guide.get_absolute_category_url()
-            }
-        })
-
-    return context
-
-
-@register.inclusion_tag('app/inclusion_tags/page_header.html', takes_context=True)
-def pml_page_header(context):
-    context = copy(context)
-
-    help_post = Post.permitted.filter(slug='mama-help')
-
-    links = []
-    links.append({
-        'title': 'Home',
-        'url': reverse('home'),
-    })
-    links.append({
-        'title': 'Articles',
-        'url': reverse('category_object_list',
-                       kwargs={'category_slug': 'articles'})
-    })
-    links.append({
-        'title': 'Stories',
-        'url': reverse('moms_stories_object_list')
-    })
-    if context.has_key('live_chat'):
-        chat = context['live_chat']['current_live_chat']
-        links.append({
-            'title': 'Ask MAMA',
-            'url': reverse('livechat:show_livechat',
-                           kwargs={'slug': chat.slug})
-        })
-    else:
-        links.append({
-            'title': 'Ask MAMA',
-            'url': reverse('askmama_home')
-        })
-    links.append({
-        'title': "Guides",
-        'url': reverse('guides_list')
-    })
-    links.append({
-        'title': 'My Profile',
-        'url': reverse('view_my_profile')
-    })
-    context['links'] = links
-    return context
 
 
 @register.inclusion_tag('app/inclusion_tags/topic_listing.html', takes_context=True)
@@ -264,25 +120,6 @@ def pagination(context, page_obj):
         context['next_url'] = Template("{% load jmbo_template_tags %}{% smart_query_string 'page' page_obj.next_page_number %}").render(Context(context))
 
     return context
-
-
-@register.inclusion_tag('app/inclusion_tags/babycenter_byline.html')
-def babycenter_byline(obj):
-    if obj.categories.filter(slug='bc-content'):
-        return {'display': True}
-    else:
-        return {}
-
-
-@register.inclusion_tag('app/inclusion_tags/babycenter_logo.html')
-def babycenter_logo(obj):
-    if obj.categories.filter(slug='bc-content'):
-        return {
-            'display': True,
-            'STATIC_URL': settings.STATIC_URL
-        }
-    else:
-        return {}
 
 
 @register.inclusion_tag('app/inclusion_tags/vlive_object_comments.html', takes_context=True)
@@ -410,7 +247,3 @@ def mama_object_comments(context, obj):
         'can_comment': can_comment(obj, request),
     })
     return context
-
-
-
-

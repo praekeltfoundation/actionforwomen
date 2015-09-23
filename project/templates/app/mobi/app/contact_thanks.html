@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
-    <div class="h1">Message Sent</div>
+    <div class="h1">{% trans "Message Sent" %}</div>
     <div class="content-inner">
         <div class="post">
-            <p><strong>Thanks!</strong></p>
-            <p>Someone will contact you asap.</p>
+            <p><strong>{% trans "Thanks!" %}</strong></p>
+            <p>{% trans "Someone will contact you asap." %}</p>
         </div>
     </div>
 {% endblock %}

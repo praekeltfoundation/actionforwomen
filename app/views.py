@@ -31,12 +31,9 @@ from app.utils import ban_user
 from moderator.utils import classify_comment
 from app.forms import (
     ContactForm,
-    DueDateForm,
-    VLiveDueDateForm,
     ProfileForm,
     VLiveProfileEditForm,
     EditProfileForm,
-    MomsStoryEntryForm,
     FeedbackForm
 )
 from app.view_modifiers import PopularViewModifier
@@ -49,8 +46,6 @@ from post.models import Post
 from haystack.views import SearchView
 from haystack.query import SearchQuerySet
 from likes.views import like as likes_view
-
-from jmboyourwords.models import YourStoryEntry, YourStoryCompetition
 
 from preferences import preferences
 
@@ -200,258 +195,8 @@ class CategoryListView(ListView):
     # def dispatch(self, *args, **kwargs):
     #     return super(CategoryListView, self).dispatch(*args, **kwargs)
 
-
-class GuidesView(TemplateView):
-    """
-    """
-    template_name="app/guides.html"
-
-    def get_context_data(self, **kwargs):
-        context = super(GuidesView, self).get_context_data(**kwargs)
-
-        # Collect the relevant categories
-        featured = self._get_category('featured')
-        mama_a2z = self._get_category('mama-a-to-z')
-        life_guides = self._get_category('life-guides')
-        context['category'] = life_guides
-
-        # Get the stage guides featured articles
-        if featured and mama_a2z:
-            qs = Post.permitted.filter(
-                primary_category=mama_a2z,
-                categories=featured)
-            stages_leaders = [{
-                'title': item.title,
-                'slug': item.slug
-            } for item in qs]
-            context['stages_leaders'] = stages_leaders
-
-        # Get the life guides featured articles
-        if featured and life_guides:
-            qs = Post.permitted.filter(
-                primary_category=life_guides,
-                categories=featured)
-            life_guide_leaders = [{
-                'title': item.title,
-                'slug': item.slug
-            } for item in qs]
-            context['life_guide_leaders'] = life_guide_leaders
-
-        return context
-
-    def _get_category(self, slug):
-        try:
-            category = Category.objects.get(slug=slug)
-            return category
-        except Category.DoesNotExist:
-            return None
-
-
-class GuidesTopicView(DetailView):
-    """ List the guide topices in a specific 'category'
-    """
-    template_name = 'app/guide_topic_list.html'
-
-    def get_object(self):
-        post = Post.permitted.get(slug=self.kwargs['slug'])
-        self.category = post.primary_category
-        return post
-
-    def get_context_data(self, **kwargs):
-        context = super(GuidesTopicView, self).get_context_data(**kwargs)
-        context['category'] = self.category
-        return context
-
-
-class MoreGuidesView(CategoryListView):
-    template_name="app/more_guides.html"
-    paginate_by = 10
-    heading_prefix = "More"
-
-    def get_context_data(self, **kwargs):
-        context = super(MoreGuidesView, self).get_context_data(**kwargs)
-        context['category'] = self.category
-        context['sort'] = self.request.GET.get('sort','pop')
-        context['page'] = self.request.GET.get('page','1')
-        return context
-
-    def get_queryset(self):
-        """ Only return Post's that are of category "life-guides".
-        """
-        self.category = get_object_or_404(
-            Category,
-            slug__iexact='life-guides')
-        queryset = Post.permitted.filter(
-            Q(primary_category__slug__in=('life-guides', 'mama-a-to-z',)) | \
-            Q(categories__slug__in=('life-guides', 'mama-a-to-z',))
-        ).distinct()
-
-        sort = self.request.GET.get('sort','pop')
-        if sort == 'pop':
-            view_modifier = PopularViewModifier(self.request)
-            active_modifiers = view_modifier.get_active_items()
-            if active_modifiers:
-                self.heading_prefix = active_modifiers[0].title
-            return view_modifier.modify(queryset)
-        elif sort == 'date':
-            return queryset.order_by('-created')
-        elif sort == 'alph':
-            return queryset.order_by('title')
-        return queryset
-
-
-class GuideDetailView(CategoryDetailView):
-    template_name = "app/topic_detail.html"
-
-
-class MomStoriesListView(CategoryListView):
-    template_name = "app/moms-stories.html"
-    paginate_by = 10
-    heading_prefix = "More"
-
-    def get_queryset(self):
-        """ Only return Post's that are of category "moms-stories".
-        """
-        self.category = get_object_or_404(
-            Category,
-            slug__iexact='moms-stories')
-        queryset = Post.permitted.filter(
-            Q(primary_category=self.category) | \
-            Q(categories=self.category)
-        ).distinct()
-        view_modifier = PopularViewModifier(self.request)
-        active_modifiers = view_modifier.get_active_items()
-        if active_modifiers:
-            self.heading_prefix = active_modifiers[0].title
-        return view_modifier.modify(queryset)
-
-
-class MomStoryFormView(FormView):
-    """ View to render the Mom's Story Entry form without a terms and
-        conditions checkbox, but with the terms and conditions text displayed.
-    """
-    form_class = MomsStoryEntryForm
-    template_name = 'yourwords/your_story.html'
-
-    def get_success_url(self):
-        return reverse('moms_stories_object_list')
-
-    def get_context_data(self, **kwargs):
-        # Add the competition to the context
-        competition = get_object_or_404(YourStoryCompetition,
-                                        pk=int(self.kwargs['competition_id']))
-        kwargs.update({'competition': competition})
-        return kwargs
-
-    def form_valid(self, form):
-        # save the story entry and redirect to the success url
-        competition = get_object_or_404(YourStoryCompetition,
-                                        pk=int(self.kwargs['competition_id']))
-        YourStoryEntry.objects.create(
-            your_story_competition = competition,
-            user = self.request.user,
-            name = form.cleaned_data['name'],
-            email = form.cleaned_data['email'],
-            text = form.cleaned_data['text'],
-            terms = True)
-        messages.success(
-            self.request,
-            "Thank you for sending us your story!"
-        )
-        return HttpResponseRedirect(self.get_success_url())
-
-class AskMamaArchiveView(DetailView):
-    template_name = "app/askmama_archive.html"
-
-    def get_context_data(self, **kwargs):
-        context = super(AskMamaArchiveView, self).get_context_data(**kwargs)
-        post = context['post']
-
-        comments = Comment.objects.filter(
-            object_pk=post.id,
-            is_removed=False,
-            replied_to_comments_set__isnull=False,
-            ).distinct()
-
-        comments = comments.order_by('-submit_date')
-        request = self.request
-        try:
-            paginator = Paginator(
-                comments,
-                per_page=10)
-            context['chat_comments'] = paginator.page(request.GET.get('p', 1))
-        except (KeyError, AttributeError):
-            pass
-        return context
-
-    def get_object(self):
-
-        self.category = get_object_or_404(Category,
-                                          slug__iexact='ask-mama')
-
-        try:
-            return Post.permitted.filter(
-                pin__category=self.category
-            ).latest('created')
-        except Post.DoesNotExist:
-            return None
-
-class AskMamaView(CategoryDetailView):
-    """
-    This view surfaces the AskMAMA section of the site. It is subclassing
-    CategoryDetailView,
-    """
-
-    template_name = "app/askapp.html"
-    heading_prefix = ""
-    context_object_name = 'lead_in_post'
-
-    def get_context_data(self, **kwargs):
-        context = super(AskMamaView, self).get_context_data(**kwargs)
-        context['category'] = self.category
-        context['weeks_ago'] = int(self.request.GET.get('wk', '0'))
-        context['cpage'] = int(self.request.GET.get('page', '1'))
-        context['sort'] = self.request.GET.get('sort','pop')
-        return context
-
-    def get_object(self, queryset=None):
-        """
-        This is the Post that explains what the AskMAMA section is all about
-        and that all the questions and answer comments will be hanging off, to
-        enable use the likes and moderation functionality.
-
-        We return the latest pinned post in this category. Ideally, you should
-        create only one pinned Post in the category, and just change the
-        content if you want to. If you create new pinned Posts, the comments
-        linked to the older article will not be shown.
-        """
-        self.category = get_object_or_404(Category,
-                                          slug__iexact='ask-mama')
-        try:
-            return Post.permitted.filter(
-                pin__category=self.category
-            ).latest('created')
-        except Post.DoesNotExist:
-            return None
-
-
-class AskExpertQuestionView(TemplateView):
-    """ Displays a form to capture a question in the weekly 'Ask an Expert'
-        section.
-
-        Uses the Django comments framework for questions.
-    """
-    template_name = 'app/askmama_ask_your_question.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(AskExpertQuestionView, self).get_context_data(**kwargs)
-        context['next'] = reverse('askmama_detail')
-        return context
-
-
 class QuestionAnswerView(TemplateView):
-    """ This view displays a question and its answer in the AskMAMA section.
-    """
+
     template_name = "app/question_and_answer.html"
 
     def get_context_data(self, **kwargs):
@@ -459,13 +204,12 @@ class QuestionAnswerView(TemplateView):
         """
         context = super(QuestionAnswerView, self).get_context_data(**kwargs)
         context['category'] = get_object_or_404(Category,
-                                          slug__iexact='ask-mama')
+                                          slug__iexact='ask-chat')
         question_id = kwargs.get('question_id', None)
         question = Comment.objects.get(pk=question_id)
         context['question'] = question
         context['answers'] = question.replied_to_comments_set.all()
         return context
-
 
 class ContactView(FormView):
     form_class = ContactForm
@@ -485,13 +229,13 @@ class ContactView(FormView):
         if not recipients:
             mail_managers(
                 'Error: No contact recipients specified',
-                "A user is trying to contact MAMA but no contact email recipients could be found.\n\nUser's Message:\n\n%s" % message,
+                "A user is trying to contact AFW but no contact email recipients could be found.\n\nUser's Message:\n\n%s" % message,
                 fail_silently=False
             )
 
         else:
-            subject = "Contact Message from MAMA user"
-            from_address = "MAMA <contact@askapp.mobi>"
+            subject = "Contact Message from AFW user"
+            from_address = "AFW <info@a4w.ca>"
             mail = EmailMessage(
                 subject,
                 message,
@@ -631,24 +375,6 @@ class MyProfileEdit(FormView):
         user.save()
         profile.save()
         return HttpResponseRedirect(reverse('view_my_profile'))
-
-
-class UpdateDueDateView(FormView):
-    form_class = DueDateForm
-    template_name = 'app/update_due_date.html'
-
-    def get_success_url(self):
-        return reverse('home')
-
-    def form_valid(self, form):
-        user = self.request.user
-        profile = user.profile
-        profile.save()
-        return super(UpdateDueDateView, self).form_valid(form)
-
-
-class VLiveUpdateDueDateView(UpdateDueDateView):
-    form_class = VLiveDueDateForm
 
 
 class ProfileView(FormView):

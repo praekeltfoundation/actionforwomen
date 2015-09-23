@@ -12,16 +12,8 @@ from app.views import (CategoryDetailView, CategoryListView,
                         StoryCommentsView, ConfirmReportView,
                         ContactView,
                         ProfileView, VLiveEditProfile,
-                        AskMamaView, QuestionAnswerView,
-                        AskExpertQuestionView, AskMamaArchiveView,
-                        MomStoriesListView,
-                        MomStoryFormView,
-                        MyProfileView, MyProfileEdit,
-                        UpdateDueDateView,
-                        VLiveUpdateDueDateView,
-                        PublicProfileView, UserCommentsView,
-                        GuidesView, GuidesTopicView,
-                        MoreGuidesView, GuideDetailView)
+                        QuestionAnswerView, MyProfileView, MyProfileEdit,
+                        PublicProfileView, UserCommentsView)
 from app.forms import PasswordResetForm, PasswordResetEmailForm
 from moderator.models import CommentReply
 from app.models import Post
@@ -135,62 +127,6 @@ urlpatterns = patterns('',
         name='comment-terms'
     ),
     url(
-        r'^ask-app/ask/$', AskMamaView.as_view(),
-        {},
-        name='askmama_detail'
-    ),
-    url(
-        r'^ask-app/archive/$', AskMamaArchiveView.as_view(),
-        {},
-        name='askmama_archive'
-    ),
-    url(
-        r'^ask-app/$',
-        TemplateView.as_view(template_name="app/askmama_home.html"),
-        name='askmama_home'
-    ),
-    url(
-        r'^ask-app/answer/(?P<question_id>\d+)/$',
-        QuestionAnswerView.as_view(),
-        {},
-        name='askmama_answer_detail'
-    ),
-    url(
-        r'^ask-app/ask-expert-question/(?P<post_id>\d+)/$',
-        login_required(AskExpertQuestionView.as_view()),
-        name='ask_expert_question'
-    ),
-    url(
-        r'^moms-stories/list/$',
-        MomStoriesListView.as_view(),
-        {},
-        name='moms_stories_object_list'
-    ),
-    url(
-        r'^guides/list/$',
-        GuidesView.as_view(),
-        {},
-        name='guides_list'
-    ),
-    url(
-        r'^guides/topic/list/(?P<slug>[\w-]+)/$',
-        GuidesTopicView.as_view(),
-        {},
-        name='guides_topic_list'
-    ),
-    url(
-        r'^guides/list/more/$',
-        MoreGuidesView.as_view(),
-        {},
-        name='more_guides_list'
-    ),
-    url(
-        r'^guides/(?P<category_slug>[\w-]+)/(?P<slug>[\w-]+)/$',
-        GuideDetailView.as_view(),
-        {},
-        name='topic_detail'
-    ),
-    url(
         r'^content/(?P<category_slug>[\w-]+)/list/$',
         CategoryListView.as_view(),
         {},
@@ -208,10 +144,6 @@ urlpatterns = patterns('',
         {},
         name='story_comments_list'
     ),
-    url(r'^ask-mama-search/',  SearchView(
-        template='search/search_askapp.html', results_per_page=5,
-        searchqueryset=commentsqs),
-        name='haystack_search_askmama'),
     url(r'^search/',  cache_page(SearchView(results_per_page=5,
                                             searchqueryset=postsqs), 60 * 60),
         name='haystack_search'),
@@ -254,11 +186,6 @@ urlpatterns = patterns('',
     ),
 
     url(
-        r'^profile/duedate/$',
-        UpdateDueDateView.as_view(),
-        name='update_due_date'
-    ),
-    url(
         r'^comment-agree/$',
         "app.views.agree_comment",
         name='agree_comment'
@@ -271,18 +198,6 @@ urlpatterns = patterns('',
         r'^confirm-comment-report/(?P<content_type>[\w-]+)/(?P<id>\d+)/$',
         ConfirmReportView.as_view(),
         name='confirm_comment'),
-
-    url(
-        r'^profile/vliveduedate/$',
-        VLiveUpdateDueDateView.as_view(),
-        name='vlive_update_due_date'
-    ),
-
-    url(
-        r'^yourwords/(?P<competition_id>\d+)/$',
-        MomStoryFormView.as_view(),
-        name='your_story'
-    ),
 
     (r'^survey/', include('survey.urls', namespace='survey')),
     (r'^livechat/', include('livechat.urls', namespace='livechat')),
