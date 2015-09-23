@@ -235,7 +235,7 @@ class ContactView(FormView):
 
         else:
             subject = "Contact Message from AFW user"
-            from_address = "AFW <contact@askaAFWpp.mobi>"
+            from_address = "AFW <info@a4w.ca>"
             mail = EmailMessage(
                 subject,
                 message,
