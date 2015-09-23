@@ -12,21 +12,8 @@
     <link rel="icon" href="{{ STATIC_URL }}img/a4wfavicon32.png" sizes="32x32">
     <link rel="stylesheet" href="{{ STATIC_URL }}css/style.min.css?v=20150804-2">
     <link rel="stylesheet" media="screen and (min-width: 20em)" href="{{ STATIC_URL }}css/enhanced.css?v=20150804-5">
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/googleExo2Font.css?">
 
-    <script type="text/javascript">
-        WebFontConfig = {
-          google: { families: [ 'Exo+2:400,700:latin' ] }
-        };
-        (function() {
-          var wf = document.createElement('script');
-          wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
-            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
-          wf.type = 'text/javascript';
-          wf.async = 'true';
-          var s = document.getElementsByTagName('script')[0];
-          s.parentNode.insertBefore(wf, s);
-        })();
-    </script>
 
     {% block extra_script %}
     {% endblock %}
@@ -106,7 +93,7 @@
     </div>
 
     {% block menu_forms %}
-    <form method="post" id="signin" action="{% url login %}" class="form-sign-in highlight-primary">
+    <form method="post" id="signin" action="{% url login %}" class="form-sign-in highlight-primary hidden">
       {% csrf_token %}
       <fieldset>
         <legend>{% trans "Sign in" %}</legend>
@@ -132,7 +119,7 @@
       </div>
     </form>
 
-    <form method="post" id="register" action="{% url registration_register %}" class="form-register highlight-primary">
+    <form method="post" id="register" action="{% url registration_register %}" class="form-register highlight-primary hidden">
       {% csrf_token %}
       <fieldset>
         <legend>{% trans "Register" %}</legend>

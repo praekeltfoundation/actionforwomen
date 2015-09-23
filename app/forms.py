@@ -15,6 +15,7 @@ from django.core.validators import RegexValidator
 from django.forms.extras.widgets import SelectDateWidget
 from django.utils.http import int_to_base36
 from django.utils.safestring import mark_safe
+from django.contrib.localflavor.ca.forms import CAPhoneNumberField
 from django.core.mail import EmailMessage, mail_managers
 
 from PIL import Image
@@ -155,8 +156,7 @@ class PasswordResetEmailForm(forms.Form):
 
 
 class RegistrationForm(RegistrationFormTermsOfService):
-    mobile_number = forms.CharField(
-        max_length=64,
+    mobile_number = CAPhoneNumberField(
         required=False,
         label=_("Your mobile number")
     )
@@ -209,12 +209,6 @@ class RegistrationForm(RegistrationFormTermsOfService):
         if not mobile_number:
             return
 
-        if mobile_number.startswith('1'):
-            RegexValidator('^\d{11}$', message=_("Enter a valid mobile number in "
-               "the form 14034228916"))(mobile_number)
-        else:
-            RegexValidator('^\d{10}$', message=_("Enter a valid mobile number in "
-                   "the form 14034228916"))(mobile_number)
         try:
             self.profile=app.models.UserProfile.objects.get(
                 mobile_number__exact=mobile_number
