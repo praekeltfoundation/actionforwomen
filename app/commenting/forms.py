@@ -4,9 +4,9 @@ from django import forms
 from preferences import preferences
 from django.contrib.comments.forms import CommentForm
 
-class MamaCommentForm(CommentForm):
+class AfwCommentForm(CommentForm):
     def clean_comment(self):
-        super(MamaCommentForm, self).clean_comment()
+        super(AfwCommentForm, self).clean_comment()
 
         """
         Check for banned patterns and silence sensitive patterns.

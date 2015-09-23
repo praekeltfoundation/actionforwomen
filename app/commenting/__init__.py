@@ -1,4 +1,4 @@
-from app.commenting.forms import MamaCommentForm
+from app.commenting.forms import AfwCommentForm
 
 def get_form():
-    return MamaCommentForm
+    return AfwCommentForm

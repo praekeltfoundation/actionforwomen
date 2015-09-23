@@ -14,9 +14,9 @@
     "model": "category.category",
     "fields": {
       "color": "maroon",
-      "slug": "ask-mama",
+      "slug": "ask-chat",
       "parent": null,
-      "title": "Ask MAMA"
+      "title": "Ask A4W"
     }
   }
 ]
