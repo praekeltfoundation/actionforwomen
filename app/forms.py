@@ -29,24 +29,9 @@ import app
 
 from app.tasks import send_sms
 from app.constants import (
-    RELATION_TO_BABY_CHOICES,
-    DATE_QUALIFIER_CHOICES
+    GENDER_CHOICES,
+    IDENTITY_CHOICES,
 )
-
-GENDER_CHOICES=[
-    ('', _('Select Gender')),
-    ('male',_('Male')),
-    ('female',_('Female')),
-    ('other',_('Other'))
-    ]
-IDENTITY_CHOICES = [
-    ('', _('Select Identity')),
-    ('first_nations_status', _('First Nations Status')),
-    ('first_nations_non_status', _('First Nations Non-Status')),
-    ('inuit', _('Inuit')),
-    ('metis', _('Metis')),
-    ('non_aboriginal', _('Non-Aboriginal'))
-    ]
 
 
 class ContactForm(forms.Form):
@@ -226,14 +211,17 @@ class RegistrationForm(RegistrationFormTermsOfService):
             return
 
         try:
-            app.models.UserProfile.objects.get(
+            self.profile=app.models.UserProfile.objects.get(
                 mobile_number__exact=mobile_number
             )
-            error_msg_1 = _('A user with that mobile number already exists.')
-            error_msg_2 = _('Forgotten your PASSWORD?')
-            raise ValidationError(error_msg_1 + ' <a href="%s">%s</a>' % (
-                reverse("reset_password_email"),
-                error_msg_2))
+            if self.profile.user.username == self.cleaned_data['username']:
+                return mobile_number
+            else:
+                error_msg_1 = _('A user with that mobile number already exists.')
+                error_msg_2 = _('Forgotten your PASSWORD?')
+                raise ValidationError(error_msg_1 + ' <a href="%s">%s</a>' % (
+                    reverse("reset_password_email"),
+                    error_msg_2))
         except app.models.UserProfile.DoesNotExist:
             return mobile_number
 
@@ -271,15 +259,7 @@ class EditProfileForm(RegistrationForm):
         widget=forms.Textarea,
         required=False
     )
-    baby_name = forms.CharField(
-        max_length=100,
-        label="Name",
-        required=False
-    )
-    baby_has_been_born = forms.BooleanField(
-        label="Baby has been born",
-        required=False
-    )
+
     avatar = forms.ImageField(
         label=_("Upload Picture"),
         required=False

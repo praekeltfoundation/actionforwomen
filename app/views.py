@@ -52,11 +52,6 @@ from likes.views import like as likes_view
 
 from jmboyourwords.models import YourStoryEntry, YourStoryCompetition
 
-from app.constants import (
-    RELATION_PARENT_CHOICES,
-    RELATION_PARENT_TO_BE_CHOICES
-)
-
 from preferences import preferences
 
 
@@ -533,7 +528,6 @@ class MyProfileView(TemplateView):
         if profile.avatar:
             context['avatar'] = profile.avatar.url
         context['mobile_number'] = profile.mobile_number
-        context['relation_description'] = profile.relation_description()
         return context
 
 
@@ -553,7 +547,6 @@ class PublicProfileView(TemplateView):
             context['avatar'] = profile.avatar.url
         context['mobile_number'] = profile.mobile_number
         context['comments'] = user.comment_comments.all().count()
-        context['relation_description'] = profile.relation_description()
         return context
 
 
@@ -613,8 +606,6 @@ class MyProfileEdit(FormView):
         Collect and save the updated profile information and redirect to the
         user's profile page.
 
-        If she indicated that the baby has been born, update the date qualifier
-        and the unknown date values.
         """
         user = self.request.user
         profile = user.profile
@@ -670,10 +661,6 @@ class ProfileView(FormView):
     def form_valid(self, form):
         user = self.request.user
         profile = user.profile
-        if form.cleaned_data['delivery_date']:
-            # parser returns today's date for an empty string.
-            profile.delivery_date = parser.parse(
-                form.cleaned_data['delivery_date'])
         profile.save()
         messages.success(
             self.request,

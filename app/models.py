@@ -19,10 +19,7 @@ from post.models import Post
 from category.models import Category
 
 from app.constants import (
-    RELATION_TO_BABY_CHOICES,
-    FULL_DATE_QUALIFIER_CHOICES,
     IMAGE_HEADING_STYLE,
-
 )
 
 
@@ -251,8 +248,6 @@ class DefaultAvatar(ImageModel):
 
 
 class UserProfile(AbstractProfileBase):
-    """ The mama user profile model
-    """
     registration_form = RegistrationForm
 
     # TODO: This could be a security risk, as password reset depends on a
@@ -260,15 +255,6 @@ class UserProfile(AbstractProfileBase):
     # not be optional. This number should also be unique across profiles.
     mobile_number = models.CharField(
         max_length=64,
-        blank=True,
-        null=True,
-    )
-    weeks_pregnant_signup = models.IntegerField(
-        choices=((i, 'Week%s %s' % ('s' if i > 1 else '', i)) for i in range(1,43)),
-        blank=True,
-        null=True,
-    )
-    delivery_date = models.DateField(
         blank=True,
         null=True,
     )
@@ -334,23 +320,13 @@ class UserProfile(AbstractProfileBase):
         null=True,
         max_length=255
     )
-    relation_to_baby = models.CharField(
-        max_length=30,
-        choices=RELATION_TO_BABY_CHOICES,
-        default='mom_or_mom_to_be'
-    )
-    date_qualifier = models.CharField(
-        max_length=20,
-        choices=FULL_DATE_QUALIFIER_CHOICES,
-        default='unspecified'
-    )
+
     unknown_date = models.BooleanField(
         help_text='Checked if the due date is unknown.',
         default=False,
         blank=True,
     )
     about_me = models.TextField(blank=True, null=True)
-    baby_name = models.CharField(max_length=100, blank=True, null=True)
     avatar = models.ImageField('avatar', max_length=100,
                                upload_to='users/profile',
                                blank=True, null=True)
@@ -358,41 +334,6 @@ class UserProfile(AbstractProfileBase):
         help_text='Whether engage_anonymously or not.',
         default=False,
     )
-
-    def relation_description(self):
-        """
-        Returns the relationship of the registrant to the baby, taking into
-        account the relationship selected, and date type selected.
-        """
-        if self.date_qualifier == 'birth_date':
-            if self.relation_to_baby == 'mom_or_mom_to_be':
-                return 'Mom'
-            elif self.relation_to_baby == 'dad_or_dad_to_be':
-                return 'Dad'
-        elif self.date_qualifier == 'due_date':
-            if self.relation_to_baby == 'mom_or_mom_to_be':
-                return 'Mom to be'
-            elif self.relation_to_baby == 'dad_or_dad_to_be':
-                return 'Dad to be'
-        return 'Family Member'
-
-    def is_prenatal(self):
-        """
-        Returns True if prenatal, otherwise False
-        If no delivery date is specified it is assumed we are prenatal.
-        """
-        if not self.delivery_date:
-            return True
-        return date.today() < self.delivery_date
-
-    def is_postnatal(self):
-        """
-        Returns True if postnatal, otherwise False
-        If no delivery date is specified it is assumed we are prenatal.
-        """
-        if not self.delivery_date:
-            return False
-        return date.today() > self.delivery_date
 
 
 class BanAudit(models.Model):

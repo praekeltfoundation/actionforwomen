@@ -36,25 +36,6 @@ class Command(BaseCommand):
         for profile in mxit_profiles:
             username = profile.user.username
 
-            # Cannot send message if no due date
-            if (profile.date_qualifier in ('unspecified', 'due_date')
-                    and profile.delivery_date is None)\
-                    or profile.unknown_date:
-                print '%s: No due date, so no message' % username
-                continue
-
-            delivery_date = profile.delivery_date
-            if delivery_date:
-                now = datetime.now().date()
-                pre_post = 'pre' if profile.is_prenatal() else 'post'
-                week = 42 - ((delivery_date - now).days / 7)\
-                        if profile.is_prenatal()\
-                        else (now - delivery_date).days / 7
-            else:
-                # Defaults in case user does not have delivery date.
-                pre_post = 'pre'
-                week = 21
-
             # Get the category corresponding to the correct week
             try:
                 week_category = Category.objects.get(slug="%snatal-week-%s" %
