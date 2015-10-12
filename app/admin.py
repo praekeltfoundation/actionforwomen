@@ -403,6 +403,24 @@ class BanAuditAdmin(admin.ModelAdmin):
     def has_delete_permission(self, request, obj=None, *args, **kwargs):
         return False
 
+class DownloadableUserAdmin (UserAdmin):
+    actions = ['download_csv']
+    def download_csv(self, request, queryset):
+        import csv
+        from django.http import HttpResponse
+        import StringIO
+     
+        f = StringIO.StringIO()
+        writer = csv.writer(f)
+        writer.writerow(["username" ,"email"])
+        for user in queryset:
+            writer.writerow([user.username, user.email])
+        
+        f.seek(0)
+        response = HttpResponse(f, content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename=stat-info.csv'
+        return response
+    download_csv.short_description = "Download CSV file for selected stats."
 
 admin.site.register(BanAudit, BanAuditAdmin)
 admin.site.register(SitePreferences, ActionforwomenPreferencesAdmin)
@@ -445,7 +463,7 @@ except NotRegistered:
     pass
 
 # Hide userprofile.admin fields by using the default django admin for User
-admin.site.register(User, UserAdmin)
+admin.site.register(User, DownloadableUserAdmin)
 
 admin.site.unregister(Relation)
 admin.site.register(Relation, HiddenModelAdmin)
