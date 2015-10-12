@@ -19,6 +19,10 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin
 
+import csv
+from django.http import HttpResponse
+import StringIO
+
 from jmbo.models import ModelBase, Relation
 from jmbo.admin import ModelBaseAdmin
 from preferences.admin import PreferencesAdmin
@@ -405,11 +409,7 @@ class BanAuditAdmin(admin.ModelAdmin):
 
 class DownloadableUserAdmin (UserAdmin):
     actions = ['download_csv']
-    def download_csv(self, request, queryset):
-        import csv
-        from django.http import HttpResponse
-        import StringIO
-     
+    def download_csv(self, request, queryset):     
         f = StringIO.StringIO()
         writer = csv.writer(f)
         writer.writerow(["username" ,"email"])
@@ -420,7 +420,7 @@ class DownloadableUserAdmin (UserAdmin):
         response = HttpResponse(f, content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename=stat-info.csv'
         return response
-    download_csv.short_description = "Download CSV file for selected stats."
+    download_csv.short_description = "Download selected users"
 
 admin.site.register(BanAudit, BanAuditAdmin)
 admin.site.register(SitePreferences, ActionforwomenPreferencesAdmin)
