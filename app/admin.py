@@ -71,6 +71,7 @@ class LinkInline(admin.TabularInline):
     extra = 1
     raw_id_fields = ('target', )
 
+
 class ImageHeadingInline(admin.TabularInline):
     model = ImageHeading
     extra = 0
@@ -407,20 +408,22 @@ class BanAuditAdmin(admin.ModelAdmin):
     def has_delete_permission(self, request, obj=None, *args, **kwargs):
         return False
 
+
 class DownloadableUserAdmin (UserAdmin):
     actions = ['download_csv']
-    def download_csv(self, request, queryset):     
+
+    def download_csv(self, request, queryset):
         f = StringIO.StringIO()
         writer = csv.writer(f)
         writer.writerow(["email", "mobile_number", "display_name", "gender",
                         "year_of_birth", "identity"])
         for user in queryset:
             user_profile = user.userprofile_set.all()[0]
-            
+
             writer.writerow([user.email, user_profile.mobile_number,
                             user_profile.alias, user_profile.gender,
                             user_profile.year_of_birth, user_profile.identity])
-        
+
         f.seek(0)
         response = HttpResponse(f, content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename=stat-info.csv'
