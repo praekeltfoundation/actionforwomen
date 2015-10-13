@@ -820,3 +820,24 @@ class MobileNumberInternationlisationTestCase(TestCase):
 
         num = utils.mobile_number_to_international('0123456789')
         self.assertEqual(num, '27123456789')
+
+class AdminActionsTestCase(TestCase):
+    def setUp(self):
+        Site.objects.create(id=2, name='french', domain='fr.site.com')
+        client = Client()
+        
+    def test_download_users(self):
+        adminuser = User.objects.create_superuser('foo', 'foo@foo.com', 'foo')
+        adminuser.save()
+        fixtures = [User.objects.create_user('bar', 'bar@bar.com', 'bar'),
+                    User.objects.create_user('lol', 'lol@lol.com', 'lol')]
+        profile1 = UserProfile.objects.create(user=fixtures[0])
+        profile2 = UserProfile.objects.create(user=fixtures[1])
+
+        self.client.login(username='foo', password='foo')
+        list_url = reverse('admin:auth_user_changelist')
+        data = {'action': 'download_csv',
+                '_selected_action': [unicode(f.pk) for f in fixtures]}
+        response = self.client.post(list_url, data)
+        self.assertEqual(response['Content-Type'], "text/csv")
+        self.assertContains(response, "bar@bar.com,,,,,")
