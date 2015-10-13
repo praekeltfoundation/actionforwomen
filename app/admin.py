@@ -412,9 +412,14 @@ class DownloadableUserAdmin (UserAdmin):
     def download_csv(self, request, queryset):     
         f = StringIO.StringIO()
         writer = csv.writer(f)
-        writer.writerow(["username" ,"email"])
+        writer.writerow(["email", "mobile_number", "gender", "year_of_birth",
+                         "identity"])
         for user in queryset:
-            writer.writerow([user.username, user.email])
+            user_profile = user.userprofile_set.all()[0]
+            
+            writer.writerow([user.email, user_profile.mobile_number,
+                            user_profile.gender, user_profile.year_of_birth,
+                            user_profile.identity])
         
         f.seek(0)
         response = HttpResponse(f, content_type='text/csv')
