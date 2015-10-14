@@ -19,6 +19,10 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin
 
+import csv
+from django.http import HttpResponse
+import StringIO
+
 from jmbo.models import ModelBase, Relation
 from jmbo.admin import ModelBaseAdmin
 from preferences.admin import PreferencesAdmin
@@ -66,6 +70,7 @@ class LinkInline(admin.TabularInline):
     fk_name = 'source'
     extra = 1
     raw_id_fields = ('target', )
+
 
 class ImageHeadingInline(admin.TabularInline):
     model = ImageHeading
@@ -404,6 +409,25 @@ class BanAuditAdmin(admin.ModelAdmin):
         return False
 
 
+class DownloadableUserAdmin (UserAdmin):
+    actions = ['download_csv']
+
+    def download_csv(self, request, queryset):
+        f = StringIO.StringIO()
+        writer = csv.writer(f)
+        writer.writerow(["email", "mobile_number", "display_name", "gender",
+                        "year_of_birth", "identity"])
+        for user in queryset:
+            writer.writerow([user.email, user.profile.mobile_number,
+                            user.profile.alias, user.profile.gender,
+                            user.profile.year_of_birth, user.profile.identity])
+
+        f.seek(0)
+        response = HttpResponse(f, content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename=users.csv'
+        return response
+    download_csv.short_description = "Download selected users"
+
 admin.site.register(BanAudit, BanAuditAdmin)
 admin.site.register(SitePreferences, ActionforwomenPreferencesAdmin)
 admin.site.register(DefaultAvatar, DefaultAvatarAdmin)
@@ -445,7 +469,7 @@ except NotRegistered:
     pass
 
 # Hide userprofile.admin fields by using the default django admin for User
-admin.site.register(User, UserAdmin)
+admin.site.register(User, DownloadableUserAdmin)
 
 admin.site.unregister(Relation)
 admin.site.register(Relation, HiddenModelAdmin)
