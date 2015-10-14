@@ -426,7 +426,7 @@ class DownloadableUserAdmin (UserAdmin):
 
         f.seek(0)
         response = HttpResponse(f, content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename=stat-info.csv'
+        response['Content-Disposition'] = 'attachment; filename=users.csv'
         return response
     download_csv.short_description = "Download selected users"
 
