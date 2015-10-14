@@ -824,7 +824,6 @@ class MobileNumberInternationlisationTestCase(TestCase):
 class AdminActionsTestCase(TestCase):
     def setUp(self):
         Site.objects.create(id=2, name='french', domain='fr.site.com')
-        client = Client()
         
     def test_download_users(self):
         adminuser = User.objects.create_superuser('foo', 'foo@foo.com', 'foo')
