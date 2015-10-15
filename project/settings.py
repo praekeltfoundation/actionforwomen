@@ -152,7 +152,6 @@ INSTALLED_APPS = (
     'app',
     'category',
     'ckeditor',
-    'export',
     'generate',
     'google_credentials',
     'haystack',
