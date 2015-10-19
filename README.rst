@@ -11,7 +11,6 @@ Prerequisites
 Make sure the following is already running on your server:
 
 - Postgresql
-- ElasticSearch
 
 Installation
 ------------
