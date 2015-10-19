@@ -25,14 +25,19 @@ Initialize the database using::
 
     $ ./manage.py syncdb --noinput --migrate
 
-Then run the server usinng::
+Then run the server using (runs on http://localhost:8000)::
 
     $ ./manage.py runserver
+
+In order to access the admin interface, you'll need to create a super user::
+
+    $ ./manage.py createsuperuser
+    Then navigate to htt://localhost:8000/admin/ once the server is up and running
 
 
 Notes
 =====
 
-This app uses Haystack for search. When deploying remember to add a cronjob periodically updating the search index, i.e::
+This app uses Haystack for search. You'll need to update the search index manually::
 
-    0 0 * * * cd /var/praekelt/actionforwomen && . ve/bin/activate && ./manage.py update_index && deactivate
+    $ ./manage.py update_index
