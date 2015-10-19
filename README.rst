@@ -41,6 +41,15 @@ In order to access the admin interface, you'll need to create a super user::
     Then navigate to htt://localhost:8000/admin/ once the server is up and running
 
 
+Deploying to Production
+=======================
+
+We use fabric to manage our deployments. Make sure your ssh keys are added to the server and use the following fabric command `fab <env>:<username> <command>` e.g::
+
+    fab production:miltontony deploy
+
+This will deploy all the latest changes in develop to production.
+
 Notes
 =====
 
