@@ -41,3 +41,10 @@ Notes
 This app uses Haystack for search. You'll need to update the search index manually::
 
     $ ./manage.py update_index
+
+Running tests
+=============
+
+We use `py.test` for running our tests::
+
+    $ py.test
