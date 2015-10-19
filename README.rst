@@ -38,7 +38,7 @@ Then run the server using (runs on http://localhost:8000)::
 In order to access the admin interface, you'll need to create a super user::
 
     $ ./manage.py createsuperuser
-    Then navigate to htt://localhost:8000/admin/ once the server is up and running
+    Then navigate to http://localhost:8000/admin/ once the server is up and running
 
 
 Deploying to Production
