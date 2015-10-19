@@ -10,7 +10,13 @@ Prerequisites
 
 Make sure the following is already running on your server:
 
-- Postgresql
+- libtidy-dev
+- libevent-dev
+- python-dev
+
+You can install them using::
+
+    sudo apt-get install -qq libtidy-dev libevent-dev python-dev
 
 Installation
 ------------
