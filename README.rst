@@ -46,7 +46,7 @@ Deploying to Production
 
 We use fabric to manage our deployments. Make sure your ssh keys are added to the server and use the following fabric command `fab <env>:<username> <command>` e.g::
 
-    fab production:miltontony deploy
+    fab prod:miltontony deploy
 
 This will deploy all the latest changes in develop to production.
 

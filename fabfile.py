@@ -20,13 +20,13 @@ def prod(ssh_user=None):
     if not ssh_user:
         print 'You must provide your login username.'
         print 'format: fab <env>:<username> <command>'
-        print ' e.g fab prod:ubuntu push'
+        print ' e.g fab prod:miltontony pull'
         raise RuntimeError('Username required')
 
     env.hosts = ['%s@a4w.ca' % ssh_user]
 
 
-def push():
+def pull():
     with cd(env.path):
         sudo('git pull', user=env.sudo_user)
 
@@ -42,7 +42,7 @@ def migrate(app=''):
     with cd(env.path):
         env.app = app
         sudo(
-            '%(ve)s/bin/python manage.py migrate %(app)s' % env,
+            '%(ve)s/bin/python manage.py migrate %(app)s --noinput' % env,
             user=env.sudo_user)
 
 
@@ -55,7 +55,7 @@ def pip():
 
 def deploy():
     with cd(env.path):
-        push()
+        pull()
         pip()
         static()
         migrate()
