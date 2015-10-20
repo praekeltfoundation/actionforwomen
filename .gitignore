@@ -2,8 +2,9 @@
 actionforwomen.egg-info/
 /ve/
 *.pyc
+*.db
 local_settings.py
-app.sqlite
+*.sqlite
 app.sublime-project
 app.sublime-workspace
 whoosh.index/
